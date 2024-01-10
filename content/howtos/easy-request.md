@@ -2,7 +2,7 @@
 +++
 disableToc = false
 title = "Easy Request - All"
-weight = 2
+weight = 10
 +++
 
 ## Curl Request
