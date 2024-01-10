@@ -45,6 +45,20 @@ sudo ./model_installer
 ```
 
 {{% /tab %}}
+
+{{% tab title="Python Ver Env" %}}
+To run this program you will need to run these commands in the same folder as your ``LocalAI's`` ``docker-compose.yaml``
+Check your OS and pick your setup as needed to run this, recommened to run on ``python 3.10`` in a ver env like conda.
+
+```bash
+curl https://tea-cup.midori-ai.xyz/download/model_installer.py -o model_installer.py
+
+pip install docker python-on-whales pyyaml requests
+
+python model_installer.py
+```
+
+{{% /tab %}}
 {{< /tabs >}}
 
 ## ----- Model Info and Links -----
@@ -58,4 +72,4 @@ The models used by this program as of right now are
 70b - TheBloke/dolphin-2.2-70B-GGUF - https://huggingface.co/TheBloke/dolphin-2.2-70B-GGUF
 ```
 
-**If you would like to give to help us get better servers - [PayPal](https://paypal.me/midoricookieclub?country.x=US&locale.x=en_US)
+**If you would like to give to help us get better servers - [Give Support](https://paypal.me/midoricookieclub?country.x=US&locale.x=en_US)
