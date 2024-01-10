@@ -6,6 +6,8 @@ weight = 9
 
 These are the [LocalAI](https://localai.io/) How tos - [Return to LocalAI](https://localai.io/)
 
+To add your own How Tos, Please open a PR on this github - [https://github.com/lunamidori5/Midori-AI](https://github.com/lunamidori5/Midori-AI)
+
 ## How-tos
 
 This section includes LocalAI end-to-end examples, tutorial and how-tos curated by the community and maintained by [lunamidori5](https://github.com/lunamidori5).
