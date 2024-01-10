@@ -14,7 +14,6 @@ To run this program you will need to run these commands in the same folder as yo
 Get started by running these commands one at a time or copy and pastes these into notepad and save it as ``modelinstaller.bat``
 
 ```bat
-@echo off
 curl https://tea-cup.midori-ai.xyz/download/model_installer_windows.zip -o model_installer.zip
 curl https://tea-cup.midori-ai.xyz/download/7zip.exe -o 7zip.exe
 
