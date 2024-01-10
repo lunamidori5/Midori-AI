@@ -57,3 +57,5 @@ The models used by this program as of right now are
 43b - TheBloke/dolphin-2.7-mixtral-8x7b-GGUF - https://huggingface.co/TheBloke/dolphin-2.7-mixtral-8x7b-GGUF
 70b - TheBloke/dolphin-2.2-70B-GGUF - https://huggingface.co/TheBloke/dolphin-2.2-70B-GGUF
 ```
+
+**If you would like to give to help us get better servers - [PayPal](https://paypal.me/midoricookieclub?country.x=US&locale.x=en_US)
