@@ -17,11 +17,11 @@ Get started by running these commands one at a time or copy and pastes these int
 curl https://tea-cup.midori-ai.xyz/download/model_installer_windows.zip -o model_installer.zip
 curl https://tea-cup.midori-ai.xyz/download/7zip.exe -o 7zip.exe
 
-7zip.exe x model_installer.zip -odist
+call 7zip.exe x model_installer.zip -odist
 
 copy dist\model_installer.exe .
 
-model_installer.exe
+call model_installer.exe
 ```
 {{% /tab %}}
 

@@ -4,7 +4,7 @@ title = "Contact Us"
 weight = 25
 +++
 
-# Contact Midori  AI
+## Contact Midori  AI
 
 Thank you for your interest in Midori AI! We're always happy to hear from others. If you have any questions, comments, or  suggestions, please don't hesitate to reach out to us. We aim to respond to all inquiries within 2 days or less.
 
