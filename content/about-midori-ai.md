@@ -1,5 +1,5 @@
 +++
 disableToc = false
-title = "Midori AI - About US"
+title = "About US"
 weight = 1
 +++
