@@ -34,6 +34,9 @@ user if mary is 7 years old, and I am 3 years older than her. how old am I?
 assistant If Mary is 7 years old, then you are 10 years old (7+3=10).
 ```
 
+## Training
+The model was trained as a LoRA on an Midori AI's supercomputer using a custom training script to enable gradient checkpointing. The LoRA has rank = 256, alpha = 512, "saves" the `wte,lm_head.linear` modules The embedding weights were "saved" and trained normally along with the rank matricies in order to train the newly added tokens to the embeddings. The full model is merged together at the end.
+
 ## Models (Quantised / Non Quantised)
 | Quant Mode | Description |
 |---|---|
@@ -43,9 +46,9 @@ assistant If Mary is 7 years old, then you are 10 years old (7+3=10).
 |Q6_K| Very large, extremely low quality loss|
 |None| Extremely large, No quality loss, hard to install - not recommended|
 
+## Download / Install
 
-## Training
-The model was trained as a LoRA on an Midori AI's supercomputer using a custom training script to enable gradient checkpointing. The LoRA has rank = 256, alpha = 512, "saves" the `wte,lm_head.linear` modules The embedding weights were "saved" and trained normally along with the rank matricies in order to train the newly added tokens to the embeddings. The full model is merged together at the end.
+***Luna fix me once the files are ready to be served**
 
 ## Authors 
 Luna Midori - https://github.com/lunamidori5
