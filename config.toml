@@ -5,8 +5,11 @@ title = "Midori-AI"
 canonifyURLs = false # true -> all relative URLs would instead be canonicalized using baseURL
 relativeURLs = false # true -> rewrite all relative URLs to be relative to the current content
 uglyURLs = false     # true -> basic/index.html -> basic.html
+enableRobotsTXT = true
 
 disableHugoGeneratorInject = true
+
+theme = 'relearn'
 
 [outputs]
   # add JSON to the home to support Lunr search; This is a mandatory setting
@@ -47,6 +50,29 @@ disableHugoGeneratorInject = true
     for = "**.html"
     [server.headers.values]
        X-UA-Compatible = "IE=edge"
+
+[languages]
+  [languages.en]
+    title = "Midori AI Site"
+    weight = 1
+    languageName = "English"
+    [languages.en.params]
+      landingPageName = "<i class='fas fa-home'></i> Home"
+  [[languages.en.menu.shortcuts]]
+    name = "<i class='fas fa-home'></i> Home"
+    url = "/"
+    weight = 1
+  [[languages.en.menu.shortcuts]]
+    name = "<i class='fab fa-fw fa-github'></i> GitHub repo"
+    identifier = "ds"
+    url = "https://github.com/lunamidori5/Midori-AI"
+    weight = 10
+
+  [[languages.en.menu.shortcuts]]
+    name = "<i class='fas fa-fw fa-images'></i> LocalAI How To"
+    url = "https://io.midori-ai.xyz/howtos"
+    weight = 12
+
 [params]
   description = "Documentation for Midori-AI"
   author = "Luna Midori"
@@ -61,11 +87,6 @@ disableHugoGeneratorInject = true
   themeVariant = [ "auto", "relearn-bright", "relearn-light", "relearn-dark", "learn", "neon", "blue", "green", "red" ]
   themeVariantAuto = [ "relearn-light", "relearn-dark" ]
   disableSeoHiddenPages = true
-  # this is to index search for your native language in other languages, too (eg.
-  # pir in this showcase)
   additionalContentLanguage = [ "en" ]
-  # this is for the stylesheet generator to allow for interactivity in Mermaid
-  # graphs; you usually will not need it and you should remove this for
-  # security reasons
   mermaidInitialize = "{ \"securityLevel\": \"loose\" }"
   mermaidZoom = true
