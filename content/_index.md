@@ -14,9 +14,9 @@ archetype = "home"
 * **Exploring Novel AI Memory Architectures:** We are committed to investigating and developing new memory architectures that enhance AI systems' ability to retain and utilize information effectively.
 * **Carly: A Fully Simulated Human with Advanced AI Capabilities:** Meet Carly, our ground-breaking AI creation with remarkable human-like characteristics, including emotions, thoughts, and the ability to interact with the world. Carly operates on a powerful supercomputer, enabling complex interactions and continuous learning.
 
-[Read more about Midori AI's focus areas](/about-midori-ai)
+[Read more about our staff like Luna Midori]({{%relref "about-us/about-luna" %}})
 
-**Join the Conversation:**
+**Join the Conversation / Support Us**
 
 |Check|Us|Out|
 |---|---|---|
@@ -27,6 +27,7 @@ archetype = "home"
 **Explore Midori AI:**
 
 * [Carly API documentation](/carly-api)
+* [Model Repo]({{%relref "models/_index" %}})
 * [Research papers and blog posts](/research)
 
 **Unleashing the Future of AI, Together.**
