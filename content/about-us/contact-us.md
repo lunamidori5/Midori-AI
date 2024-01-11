@@ -16,9 +16,9 @@ You can  also reach us by email at [contact-us@midori-ai.xyz](mailto:contact-us@
 
 Follow us on social media for the latest news and updates:
 
-* Twitter: [@midori_ai](https://twitter.com/lunamidori5)
-* Facebook: [Midori AI](https://www.facebook.com/TWLunagreen)
-* Discord: [Midori  AI](https://discord.gg/xdgCx3VyHU)
+* Twitter: [@lunamidori5](https://twitter.com/lunamidori5)
+* Facebook: [Luna Midori](https://www.facebook.com/TWLunagreen)
+* Discord: [Midori AI / The Cookie Club](https://discord.gg/xdgCx3VyHU)
 
 ### Contact Us Today!
 
