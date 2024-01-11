@@ -27,7 +27,7 @@ archetype = "home"
 **Explore Midori AI:**
 
 * [Carly API documentation](/carly-api)
-* [Model Repo]({{%relref "models/_index" %}})
+* [Model Repo]({{%relref "models" %}})
 * [Research papers and blog posts](/research)
 
 **Unleashing the Future of AI, Together.**
