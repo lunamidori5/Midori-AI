@@ -4,7 +4,7 @@ title = "Home-LLM-v001-Dolphin-Mistral-7b"
 weight = 10
 +++
 
-# Model Card for Home-LLM-v001-Dolphin-Mistral-7b
+## Model Card for Home-LLM-v001-Dolphin-Mistral-7b
 
 The model is quantized using Lama.cpp in order to enable running the model in low resource environments that are common with Home Assistant installations such as Home PCs / Gaming computers.
 
@@ -51,11 +51,11 @@ The model was trained as a LoRA on an Midori AI's supercomputer using a custom t
 ***Luna fix me once the files are ready to be served**
 
 ## Authors 
-Luna Midori - https://github.com/lunamidori5
-Midori AI - https://io.midori-ai.xyz/
-Acon96 - https://github.com/acon96
-Cognitive Computations - https://erichartford.com/
-MistralAI - https://mistral.ai/
+- Luna Midori - https://github.com/lunamidori5
+- Midori AI - https://io.midori-ai.xyz/
+- Acon96 - https://github.com/acon96
+- Cognitive Computations - https://erichartford.com/
+- MistralAI - https://mistral.ai/
 
 ## License
 License: Apache-2.0 - https://choosealicense.com/licenses/apache-2.0/
