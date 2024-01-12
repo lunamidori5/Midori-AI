@@ -14,7 +14,7 @@ To contribute a model card, please follow these steps:
 
 1. Fork the [Midori AI Repository](https://github.com/lunamidori5/Midori-AI) to your GitHub account.
 2. Create a new branch in your forked repository where you will make your changes.
-3. Add your model card to the ``models`` directory. Follow the structure of the existing model cards and the [Model Card Template](LINK_TO_MODEL_CARD_TEMPLATE) to ensure consistency.
+3. Add your model card to the ``models`` directory. Follow the structure of the existing model cards to ensure consistency.
 4. Commit your changes and push them to your forked repository.
 5. Open a pull request from your forked repository to the `master` branch of the Midori AI Self-Hosted Models' Model Card Repository.
 6. In the pull request, provide a clear and concise description of the changes you have made.
