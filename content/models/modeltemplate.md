@@ -1,7 +1,7 @@
 +++
 disableToc = false
 title = "Model Template"
-weight = 10
+weight = 2
 +++
 
 ## Model Card for [model name here]
