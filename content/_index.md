@@ -3,7 +3,7 @@
 archetype = "home"
 +++
 
-![Midori AI photo](https://tea-cup.midori-ai.xyz/download/logom.png)
+![Midori AI photo](https://tea-cup.midori-ai.xyz/download/logo_color1.png)
 
 ## Midori AI: Where Creativity and Innovation Blossom
 
