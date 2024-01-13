@@ -27,7 +27,6 @@ The model card template provides guidance on the information to include in your 
 - Model Description: A brief overview of the model's purpose, architecture, and key features.
 - Intended Use: Specify the tasks or applications for which the model is designed.
 - Training Data: Describe the dataset(s) used to train the model, including their size, composition, and any relevant characteristics.
-- Evaluation Results: Provide quantitative and qualitative metrics to assess the model's performance on different evaluation datasets.
 - Limitations and Biases: Discuss any known limitations or potential biases in the model, as well as steps taken to mitigate them.
 - Ethical Considerations: Address any ethical implications or considerations related to the model's use, such as privacy concerns or potential for discrimination.
 - Deployment Details: If the model is deployed, provide information about the deployment environment, serving infrastructure, and any specific considerations for real-world usage.
