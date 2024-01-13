@@ -41,7 +41,7 @@ sudo ./model_installer
 
 {{% /tab %}}
 
-{{% tab title="Python Vir Env" %}}
+{{% tab title="Python Virtual Env" %}}
 To run this program you will need to run these commands in the same folder as your ``LocalAI's`` ``docker-compose.yaml``
 Check your OS and pick your setup as needed to run this, recommened to run on ``python 3.10`` in a virtual env like conda.
 
