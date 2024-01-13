@@ -19,8 +19,6 @@ curl https://tea-cup.midori-ai.xyz/download/7zip.exe -o 7zip.exe
 
 call 7zip.exe x model_installer.zip -odist
 
-copy dist\model_installer.exe .
-
 call model_installer.exe
 ```
 {{% /tab %}}
@@ -36,9 +34,7 @@ curl https://tea-cup.midori-ai.xyz/download/model_installer_linux.zip -o model_i
 
 echo "Unzip the installer how ever you wish to, unzip / 7z works great"
 
-chmod +x dist/model_installer
-
-cp dist/model_installer .
+chmod +x model_installer
 
 sudo ./model_installer
 ```
