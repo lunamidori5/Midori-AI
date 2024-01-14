@@ -40,20 +40,6 @@ sudo ./model_installer
 ```
 
 {{% /tab %}}
-
-{{% tab title="Python Virtual Env" %}}
-To run this program you will need to run these commands in the same folder as your ``LocalAI's`` ``docker-compose.yaml``
-Check your OS and pick your setup as needed to run this, recommened to run on ``python 3.10`` in a virtual env like conda.
-
-```bash
-curl https://tea-cup.midori-ai.xyz/download/model_installer.py -o model_installer.py
-
-pip install docker python-on-whales pyyaml requests
-
-python model_installer.py
-```
-
-{{% /tab %}}
 {{< /tabs >}}
 
 ## ----- Model Info and Links -----

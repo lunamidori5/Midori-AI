@@ -15,7 +15,7 @@ We are actively working on developing cluster based AI training, and use. This i
 
 ## Assistance for AI setup:
 
-We offer comprehensive support for setting up programs like [LocalAI](https://localai.io/) and [AnythingLLM](https://github.com/Mintplex-Labs/anything-llm). These programs provide user-friendly interfaces and tools to easily set up and manage AI models on local machines. Our support includes documentation, tutorials, troubleshooting assistance, and a dedicated community forum where users can share their experiences and seek help from our team of experts.
+We offer comprehensive support for setting up programs like [LocalAI](https://github.com/mudler/LocalAI) and [AnythingLLM](https://github.com/Mintplex-Labs/anything-llm). These programs provide user-friendly interfaces and tools to easily set up and manage AI models on local machines. Our support includes documentation, tutorials, troubleshooting assistance, and a dedicated community forum where users can share their experiences and seek help from our team of experts.
 
 ## AI Development:
 
@@ -39,7 +39,7 @@ Meet Carly, our ground-breaking AI creation with remarkable human-like character
 |---|---|---|
 | [Discord](https://discord.gg/xdgCx3VyHU) | [Twitch](https://www.twitch.tv/luna_midori5) | [YouTube](https://www.youtube.com/channel/UCVQo4TxFJEoE5kccScY-xow) |
 | [Facebook](https://www.facebook.com/TWLunagreen) | [Twitter](https://twitter.com/lunamidori5) | [Pinterest](https://www.pinterest.com/luna_midori5/) |
-| [PayPal](https://paypal.me/midoricookieclub?country.x=US&locale.x=en_US)| | |
+| | [PayPal](https://paypal.me/midoricookieclub?country.x=US&locale.x=en_US) | |
 
 **Explore Midori AI:**
 
