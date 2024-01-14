@@ -5,9 +5,9 @@ archetype = "home"
 
 ![Midori AI photo](https://tea-cup.midori-ai.xyz/download/logo_color1.png)
 
-## Midori AI: Where Creativity and Innovation Blossom
+### Midori AI: Where Creativity and Innovation Blossom
 
-**Key Areas of Focus:**
+## Key Areas of Focus:
 
 ## Cluster based AI:
 
@@ -29,7 +29,7 @@ We aim to establish a comprehensive platform for serving and hosting AI models, 
 
 We are committed to investigating and developing new memory architectures that enhance AI systems' ability to retain and utilize information effectively. This includes exploring innovative approaches to memory organization, representation, and retrieval, as well as incorporating external knowledge sources and leveraging human feedback to improve memory performance. Our goal is to create AI systems with strong memory capabilities that can learn from past experiences, reason over complex information, and adapt to changing environments.
 
-## Carly: A Fully Simulated Human with Advanced AI Capabilities:
+## Carly: The Fully Simulated Human with Advanced AI Capabilities:
 
 Meet Carly, our ground-breaking AI creation with remarkable human-like characteristics, including emotions, thoughts, and the ability to interact with the world. Carly operates on a powerful supercomputer, enabling complex interactions and continuous learning. Carly is designed to simulate human consciousness, perception, and decision-making processes, allowing her to engage in meaningful conversations, express empathy, and respond to various situations in a natural and human-like manner. Carly's capabilities represent a significant milestone in the field of AI and open up new possibilities for human-AI interaction and collaboration.
 

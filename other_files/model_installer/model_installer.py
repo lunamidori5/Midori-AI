@@ -15,7 +15,7 @@ use_llava = False
 
 compose_path = "docker-compose.yaml"
 
-ver_info = "0.0.101"
+ver_info = "0.0.102"
 
 now = datetime.datetime.now()
 timestamp = now.strftime("%m%d%Y%H%M%S")
@@ -254,8 +254,6 @@ if answerbasic:
 
     clear_window(ver_os_info)
 
-
-
 if "ffmpeg" in service_data["image"]:
     questionsd = "Would you like me to install a few Text to Speech models?: "
     sd_valid_answers = ["yes", "no", "true", "false"]
@@ -305,6 +303,20 @@ else:
         clear_window(ver_os_info)
     else:
         log("Looks like you are running on CPU only, Skipping: Stable diffusion, Llava, Huggingface Models")
+    
+    questionsd = "Would you like to use our encrypted endpoint for LocalAI to serve and setup the model?: "
+    sd_valid_answers = ["yes", "no", "true", "false"]
+    answerencrypted = check_str(questionsd, sd_valid_answers)
+
+    if answerencrypted.lower() == "no":
+        answerencrypted = "False"
+    
+    if answerencrypted.lower() == "yes":
+        answerencrypted = "True"
+
+    answerencrypted = bool(answerencrypted.lower())
+
+    clear_window(ver_os_info)
 
 questionsd = "Would you like me to install the embedding model?: "
 sd_valid_answers = ["yes", "no", "true", "false"]
@@ -385,6 +397,59 @@ if answerbasic:
         ["rm", "-f", f"{answer4}.yaml"],
         ["rm", "-f", f"{answer4}.gguf"],
     ]
+    
+
+    encrypted_docker_commands_cpu = [
+        ["echo", f"Setting up the {answer2} model you requested"],
+        ["pip", "install", "psutil", "requests", "diskcache", "cryptography"],
+        ["rm", "-f", f"{inside_model_folder}/{answer4}.gguf"],
+        ["rm", "-f", f"{inside_model_folder}/localai-chat.tmpl"],
+        ["rm", "-f", f"{inside_model_folder}/localai-chatmsg.tmpl"],
+        ["rm", "-f", f"{inside_model_folder}/{answer4}.yaml"],
+        ["wget", "-O", f"localai-chat.tmpl", f"https://tea-cup.midori-ai.xyz/download/localai-chat.tmpl"],
+        ["wget", "-O", f"localai-chatmsg.tmpl", f"https://tea-cup.midori-ai.xyz/download/localai-chatmsg.tmpl"],
+        ["wget", "-O", f"{answer4}.yaml", f"https://tea-cup.midori-ai.xyz/download/models.yaml"],
+        ["wget", "-O", f"{answer4}.gguf", f"https://tea-cup.midori-ai.xyz/download/{answer2}model{answer1}.gguf"],
+        ["cp", f"localai-chat.tmpl", f"{temp_chat_path}"],
+        ["cp", f"localai-chatmsg.tmpl", f"{temp_chatmsg_path}"],
+        ["cp", f"{answer4}.yaml", f"{yaml_path_temp}"],
+        ["cp", f"{answer4}.gguf", f"{model_path_temp}"],
+        ["sed", "-i", f"s/name.*/name: {answer4}/g", f"{yaml_path_temp}"],
+        ["sed", "-i", f"s/model.*/model: {answer4}.gguf/g", f"{yaml_path_temp}"],
+        ["echo", f"Catting the yaml for easyer debuging..."],
+        ["cat", f"{yaml_path_temp}"],
+        ["rm", "-f", "localai-chat.tmpl"],
+        ["rm", "-f", "localai-chatmsg.tmpl"],
+        ["rm", "-f", f"{answer4}.yaml"],
+        ["rm", "-f", f"{answer4}.gguf"],
+    ]
+
+    encrypted_docker_commands_gpu = [
+        ["echo", f"Setting up the {answer2} model you requested"],
+        ["pip", "install", "psutil", "requests", "diskcache", "cryptography"],
+        ["rm", "-f", f"{inside_model_folder}/{answer4}.gguf"],
+        ["rm", "-f", f"{inside_model_folder}/localai-chat.tmpl"],
+        ["rm", "-f", f"{inside_model_folder}/localai-chatmsg.tmpl"],
+        ["rm", "-f", f"{inside_model_folder}/{answer4}.yaml"],
+        ["wget", "-O", f"helper_app.py", f"https://tea-cup.midori-ai.xyz/download/helper_app.py"],
+        ["wget", "-O", f"localai-chat.tmpl", f"https://tea-cup.midori-ai.xyz/download/localai-chat.tmpl"],
+        ["wget", "-O", f"localai-chatmsg.tmpl", f"https://tea-cup.midori-ai.xyz/download/localai-chatmsg.tmpl"],
+        ["wget", "-O", f"{answer4}.yaml", f"https://tea-cup.midori-ai.xyz/download/models-gpu.yaml"],
+        ["wget", "-O", f"{answer4}.gguf", f"https://tea-cup.midori-ai.xyz/download/{answer2}model{answer1}.gguf"],
+        ["cp", f"localai-chat.tmpl", f"{temp_chat_path}"],
+        ["cp", f"localai-chatmsg.tmpl", f"{temp_chatmsg_path}"],
+        ["cp", f"{answer4}.yaml", f"{yaml_path_temp}"],
+        ["cp", f"{answer4}.gguf", f"{model_path_temp}"],
+        ["sed", "-i", f"s/gpu_layers.*/gpu_layers: {answer3}/g", f"{yaml_path_temp}"],
+        ["sed", "-i", f"s/name.*/name: {answer4}/g", f"{yaml_path_temp}"],
+        ["sed", "-i", f"s/model.*/model: {answer4}.gguf/g", f"{yaml_path_temp}"],
+        ["echo", f"Catting the yaml for easyer debuging..."],
+        ["cat", f"{yaml_path_temp}"],
+        ["rm", "-f", "localai-chat.tmpl"],
+        ["rm", "-f", "localai-chatmsg.tmpl"],
+        ["rm", "-f", f"{answer4}.yaml"],
+        ["rm", "-f", f"{answer4}.gguf"],
+    ]
 
 else:
     docker_commands_cpu = []
@@ -406,7 +471,7 @@ if use_tts:
 
 if use_sd:
     sd_commands = [
-        ["wget", "-O", inside_model_folder + f"/diffusers.yaml", f"https://tea-cup.midori-ai.xyz/download/diffusers.yaml"]
+        ["wget", "-O", inside_model_folder + f"/diffusers.yaml", f"https://tea-cup.midori-ai.xyz/download/diffusers.yaml"] # type: ignore
     ]
     docker_commands.extend(sd_commands)
 

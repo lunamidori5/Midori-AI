@@ -21,7 +21,7 @@ missing_cuda_toolkit = True
 
 compose_path = "docker-compose.yaml"
 
-ver_info = "0.0.04"
+ver_info = "0.0.1"
 
 localai_ver_number = "v2.5.1"
 base_image_name = "quay.io/go-skynet/local-ai:"
@@ -246,7 +246,10 @@ if answer_cuda.lower() == "yes":
 use_cuda = bool(answer_cuda.lower())
 
 if use_cuda:
-  questionbasic = "Do you have CUDA12 or CUDA11? (Type just 11 or 12): "
+  clear_window(ver_os_info)
+  os.system('nvidia-smi')
+  log("I ran the cuda command, it \"should\" show you if you have CUDA11 or CUDA12")
+  questionbasic = "Do you have CUDA11 or CUDA12? (Type just 11 or 12): "
   valid_answers = ["11", "12"]
   version = check_str(questionbasic, valid_answers)
 
@@ -266,7 +269,7 @@ answertts = bool(answertts.lower())
 
 clear_window(ver_os_info)
 
-questionbasic = "LocalAI offers a ``core`` image that lowers the image size by more than 60% \nrunning this image removes support for all non LLM, Embedding, or TTS models. \nWould you like to use the core image? (Not Recommended): "
+questionbasic = "LocalAI offers a ``core`` image that lowers the image size by more than 60% \nInstalling this image removes support for all non LLM, Embedding, or TTS models.\nThis also removes the encrypted endpoint of the model installer. \nWould you like to use the core image? (Not Recommended): "
 valid_answers = ["yes", "no", "true", "false"]
 answercore = check_str(questionbasic, valid_answers)
 
@@ -277,6 +280,21 @@ if answercore.lower() == "yes":
   answercore = "True"
 
 answercore = bool(answercore.lower())
+
+clear_window(ver_os_info)
+
+log("We have a docker ready if you would like to try it, its called AnythingLLM, its a GUI or WebUI for LocalAI. It comes highly recommened for new users.")
+questionbasic = "Would you like me to install AnythingLLM in a docker next to LocalAI?"
+valid_answers = ["yes", "no", "true", "false"]
+answeranything = check_str(questionbasic, valid_answers)
+
+if answeranything.lower() == "no":
+  answeranything = "False"
+        
+if answeranything.lower() == "yes":
+  answeranything = "True"
+
+answeranything = bool(answeranything.lower())
 
 clear_window(ver_os_info)
 
@@ -321,9 +339,9 @@ if not use_cuda:
               "environment": {
                 "REBUILD": str(rebuild).lower(),
                 "COMPEL": "0",
-                "DEBUG": str("True").lower(),
+                "DEBUG": str(True).lower(),
                 "MODELS_PATH": "/models",
-                "SINGLE_ACTIVE_BACKEND": str("True").lower(),
+                "SINGLE_ACTIVE_BACKEND": str(True).lower(),
                 },  # env_file is commented out  
               "volumes": ["./models:/models", "./photos:/tmp/generated/images/"],
               "command": ["/usr/bin/local-ai"],
@@ -352,9 +370,9 @@ else:
           "environment": {
             "REBUILD": str(rebuild).lower(),
             "COMPEL": "0",
-            "DEBUG": str("True").lower(),
+            "DEBUG": str(True).lower(),
             "MODELS_PATH": "/models",
-            "SINGLE_ACTIVE_BACKEND": str("True").lower(),
+            "SINGLE_ACTIVE_BACKEND": str(True).lower(),
           },  # env_file is commented out
           "volumes": ["./models:/models", "./photos:/tmp/generated/images/"],
           "command": ["/usr/bin/local-ai"],
@@ -370,33 +388,48 @@ with open(compose_path, "w") as f:
 
 if use_cuda:
   with open(compose_path, 'r') as f: 
-      # Read the entire contents of the file into a string
-      compose_yaml = f.read()
+    # Read the entire contents of the file into a string
+    compose_yaml = f.read()
 
   # Replace all occurrences of 'changeme ' with '["gpu"]' in the string
   compose_yaml = compose_yaml.replace('changeme', '["gpu"]')
 
   # Write the modified string back to the file
   with open(compose_path, 'w') as f:
-      f.write(compose_yaml)
+    f.write(compose_yaml)
+
+if answeranything:
+  log("making folders and docker compose file for AnythingLLM")
+
+  anythingllm_str_env = """
+    SERVER_PORT=3001
+    STORAGE_DIR="/app/server/storage"
+    UID='1000'
+    GID='1000'
+  """
+
+  with open(".env", 'w') as f:
+    f.write(anythingllm_str_env)
+  
+  os.system( f"curl https://tea-cup.midori-ai.xyz/download/anythingllm-docker-compose.yaml -o anythingllm-docker-compose.yaml")
+  
+  os.makedirs("storage", exist_ok=True)
+  os.makedirs("hotdir", exist_ok=True)
+  os.makedirs("outputs", exist_ok=True)
+  
+  anythingllm_docker = DockerClient(compose_files=["./anythingllm-docker-compose.yaml"])
 
 log("yaml saved spinning up the docker compose...")
 localai_docker = DockerClient(compose_files=["./docker-compose.yaml"])
 
-localai_docker.compose.up(build=False, detach=True, no_build=False, remove_orphans=True, color=True, log_prefix=True, start=True)
+localai_docker.compose.up(build=False, detach=True, no_build=False, remove_orphans=True, color=True, log_prefix=True, start=True, pull="always")
+
+if answeranything:
+  anythingllm_docker.compose.up(build=False, detach=True, no_build=False, remove_orphans=True, color=True, log_prefix=True, start=True, pull="always")
 
 if rebuild:
   log("Due to your CPU not supporting one of the needed things, LocalAI is now rebuilding itself, please wait before installing models or making requests...")
   log("This can take up to 10+ mins to do, sorry for the delay...")
-  
-if ver_os_info == "windows":
-  if os.path.exists("model_installer.exe"):
-    log("looks like you have the model installer in this folder...")
-
-if ver_os_info == "linux":
-  if os.path.exists("model_installer"):
-    log("looks like you have the model installer in this folder...")
-    os.system('title LocalAI Installer')
 
 log("Alright all done, please try out our model installer if you would like us to install some starting models for you <3")
 log("Thank you for using Midori AI's Auto LocalAI installer!")
