@@ -14,7 +14,7 @@ To add your own How Tos, Please open a PR on this github - [https://github.com/l
 - [Seting up a Model]({{%relref "howtos/easy-model" %}})
 - [Making Text / LLM requests to LocalAI]({{%relref "howtos/easy-request" %}})
 - [Making Photo / SD requests to LocalAI]({{%relref "howtos/easy-setup-sd" %}})
-  
+
 ## Programs and Demos
 
 This section includes other programs and how to setup, install, and use of LocalAI.

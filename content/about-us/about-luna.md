@@ -9,7 +9,7 @@ weight = 2
 
 Hey there! I'm Luna Midori, the one who brings Midori AI to life, and I'm also an enthusiastic streamer who enjoys nurturing safe and inviting online communities.
 
-Before joining Twitch, I spent eight wonderful years on  YouTube, constantly refining my skills in content creation and building strong communities. My true passion as a streamer is not driven by numbers or income; instead, it revolves around creating a space where everyone feels comfortable, accepted, and entertained.
+Before joining Twitch, I spent eight wonderful years on YouTube, constantly refining my skills in content creation and building strong communities. My true passion as a streamer is not driven by numbers or income; instead, it revolves around creating a space where everyone feels comfortable, accepted, and entertained.
 
 Recently, I've shifted my focus from Final Fantasy XIV to Honkai: Star Rail, a game that has completely captured my attention since its release. I'm dedicated to helping others, both inside and outside the game, to make the most of their experiences.
 
