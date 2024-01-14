@@ -15,7 +15,7 @@ use_llava = False
 
 compose_path = "docker-compose.yaml"
 
-ver_info = "0.0.102"
+ver_info = "0.0.103"
 
 now = datetime.datetime.now()
 timestamp = now.strftime("%m%d%Y%H%M%S")
