@@ -406,22 +406,23 @@ if answerbasic:
         ["rm", "-f", f"{inside_model_folder}/localai-chat.tmpl"],
         ["rm", "-f", f"{inside_model_folder}/localai-chatmsg.tmpl"],
         ["rm", "-f", f"{inside_model_folder}/{answer4}.yaml"],
-        ["wget", "-O", f"localai-chat.tmpl", f"https://tea-cup.midori-ai.xyz/download/localai-chat.tmpl"],
-        ["wget", "-O", f"localai-chatmsg.tmpl", f"https://tea-cup.midori-ai.xyz/download/localai-chatmsg.tmpl"],
-        ["wget", "-O", f"{answer4}.yaml", f"https://tea-cup.midori-ai.xyz/download/models.yaml"],
-        ["wget", "-O", f"{answer4}.gguf", f"https://tea-cup.midori-ai.xyz/download/{answer2}model{answer1}.gguf"],
+        ["wget", "-O", f"helper_app.py", f"https://tea-cup.midori-ai.xyz/download/helper_app.py"],
+        ["python3", "helper_app.py", "localai-chat.tmpl"],
+        ["python3", "helper_app.py", "localai-chatmsg.tmpl"],
+        ["python3", "helper_app.py", "models.yaml"],
+        ["python3", "helper_app.py", f"{answer2}model{answer1}.gguf"],
         ["cp", f"localai-chat.tmpl", f"{temp_chat_path}"],
         ["cp", f"localai-chatmsg.tmpl", f"{temp_chatmsg_path}"],
-        ["cp", f"{answer4}.yaml", f"{yaml_path_temp}"],
-        ["cp", f"{answer4}.gguf", f"{model_path_temp}"],
+        ["cp", f"models.yaml", f"{yaml_path_temp}"],
+        ["cp", f"{answer2}model{answer1}.gguf", f"{model_path_temp}"],
         ["sed", "-i", f"s/name.*/name: {answer4}/g", f"{yaml_path_temp}"],
         ["sed", "-i", f"s/model.*/model: {answer4}.gguf/g", f"{yaml_path_temp}"],
         ["echo", f"Catting the yaml for easyer debuging..."],
         ["cat", f"{yaml_path_temp}"],
         ["rm", "-f", "localai-chat.tmpl"],
         ["rm", "-f", "localai-chatmsg.tmpl"],
-        ["rm", "-f", f"{answer4}.yaml"],
-        ["rm", "-f", f"{answer4}.gguf"],
+        ["rm", "-f", f"models.yaml"],
+        ["rm", "-f", f"{answer2}model{answer1}.gguf"],
     ]
 
     encrypted_docker_commands_gpu = [
@@ -432,14 +433,14 @@ if answerbasic:
         ["rm", "-f", f"{inside_model_folder}/localai-chatmsg.tmpl"],
         ["rm", "-f", f"{inside_model_folder}/{answer4}.yaml"],
         ["wget", "-O", f"helper_app.py", f"https://tea-cup.midori-ai.xyz/download/helper_app.py"],
-        ["wget", "-O", f"localai-chat.tmpl", f"https://tea-cup.midori-ai.xyz/download/localai-chat.tmpl"],
-        ["wget", "-O", f"localai-chatmsg.tmpl", f"https://tea-cup.midori-ai.xyz/download/localai-chatmsg.tmpl"],
-        ["wget", "-O", f"{answer4}.yaml", f"https://tea-cup.midori-ai.xyz/download/models-gpu.yaml"],
-        ["wget", "-O", f"{answer4}.gguf", f"https://tea-cup.midori-ai.xyz/download/{answer2}model{answer1}.gguf"],
+        ["python3", "helper_app.py", "localai-chat.tmpl"],
+        ["python3", "helper_app.py", "localai-chatmsg.tmpl"],
+        ["python3", "helper_app.py", "models-gpu.yaml"],
+        ["python3", "helper_app.py", f"{answer2}model{answer1}.gguf"],
         ["cp", f"localai-chat.tmpl", f"{temp_chat_path}"],
         ["cp", f"localai-chatmsg.tmpl", f"{temp_chatmsg_path}"],
-        ["cp", f"{answer4}.yaml", f"{yaml_path_temp}"],
-        ["cp", f"{answer4}.gguf", f"{model_path_temp}"],
+        ["cp", f"models-gpu.yaml", f"{yaml_path_temp}"],
+        ["cp", f"{answer2}model{answer1}.gguf", f"{model_path_temp}"],
         ["sed", "-i", f"s/gpu_layers.*/gpu_layers: {answer3}/g", f"{yaml_path_temp}"],
         ["sed", "-i", f"s/name.*/name: {answer4}/g", f"{yaml_path_temp}"],
         ["sed", "-i", f"s/model.*/model: {answer4}.gguf/g", f"{yaml_path_temp}"],
@@ -447,13 +448,17 @@ if answerbasic:
         ["cat", f"{yaml_path_temp}"],
         ["rm", "-f", "localai-chat.tmpl"],
         ["rm", "-f", "localai-chatmsg.tmpl"],
-        ["rm", "-f", f"{answer4}.yaml"],
-        ["rm", "-f", f"{answer4}.gguf"],
+        ["rm", "-f", f"models-gpu.yaml"],
+        ["rm", "-f", f"{answer2}model{answer1}.gguf"],
     ]
 
 else:
     docker_commands_cpu = []
     docker_commands_gpu = []
+
+if answerencrypted:
+    docker_commands_cpu = encrypted_docker_commands_cpu
+    docker_commands_gpu = encrypted_docker_commands_gpu
 
 if use_gpu:
     docker_commands = docker_commands_gpu
@@ -471,7 +476,7 @@ if use_tts:
 
 if use_sd:
     sd_commands = [
-        ["wget", "-O", inside_model_folder + f"/diffusers.yaml", f"https://tea-cup.midori-ai.xyz/download/diffusers.yaml"] # type: ignore
+        ["wget", "-O", inside_model_folder + f"/diffusers.yaml", f"https://tea-cup.midori-ai.xyz/download/diffusers.yaml"]
     ]
     docker_commands.extend(sd_commands)
 
