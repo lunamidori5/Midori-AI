@@ -8,14 +8,14 @@ archetype = "home"
 ## Midori AI: Where Creativity and Innovation Blossom
 
 **Key  Areas of Focus:**
-* **Cluster based AI:** We are actively working on developing cluster based AI training, and use.
-* **Assistance for AI setup:** We offer comprehensive support for setting up programs like [LocalAI](https://localai.io/), [AnythingLLM](https://github.com/Mintplex-Labs/anything-llm)
-* **AI Development:** We actively develop AI-powered (Discord for now) bots, leveraging their capabilities to enhance user experiences and automate tasks within the platform.
-* **Model Serving / Model Hosting:** We aim to establish a comprehensive platform for serving and hosting AI models, enabling developers to easily deploy and share their models with others.
-* **Exploring Novel AI Memory Architectures:** We are committed to investigating and developing new memory architectures that enhance AI systems' ability to retain and utilize information effectively.
-* **Carly: A Fully Simulated Human with Advanced AI Capabilities:** Meet Carly, our ground-breaking AI creation with remarkable human-like characteristics, including emotions, thoughts, and the ability to interact with the world. Carly operates on a powerful supercomputer, enabling complex interactions and continuous learning.
+* **Cluster based AI:** 
+* **Assistance for AI setup:** 
+* **AI Development:**
+* **Model Serving / Model Hosting:** 
+* **Exploring Novel AI Memory Architectures:** 
+* **Carly: A Fully Simulated Human with Advanced AI Capabilities:** 
 
-[Read more about our staff like Luna Midori]({{%relref "about-us/about-luna" %}})
+[Read more about us]({{%relref "about-us" %}})
 
 **Join the Conversation / Support Us**
 
@@ -27,8 +27,9 @@ archetype = "home"
 
 **Explore Midori AI:**
 
-* [Carly API documentation](/carly-api)
+* [Carly's documentation](/carly-api)
 * [Model Repo]({{%relref "models" %}})
-* [Research papers and blog posts](/research)
+* [Blog posts](/blogs)
+* [Research papers](/research)
 
 **Unleashing the Future of AI, Together.**
