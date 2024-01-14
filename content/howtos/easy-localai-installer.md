@@ -53,4 +53,6 @@ python localai_installer.py
 {{% /tab %}}
 {{< /tabs >}}
 
+*For your safety we have posted the code of this program onto github, please check it out! - [Github](https://github.com/lunamidori5/Midori-AI/tree/master/other_files)
+
 **If you would like to give to help us get better servers - [Give Support](https://paypal.me/midoricookieclub?country.x=US&locale.x=en_US)
