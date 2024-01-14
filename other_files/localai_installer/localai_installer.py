@@ -389,12 +389,12 @@ if rebuild:
   log("Due to your CPU not supporting one of the needed things, LocalAI is now rebuilding itself, please wait before installing models or making requests...")
   log("This can take up to 10+ mins to do, sorry for the delay...")
   
-if ver_os_info == "windows"
-  if os.path.exists("model_installer.exe")
+if ver_os_info == "windows":
+  if os.path.exists("model_installer.exe"):
     log("looks like you have the model installer in this folder...")
 
-if ver_os_info == "linux"
-  if os.path.exists("model_installer")
+if ver_os_info == "linux":
+  if os.path.exists("model_installer"):
     log("looks like you have the model installer in this folder...")
     os.system('title LocalAI Installer')
 
