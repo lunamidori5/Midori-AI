@@ -5,14 +5,6 @@ import requests
 import datetime
 import platform
 
-use_gpu = True
-
-use_sd = False
-use_tts = False
-
-use_enbed = False
-use_llava = False
-
 compose_path = "docker-compose.yaml"
 
 ver_info = "0.0.104"
@@ -193,6 +185,18 @@ log("For more info on the models used, or links to the models, go to ``https://i
 log(f"I am going to save our chat here and every thing I do to a file called ``{log_file_name}``, check it out if you like <3")
 log("Here are a few questions to find out what model you would like to try")
 
+use_gpu = True
+
+use_sd = False
+use_tts = False
+
+use_enbed = False
+use_llava = False
+
+use_llava = False
+use_enbed = False
+
+answerencrypted = False
 
 questionbasic = "Would you like to install a LLM?: "
 sd_valid_answers = ["yes", "no", "true", "false"]
@@ -270,6 +274,21 @@ if "ffmpeg" in service_data["image"]:
 
     clear_window(ver_os_info)
 
+questionsd = "Would you like me to install the embedding model?: "
+sd_valid_answers = ["yes", "no", "true", "false"]
+answerenbed = check_str(questionsd, sd_valid_answers)
+
+if answerenbed.lower() == "no":
+    answerenbed = "False"
+        
+if answerenbed.lower() == "yes":
+    answerenbed = "True"
+
+answerenbed = bool(answerenbed.lower())
+use_enbed = answerenbed
+
+clear_window(ver_os_info)
+
 if "core" in service_data["image"]:
     log("Looks like you are running a Core Image, Skipping: Stable diffusion, Llava, Huggingface Models")
 else:
@@ -317,20 +336,6 @@ else:
     answerencrypted = bool(answerencrypted.lower())
 
     clear_window(ver_os_info)
-
-questionsd = "Would you like me to install the embedding model?: "
-sd_valid_answers = ["yes", "no", "true", "false"]
-answerenbed = check_str(questionsd, sd_valid_answers)
-
-if answerenbed.lower() == "no":
-    answerenbed = "False"
-        
-if answerenbed.lower() == "yes":
-    answerenbed = "True"
-
-answerenbed = bool(answerenbed.lower())
-use_enbed = answerenbed
-clear_window(ver_os_info)
 
 log(f"I am now going to install everything you requested, please wait for me to get done. As ill be running commands inside of your docker image.")
 log("Hit enter to start")
@@ -398,7 +403,6 @@ if answerbasic:
         ["rm", "-f", f"{answer4}.gguf"],
     ]
     
-
     encrypted_docker_commands_cpu = [
         ["echo", f"Setting up the {answer2} model you requested"],
         ["pip", "install", "psutil", "requests", "diskcache", "cryptography"],
