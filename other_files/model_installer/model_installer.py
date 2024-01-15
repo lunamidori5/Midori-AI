@@ -187,16 +187,16 @@ log("Here are a few questions to find out what model you would like to try")
 
 use_gpu = True
 
-use_sd = False
-use_tts = False
+use_sd = "false"
+use_tts = "false"
 
-use_enbed = False
-use_llava = False
+use_enbed = "false"
+use_llava = "false"
 
-use_llava = False
-use_enbed = False
+use_llava = "false"
+use_enbed = "false"
 
-answerencrypted = False
+answerencrypted = "false"
 
 questionbasic = "Would you like to install a LLM?: "
 sd_valid_answers = ["yes", "no", "true", "false"]
@@ -208,7 +208,7 @@ if answerbasic.lower() == "no":
 if answerbasic.lower() == "yes":
     answerbasic = "True"
 
-answerbasic = bool(answerbasic.lower())
+answerbasic = answerbasic.lower()
 
 if answerbasic:
     clear_window(ver_os_info)
@@ -269,7 +269,7 @@ if "ffmpeg" in service_data["image"]:
     if answertts.lower() == "yes":
         answertts = "True"
 
-    answertts = bool(answertts.lower())
+    answertts = answertts.lower()
     use_tts = answertts
 
     clear_window(ver_os_info)
@@ -284,7 +284,7 @@ if answerenbed.lower() == "no":
 if answerenbed.lower() == "yes":
     answerenbed = "True"
 
-answerenbed = bool(answerenbed.lower())
+answerenbed = answerenbed.lower()
 use_enbed = answerenbed
 
 clear_window(ver_os_info)
@@ -303,7 +303,7 @@ else:
         if answersd.lower() == "yes":
             answersd = "True"
 
-        answersd = bool(answersd.lower())
+        answersd = answersd.lower()
         use_sd = answersd
         
         questionsd = "Would you like me to install the Llava model?: "
@@ -316,7 +316,7 @@ else:
         if answerllava.lower() == "yes":
             answerllava = "True"
 
-        answerllava = bool(answerllava.lower())
+        answerllava = answerllava.lower()
         use_llava = answerllava
 
         clear_window(ver_os_info)
@@ -333,7 +333,7 @@ else:
     if answerencrypted.lower() == "yes":
         answerencrypted = "True"
 
-    answerencrypted = bool(answerencrypted.lower())
+    answerencrypted = answerencrypted.lower()
 
     clear_window(ver_os_info)
 
@@ -342,7 +342,7 @@ log("Hit enter to start")
 
 input()
 
-if answerbasic:
+if answerbasic == "true":
     log(f"The type of model you want to setup is: {answer1}")
     log(f"The size of the known model you want to setup is: {answer2}")
     log(f"The amount of GPU layers you want to give it is: {answer3}")
@@ -460,7 +460,7 @@ else:
     docker_commands_cpu = []
     docker_commands_gpu = []
 
-if answerencrypted:
+if answerencrypted == "true":
     docker_commands_cpu = encrypted_docker_commands_cpu
     docker_commands_gpu = encrypted_docker_commands_gpu
 
@@ -469,7 +469,7 @@ if use_gpu:
 else:
     docker_commands = docker_commands_cpu
 
-if use_tts:
+if use_tts == "true":
     tts_commands = [
         ["wget", "-O", inside_model_folder + f"/en_US-amy-medium.onnx.json", f"https://tea-cup.midori-ai.xyz/download/en_US-amy-medium.onnx.json"],
         ["wget", "-O", inside_model_folder + f"/en_US-amy-medium.onnx", f"https://tea-cup.midori-ai.xyz/download/en_US-amy-medium.onnx"],
@@ -478,19 +478,19 @@ if use_tts:
     ]
     docker_commands.extend(tts_commands)
 
-if use_sd:
+if use_sd == "true":
     sd_commands = [
         ["wget", "-O", inside_model_folder + f"/diffusers.yaml", f"https://tea-cup.midori-ai.xyz/download/diffusers.yaml"]
     ]
     docker_commands.extend(sd_commands)
 
-if use_enbed:
+if use_enbed == "true":
     embed_commands = [
         ["curl", f"http://localhost:{model_port_api}/models/apply", "-H", f"\"Content-Type: application/json\"", "-d", "'{\"id\": \"model-gallery@bert-embeddings\"}'"],
     ]
     docker_commands.extend(embed_commands)
 
-if use_llava:
+if use_llava == "true":
     llava_commands = [
         ["wget", "-O", inside_model_folder + f"/ggml-model-q4_k.gguf", f"https://huggingface.co/mys/ggml_bakllava-1/resolve/main/ggml-model-q4_k.gguf"],
         ["wget", "-O", inside_model_folder + f"/mmproj-model-f16.gguf", f"https://huggingface.co/mys/ggml_bakllava-1/resolve/main/mmproj-model-f16.gguf"],
