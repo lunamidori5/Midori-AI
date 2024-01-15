@@ -15,7 +15,7 @@ use_llava = False
 
 compose_path = "docker-compose.yaml"
 
-ver_info = "0.0.103"
+ver_info = "0.0.104"
 
 now = datetime.datetime.now()
 timestamp = now.strftime("%m%d%Y%H%M%S")
@@ -304,7 +304,7 @@ else:
     else:
         log("Looks like you are running on CPU only, Skipping: Stable diffusion, Llava, Huggingface Models")
     
-    questionsd = "Would you like to use our encrypted endpoint for LocalAI to serve and setup the model?: "
+    questionsd = "Would you like to use our slower but encrypted endpoint for LocalAI to serve and setup the model? (Not Recommend): "
     sd_valid_answers = ["yes", "no", "true", "false"]
     answerencrypted = check_str(questionsd, sd_valid_answers)
 
