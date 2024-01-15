@@ -405,7 +405,7 @@ if answerbasic == "true":
     
     encrypted_docker_commands_cpu = [
         ["echo", f"Setting up the {answer2} model you requested"],
-        ["pip", "install", "psutil", "requests", "diskcache", "cryptography"],
+        ["pip", "install", "psutil", "requests", "diskcache", "cryptography", "aiohttp"],
         ["rm", "-f", f"{inside_model_folder}/{answer4}.gguf"],
         ["rm", "-f", f"{inside_model_folder}/localai-chat.tmpl"],
         ["rm", "-f", f"{inside_model_folder}/localai-chatmsg.tmpl"],
@@ -431,7 +431,7 @@ if answerbasic == "true":
 
     encrypted_docker_commands_gpu = [
         ["echo", f"Setting up the {answer2} model you requested"],
-        ["pip", "install", "psutil", "requests", "diskcache", "cryptography"],
+        ["pip", "install", "psutil", "requests", "diskcache", "cryptography", "aiohttp"],
         ["rm", "-f", f"{inside_model_folder}/{answer4}.gguf"],
         ["rm", "-f", f"{inside_model_folder}/localai-chat.tmpl"],
         ["rm", "-f", f"{inside_model_folder}/localai-chatmsg.tmpl"],
