@@ -19,3 +19,4 @@ To add your own How Tos, Please open a PR on this github - [https://github.com/l
 
 This section includes other programs and how to setup, install, and use of LocalAI.
 - [Auto Model Installer]({{%relref "howtos/easy-model-installer" %}}) - [lunamidori5](https://github.com/lunamidori5)
+- [Auto LocalAI Installer]({{%relref "howtos/easy-localai-installer" %}}) - [lunamidori5](https://github.com/lunamidori5)
