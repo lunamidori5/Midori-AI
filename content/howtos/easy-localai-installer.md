@@ -8,6 +8,10 @@ weight = 2
 ## ----- Midori AI Easy LocalAI installer -----
 This is the easy installer for [LocalAI](https://github.com/mudler/LocalAI) / [AnythingLLM](https://github.com/Mintplex-Labs/anything-llm), please place it in a folder with nothing else in it
 
+{{% notice note %}}
+- The ``encrypted`` endpoint seems to be having some issues, please use the normal endpoint for now
+{{% /notice %}}
+
 {{< tabs >}}
 {{% tab title="Windows" %}}
 Get started by running these commands one at a time or copy and pastes these into notepad and save it as ``localaiinstaller.bat``

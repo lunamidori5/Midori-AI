@@ -8,6 +8,10 @@ weight = 2
 ## ----- Midori AI Easy Model installer -----
 Make note, model downloads maybe slow as they are hitting Midori Ai's servers. If they are down please let Luna know.
 
+{{% notice note %}}
+- The ``encrypted`` endpoint seems to be having some issues, please use the normal endpoint for now
+{{% /notice %}}
+
 {{< tabs >}}
 {{% tab title="Windows" %}}
 To run this program you will need to run these commands in the same folder as your ``LocalAI's`` ``docker-compose.yaml``
