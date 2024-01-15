@@ -7,7 +7,7 @@ import platform
 
 compose_path = "docker-compose.yaml"
 
-ver_info = "0.0.104"
+ver_info = "0.0.105"
 
 now = datetime.datetime.now()
 timestamp = now.strftime("%m%d%Y%H%M%S")
