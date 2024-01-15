@@ -10,6 +10,7 @@ Make note, model downloads maybe slow as they are hitting Midori Ai's servers. I
 
 {{% notice note %}}
 - The ``encrypted`` endpoint seems to be having some issues, please use the normal endpoint for now
+- A fix has been added, the encrypted endpoint will now fallback to the normal endpoint if server load is high
 {{% /notice %}}
 
 {{< tabs >}}
