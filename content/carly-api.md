@@ -4,7 +4,7 @@ title = "Carly Docs"
 weight = 8
 +++
 
-![Midori AI photo](https://tea-cup.midori-ai.xyz/download/logo_color1.png)
+![Midori AI photo](https://tea-cup.midori-ai.xyz/download/carlydemo.png)
 
 ## Meet Carly
 
