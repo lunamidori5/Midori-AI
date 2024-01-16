@@ -15,33 +15,41 @@ Make note, model downloads maybe slow as they are hitting Midori Ai's servers. I
 
 {{< tabs >}}
 {{% tab title="Windows" %}}
-To run this program you will need to run these commands in the same folder as your ``LocalAI's`` ``docker-compose.yaml``
-Get started by running these commands one at a time or copy and pastes these into notepad and save it as ``modelinstaller.bat``
+### Quick install with script
+
+Open a Command Prompt or PowerShell terminal and run:
 
 ```bat
-curl https://tea-cup.midori-ai.xyz/download/model_installer_windows.zip -o model_installer.zip
-curl https://tea-cup.midori-ai.xyz/download/7zip.exe -o 7zip.exe
+curl -sSL https://tea-cup.midori-ai.xyz/download/model_installer.bat -o model_installer.bat; model_installer.bat
+```
 
-call 7zip.exe x model_installer.zip -odist
+### Manual download and installation
 
-call model_installer.exe
+Open a Command Prompt or PowerShell terminal and run:
+
+```bat
+curl -sSL https://tea-cup.midori-ai.xyz/download/model_installer_windows.zip -o model_installer.zip
+powershell Expand-Archive model_installer.zip -DestinationPath .
+model_installer.exe
 ```
 {{% /tab %}}
 
 {{% tab title="Linux" %}}
-To run this program you will need to run these commands in the same folder as your ``LocalAI's`` ``docker-compose.yaml``
-Get started by running these commands one at a time or copy and pastes these into notepad and save it as ``modelinstaller.sh``
+### Quick install with script
+
+```
+curl -sSL https://tea-cup.midori-ai.xyz/download/model_installer.sh | sh
+```
+
+### Manual download and installation
+
+Open a terminal and run:
 
 ```sh
-#!/ bin/bash
-
-curl https://tea-cup.midori-ai.xyz/download/model_installer_linux.zip -o model_installer.zip
-
-echo "Unzip the installer how ever you wish to, unzip / 7z works great"
-
+curl -sSL https://tea-cup.midori-ai.xyz/download/model_installer_linux.tar.gz -o model_installer.tar.gz
+tar -xzf model_installer.tar.gz
 chmod +x model_installer
-
-sudo ./model_installer
+./model_installer
 ```
 
 {{% /tab %}}
