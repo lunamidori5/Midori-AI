@@ -12,9 +12,9 @@ from multiprocessing import freeze_support
 from python_on_whales import docker as docker_two
 from python_on_whales import DockerClient
 
-use_cuda = False
-use_tts = False
-use_core = False
+use_cuda = "False"
+use_tts = "False"
+use_core = "False"
 
 missing_cuda = True
 missing_cuda_toolkit = True
@@ -205,9 +205,9 @@ if answerbasic.lower() == "no":
 if answerbasic.lower() == "yes":
   answerbasic = "True"
 
-answerbasic = bool(answerbasic.lower())
+answerbasic = answerbasic.lower()
 
-if not answerbasic:
+if answerbasic == "false":
   log("Alright then ill go ahead and exit! Thank you!")
   exit(1)
 
@@ -226,7 +226,7 @@ if answermaster.lower() == "no":
 if answermaster.lower() == "yes":
   answermaster = "True"
 
-answermaster = bool(answermaster.lower())
+answermaster = answermaster.lower()
 
 clear_window(ver_os_info)
 
@@ -243,9 +243,9 @@ if answer_cuda.lower() == "no":
 if answer_cuda.lower() == "yes":
   answer_cuda = "True"
 
-use_cuda = bool(answer_cuda.lower())
+use_cuda = answer_cuda.lower()
 
-if use_cuda:
+if use_cuda == "true":
   clear_window(ver_os_info)
   os.system('nvidia-smi')
   log("I ran the cuda command, it \"should\" show you if you have CUDA11 or CUDA12")
@@ -265,7 +265,7 @@ if answertts.lower() == "no":
 if answertts.lower() == "yes":
   answertts = "True"
 
-answertts = bool(answertts.lower())
+answertts = answertts.lower()
 
 clear_window(ver_os_info)
 
@@ -279,7 +279,7 @@ if answercore.lower() == "no":
 if answercore.lower() == "yes":
   answercore = "True"
 
-answercore = bool(answercore.lower())
+answercore = answercore.lower()
 
 clear_window(ver_os_info)
 
@@ -294,13 +294,13 @@ if answeranything.lower() == "no":
 if answeranything.lower() == "yes":
   answeranything = "True"
 
-answeranything = bool(answeranything.lower())
+answeranything = answeranything.lower()
 
 clear_window(ver_os_info)
 
 log("Alright lets get everything together...")
 
-if answermaster:
+if answermaster == "true":
   log("you requested to use the master image, Ill add that to the compose file now!")
   user_image = "master"
 
@@ -308,16 +308,16 @@ else:
   log(f"you requested to not use the master image, Ill set you to ``{localai_ver_number}`` image then! Adding that to your compose file!")
   user_image = localai_ver_number
 
-if use_cuda:
+if use_cuda == "true":
   log("cuda is installed, setup, and requested. Adding that to the docker-compose file now <3")
   user_image = user_image + "-cublas-cuda"
   user_image = user_image + version
 
-if use_tts:
+if use_tts == "true":
   log("looks like you requested TTS / Audio support, Ill get that added now!")
   user_image = user_image + "-ffmpeg"
 
-if use_core:
+if use_core == "true":
   log("looks like you wish to use the smaller core image. Ill add that to your docker-compose.yaml")
   user_image = user_image + "-core"
 
@@ -327,7 +327,7 @@ os.makedirs("others", exist_ok=True)
 
 gpu_text_debug = ["gpu", "nvidia-compute"]
 
-if not use_cuda:
+if use_cuda == "false":
   config = { 
       "version": "3.6",
       "services": {
@@ -386,7 +386,7 @@ log(config)
 with open(compose_path, "w") as f:
   yaml.dump(config, f, sort_keys=True)
 
-if use_cuda:
+if use_cuda == "true":
   with open(compose_path, 'r') as f: 
     # Read the entire contents of the file into a string
     compose_yaml = f.read()
@@ -398,7 +398,7 @@ if use_cuda:
   with open(compose_path, 'w') as f:
     f.write(compose_yaml)
 
-if answeranything:
+if answeranything == "true":
   log("making folders and docker compose file for AnythingLLM")
 
   anythingllm_str_env = """
@@ -424,7 +424,7 @@ localai_docker = DockerClient(compose_files=["./docker-compose.yaml"])
 
 localai_docker.compose.up(build=False, detach=True, no_build=False, remove_orphans=True, color=True, log_prefix=True, start=True, pull="always")
 
-if answeranything:
+if answeranything == "true":
   anythingllm_docker.compose.up(build=False, detach=True, no_build=False, remove_orphans=True, color=True, log_prefix=True, start=True, pull="always")
 
 if rebuild:
