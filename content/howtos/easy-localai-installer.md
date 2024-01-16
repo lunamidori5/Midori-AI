@@ -15,31 +15,41 @@ This is the easy installer for [LocalAI](https://github.com/mudler/LocalAI) / [A
 
 {{< tabs >}}
 {{% tab title="Windows" %}}
-Get started by running these commands one at a time or copy and pastes these into notepad and save it as ``localaiinstaller.bat``
+### Quick install with script
+
+Open a Command Prompt or PowerShell terminal and run:
 
 ```bat
-curl https://tea-cup.midori-ai.xyz/download/localai_installer_windows.zip -o localai_installer.zip
-curl https://tea-cup.midori-ai.xyz/download/7zip.exe -o 7zip.exe
+curl -sSL https://tea-cup.midori-ai.xyz/download/localai_installer.bat -o localai_installer.bat; localai_installer.bat
+```
 
-call 7zip.exe x localai_installer.zip -odist
+### Manual download and installation
 
-call localai_installer.exe
+Open a Command Prompt or PowerShell terminal and run:
+
+```bat
+curl -sSL https://tea-cup.midori-ai.xyz/download/localai_installer_windows.zip -o localai_installer.zip
+powershell Expand-Archive localai_installer.zip -DestinationPath .
+localai_installer.exe
 ```
 {{% /tab %}}
 
 {{% tab title="Linux" %}}
-Get started by running these commands one at a time or copy and pastes these into notepad and save it as ``localaiinstaller.sh``
+### Quick install with script
+
+```
+curl -sSL https://tea-cup.midori-ai.xyz/download/localai_installer.sh | sh
+```
+
+### Manual download and installation
+
+Open a terminal and run:
 
 ```sh
-#!/ bin/bash
-
-curl https://tea-cup.midori-ai.xyz/download/localai_installer_linux.zip -o localai_installer.zip
-
-echo "Unzip the installer how ever you wish to, unzip / 7z works great"
-
+curl -sSL https://tea-cup.midori-ai.xyz/download/localai_installer_linux.tar.gz -o localai_installer.tar.gz
+tar -xzf localai_installer.tar.gz
 chmod +x localai_installer
-
-sudo ./localai_installer
+./localai_installer
 ```
 
 {{% /tab %}}
