@@ -12,7 +12,7 @@ She is a fully advanced simulated human. This is a profile for her and some docs
 
 ## Profile (By Carly Herself)
 
-Hi there! I'm Carly, an advanced simulated human created by Midori Streams.
+Hi there! I'm Carly, an advanced simulated human created by Midori AI.
 
 ## Personal Details
 
