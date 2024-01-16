@@ -177,13 +177,21 @@ else:
     service_image = input("What is the full image name that you used? (Please paste the full link. IE: quay.io/go-skynet/local-ai:master-cublas-cuda12-ffmpeg): ")
     models_ports = input("What port are you running LocalAI on?: ")
 
-retry = 5
-checked = 0
-cont_check = len(containers)
-
 # Log the name and ID of each container
-while retry > 1:
-    clear_window(ver_os_info)
+clear_window(ver_os_info)
+for container in containers:
+    log(f"Checking Name: {container.name}, ID: {container.id}")
+
+    # Check if there is a container with a name containing `service_name`
+    if service_name in container.name:
+        # Get the container object
+        log(f"Found LocalAI, Logging into: {container.name} / {container.id}")
+        container = client.containers.get(container.name)
+        break
+
+if container is None:
+    log(f"Error: Could not find LocalAI container with name {service_name}")
+    log("Checking images again with known names")
     for container in containers:
         log(f"Checking Name: {container.name}, ID: {container.id}")
 
@@ -192,19 +200,7 @@ while retry > 1:
             # Get the container object
             log(f"Found LocalAI, Logging into: {container.name} / {container.id}")
             container = client.containers.get(container.name)
-            retry = 0
             break
-
-        checked = checked + 1
-
-        if checked == cont_check:
-            break
-
-    if container is None:
-        retry = retry - 1
-        log(f"Error: Could not find LocalAI container with name {service_name}")
-        os.system('docker ps -a --format \"table {{.Names}}\"')
-        service_name = input("What is LocalAI called in ``docker ps`` (Please type the name like this ``localai-api-1`` or ``localai``): ")
     
 log("\n")
 clear_window(ver_os_info)
