@@ -43,7 +43,7 @@ Meet Carly, our ground-breaking AI creation with remarkable human-like character
 
 **Explore Midori AI:**
 
-* [Carly's documentation](/carly-api)
+* [Carly's documentation](/about-us/carly-api)
 * [Model Repo]({{%relref "models" %}})
 * [Blog posts](/blogs)
 * [Research papers](/research)
