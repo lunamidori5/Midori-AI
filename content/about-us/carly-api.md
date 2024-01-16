@@ -1,6 +1,6 @@
 +++
 disableToc = false
-title = "Carly Docs"
+title = "About Carly Kay"
 weight = 8
 +++
 
