@@ -128,52 +128,75 @@ containers = client.containers.list()
 
 # Try to load the Docker Compose file
 log("Docker Server error, trying to check your docker-compose.yaml file...")
+docker_compose_found = False
 try:
     log("Loading your docker-compose.yaml")
     with open(compose_path, "r") as f:
         compose_data  = yaml.safe_load(f)
         log("Auto loaded the docker-compose.yaml")
+        docker_compose_found = True
 except FileNotFoundError:
     # If the file is not found, ask the user where it is
-    compose_path = input("Could not find docker-compose.yaml in the current directory. Where is it located?: ") 
-    models_path = input("Where is your models folder located?: ")
+    log("If you used docker run or just want to try to run this in ``fallback mode`` type ``fallback``")
+    compose_path = input("Could not find docker-compose.yaml in the current directory. Where is it located?: ")
     try:
         with open(compose_path, "r") as f:
             compose_data = yaml.safe_load(f)
         log("Loaded the docker-compose.yaml from users path")
     except FileNotFoundError:
         # If the file is still not found, raise an error
-        log("Could not find docker-compose.yaml at the specified location. Crashing...")
-        raise FileNotFoundError("Could not find docker-compose.yaml at the specified location.")
+        log("Could not find docker-compose.yaml at the specified location. Entering ``fallback mode``")
 
 
 # Extract service name and model folder path
-for service_name, service_data in compose_data["services"].items():
-    log(f"Checking... Service Name: {service_name}, Service Data: {service_data}")
-    if service_data["image"].startswith("quay.io/go-skynet/local-ai"):
-        models_volume = service_data["volumes"][0]
-        models_folder_host = models_volume.split(":")[0]  # Assuming host path is first
-        models_folder_container = models_volume.split(":")[1]  # Assuming container path is second
-        models_ports = service_data["ports"][0]
-        model_port_api = models_ports.split(":")[1]
+if docker_compose_found:
+    for service_name, service_data in compose_data["services"].items():
+        log(f"Checking... Service Name: {service_name}, Service Data: {service_data}")
+        if service_data["image"].startswith("quay.io/go-skynet/local-ai"):
+            models_volume = service_data["volumes"][0]
+            models_folder_host = models_volume.split(":")[0]  # Assuming host path is first
+            models_folder_container = models_volume.split(":")[1]  # Assuming container path is second
+            models_ports = service_data["ports"][0]
+            model_port_api = models_ports.split(":")[1]
+            service_image = service_data["image"]
 
-        log(f"The inside model folder of the docker is {models_folder_container}, This is were ill place all the files inside of the docker.")
-        break
+            log(f"The inside model folder of the docker is {models_folder_container}, This is were ill place all the files inside of the docker.")
+            break
 
-# If no matching service is found, raise an error
-if service_name not in compose_data["services"]:
-    raise Exception("Could not find a service with the image 'quay.io/go-skynet/local-ai' in your docker-compose.yaml file.")
+    # If no matching service is found, raise an error
+    if service_name not in compose_data["services"]:
+        raise Exception("Could not find a service with the image 'quay.io/go-skynet/local-ai' in your docker-compose.yaml file.")
+else:
+    clear_window(ver_os_info)
+    log("Running ``docker ps``")
+
+    os.system('docker ps -a --format \"table {{.ID}}\t{{.Names}}\t{{.Image}}\t{{.Ports}}\"')
+    
+    service_name = input("What is LocalAI called in ``docker ps`` (Please type the name like this ``localai-api-1`` or ``localai``): ")
+    models_folder_container = input("Where is LocalAI's models folder located? (IE: ``/models`` or ``/build/models``): ")
+    service_image = input("What is the full image name that you used? (Please paste the full link. IE: quay.io/go-skynet/local-ai:master-cublas-cuda12-ffmpeg): ")
+    models_ports = input("What port are you running LocalAI on?: ")
+
+retry = 5
 
 # Log the name and ID of each container
-for container in containers:
-    log(f"Checking Name: {container.name}, ID: {container.id}")
+while retry > 0:
+    clear_window(ver_os_info)
+    for container in containers:
+        log(f"Checking Name: {container.name}, ID: {container.id}")
 
-    # Check if there is a container with a name containing `service_name`
-    if service_name in container.name:
-        # Get the container object
-        log(f"Found Localai, Logging into: {container.name} / {container.id}")
-        container = client.containers.get(container.name)
-        break
+        # Check if there is a container with a name containing `service_name`
+        if service_name in container.name:
+            # Get the container object
+            log(f"Found LocalAI, Logging into: {container.name} / {container.id}")
+            container = client.containers.get(container.name)
+            break
+
+    if container is None:
+        retry = retry - 1
+        log(f"Error: Could not find LocalAI container with name {service_name}")
+        os.system('docker ps -a --format \"table {{.Names}}\"')
+        service_name = input("What is LocalAI called in ``docker ps`` (Please type the name like this ``localai-api-1`` or ``localai``): ")
     
 log("\n")
 clear_window(ver_os_info)
@@ -231,9 +254,11 @@ if answerbasic:
     answer1 = check_str(question1, valid_answers1)
     answer1 = str(answer1.upper())
 
-    question4 = "\n What would you like to name the models file?: \n"
+    question4 = "\nWhat would you like to name the models file?: \n"
     answer4 = input(question4)
     answer4 = str(answer4.lower())
+
+    clear_window(ver_os_info)
 
     # Check if the word "model" is in the answer
     if "model" in answer4:
@@ -243,9 +268,8 @@ if answerbasic:
         # Print a message to the user
         log("\nThe word 'model' has been removed from the file name.")
 
-
     # Check if GPU is turned on
-    if "cuda11" in service_data["image"] or "cuda12" in service_data["image"]:
+    if "cuda11" in service_image or "cuda12" in service_image:
         # Ask the user the third question
         question3 = "\nNumber of GPU layers to give the model?  (0 to 100): \n"
         answer3 = input(question3)
@@ -258,7 +282,7 @@ if answerbasic:
 
     clear_window(ver_os_info)
 
-if "ffmpeg" in service_data["image"]:
+if "ffmpeg" in service_image:
     questionsd = "Would you like me to install a few Text to Speech models?: "
     sd_valid_answers = ["yes", "no", "true", "false"]
     answertts = check_str(questionsd, sd_valid_answers)
@@ -289,10 +313,10 @@ use_enbed = answerenbed
 
 clear_window(ver_os_info)
 
-if "core" in service_data["image"]:
+if "core" in service_image:
     log("Looks like you are running a Core Image, Skipping: Stable diffusion, Llava, Huggingface Models")
 else:
-    if "cuda11" in service_data["image"] or "cuda12" in service_data["image"]:
+    if "cuda11" in service_image or "cuda12" in service_image:
         questionsd = "Would you like me to install a Stable diffusion model?: "
         sd_valid_answers = ["yes", "no", "true", "false"]
         answersd = check_str(questionsd, sd_valid_answers)
@@ -341,6 +365,8 @@ log(f"I am now going to install everything you requested, please wait for me to 
 log("Hit enter to start")
 
 input()
+
+clear_window(ver_os_info)
 
 if answerbasic == "true":
     log(f"The type of model you want to setup is: {answer1}")
