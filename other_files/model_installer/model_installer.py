@@ -178,6 +178,8 @@ else:
     models_ports = input("What port are you running LocalAI on?: ")
 
 retry = 5
+checked = 0
+cont_check = len(containers)
 
 # Log the name and ID of each container
 while retry > 0:
@@ -190,6 +192,11 @@ while retry > 0:
             # Get the container object
             log(f"Found LocalAI, Logging into: {container.name} / {container.id}")
             container = client.containers.get(container.name)
+            break
+
+        checked = checked + 1
+
+        if checked == cont_check:
             break
 
     if container is None:
