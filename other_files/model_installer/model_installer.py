@@ -182,7 +182,7 @@ checked = 0
 cont_check = len(containers)
 
 # Log the name and ID of each container
-while retry > 0:
+while retry > 1:
     clear_window(ver_os_info)
     for container in containers:
         log(f"Checking Name: {container.name}, ID: {container.id}")
@@ -192,6 +192,7 @@ while retry > 0:
             # Get the container object
             log(f"Found LocalAI, Logging into: {container.name} / {container.id}")
             container = client.containers.get(container.name)
+            retry = 0
             break
 
         checked = checked + 1
