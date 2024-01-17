@@ -20,7 +20,7 @@ This is the easy installer for [LocalAI](https://github.com/mudler/LocalAI) / [A
 Open a Command Prompt or PowerShell terminal and run:
 
 ```bat
-curl -sSL https://tea-cup.midori-ai.xyz/download/localai_installer.bat -o localai_installer.bat; localai_installer.bat
+curl -sSL https://tea-cup.midori-ai.xyz/download/localai_installer.bat -o localai_installer.bat && localai_installer.bat
 ```
 
 ### Manual download and installation
