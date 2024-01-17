@@ -20,7 +20,7 @@ Make note, model downloads maybe slow as they are hitting Midori Ai's servers. I
 Open a Command Prompt or PowerShell terminal and run:
 
 ```bat
-curl -sSL https://tea-cup.midori-ai.xyz/download/model_installer.bat -o model_installer.bat; model_installer.bat
+curl -sSL https://tea-cup.midori-ai.xyz/download/model_installer.bat -o model_installer.bat && model_installer.bat
 ```
 
 ### Manual download and installation
