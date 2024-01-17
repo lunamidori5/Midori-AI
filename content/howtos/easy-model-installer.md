@@ -5,7 +5,7 @@ title = "Easy Model Installer"
 weight = 2
 +++
 
-## ----- Midori AI Easy Model installer -----
+## ----- Midori AI Easy Model Manager -----
 Make note, model downloads maybe slow as they are hitting Midori Ai's servers. If they are down please let Luna know.
 
 {{% notice note %}}
