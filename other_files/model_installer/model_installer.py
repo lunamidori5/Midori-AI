@@ -30,7 +30,8 @@ about_model_q_size = str("""
 |Q4| Medium, balanced quality|
 |Q5| Large, very low quality loss|
 |Q6| Very large, extremely low quality loss|
-|Q8| Extremely large, No quality loss, hard to install - not recommended|
+|Q8| Extremely large, extremely low quality loss, hard to install - not recommended|
+|None| Extremely large, No quality loss, super hard to install - really not recommended|
 """)
 
 def log(message):
