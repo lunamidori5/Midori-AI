@@ -7,7 +7,7 @@ import platform
 
 compose_path = "docker-compose.yaml"
 
-ver_info = "0.0.106"
+ver_info = "0.0.107"
 
 now = datetime.datetime.now()
 timestamp = now.strftime("%m%d%Y%H%M%S")
@@ -517,7 +517,8 @@ if use_sd == "true":
 
 if use_enbed == "true":
     embed_commands = [
-        ["curl", f"http://localhost:{model_port_api}/models/apply", "-H", f"\"Content-Type: application/json\"", "-d", "'{\"id\": \"model-gallery@bert-embeddings\"}'"],
+        ["wget", "-O", inside_model_folder + f"/embedding.yaml", f"https://tea-cup.midori-ai.xyz/download/bert-embeddings.yaml"],
+        ["wget", "-O", inside_model_folder + f"/bert-MiniLM-L6-v2q4_0.bin", f"https://tea-cup.midori-ai.xyz/download/bert-MiniLM-L6-v2q4_0.bin"],
     ]
     docker_commands.extend(embed_commands)
 
