@@ -6,10 +6,6 @@ import requests
 import datetime
 import platform
 
-import model_installer as ml
-import model_uninstaller as mu
-import model_upgrader as mug
-
 compose_path = "docker-compose.yaml"
 
 ver_info = "0.0.2"
