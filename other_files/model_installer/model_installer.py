@@ -253,8 +253,17 @@ if answerstartup == 1:
 
     answerbasic = answerbasic.lower()
 
+    clear_window(ver_os_info)
+
     if answerbasic:
+            
+
+        question4 = "What would you like to name the models file?: \n"
+        answer4 = input(question4)
+        answer4 = str(answer4.lower())
+
         clear_window(ver_os_info)
+
         log(about_model_size)
         valid_answers2 = ["7b", "43b", "70b"]
         question2 = f"What size of known and supported model would you like to setup ({', '.join(valid_answers2)}): "
@@ -277,13 +286,6 @@ if answerstartup == 1:
             answer1 = str(answer1.lower())
         else:
             answer1 = str(answer1.upper())
-            
-
-        question4 = "\nWhat would you like to name the models file?: \n"
-        answer4 = input(question4)
-        answer4 = str(answer4.lower())
-
-        clear_window(ver_os_info)
 
         # Check if the word "model" is in the answer
         if "model" in answer4:
@@ -296,10 +298,11 @@ if answerstartup == 1:
         # Check if GPU is turned on
         if "cuda11" in service_image or "cuda12" in service_image:
             # Ask the user the third question
-            question3 = "\nNumber of GPU layers to give the model?  (0 to 100): \n"
-            answer3 = input(question3)
-            answer3 = int(answer3)
-            use_gpu = True
+            if not answer1 == "none":
+                question3 = "\nNumber of GPU layers to give the model?  (0 to 100): \n"
+                answer3 = input(question3)
+                answer3 = int(answer3)
+                use_gpu = True
         else:
             answer3 = 0
             answer3 = int(answer3)
@@ -395,11 +398,14 @@ if answerstartup == 1:
 
     if answer1 == "none":
         if answer2 == "7b":
-            answer4_name = "cognitivecomputations/dolphin-2.6-mistral-7b"
+            answer4_name = "cognitivecomputations"
+            answer4_name_b = "dolphin-2.6-mistral-7b"
         if answer2 == "43b":
-            answer4_name = "cognitivecomputations/dolphin-2.7-mixtral-8x7b"
+            answer4_name = "cognitivecomputations"
+            answer4_name_b = "dolphin-2.7-mixtral-8x7b"
         if answer2 == "70b":
-            answer4_name = "cognitivecomputations/dolphin-2.2-70b"
+            answer4_name = "cognitivecomputations"
+            answer4_name_b = "dolphin-2.2-70b"
 
     if answerbasic == "true":
         log(f"The type of model you want to setup is: {answer1}")
@@ -468,7 +474,7 @@ if answerstartup == 1:
             ["wget", "-O", f"{answer4}.yaml", f"https://tea-cup.midori-ai.xyz/download/models-vllm.yaml"],
             ["cp", f"{answer4}.yaml", f"{yaml_path_temp}"],
             ["sed", "-i", f"s/name.*/name: {answer4}/g", f"{yaml_path_temp}"],
-            ["sed", "-i", f"s/model.*/model: {answer4_name}/g", f"{yaml_path_temp}"],
+            ["sed", "-i", f"s/model.*/model: {answer4_name}/{answer4_name_b}/g", f"{yaml_path_temp}"],
             ["echo", f"Catting the yaml for easyer debuging..."],
             ["cat", f"{yaml_path_temp}"],
             ["rm", "-f", f"{answer4}.yaml"],
