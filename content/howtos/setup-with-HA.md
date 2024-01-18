@@ -17,6 +17,7 @@ To install LocalAI, use our [LocalAI Installer]({{%relref "howtos/easy-localai-i
 
 ## Installation Instructions – Home LLM (The HA plugin)
 
+
 Please follow the installation instructions on Home-LLM(https://github.com/acon96/home-llm?tab=readme-ov-file#installing-with-hacs) repo to install HACS plug-in.
 
 ## Setting up the plugin for HA & LocalAI

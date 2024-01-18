@@ -6,13 +6,9 @@ import requests
 import datetime
 import platform
 
-import model_installer as ml
-import model_uninstaller as mu
-import model_upgrader as mug
-
 compose_path = "docker-compose.yaml"
 
-ver_info = "0.0.2"
+ver_info = "0.0.23"
 
 now = datetime.datetime.now()
 timestamp = now.strftime("%m%d%Y%H%M%S")
@@ -232,6 +228,8 @@ if answerstartup == 1:
 
     use_gpu = True
 
+    answer4_name = ""
+
     use_sd = "false"
     use_tts = "false"
 
@@ -274,7 +272,12 @@ if answerstartup == 1:
 
         question1 = f"What type of quantised model would you like to setup? ({', '.join(valid_answers1)}): "
         answer1 = check_str(question1, valid_answers1)
-        answer1 = str(answer1.upper())
+
+        if answer1.lower() == "none":
+            answer1 = str(answer1.lower())
+        else:
+            answer1 = str(answer1.upper())
+            
 
         question4 = "\nWhat would you like to name the models file?: \n"
         answer4 = input(question4)
@@ -465,7 +468,7 @@ if answerstartup == 1:
             ["wget", "-O", f"{answer4}.yaml", f"https://tea-cup.midori-ai.xyz/download/models-vllm.yaml"],
             ["cp", f"{answer4}.yaml", f"{yaml_path_temp}"],
             ["sed", "-i", f"s/name.*/name: {answer4}/g", f"{yaml_path_temp}"],
-            ["sed", "-i", f"s/model.*/model: \"{answer4_name}\"/g", f"{yaml_path_temp}"],
+            ["sed", "-i", f"s/model.*/model: {answer4_name}/g", f"{yaml_path_temp}"],
             ["echo", f"Catting the yaml for easyer debuging..."],
             ["cat", f"{yaml_path_temp}"],
             ["rm", "-f", f"{answer4}.yaml"],
