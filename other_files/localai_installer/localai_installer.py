@@ -21,7 +21,7 @@ missing_cuda_toolkit = True
 
 compose_path = "docker-compose.yaml"
 
-ver_info = "0.0.23"
+ver_info = "0.0.24"
 
 localai_ver_number = "v2.5.1"
 base_image_name = "quay.io/go-skynet/local-ai:"
@@ -64,7 +64,7 @@ def check_for_update(ver_os_info):
   placeholder_link = f"https://tea-cup.midori-ai.xyz/download/localai_installer_{ver_os_info}.zip"
 
   # Send a request to the server for the model version.
-  response = requests.get("https://tea-cup.midori-ai.xyz/download/localai_installer_ver.txt")
+  response = requests.get("https://tea-cup.midori-ai.xyz/download/midori_program_ver.txt")
 
   # Check if the request was successful.
   if response.status_code != 200:

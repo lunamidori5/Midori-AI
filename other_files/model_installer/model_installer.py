@@ -8,21 +8,21 @@ import platform
 
 compose_path = "docker-compose.yaml"
 
-ver_info = "0.0.23"
+ver_info = "0.0.24"
 
 now = datetime.datetime.now()
 timestamp = now.strftime("%m%d%Y%H%M%S")
 log_file_name = "log_" + timestamp + ".txt"
 
-ver_file_name = "model_installer_ver.txt"
+ver_file_name = "midori_program_ver.txt"
 
 with open(log_file_name, "w") as f:
    f.write("Booted and Running Model Installer")
 
 about_model_size = str("""
-7b (Small easy to run but barly okay over all) - TheBloke/dolphin-2.6-mistral-7B-GGUF - https://huggingface.co/TheBloke/dolphin-2.6-mistral-7B-GGUF
-43b (Normal sized, great output over all) - TheBloke/dolphin-2.7-mixtral-8x7b-GGUF - https://huggingface.co/TheBloke/dolphin-2.7-mixtral-8x7b-GGUF
-70b (Large, hard to run but great over all) - TheBloke/dolphin-2.2-70B-GGUF - https://huggingface.co/TheBloke/dolphin-2.2-70B-GGUF
+7b (Small easy to run but okay quality over all) - https://huggingface.co/TheBloke/dolphin-2.6-mistral-7B-GGUF
+43b (Normal sized, great quality over all) - https://huggingface.co/TheBloke/dolphin-2.7-mixtral-8x7b-GGUF
+70b (Large, hard to run but significant quality over all) - https://huggingface.co/TheBloke/dolphin-2.2-70B-GGUF
 """)
 
 about_model_q_size = str("""
@@ -31,8 +31,8 @@ about_model_q_size = str("""
 |Q4| Medium, balanced quality|
 |Q5| Large, very low quality loss|
 |Q6| Very large, extremely low quality loss|
-|Q8| Extremely large, extremely low quality loss, hard to install - not recommended|
-|None| Extremely large, No quality loss, super hard to install - really not recommended|
+|Q8| Extremely large, extremely low quality loss, hard to use - not recommended|
+|None| Extremely large, No quality loss, super hard to use - really not recommended|
 """)
 
 def log(message):
@@ -471,10 +471,9 @@ if answerstartup == 1:
         docker_commands_vllm = [
             ["echo", f"Setting up the {answer2} model you requested"],
             ["rm", "-f", f"{inside_model_folder}/{answer4}.yaml"],
-            ["wget", "-O", f"{answer4}.yaml", f"https://tea-cup.midori-ai.xyz/download/models-vllm.yaml"],
+            ["wget", "-O", f"{answer4}.yaml", f"https://tea-cup.midori-ai.xyz/download/models-{answer2}-vllm.yaml"],
             ["cp", f"{answer4}.yaml", f"{yaml_path_temp}"],
             ["sed", "-i", f"s/name.*/name: {answer4}/g", f"{yaml_path_temp}"],
-            ["sed", "-i", f"s/model.*/model: {answer4_name}/{answer4_name_b}/g", f"{yaml_path_temp}"],
             ["echo", f"Catting the yaml for easyer debuging..."],
             ["cat", f"{yaml_path_temp}"],
             ["rm", "-f", f"{answer4}.yaml"],
