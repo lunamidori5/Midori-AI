@@ -8,7 +8,7 @@ import platform
 
 compose_path = "docker-compose.yaml"
 
-ver_info = "0.0.21"
+ver_info = "0.0.22"
 
 now = datetime.datetime.now()
 timestamp = now.strftime("%m%d%Y%H%M%S")
@@ -272,7 +272,12 @@ if answerstartup == 1:
 
         question1 = f"What type of quantised model would you like to setup? ({', '.join(valid_answers1)}): "
         answer1 = check_str(question1, valid_answers1)
-        answer1 = str(answer1.upper())
+
+        if answer1.lower() == "none":
+            answer1 = str(answer1.lower())
+        else:
+            answer1 = str(answer1.upper())
+            
 
         question4 = "\nWhat would you like to name the models file?: \n"
         answer4 = input(question4)
