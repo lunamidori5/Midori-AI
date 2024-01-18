@@ -8,7 +8,7 @@ import platform
 
 compose_path = "docker-compose.yaml"
 
-ver_info = "0.0.22"
+ver_info = "0.0.23"
 
 now = datetime.datetime.now()
 timestamp = now.strftime("%m%d%Y%H%M%S")
@@ -468,7 +468,7 @@ if answerstartup == 1:
             ["wget", "-O", f"{answer4}.yaml", f"https://tea-cup.midori-ai.xyz/download/models-vllm.yaml"],
             ["cp", f"{answer4}.yaml", f"{yaml_path_temp}"],
             ["sed", "-i", f"s/name.*/name: {answer4}/g", f"{yaml_path_temp}"],
-            ["sed", "-i", f"s/model.*/model: \"{answer4_name}\"/g", f"{yaml_path_temp}"],
+            ["sed", "-i", f"s/model.*/model: {answer4_name}/g", f"{yaml_path_temp}"],
             ["echo", f"Catting the yaml for easyer debuging..."],
             ["cat", f"{yaml_path_temp}"],
             ["rm", "-f", f"{answer4}.yaml"],
