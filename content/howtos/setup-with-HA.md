@@ -39,7 +39,7 @@ The "LLaMA Conversation" integration should show up in the "Devices" section now
 
 ## Setting up the plugin for HA & LocalAI
 
-Before adding setting up the Llama Conversation agent in Home Assistant, you must download a LLM in the LocalAI models directory. Although you may use any model you want, this specific integration uses a model that has been specifically fine-tuned to work with Home Assistant. Performance will vary widely with other models, if work at all.
+Before adding setting up the Llama Conversation agent in Home Assistant, you must download a LLM in the LocalAI models directory. Although you may use any model you want, this specific integration uses a model that has been specifically fine-tuned to work with Home Assistant. Performance will vary widely with other models.
 
 The model can be found on HuggingFace. It is a 3B v1 model Based on Phi-2:
 
