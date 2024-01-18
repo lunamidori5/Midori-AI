@@ -228,6 +228,8 @@ if answerstartup == 1:
 
     use_gpu = True
 
+    answer4_name = ""
+
     use_sd = "false"
     use_tts = "false"
 
