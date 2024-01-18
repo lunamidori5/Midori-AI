@@ -23,7 +23,7 @@ You can use this button to add the repository to HACS and open the download page
 
 https://my.home-assistant.io/redirect/_change/?redirect=hacs_repository%2F%3Fowner%3Dacon96%26repository%3Dhome-llm%26category%3DIntegration
 
-Once you have downloaded and installed it, be sure to reboot HA. Proceed to “Setting up Llama Conversation to work with HA and LocalAI”.
+Once you have downloaded and installed it, be sure to reboot HA. Proceed to “## Setting up the plugin for HA & LocalAI”.
 
 ### Installing Manually
 
@@ -39,7 +39,7 @@ The "LLaMA Conversation" integration should show up in the "Devices" section now
 
 ## Setting up the plugin for HA & LocalAI
 
-Before adding setting up the Llama Conversation agent in Home Assistant, you must download a LLM in the LocalAI models directory. Although you may use any model you want, this specific integration uses a model that has been specifically fine-tuned to work with Home Assistant. Performance will vary widely with other models.
+Before adding setting up the Llama Conversation agent in Home Assistant, you must download a LLM in the LocalAI models directory. Although you may use any model you want, this specific integration uses a model that has been specifically fine-tuned to work with Home Assistant. Performance will vary widely with other models, if work at all.
 
 The model can be found on HuggingFace. It is a 3B v1 model Based on Phi-2:
 
@@ -58,6 +58,8 @@ You need the following settings in order to configure LocalAI backend:
 - Name of the Model as exactly in the `model.yaml` file: This name must EXACTLY match the name as it appears in the file.
 
 The component will validate that the selected model is available for use and will ensure it is loaded remotely.
+
+Once you have this information, proceed to “add Integration” in Home Assistant and search for “Llama Conversation” Here you will be greeted with a config flow to add the above information. Once the information is accepted, search your integrations for “Llama Conversation” and you can now view your settings including prompt, temperature, top K and other parameters.
 
 ## Configuring the component as a Conversation Agent
 
