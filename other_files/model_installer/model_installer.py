@@ -8,7 +8,7 @@ import platform
 
 compose_path = "docker-compose.yaml"
 
-ver_info = "0.0.24"
+ver_info = "0.0.26"
 
 now = datetime.datetime.now()
 timestamp = now.strftime("%m%d%Y%H%M%S")
@@ -55,32 +55,50 @@ def clear_window(ver_os):
         os.system('clear ')
 
 def check_for_update(ver_os_info):
-  """
-  Sends a request to the server to check for a installer update.
-  """
-  placeholder_link = f"https://tea-cup.midori-ai.xyz/download/model_installer_{ver_os_info}.zip"
+    """
+    Sends a request to the server to check for a installer update.
+    """
+    placeholder_link = f"https://tea-cup.midori-ai.xyz/download/model_installer_{ver_os_info}"
 
-  # Send a request to the server for the model version.
-  response = requests.get("https://tea-cup.midori-ai.xyz/download/model_installer_ver.txt")
+    if ver_os_info == 'windows':
+        placeholder_link = placeholder_link + ".zip"
+    if ver_os_info == 'linux':
+        placeholder_link = placeholder_link + ".tar.gz"
 
-  # Check if the request was successful.
-  if response.status_code != 200:
-    log(f"Servers seem to be down, please try again in a moment...")
-    exit(418)
+    # Send a request to the server for the model version.
+    response = requests.get("https://tea-cup.midori-ai.xyz/download/model_installer_ver.txt")
 
-  # Get the current model version.
-  current_version = response.text.strip()
+    # Check if the request was successful.
+    if response.status_code != 200:
+        log(f"Servers seem to be down, please try again in a moment...")
+        exit(418)
 
-  # Check if the current version is the latest version.
-  clear_window(ver_os_info)
-  if current_version == ver_info:
-    log("Your installer is up to date.")
+    # Get the current model version.
+    current_version = response.text.strip()
+
+    # Check if the current version is the latest version.
     clear_window(ver_os_info)
-  else: 
-    log(f"-----------------------------------------------------------------------------------------------")
-    log(f"A update is available. Please update using the following link: {placeholder_link}")
-    log(f"-----------------------------------------------------------------------------------------------")
-    exit(1)
+
+    if current_version == ver_info:
+        log("Your installer is up to date.")
+        clear_window(ver_os_info)
+    else: 
+        log(f"-----------------------------------------------------------------------------------------------")
+        log(f"A update is available. I am now going to update your install of the model manager...")
+        log(f"-----------------------------------------------------------------------------------------------")
+        
+        # Run commands based on the OS
+        if ver_os_info == 'windows':
+            os.system("del model_installer.zip")
+            os.system("del model_installer")
+            os.system(f"curl -sSL https://raw.githubusercontent.com/lunamidori5/Midori-AI/master/other_files/model_installer/model_installer.bat -o model_installer.bat && start model_installer.bat")
+            log(f"If the model manager failed to start, just run ``call model_installer.bat``")
+        elif ver_os_info == 'linux':
+            os.system("rm -f model_installer.tar.gz model_installer")
+            os.system(f"curl -sSL https://raw.githubusercontent.com/lunamidori5/Midori-AI/master/other_files/model_installer/model_installer.sh | sh")
+            log(f"If the model manager failed to start, just run ``./model_installer.sh``")
+
+        exit(1)
 
 def check_str(question, valid_answers):
   """
