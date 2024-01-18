@@ -17,25 +17,8 @@ To install LocalAI, use our [LocalAI Installer]({{%relref "howtos/easy-localai-i
 
 ## Installation Instructions – Home LLM (The HA plugin)
 
-Home LLM can be installed on Home Assistant in a couple of ways, with the HACS method being the preferred method.
 
-You can use this button to add the repository to HACS and open the download page:
-
-https://my.home-assistant.io/redirect/_change/?redirect=hacs_repository%2F%3Fowner%3Dacon96%26repository%3Dhome-llm%26category%3DIntegration
-
-Once you have downloaded and installed it, be sure to reboot HA. Proceed to “## Setting up the plugin for HA & LocalAI”.
-
-### Installing Manually
-
-Ensure you have either the Samba, SSH, FTP, or another add-on installed that gives you access to the `config` folder
-
-If there is not already a `custom_components` folder, create one now.
-
-Copy the `custom_components/llama_conversation` folder from this repo to `config/custom_components/llama_conversation` on your Home Assistant machine.
-
-Restart Home Assistant using the "Developer Tools" tab -> Services -> Run `homeassistant.restart`
-
-The "LLaMA Conversation" integration should show up in the "Devices" section now.
+Please follow the installation instructions on Home-LLM(https://github.com/acon96/home-llm?tab=readme-ov-file#installing-with-hacs) repo to install HACS plug-in.
 
 ## Setting up the plugin for HA & LocalAI
 
@@ -63,21 +46,7 @@ Once you have this information, proceed to “add Integration” in Home Assista
 
 ## Configuring the component as a Conversation Agent
 
-In order to utilize the conversation agent in HomeAssistant:
-
-1. Navigate to "Settings" -> "Voice Assistants"
-2. Select "+ Add Assistant"
-3. Name the assistant whatever you want.
-4. Select the "Conversation Agent" that we created previously
-5. If using STT or TTS configure these now
-6. Return to the "Overview" dashboard and select chat icon in the top left.
-7. From here you can submit queries to the AI agent.
-
-In order for any entities be available to the agent, you must "expose" them first.
-
-1. Navigate to "Settings" -> "Voice Assistants" -> "Expose" Tab
-2. Select "+ Expose Entities" in the bottom right
-3. Check any entities you would like to be exposed to the conversation agent.
+In order to utilize the conversation agent in HomeAssistant, you will need to configure it as a conversation agent. This can be done by following the the instructions here(https://github.com/acon96/home-llm?tab=readme-ov-file#configuring-the-component-as-a-conversation-agent).
 
 {{% notice note %}}
 ANY DEVICES THAT YOU SELECT TO BE EXPOSED TO THE MODEL WILL BE ADDED AS CONTEXT AND POTENTIALLY HAVE THEIR STATE CHANGED BY THE MODEL. ONLY EXPOSE DEVICES THAT YOU ARE OK WITH THE MODEL MODIFYING THE STATE OF, EVEN IF IT IS NOT WHAT YOU REQUESTED. THE MODEL MAY OCCASIONALLY HALLUCINATE AND ISSUE COMMANDS TO THE WRONG DEVICE! USE AT YOUR OWN RISK.
