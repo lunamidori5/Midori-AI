@@ -87,8 +87,9 @@ def check_for_update(ver_os_info):
         clear_window(ver_os_info)
     else: 
         log(f"-----------------------------------------------------------------------------------------------")
-        log(f"A update is available. I am now going to update your install of the model manager...")
+        log(f"A update is available. Please update using the following link: {placeholder_link}")
         log(f"-----------------------------------------------------------------------------------------------")
+        exit(15)
         
         # Run commands based on the OS
         if ver_os_info == 'windows':
@@ -220,11 +221,23 @@ else:
     clear_window(ver_os_info)
     log("Running ``docker ps``")
 
-    os.system('docker ps -a --format \"table {{.ID}}\t{{.Names}}\t{{.Image}}\t{{.Ports}}\"')
+    os.system('docker ps -a --format \"table {{.ID}}\t{{.Names}}\"')
     
     service_name = input("What is LocalAI called in ``docker ps`` (Please type the name like this ``localai-api-1`` or ``localai``): ")
+
+    clear_window(ver_os_info)
+
     models_folder_container = input("Where is LocalAI's models folder located? (IE: ``/models`` or ``/build/models``): ")
+
+    clear_window(ver_os_info)
+
+    os.system('docker ps -a --format \"table {{.Names}}\t{{.Image}}\"')
+
     service_image = input("What is the full image name that you used? (Please paste the full link. IE: quay.io/go-skynet/local-ai:master-cublas-cuda12-ffmpeg): ")
+
+    clear_window(ver_os_info)
+
+    os.system('docker ps -a --format \"table {{.Names}}\t{{.Ports}}\"')
     models_ports = input("What port are you running LocalAI on?: ")
 
 # Log the name and ID of each container
