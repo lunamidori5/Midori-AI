@@ -1,7 +1,7 @@
 
 +++
 disableToc = false
-title = "Easy Model Installer"
+title = "LocalAI Model Manager"
 weight = 2
 +++
 
