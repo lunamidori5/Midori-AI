@@ -21,7 +21,7 @@ missing_cuda_toolkit = True
 
 compose_path = "docker-compose.yaml"
 
-ver_info = "0.0.26"
+ver_info = "changemelunaplease"
 
 localai_ver_number = "v2.5.1"
 base_image_name = "quay.io/go-skynet/local-ai:"
@@ -289,6 +289,8 @@ answercore = answercore.lower()
 clear_window(ver_os_info)
 
 log("We have a docker ready if you would like to try it, its called AnythingLLM, its a GUI or WebUI for LocalAI. It comes highly recommened for new users.")
+log("If you already have a AnythingLLM or WebUI image installed please type ``no``")
+
 questionbasic = "Would you like me to install AnythingLLM in a docker next to LocalAI?"
 valid_answers = ["yes", "no", "true", "false"]
 answeranything = check_str(questionbasic, valid_answers)
@@ -413,10 +415,16 @@ if answeranything == "true":
     GID='1000'
   """
 
+  log("Making anythingllm docker compose file")
+
   with open(".env", 'w') as f:
     f.write(anythingllm_str_env)
+
+  log("``.env`` saved")
   
   os.system( f"curl https://tea-cup.midori-ai.xyz/download/anythingllm-docker-compose.yaml -o anythingllm-docker-compose.yaml")
+
+  log("``docker compose`` saved")
   
   os.makedirs("storage", exist_ok=True)
   os.makedirs("hotdir", exist_ok=True)

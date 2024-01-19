@@ -8,7 +8,7 @@ import platform
 
 compose_path = "docker-compose.yaml"
 
-ver_info = "0.0.26"
+ver_info = "changemelunaplease"
 
 now = datetime.datetime.now()
 timestamp = now.strftime("%m%d%Y%H%M%S")
@@ -23,6 +23,7 @@ about_model_size = str("""
 7b (Small easy to run but okay quality over all) - https://huggingface.co/TheBloke/dolphin-2.6-mistral-7B-GGUF
 43b (Normal sized, great quality over all) - https://huggingface.co/TheBloke/dolphin-2.7-mixtral-8x7b-GGUF
 70b (Large, hard to run but significant quality over all) - https://huggingface.co/TheBloke/dolphin-2.2-70B-GGUF
+ID (These are models from the Midori AI model repo) - https://io.midori-ai.xyz/models/
 """)
 
 about_model_q_size = str("""
@@ -33,6 +34,8 @@ about_model_q_size = str("""
 |Q6| Very large, extremely low quality loss|
 |Q8| Extremely large, extremely low quality loss, hard to use - not recommended|
 |None| Extremely large, No quality loss, super hard to use - really not recommended|
+                         
+Note: If the model does not support a quant mode, the server will return the next lowest one it has...
 """)
 
 def log(message):
@@ -99,6 +102,33 @@ def check_for_update(ver_os_info):
             log(f"If the model manager failed to start, just run ``./model_installer.sh``")
 
         exit(1)
+
+def check_model_ids_file():
+    """Downloads a file from a server and loads it into a list 1 line at a time.
+
+    Args:
+    url: The URL of the  file to download.
+
+    Returns:
+    A list of the lines in the file.
+    """
+
+    # Download the file.
+    response = requests.get("https://tea-cup.midori-ai.xyz/download/model_list.txt")
+
+    # Check if the request was successful.
+    if response.status_code != 200:
+        log(f"Servers seem to be down, please try again in a moment...")
+        exit(418)
+
+    # Load the file into a list.
+    lines = [] 
+    for line in response.iter_lines():
+        lines.append(line.decode("utf-8"))
+
+    # Return the list.
+    return lines
+
 
 def check_str(question, valid_answers):
   """
@@ -231,7 +261,7 @@ log("``1`` - Setup / Upgrade Models")
 log("``2`` - Uninstall Models")
 
 questionbasic = "What would you like to do?: "
-sd_valid_answers = ["1", "2", "3"]
+sd_valid_answers = ["1", "2"]
 answerstartup = check_str(questionbasic, sd_valid_answers)
 
 answerstartup = int(answerstartup)
@@ -283,7 +313,7 @@ if answerstartup == 1:
         clear_window(ver_os_info)
 
         log(about_model_size)
-        valid_answers2 = ["7b", "43b", "70b"]
+        valid_answers2 = ["7b", "43b", "70b", "id"]
         question2 = f"What size of known and supported model would you like to setup ({', '.join(valid_answers2)}): "
         answer2 = check_str(question2, valid_answers2)
         answer2 = str(answer2.lower())
@@ -294,7 +324,15 @@ if answerstartup == 1:
         if answer2.lower() == "43b":
             valid_answers1.extend(added_valid_answers1)
 
+        if answer2.lower() == "id":
+            clear_window(ver_os_info)
+            valid_answers2 = check_model_ids_file()
+            question2 = f"What is the id of the model you would like to install? ({', '.join(valid_answers2)}): "
+            answer2 = check_str(question2, valid_answers2)
+            answer2 = str(answer2.lower())
+
         clear_window(ver_os_info)
+
         log(about_model_q_size)
 
         question1 = f"What type of quantised model would you like to setup? ({', '.join(valid_answers1)}): "
