@@ -252,10 +252,15 @@ if container is None:
             container = client.containers.get(container.name)
             break
     
-log("\n")
 clear_window(ver_os_info)
 
 check_for_update(ver_os_info)
+
+log("\n")
+
+log(f"-----------------------------------------------------------------------------------------------")
+log(f"------------------------------------------ Main Menu ------------------------------------------")
+log(f"-----------------------------------------------------------------------------------------------")
 
 log("``1`` - Setup / Upgrade Models")
 log("``2`` - Uninstall Models")
@@ -353,6 +358,7 @@ if answerstartup == 1:
 
         # Check if GPU is turned on
         if "cuda11" in service_image or "cuda12" in service_image:
+            clear_window(ver_os_info)
             # Ask the user the third question
             if not answer1 == "none":
                 question3 = "\nNumber of GPU layers to give the model?  (0 to 100): \n"
@@ -413,6 +419,8 @@ if answerstartup == 1:
 
             answersd = answersd.lower()
             use_sd = answersd
+
+            clear_window(ver_os_info)
             
             questionsd = "Would you like me to install the Llava model?: "
             sd_valid_answers = ["yes", "no", "true", "false"]
