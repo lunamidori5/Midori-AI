@@ -336,11 +336,15 @@ if answerstartup == 1:
         answer2 = check_str(question2, valid_answers2)
         answer2 = str(answer2.lower())
 
-        valid_answers1 = ["q3", "q4", "q5", "q6", "q8", "none"] 
+        valid_answers1 = ["q3", "q4", "q5", "q6", "q8"] 
         added_valid_answers1 = ["q4-k-m", "q5-k-m"]
+        added_valid_answers2 = ["none"]
 
         if answer2.lower() == "43b":
             valid_answers1.extend(added_valid_answers1)
+        
+        if answer2.lower() != "id":
+            valid_answers1.extend(added_valid_answers2)
 
         if answer2.lower() == "id":
             clear_window(ver_os_info)
