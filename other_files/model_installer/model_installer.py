@@ -69,7 +69,7 @@ def check_for_update(ver_os_info):
         placeholder_link = placeholder_link + ".tar.gz"
 
     # Send a request to the server for the model version.
-    response = requests.get("https://tea-cup.midori-ai.xyz/download/model_installer_ver.txt")
+    response = requests.get("https://tea-cup.midori-ai.xyz/download/midori_program_ver.txt")
 
     # Check if the request was successful.
     if response.status_code != 200:
