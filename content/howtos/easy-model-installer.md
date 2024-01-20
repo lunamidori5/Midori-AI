@@ -1,20 +1,28 @@
 
 +++
 disableToc = false
-title = "LocalAI Model Manager"
-weight = 2
+title = "LocalAI Manager"
+weight = 1
 +++
 
-## ----- Midori AI Easy Model Manager -----
-Make note, model downloads maybe slow as they are hitting Midori Ai's servers. If they are down please let Luna know.
-
 {{% notice note %}}
-- The ``encrypted`` endpoint seems to be having some issues, please use the normal endpoint for now
-- A fix has been added, the encrypted endpoint will now fallback to the normal endpoint if server load is high
+
+- The ``encrypted`` endpoint has undergone a comprehensive revision to address increased load in an efficient and reliable manner. 
+- This enhancement allows for improved scalability and performance, ensuring seamless operation even under demanding circumstances. 
+- We appreciate your continued support as we strive to provide the highest quality service.
+
 {{% /notice %}}
+
+## ----- Midori AI LocalAI Manager -----
+The LocalAI manager  can set up and install [LocalAI](https://github.com/mudler/LocalAI)/[AnythingLLM](https://github.com/ Mintplex-Labs/anything-llm). Place it in a folder with nothing else before use. If you are just using this for model management of a running LocalAI docker, put this in the folder with the `docker-compose.yaml` file.
+
+Note that model downloads may be slow because they are hitting Midori Ai's servers. If the servers are down, please inform Luna.
 
 {{< tabs >}}
 {{% tab title="Windows" %}}
+### Prerequisites
+[Docker Desktop Windows](https://docs.docker.com/desktop/install/windows-install/)
+
 ### Quick install with script
 
 Open a Command Prompt or PowerShell terminal and run:
@@ -35,9 +43,16 @@ model_installer.exe
 {{% /tab %}}
 
 {{% tab title="Linux" %}}
+### Prerequisites
+[Docker Desktop Linux](https://docs.docker.com/desktop/install/linux-install/) 
+
+or 
+
+[Docker Engine](https://docs.docker.com/engine/install/) and [Docker Compose](https://docs.docker.com/compose/install/)
+
 ### Quick install with script
 
-```
+```sh
 curl -sSL https://raw.githubusercontent.com/lunamidori5/Midori-AI/master/other_files/model_installer/model_installer.sh | sh
 ```
 
@@ -54,6 +69,13 @@ chmod +x model_installer
 
 {{% /tab %}}
 {{< /tabs >}}
+
+## AnythingLLM install
+
+When setting up this copy of AnythingLLM, please use the host computers ip. 
+- LocalAI - ``192.168.?.?:8080/v1``
+- AnythingLLM - ``192.168.?.?:3001``
+
 
 ## ----- Model Info and Links -----
 

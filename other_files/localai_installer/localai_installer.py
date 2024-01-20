@@ -1,4 +1,5 @@
 import os
+import json
 import yaml
 import docker
 import requests
@@ -168,7 +169,7 @@ try:
   # Check if the current platform is Windows
   if os.name == 'nt':
     # Connect to the Docker daemon on Windows using Docker-py for Windows 
-    log("Logging into  docker vm subsystem (Windows)")
+    log("Logging into docker vm subsystem (Windows)")
     client = docker.from_env(version='auto')
   else:
     # Connect to the Docker daemon on Linux-like systems using Docker-py
