@@ -216,7 +216,7 @@ os_info = platform.system()
 # Set the ver_os_info variable accordingly.
 if os_info == "Windows":
     ver_os_info = "windows"
-    os.system('title LocalAI Model Installer')
+    os.system('title LocalAI Manager')
 elif os_info == "Linux":
     ver_os_info = "linux"
 else:
@@ -896,6 +896,7 @@ if answerstartup == 1:
         answertts = "True"
 
     answertts = answertts.lower()
+    use_tts = answertts
 
     clear_window(ver_os_info)
 
