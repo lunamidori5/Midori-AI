@@ -1,6 +1,6 @@
 
 +++
-disableToc = false
+disableToc = true
 title = "Easy LocalAI Installer"
 weight = 2
 +++
