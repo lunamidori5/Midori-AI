@@ -14,7 +14,7 @@ weight = 1
 {{% /notice %}}
 
 ## ----- Midori AI LocalAI Manager -----
-The LocalAI manager  can set up and install [LocalAI](https://github.com/mudler/LocalAI)/[AnythingLLM](https://github.com/ Mintplex-Labs/anything-llm). Place it in a folder with nothing else before use. If you are just using this for model management of a running LocalAI docker, put this in the folder with the `docker-compose.yaml` file.
+The LocalAI manager  can set up and install [LocalAI](https://github.com/mudler/LocalAI)/[AnythingLLM](https://github.com/Mintplex-Labs/anything-llm). Place it in a folder with nothing else before use. If you are just using this for model management of a running LocalAI docker, put this in the folder with the `docker-compose.yaml` file.
 
 Note that model downloads may be slow because they are hitting Midori Ai's servers. If the servers are down, please inform Luna.
 
