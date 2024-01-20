@@ -257,8 +257,7 @@ answerstartup = int(answerstartup)
 
 clear_window(ver_os_info)
 
-if answerstartup in (3, 4):
-
+if answerstartup == 3:
     # Try to load the Docker Compose file
     log("Docker Server error, trying to check your docker-compose.yaml file...")
     docker_compose_found = False
@@ -349,7 +348,6 @@ if answerstartup in (3, 4):
         
     clear_window(ver_os_info)
 
-if answerstartup == 3:
     log("Alright, now that I am logged into the docker, lets get you started with installing the model...")
     log("For more info on the models used, or links to the models, go to ``https://io.midori-ai.xyz/howtos/easy-model-installer/``")
     log(f"I am going to save our chat here and every thing I do to a file called ``{log_file_name}``, check it out if you like <3")
@@ -733,6 +731,96 @@ if answerstartup == 3:
     log("Thank you! Please enjoy your new models!")
 
 if answerstartup == 4:
+    # Try to load the Docker Compose file
+    log("Docker Server error, trying to check your docker-compose.yaml file...")
+    docker_compose_found = False
+    try:
+        log("Loading your docker-compose.yaml")
+        with open(compose_path, "r") as f:
+            compose_data  = yaml.safe_load(f)
+            log("Auto loaded the docker-compose.yaml")
+            docker_compose_found = True
+    except FileNotFoundError:
+        # If the file is not found, ask the user where it is
+        log("If you used docker run or just want to try to run this in ``fallback mode`` type ``fallback``")
+        compose_path = input("Could not find docker-compose.yaml in the current directory. Where is it located?: ")
+        try:
+            with open(compose_path, "r") as f:
+                compose_data = yaml.safe_load(f)
+            log("Loaded the docker-compose.yaml from users path")
+        except FileNotFoundError:
+            # If the file is still not found, raise an error
+            log("Could not find docker-compose.yaml at the specified location. Entering ``fallback mode``")
+
+
+    # Extract service name and model folder path
+    if docker_compose_found:
+        for service_name, service_data in compose_data["services"].items():
+            log(f"Checking... Service Name: {service_name}, Service Data: {service_data}")
+            if service_data["image"].startswith("quay.io/go-skynet/local-ai"):
+                models_volume = service_data["volumes"][0]
+                models_folder_host = models_volume.split(":")[0]  # Assuming host path is first
+                models_folder_container = models_volume.split(":")[1]  # Assuming container path is second
+                models_ports = service_data["ports"][0]
+                model_port_api = models_ports.split(":")[1]
+                service_image = service_data["image"]
+
+                log(f"The inside model folder of the docker is {models_folder_container}, This is were ill place all the files inside of the docker.")
+                break
+
+        # If no matching service is found, raise an error
+        if service_name not in compose_data["services"]:
+            raise Exception("Could not find a service with the image 'quay.io/go-skynet/local-ai' in your docker-compose.yaml file.")
+    else:
+        clear_window(ver_os_info)
+        log("Running ``docker ps``")
+
+        os.system('docker ps -a --format \"table {{.ID}}\t{{.Names}}\"')
+        
+        service_name = input("What is LocalAI called in ``docker ps`` (Please type the name like this ``localai-api-1`` or ``localai``): ")
+
+        clear_window(ver_os_info)
+
+        models_folder_container = input("Where is LocalAI's models folder located? (IE: ``/models`` or ``/build/models``): ")
+
+        clear_window(ver_os_info)
+
+        os.system('docker ps -a --format \"table {{.Names}}\t{{.Image}}\"')
+
+        service_image = input("What is the full image name that you used? (Please paste the full link. IE: quay.io/go-skynet/local-ai:master-cublas-cuda12-ffmpeg): ")
+
+        clear_window(ver_os_info)
+
+        os.system('docker ps -a --format \"table {{.Names}}\t{{.Ports}}\"')
+        models_ports = input("What port are you running LocalAI on?: ")
+
+    clear_window(ver_os_info)
+
+    for container in containers:
+        log(f"Checking Name: {container.name}, ID: {container.id}")
+
+        # Check if there is a container with a name containing `service_name`
+        if service_name in container.name:
+            # Get the container object
+            log(f"Found LocalAI, Logging into: {container.name} / {container.id}")
+            container = client.containers.get(container.name)
+            break
+
+    if container is None:
+        log(f"Error: Could not find LocalAI container with name {service_name}")
+        log("Checking images again with known names")
+        for container in containers:
+            log(f"Checking Name: {container.name}, ID: {container.id}")
+
+            # Check if there is a container with a name containing `service_name`
+            if service_name in container.name:
+                # Get the container object
+                log(f"Found LocalAI, Logging into: {container.name} / {container.id}")
+                container = client.containers.get(container.name)
+                break
+        
+    clear_window(ver_os_info)
+
     bearer_token = str(input("Do you have a API Key on your models endpoint?"))
     ip_address = str(input("What is the LocalAI's IP and Port? "))
 
