@@ -30,7 +30,7 @@ jobs:
         flake8 . --count --exit-zero --max-complexity=25 --max-line-length=127 --statistics
         
   check-windows:
-    runs-on: win-latest
+    runs-on: windows-latest
     strategy:
       max-parallel: 5
 
