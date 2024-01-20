@@ -787,6 +787,10 @@ if answerstartup == 4:
 if answerstartup == 1:
     try:
         localai_docker = DockerClient(compose_files=["./docker-compose.yaml"])
+        
+        with open(compose_path, "r") as f:
+            compose_yaml = f.read()
+
         log(f"You Already have localai setup in docker please use the uninstall / reinstall menu to update or remove it")
         input("Hit enter to exit")
         exit()
@@ -795,6 +799,10 @@ if answerstartup == 1:
 
     try:
         anythingllm_docker = DockerClient(compose_files=["./anythingllm-docker-compose.yaml"])
+        
+        with open("anythingllm-docker-compose.yaml", "r") as f:
+            compose_yaml = f.read()
+
         log(f"You Already have anythingllm setup in docker please use the uninstall / reinstall menu to update or remove it")
         input("Hit enter to exit")
         exit()
@@ -1098,6 +1106,10 @@ if answerstartup == 1:
 if answerstartup == 2:
     try:
         localai_docker = DockerClient(compose_files=["./docker-compose.yaml"])
+        
+        with open(compose_path, "r") as f:
+            compose_yaml = f.read()
+
         log(f"LocalAI Found...")
     except Exception as e:
         log(f"Failed docker check... Please pick to install LocalAI from the main menu...")
@@ -1109,6 +1121,10 @@ if answerstartup == 2:
 
     try:
         anythingllm_docker = DockerClient(compose_files=["./anythingllm-docker-compose.yaml"])
+        
+        with open("anythingllm-docker-compose.yaml", "r") as f:
+            compose_yaml = f.read()
+
         anything_llm_installed = True
         log(f"AnythingLLM Found...")
     except Exception as e:
