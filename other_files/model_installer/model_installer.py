@@ -21,7 +21,7 @@ missing_cuda_toolkit = True
 
 compose_path = "docker-compose.yaml"
 
-localai_ver_number = "v2.5.1"
+localai_ver_number = "v2.6.0"
 base_image_name = "quay.io/go-skynet/local-ai:"
 
 user_image = ""
