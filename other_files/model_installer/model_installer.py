@@ -79,12 +79,7 @@ def check_for_update(ver_os_info):
     """
     Sends a request to the server to check for a installer update.
     """
-    placeholder_link = f"https://tea-cup.midori-ai.xyz/download/model_installer_{ver_os_info}"
-
-    if ver_os_info == 'windows':
-        placeholder_link = placeholder_link + ".zip"
-    if ver_os_info == 'linux':
-        placeholder_link = placeholder_link + ".tar.gz"
+    placeholder_link = f"https://io.midori-ai.xyz/howtos/easy-model-installer/"
 
     # Send a request to the server for the model version.
     response = requests.get("https://tea-cup.midori-ai.xyz/download/midori_program_ver.txt")
@@ -241,7 +236,7 @@ check_for_update(ver_os_info)
 log("\n")
 
 log(f"-----------------------------------------------------------------------------------------------")
-log(f"------------------------------------------ Main Menu ------------------------------------------")
+log(f"------------------------------ Main Menu (Ver: {ver_info}) ------------------------------------")
 log(f"-----------------------------------------------------------------------------------------------")
 
 log("``1`` - Setup LocalAI / AnythingLLM")
