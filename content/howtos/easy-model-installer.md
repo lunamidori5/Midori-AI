@@ -12,7 +12,7 @@ weight = 1
 - We appreciate your continued support as we strive to provide the highest quality service.
 
 **Windows Users**
-- There seems to be a bug where the manager is adding ``140_1.dll`` to file request. We are working on a fix as this is only inpacting some users
+- There seems to be a bug where the manager is adding ``140_1.dll`` to file request. We are working on a fix.
 
 {{% /notice %}}
 
