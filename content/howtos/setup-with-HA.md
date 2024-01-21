@@ -13,7 +13,7 @@ An example custom integration to utilize Local-based services in Home-LLM. Home-
 
 ## Installation Instructions – LocalAI
 
-To install LocalAI, use our [LocalAI Installer]({{%relref "howtos/easy-localai-installer" %}})
+To install LocalAI, use our [LocalAI Manager]({{%relref "howtos/easy-model-installer" %}})
 
 ## Installation Instructions – Home LLM (The HA plugin)
 
@@ -24,9 +24,9 @@ Please follow the installation instructions on [Home-LLM](https://github.com/aco
 
 Before adding setting up the Llama Conversation agent in Home Assistant, you must download a LLM in the LocalAI models directory. Although you may use any model you want, this specific integration uses a model that has been specifically fine-tuned to work with Home Assistant. Performance will vary widely with other models.
 
-The models can be found on HuggingFace, [here](https://huggingface.co/acon96).
+The models can be found on the Midori AI model repo, as a part of the LocalAI manager.
 
-Use the [Auto Model Installer]({{%relref "howtos/easy-model-installer" %}}) for a easy time installing models or follow [Seting up a Model]({{%relref "howtos/easy-model" %}})
+Use the [LocalAI Manager]({{%relref "howtos/easy-model-installer" %}}) for a easy time installing models or follow [Seting up a Model]({{%relref "howtos/easy-model" %}})
 
 ## Setting up the "remote" backends:
 
