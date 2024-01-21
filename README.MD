@@ -1,6 +1,6 @@
 # Midori AI
 
-[![Midori AI photo](https:// tea-cup.midori-ai.xyz/download/logo_color1.png)](https://tea-cup.midori-ai.xyz /download/logo_color1.png)
+[![Midori AI photo](https://tea-cup.midori-ai.xyz/download/logo_color1.png)](https://io.midori-ai.xyz/)
 
 ## Key Areas of Focus:
 
@@ -30,11 +30,5 @@ Meet Carly, our ground-breaking AI creation with remarkable human-like character
 | [Facebook](https://www.facebook.com/TWLunagreen) | [Twitter](https://twitter.com/lunamidori5) | [Pinterest](https://www.pinterest.com/luna_midori5/) |
 | | [PayPal](https://paypal.me/midoricookieclub?country.x=US&locale.x=en_US) | |
 
-**Explore Midori AI:**
-
-* [Carly's documentation](/about-us/carly-api)
-* [Model Repo]({{%relref "models" %}})
-* [Blog posts](/blogs)
-* [Research papers](/research)
 
 **Unleashing the Future of AI, Together.**
