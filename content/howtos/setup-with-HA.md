@@ -13,24 +13,20 @@ An example custom integration to utilize Local-based services in Home-LLM. Home-
 
 ## Installation Instructions – LocalAI
 
-To install LocalAI, use our [LocalAI Installer]({{%relref "howtos/easy-localai-installer" %}})
+To install LocalAI, use our [LocalAI Manager]({{%relref "howtos/easy-model-installer" %}})
 
 ## Installation Instructions – Home LLM (The HA plugin)
 
 
-Please follow the installation instructions on Home-LLM(https://github.com/acon96/home-llm?tab=readme-ov-file#installing-with-hacs) repo to install HACS plug-in.
+Please follow the installation instructions on [Home-LLM](https://github.com/acon96/home-llm?tab=readme-ov-file#installing-with-hacs) repo to install HACS plug-in.
 
 ## Setting up the plugin for HA & LocalAI
 
 Before adding setting up the Llama Conversation agent in Home Assistant, you must download a LLM in the LocalAI models directory. Although you may use any model you want, this specific integration uses a model that has been specifically fine-tuned to work with Home Assistant. Performance will vary widely with other models.
 
-The model can be found on HuggingFace. It is a 3B v1 model Based on Phi-2:
+The models can be found on the Midori AI model repo, as a part of the LocalAI manager.
 
-https://huggingface.co/acon96/Home-3B-v1-GGUF
-
-We recommend trying the Home-3b and the all of the models from the model installer. 
-
-Use the [Auto Model Installer]({{%relref "howtos/easy-model-installer" %}}) for a easy time installing models or follow [Seting up a Model]({{%relref "howtos/easy-model" %}})
+Use the [LocalAI Manager]({{%relref "howtos/easy-model-installer" %}}) for a easy time installing models or follow [Seting up a Model]({{%relref "howtos/easy-model" %}})
 
 ## Setting up the "remote" backends:
 
@@ -46,7 +42,7 @@ Once you have this information, proceed to “add Integration” in Home Assista
 
 ## Configuring the component as a Conversation Agent
 
-In order to utilize the conversation agent in HomeAssistant, you will need to configure it as a conversation agent. This can be done by following the the instructions here(https://github.com/acon96/home-llm?tab=readme-ov-file#configuring-the-component-as-a-conversation-agent).
+In order to utilize the conversation agent in HomeAssistant, you will need to configure it as a conversation agent. This can be done by following the the instructions [here](https://github.com/acon96/home-llm?tab=readme-ov-file#configuring-the-component-as-a-conversation-agent).
 
 {{% notice note %}}
 ANY DEVICES THAT YOU SELECT TO BE EXPOSED TO THE MODEL WILL BE ADDED AS CONTEXT AND POTENTIALLY HAVE THEIR STATE CHANGED BY THE MODEL. ONLY EXPOSE DEVICES THAT YOU ARE OK WITH THE MODEL MODIFYING THE STATE OF, EVEN IF IT IS NOT WHAT YOU REQUESTED. THE MODEL MAY OCCASIONALLY HALLUCINATE AND ISSUE COMMANDS TO THE WRONG DEVICE! USE AT YOUR OWN RISK.
