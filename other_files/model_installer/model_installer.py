@@ -816,8 +816,8 @@ if answerstartup == 4:
         
     clear_window(ver_os_info)
 
-    bearer_token = str(input("Do you have a API Key on your models endpoint?"))
-    ip_address = str(input("What is the LocalAI's IP and Port? "))
+    bearer_token = str(input("If you have a API Key, please put it here: "))
+    ip_address = str(input("What is the LocalAI's IP and Port?: "))
 
     headers = {
         "Authorization": f"Bearer {bearer_token}"
