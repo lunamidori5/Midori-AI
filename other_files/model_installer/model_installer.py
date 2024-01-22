@@ -57,23 +57,24 @@ Note: If the model does not support a quant mode, the server will return the nex
 """)
 
 def log(message):
-  # Read the current contents of  the file
-  with open(log_file_name, "r") as f:
-    contents = f.read()
+    # Read the current contents of  the file
+    with open(log_file_name, "r") as f:
+        contents = f.read()
 
-  print(str(message))
-  contents += "\n" + str(message)
+    print(str(message))
 
-  # Resave the file
-  with open(log_file_name, "w") as f:
-    f.write(contents)
+    contents += "\n" + str(message)
+
+    # Resave the file
+    with open(log_file_name, "w") as f:
+        f.write(contents)
 
 def clear_window(ver_os):
     log("Clearing the screen")
     if ver_os == 'windows':
         os.system('cls')
     if ver_os == 'linux':
-        os.system('clear ')
+        os.system('clear')
 
 def check_for_update(ver_os_info):
     """
@@ -119,44 +120,44 @@ def check_for_update(ver_os_info):
 
 def check_cpu_support():
 
-  freeze_support()
+    freeze_support()
 
-  info = get_cpu_info()
+    info = get_cpu_info()
 
-  log(info)
+    log(info)
 
-  info = str(info).lower()
+    info = str(info).lower()
 
-  log(info)
+    log(info)
 
-  # Check if the CPU supports F16C
-  if "f16c" not in info:
-    log("f16c failed check")
-    return True
+    # Check if the CPU supports F16C
+    if "f16c" not in info:
+        log("f16c failed check")
+        return True
 
-  # Check if  the CPU supports AVX512
-  if "avx512" not in info:
-    log("avx512 failed check")
-    log("overriding failed avx512 check")
-    log("avx512 found (OVERRIDE)")
+    # Check if  the CPU supports AVX512
+    if "avx512" not in info:
+        log("avx512 failed check")
+        log("overriding failed avx512 check")
+        log("avx512 found (OVERRIDE)")
 
-  # Check if the CPU supports AVX2
-  if "avx2" not in info:
-    log("avx2 failed check")
-    return True
+    # Check if the CPU supports AVX2
+    if "avx2" not in info:
+        log("avx2 failed check")
+        return True
 
-  # Check if the CPU supports AVX
-  if "avx" not in info:
-    log("avx failed check")
-    return True
+    # Check if the CPU supports AVX
+    if "avx" not in info:
+        log("avx failed check")
+        return True
 
-  # Check if the CPU supports FMA
-  if "fma" not in info:
-    log("fma failed check")
-    return True
+    # Check if the CPU supports FMA
+    if "fma" not in info:
+        log("fma failed check")
+        return True
 
-  # If all checks pass, return False
-  return False
+    # If all checks pass, return False
+    return False
 
 def check_model_ids_file():
     """Downloads a file from a server and loads it into a list 1 line at a time.
@@ -186,24 +187,24 @@ def check_model_ids_file():
 
 
 def check_str(question, valid_answers):
-  """
-  Checks if the user input is valid.
+    """
+    Checks if the user input is valid.
 
-  Args:
+    Args:
     question: The  question to ask the user.
     valid_answers:  A list of valid answers.
 
-  Returns:
+    Returns:
     The user's input if it is valid, or None otherwise.
-  """
+    """
 
-  while True:
-    answer = input(f"\n{question}\n").lower()
-    if answer in valid_answers:
-      log(f"I asked {question} / you replied {answer}")
-      return answer
-    else:
-      log(f"\nInvalid input. Please enter one of the following: {', '.join(valid_answers)}\n")
+    while True:
+        answer = input(f"\n{question}\n").lower()
+        if answer in valid_answers:
+            log(f"I asked {question} / you replied {answer}")
+            return answer
+        else:
+            log(f"\nInvalid input. Please enter one of the following: {', '.join(valid_answers)}\n")
 
 # Get the operating system.
 os_info = platform.system()
@@ -232,8 +233,6 @@ else:
 containers = client.containers.list()
 
 check_for_update(ver_os_info)
-
-log("\n")
 
 log(f"-----------------------------------------------------------------------------------------------")
 log(f"------------------------------ Main Menu (Ver: {ver_info}) ------------------------------------")
@@ -299,22 +298,36 @@ if answerstartup == 3:
 
         os.system('docker ps -a --format \"table {{.ID}}\t{{.Names}}\"')
         
-        service_name = input("What is LocalAI called in ``docker ps`` (Please type the name like this ``localai-api-1`` or ``localai``): ")
+        service_name = input("What is LocalAI called in ``docker ps`` (Please type the name like this ``localai-api-1``): ")
 
         clear_window(ver_os_info)
 
+        # Get the output of the ` docker ps` command
+        output = os.popen('docker ps -a --format "table {{.ID}}\t{{.Names}}\t{{.Image}}\t{{.Ports}}\n"').read()
+
+        log(output)
+
+        # Split the output into lines
+        lines = output.split('\n')
+
+        log(lines)
+
+        # Find the  line that contains the service name
+        for line in lines:
+            log(f"Checking {line} in {lines}")
+            if service_name in line:
+                log(f"LocalAI found : {service_name} in {line}")
+                # Split the line into columns
+                columns = line.split('\t')
+
+                # Get the service image and port
+                service_image = columns[2]
+                log(f"LocalAI found : {service_name} in {line}")
+                models_ports = columns[3]
+                log(f"LocalAI found : {service_name} in {line}")
+
+        # Get the models folder location
         models_folder_container = input("Where is LocalAI's models folder located? (IE: ``/models`` or ``/build/models``): ")
-
-        clear_window(ver_os_info)
-
-        os.system('docker ps -a --format \"table {{.Names}}\t{{.Image}}\"')
-
-        service_image = input("What is the full image name that you used? (Please paste the full link. IE: quay.io/go-skynet/local-ai:master-cublas-cuda12-ffmpeg): ")
-
-        clear_window(ver_os_info)
-
-        os.system('docker ps -a --format \"table {{.Names}}\t{{.Ports}}\"')
-        models_ports = input("What port are you running LocalAI on?: ")
 
     clear_window(ver_os_info)
 
@@ -771,23 +784,37 @@ if answerstartup == 4:
         log("Running ``docker ps``")
 
         os.system('docker ps -a --format \"table {{.ID}}\t{{.Names}}\"')
-        
-        service_name = input("What is LocalAI called in ``docker ps`` (Please type the name like this ``localai-api-1`` or ``localai``): ")
+
+        service_name = input("What is LocalAI called in ``docker ps`` (Please type the name like this ``localai-api-1``): ")
 
         clear_window(ver_os_info)
 
+        # Get the output of the ` docker ps` command
+        output = os.popen('docker ps -a --format "table {{.ID}}\t{{.Names}}\t{{.Image}}\t{{.Ports}}\n"').read()
+
+        log(output)
+
+        # Split the output into lines
+        lines = output.split('\n')
+
+        log(lines)
+
+        # Find the  line that contains the service name
+        for line in lines:
+            log(f"Checking {line} in {lines}")
+            if service_name in line:
+                log(f"LocalAI found : {service_name} in {line}")
+                # Split the line into columns
+                columns = line.split('\t')
+
+                # Get the service image and port
+                service_image = columns[2]
+                log(f"LocalAI found : {service_name} in {line}")
+                models_ports = columns[3]
+                log(f"LocalAI found : {service_name} in {line}")
+
+        # Get the models folder location
         models_folder_container = input("Where is LocalAI's models folder located? (IE: ``/models`` or ``/build/models``): ")
-
-        clear_window(ver_os_info)
-
-        os.system('docker ps -a --format \"table {{.Names}}\t{{.Image}}\"')
-
-        service_image = input("What is the full image name that you used? (Please paste the full link. IE: quay.io/go-skynet/local-ai:master-cublas-cuda12-ffmpeg): ")
-
-        clear_window(ver_os_info)
-
-        os.system('docker ps -a --format \"table {{.Names}}\t{{.Ports}}\"')
-        models_ports = input("What port are you running LocalAI on?: ")
 
     clear_window(ver_os_info)
 
