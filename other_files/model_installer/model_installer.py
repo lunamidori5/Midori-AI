@@ -35,7 +35,7 @@ log_file_name = "log_" + timestamp + ".txt"
 ver_file_name = "midori_program_ver.txt"
 
 with open(log_file_name, "w") as f:
-   f.write("Booted and Running Model Installer")
+    f.write("Booted and Running Model Installer")
 
 about_model_size = str("""
 7b [CPU Friendly!] (Small and okay quality) - https://huggingface.co/TheBloke/dolphin-2.6-mistral-7B-GGUF
