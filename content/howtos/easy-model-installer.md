@@ -7,9 +7,7 @@ weight = 1
 
 {{% notice note %}}
 
-- The ``encrypted`` endpoint has undergone a comprehensive revision to address increased load in an efficient and reliable manner. 
-- This enhancement allows for improved scalability and performance, ensuring seamless operation even under demanding circumstances. 
-- We appreciate your continued support as we strive to provide the highest quality service.
+- Due to an unexpected outage at Cloudflare, which resulted in our servers becoming inaccessible, we have promptly rectified the routing issue, thereby restoring normal service.
 
 **Windows Users**
 - There seems to be a bug where the manager is adding ``140_1.dll`` to file request. We are working on a fix.
