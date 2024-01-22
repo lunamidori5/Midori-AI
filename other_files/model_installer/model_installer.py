@@ -297,31 +297,23 @@ if answerstartup == 3:
         log("Running ``docker ps``")
 
         os.system('docker ps -a --format \"table {{.ID}}\t{{.Names}}\"')
-        
-        service_name = input("What is LocalAI called in ``docker ps`` (Please type the name like this ``localai-api-1``): ")
+
+        service_name = input("What is LocalAI called in ``docker ps`` (Please type the name like this ``localai-api-1`` or ``localai``): ")
 
         clear_window(ver_os_info)
 
-        # Get all running containers
-        containers = client.containers.list(all=True)
-
-        # Find the LocalAI container 
-        localai_container = None
-        for container in containers:
-            if service_name in container.name:
-                localai_container = container
-                break
-
-        # If the LocalAI container was not found, raise an error
-        if localai_container is None:
-            raise RuntimeError("LocalAI container not found")
-        
-        # Get the service image and port
-        service_image = localai_container.image.tags[0]
-        models_ports = [port['Port'] for port in localai_container.ports]
-
-        # Get the models folder location
         models_folder_container = input("Where is LocalAI's models folder located? (IE: ``/models`` or ``/build/models``): ")
+
+        clear_window(ver_os_info)
+
+        os.system('docker ps -a --format \"table {{.Names}}\t{{.Image}}\"')
+
+        service_image = input("What is the full image name that you used? (Please paste the full link. IE: quay.io/go-skynet/local-ai:master-cublas-cuda12-ffmpeg): ")
+
+        clear_window(ver_os_info)
+
+        os.system('docker ps -a --format \"table {{.Names}}\t{{.Ports}}\"')
+        models_ports = input("What port are you running LocalAI on?: ")
 
     clear_window(ver_os_info)
 
@@ -779,30 +771,22 @@ if answerstartup == 4:
 
         os.system('docker ps -a --format \"table {{.ID}}\t{{.Names}}\"')
 
-        service_name = input("What is LocalAI called in ``docker ps`` (Please type the name like this ``localai-api-1``): ")
+        service_name = input("What is LocalAI called in ``docker ps`` (Please type the name like this ``localai-api-1`` or ``localai``): ")
 
         clear_window(ver_os_info)
 
-        # Get all running containers
-        containers = client.containers.list(all=True)
-
-        # Find the LocalAI container 
-        localai_container = None
-        for container in containers:
-            if service_name in container.name:
-                localai_container = container
-                break
-
-        # If the LocalAI container was not found, raise an error
-        if localai_container is None:
-            raise RuntimeError("LocalAI container not found")
-        
-        # Get the service image and port
-        service_image = localai_container.image.tags[0]
-        models_ports = [port['Port'] for port in localai_container.ports]
-
-        # Get the models folder location
         models_folder_container = input("Where is LocalAI's models folder located? (IE: ``/models`` or ``/build/models``): ")
+
+        clear_window(ver_os_info)
+
+        os.system('docker ps -a --format \"table {{.Names}}\t{{.Image}}\"')
+
+        service_image = input("What is the full image name that you used? (Please paste the full link. IE: quay.io/go-skynet/local-ai:master-cublas-cuda12-ffmpeg): ")
+
+        clear_window(ver_os_info)
+
+        os.system('docker ps -a --format \"table {{.Names}}\t{{.Ports}}\"')
+        models_ports = input("What port are you running LocalAI on?: ")
 
     clear_window(ver_os_info)
 
