@@ -302,29 +302,23 @@ if answerstartup == 3:
 
         clear_window(ver_os_info)
 
-        # Get the output of the ` docker ps` command
-        output = os.popen('docker ps -a --format "table {{.ID}}\t{{.Names}}\t{{.Image}}\t{{.Ports}}\n"').read()
+        # Get all running containers
+        containers = client.containers.list(all=True)
 
-        log(output)
+        # Find the LocalAI container 
+        localai_container = None
+        for container in containers:
+            if service_name in container.name:
+                localai_container = container
+                break
 
-        # Split the output into lines
-        lines = output.split('\n')
-
-        log(lines)
-
-        # Find the  line that contains the service name
-        for line in lines:
-            log(f"Checking {line} in {lines}")
-            if service_name in line:
-                log(f"LocalAI found : {service_name} in {line}")
-                # Split the line into columns
-                columns = line.split('\t')
-
-                # Get the service image and port
-                service_image = columns[2]
-                log(f"LocalAI found : {service_name} in {line}")
-                models_ports = columns[3]
-                log(f"LocalAI found : {service_name} in {line}")
+        # If the LocalAI container was not found, raise an error
+        if localai_container is None:
+            raise RuntimeError("LocalAI container not found")
+        
+        # Get the service image and port
+        service_image = localai_container.image.tags[0]
+        models_ports = [port['Port'] for port in localai_container.ports]
 
         # Get the models folder location
         models_folder_container = input("Where is LocalAI's models folder located? (IE: ``/models`` or ``/build/models``): ")
@@ -789,29 +783,23 @@ if answerstartup == 4:
 
         clear_window(ver_os_info)
 
-        # Get the output of the ` docker ps` command
-        output = os.popen('docker ps -a --format "table {{.ID}}\t{{.Names}}\t{{.Image}}\t{{.Ports}}\n"').read()
+        # Get all running containers
+        containers = client.containers.list(all=True)
 
-        log(output)
+        # Find the LocalAI container 
+        localai_container = None
+        for container in containers:
+            if service_name in container.name:
+                localai_container = container
+                break
 
-        # Split the output into lines
-        lines = output.split('\n')
-
-        log(lines)
-
-        # Find the  line that contains the service name
-        for line in lines:
-            log(f"Checking {line} in {lines}")
-            if service_name in line:
-                log(f"LocalAI found : {service_name} in {line}")
-                # Split the line into columns
-                columns = line.split('\t')
-
-                # Get the service image and port
-                service_image = columns[2]
-                log(f"LocalAI found : {service_name} in {line}")
-                models_ports = columns[3]
-                log(f"LocalAI found : {service_name} in {line}")
+        # If the LocalAI container was not found, raise an error
+        if localai_container is None:
+            raise RuntimeError("LocalAI container not found")
+        
+        # Get the service image and port
+        service_image = localai_container.image.tags[0]
+        models_ports = [port['Port'] for port in localai_container.ports]
 
         # Get the models folder location
         models_folder_container = input("Where is LocalAI's models folder located? (IE: ``/models`` or ``/build/models``): ")
