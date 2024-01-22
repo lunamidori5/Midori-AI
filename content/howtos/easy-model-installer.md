@@ -24,6 +24,12 @@ Note that model downloads may be slow because they are hitting Midori Ai's serve
 ### Prerequisites
 [Docker Desktop Windows](https://docs.docker.com/desktop/install/windows-install/)
 
+### Quick install
+
+1. Download - https://tea-cup.midori-ai.xyz/download/model_installer_windows.zip
+2. Unzip into LocalAI folder
+3. Run `model_installer.exe`
+
 ### Quick install with script
 
 Open a Command Prompt or PowerShell terminal and run:
