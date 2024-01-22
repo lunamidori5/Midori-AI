@@ -30,7 +30,7 @@ jobs:
       - name: Install Node.js dependencies
         run: "[[ -f package-lock.json || -f npm-shrinkwrap.json ]] && npm ci || true"
       - name: Install Hugo dependencies
-        run: "git submodule add https://github.com/theNewDynamic/gohugo-theme-ananke.git themes/ananke"
+        run: "git submodule add https://github.com/theNewDynamic/gohugo-theme-ananke.git themes/ananke -f"
       - name: Test Build with Hugo
         env:
           # For maximum backward compatibility with Hugo modules
