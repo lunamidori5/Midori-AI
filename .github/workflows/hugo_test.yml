@@ -21,12 +21,16 @@ jobs:
           && sudo dpkg -i ${{ runner.temp }}/hugo.deb
       - name: Install Dart Sass
         run: sudo snap install dart-sass
+      - name: Install git
+        run: sudo apt-get update && sudo apt-get install -y git
       - name: Checkout
         uses: actions/checkout@v4
         with:
           submodules: recursive
       - name: Install Node.js dependencies
         run: "[[ -f package-lock.json || -f npm-shrinkwrap.json ]] && npm ci || true"
+      - name: Install Hugo dependencies
+        run: "git submodule add https://github.com/theNewDynamic/gohugo-theme-ananke.git themes/ananke"
       - name: Test Build with Hugo
         env:
           # For maximum backward compatibility with Hugo modules
