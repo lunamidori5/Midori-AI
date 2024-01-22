@@ -40,6 +40,4 @@ Meet Carly, our ground-breaking AI creation with remarkable human-like character
   </picture>
 </a>
 
-
-
 **Unleashing the Future of AI, Together.**
