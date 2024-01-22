@@ -30,5 +30,16 @@ Meet Carly, our ground-breaking AI creation with remarkable human-like character
 | [Facebook](https://www.facebook.com/TWLunagreen) | [Twitter](https://twitter.com/lunamidori5) | [Pinterest](https://www.pinterest.com/luna_midori5/) |
 | | [PayPal](https://paypal.me/midoricookieclub?country.x=US&locale.x=en_US) | |
 
+## Star History
+
+<a href="https://star-history.com/#lunamidori5/Midori-AI&Date">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="https://api.star-history.com/svg?repos=lunamidori5/Midori-AI&type=Date&theme=dark" />
+    <source media="(prefers-color-scheme: light)" srcset="https://api.star-history.com/svg?repos=lunamidori5/Midori-AI&type=Date" />
+    <img alt="Star History Chart" src="https://api.star-history.com/svg?repos=lunamidori5/Midori-AI&type=Date" />
+  </picture>
+</a>
+
+
 
 **Unleashing the Future of AI, Together.**
