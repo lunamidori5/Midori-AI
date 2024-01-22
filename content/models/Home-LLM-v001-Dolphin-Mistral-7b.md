@@ -48,7 +48,7 @@ The model was trained as a LoRA on an Midori AI's supercomputer using a custom t
 
 ## Download / Install
 
-***Luna fix me once the files are ready to be served**
+This model has been removed from the Midori AI servers, we are waiting to hear back from the person training the model. Please stand by...
 
 ## Authors 
 - Luna Midori - https://github.com/lunamidori5
