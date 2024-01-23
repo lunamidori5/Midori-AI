@@ -834,9 +834,9 @@ if answerstartup == 5:
         model_ids = [model["id"] for model in models]
 
         # Print model IDs or perform other operations as needed
-        log(f"Available model IDs: {model_ids}")
-
         clear_window(ver_os_info)
+
+        log(f"Available model IDs: {model_ids}")
 
         questionbasic = "What model would you like to uninstall?: "
         valid_answers = model_ids
