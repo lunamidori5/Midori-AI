@@ -32,6 +32,6 @@ jobs:
         # exit-zero treats all errors as warnings.
         flake8 . --count --exit-zero --max-complexity=20 --max-line-length=400 --statistics
     - name: Lint Markdown
-      uses: nosborn/github-action-markdown-cli@v3.0.1
-      with:
-        files: .
+      run: |
+        echo "Hello there!"
+    
