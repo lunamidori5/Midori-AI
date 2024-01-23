@@ -108,11 +108,12 @@ def check_for_update(ver_os_info):
         # Run commands based on the OS
         if ver_os_info == 'windows':
             os.system("del model_installer.zip")
-            os.system("del model_installer")
+            os.system("del model_installer.exe")
+            os.system("del model_installer.bat")
             os.system(f"curl -sSL https://raw.githubusercontent.com/lunamidori5/Midori-AI/master/other_files/model_installer/model_installer.bat -o model_installer.bat && start model_installer.bat")
             log(f"If the model manager failed to start, just run ``call model_installer.bat``")
         elif ver_os_info == 'linux':
-            os.system("rm -f model_installer.tar.gz model_installer")
+            os.system("rm -f model_installer.tar.gz model_installer model_installer.sh")
             os.system(f"curl -sSL https://raw.githubusercontent.com/lunamidori5/Midori-AI/master/other_files/model_installer/model_installer.sh | sh")
             log(f"If the model manager failed to start, just run ``./model_installer.sh``")
 
@@ -241,10 +242,11 @@ log(f"--------------------------------------------------------------------------
 log("``1`` - Setup LocalAI / AnythingLLM")
 log("``2`` - Uninstall or Upgrade LocalAI / AnythingLLM")
 log("``3`` - Setup or Upgrade Models")
-log("``4`` - Uninstall Models")
+log("``4`` - Edit Models Congifs")
+log("``5`` - Uninstall Models")
 
 questionbasic = "What would you like to do?: "
-sd_valid_answers = ["1", "2", "3", "4"]
+sd_valid_answers = ["1", "2", "3", "4", "5"]
 answerstartup = check_str(questionbasic, sd_valid_answers)
 
 answerstartup = int(answerstartup)
@@ -266,7 +268,7 @@ if answerstartup == 3:
         log("If you used docker run or just want to try to run this in ``fallback mode`` type ``fallback``")
         compose_path = input("Could not find docker-compose.yaml in the current directory. Where is it located?: ")
         try:
-            with open(compose_path, "r") as f:
+            with open(os.path.join(compose_path, "docker-compose.yaml"), "r") as f:
                 compose_data = yaml.safe_load(f)
             log("Loaded the docker-compose.yaml from users path")
         except FileNotFoundError:
@@ -724,7 +726,7 @@ if answerstartup == 3:
     container.restart()
     log("Thank you! Please enjoy your new models!")
 
-if answerstartup == 4:
+if answerstartup == 5:
     # Try to load the Docker Compose file
     log("Docker Server error, trying to check your docker-compose.yaml file...")
     docker_compose_found = False
@@ -739,7 +741,7 @@ if answerstartup == 4:
         log("If you used docker run or just want to try to run this in ``fallback mode`` type ``fallback``")
         compose_path = input("Could not find docker-compose.yaml in the current directory. Where is it located?: ")
         try:
-            with open(compose_path, "r") as f:
+            with open(os.path.join(compose_path, "docker-compose.yaml"), "r") as f:
                 compose_data = yaml.safe_load(f)
             log("Loaded the docker-compose.yaml from users path")
         except FileNotFoundError:
@@ -832,7 +834,7 @@ if answerstartup == 4:
         model_ids = [model["id"] for model in models]
 
         # Print model IDs or perform other operations as needed
-        log("Available model IDs:", model_ids)
+        log(f"Available model IDs: {model_ids}")
 
         clear_window(ver_os_info)
 
@@ -1266,4 +1268,5 @@ if answerstartup == 2:
             except Exception as e:
                 log(f"Error occurred while running docker-compose: {e}")
 
-
+if answerstartup == 4:
+    log("This menu is not ready")
