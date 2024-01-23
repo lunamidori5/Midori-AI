@@ -271,6 +271,7 @@ if answerstartup == 3:
             with open(os.path.join(compose_path, "docker-compose.yaml"), "r") as f:
                 compose_data = yaml.safe_load(f)
             log("Loaded the docker-compose.yaml from users path")
+            docker_compose_found = True
         except FileNotFoundError:
             # If the file is still not found, raise an error
             log("Could not find docker-compose.yaml at the specified location. Entering ``fallback mode``")
@@ -444,6 +445,13 @@ if answerstartup == 3:
 
         clear_window(ver_os_info)
 
+        if not answer1 == "none":
+            question3 = "\nNumber of CPU Cores to give the model?  (0 to 2000): \n"
+            answercpu = input(question3)
+            answercpu = int(answercpu)
+
+        clear_window(ver_os_info)
+
     if "ffmpeg" in service_image:
         questionsd = "Would you like me to install a few Text to Speech models?: "
         sd_valid_answers = ["yes", "no", "true", "false"]
@@ -570,6 +578,7 @@ if answerstartup == 3:
             ["cp", f"{answer4}.yaml", f"{yaml_path_temp}"],
             ["cp", f"{answer4}.gguf", f"{model_path_temp}"],
             ["sed", "-i", f"s/name.*/name: {answer4}/g", f"{yaml_path_temp}"],
+            ["sed", "-i", f"s/threads.*/threads: {answercpu}/g", f"{yaml_path_temp}"],
             ["sed", "-i", f"s/model.*/model: {answer4}.gguf/g", f"{yaml_path_temp}"],
             ["echo", f"Catting the yaml for easyer debuging..."],
             ["cat", f"{yaml_path_temp}"],
@@ -593,8 +602,9 @@ if answerstartup == 3:
             ["cp", f"localai-chatmsg.tmpl", f"{temp_chatmsg_path}"],
             ["cp", f"{answer4}.yaml", f"{yaml_path_temp}"],
             ["cp", f"{answer4}.gguf", f"{model_path_temp}"],
-            ["sed", "-i", f"s/gpu_layers.*/gpu_layers: {answer3}/g", f"{yaml_path_temp}"],
             ["sed", "-i", f"s/name.*/name: {answer4}/g", f"{yaml_path_temp}"],
+            ["sed", "-i", f"s/threads.*/threads: {answercpu}/g", f"{yaml_path_temp}"],
+            ["sed", "-i", f"s/gpu_layers.*/gpu_layers: {answer3}/g", f"{yaml_path_temp}"],
             ["sed", "-i", f"s/model.*/model: {answer4}.gguf/g", f"{yaml_path_temp}"],
             ["echo", f"Catting the yaml for easyer debuging..."],
             ["cat", f"{yaml_path_temp}"],
@@ -632,6 +642,7 @@ if answerstartup == 3:
             ["cp", f"models.yaml", f"{yaml_path_temp}"],
             ["cp", f"{answer2}model{answer1}.gguf", f"{model_path_temp}"],
             ["sed", "-i", f"s/name.*/name: {answer4}/g", f"{yaml_path_temp}"],
+            ["sed", "-i", f"s/threads.*/threads: {answercpu}/g", f"{yaml_path_temp}"],\
             ["sed", "-i", f"s/model.*/model: {answer4}.gguf/g", f"{yaml_path_temp}"],
             ["echo", f"Catting the yaml for easyer debuging..."],
             ["cat", f"{yaml_path_temp}"],
@@ -657,8 +668,9 @@ if answerstartup == 3:
             ["cp", f"localai-chatmsg.tmpl", f"{temp_chatmsg_path}"],
             ["cp", f"models-gpu.yaml", f"{yaml_path_temp}"],
             ["cp", f"{answer2}model{answer1}.gguf", f"{model_path_temp}"],
-            ["sed", "-i", f"s/gpu_layers.*/gpu_layers: {answer3}/g", f"{yaml_path_temp}"],
             ["sed", "-i", f"s/name.*/name: {answer4}/g", f"{yaml_path_temp}"],
+            ["sed", "-i", f"s/threads.*/threads: {answercpu}/g", f"{yaml_path_temp}"],
+            ["sed", "-i", f"s/gpu_layers.*/gpu_layers: {answer3}/g", f"{yaml_path_temp}"],
             ["sed", "-i", f"s/model.*/model: {answer4}.gguf/g", f"{yaml_path_temp}"],
             ["echo", f"Catting the yaml for easyer debuging..."],
             ["cat", f"{yaml_path_temp}"],
@@ -744,6 +756,7 @@ if answerstartup == 5:
             with open(os.path.join(compose_path, "docker-compose.yaml"), "r") as f:
                 compose_data = yaml.safe_load(f)
             log("Loaded the docker-compose.yaml from users path")
+            docker_compose_found = True
         except FileNotFoundError:
             # If the file is still not found, raise an error
             log("Could not find docker-compose.yaml at the specified location. Entering ``fallback mode``")
@@ -817,14 +830,14 @@ if answerstartup == 5:
         
     clear_window(ver_os_info)
 
-    bearer_token = str(input("If you have a API Key, please put it here: "))
-    ip_address = str(input("What is the LocalAI's IP and Port?: "))
+    bearer_token = str(input("If you have a API Key, please put it here. Else type no: "))
+    ip_address = str(input("What is the LocalAI's IP? (192.168.x.x): "))
 
     headers = {
         "Authorization": f"Bearer {bearer_token}"
     }
 
-    response = requests.get(f"http://{ip_address}/models", headers=headers)
+    response = requests.get(f"http://{ip_address}:{models_ports}/models", headers=headers)
 
     if response.status_code == 200:
         response_data = json.loads(response.text)
@@ -1269,4 +1282,96 @@ if answerstartup == 2:
                 log(f"Error occurred while running docker-compose: {e}")
 
 if answerstartup == 4:
-    log("This menu is not ready")
+    # Try to load the Docker Compose file
+    log("Docker Server error, trying to check your docker-compose.yaml file...")
+    docker_compose_found = False
+    try:
+        log("Loading your docker-compose.yaml")
+        with open(compose_path, "r") as f:
+            compose_data  = yaml.safe_load(f)
+            log("Auto loaded the docker-compose.yaml")
+            docker_compose_found = True
+    except FileNotFoundError:
+        # If the file is not found, ask the user where it is
+        log("If you used docker run or just want to try to run this in ``fallback mode`` type ``fallback``")
+        compose_path = input("Could not find docker-compose.yaml in the current directory. Where is it located?: ")
+        try:
+            with open(os.path.join(compose_path, "docker-compose.yaml"), "r") as f:
+                compose_data = yaml.safe_load(f)
+            log("Loaded the docker-compose.yaml from users path")
+            docker_compose_found = True
+        except FileNotFoundError:
+            # If the file is still not found, raise an error
+            log("Could not find docker-compose.yaml at the specified location. Entering ``fallback mode``")
+
+
+    # Extract service name and model folder path
+    if docker_compose_found:
+        for service_name, service_data in compose_data["services"].items():
+            log(f"Checking... Service Name: {service_name}, Service Data: {service_data}")
+            if service_data["image"].startswith("quay.io/go-skynet/local-ai"):
+                models_volume = service_data["volumes"][0]
+                models_folder_host = models_volume.split(":")[0]  # Assuming host path is first
+                models_folder_container = models_volume.split(":")[1]  # Assuming container path is second
+                models_ports = service_data["ports"][0]
+                model_port_api = models_ports.split(":")[1]
+                service_image = service_data["image"]
+
+                log(f"The inside model folder of the docker is {models_folder_container}, This is were ill place all the files inside of the docker.")
+                break
+
+        # If no matching service is found, raise an error
+        if service_name not in compose_data["services"]:
+            raise Exception("Could not find a service with the image 'quay.io/go-skynet/local-ai' in your docker-compose.yaml file.")
+    else:
+        clear_window(ver_os_info)
+        log("Running ``docker ps``")
+
+        os.system('docker ps -a --format \"table {{.ID}}\t{{.Names}}\"')
+
+        service_name = input("What is LocalAI called in ``docker ps`` (Please type the name like this ``localai-api-1`` or ``localai``): ")
+
+        clear_window(ver_os_info)
+
+        models_folder_container = input("Where is LocalAI's models folder located? (IE: ``/models`` or ``/build/models``): ")
+
+        clear_window(ver_os_info)
+
+        os.system('docker ps -a --format \"table {{.Names}}\t{{.Image}}\"')
+
+        service_image = input("What is the full image name that you used? (Please paste the full link. IE: quay.io/go-skynet/local-ai:master-cublas-cuda12-ffmpeg): ")
+
+        clear_window(ver_os_info)
+
+        os.system('docker ps -a --format \"table {{.Names}}\t{{.Ports}}\"')
+        models_ports = input("What port are you running LocalAI on?: ")
+
+    clear_window(ver_os_info)
+
+    for container in containers:
+        log(f"Checking Name: {container.name}, ID: {container.id}")
+
+        # Check if there is a container with a name containing `service_name`
+        if service_name in container.name:
+            # Get the container object
+            log(f"Found LocalAI, Logging into: {container.name} / {container.id}")
+            container = client.containers.get(container.name)
+            break
+
+    if container is None:
+        log(f"Error: Could not find LocalAI container with name {service_name}")
+        log("Checking images again with known names")
+        for container in containers:
+            log(f"Checking Name: {container.name}, ID: {container.id}")
+
+            # Check if there is a container with a name containing `service_name`
+            if service_name in container.name:
+                # Get the container object
+                log(f"Found LocalAI, Logging into: {container.name} / {container.id}")
+                container = client.containers.get(container.name)
+                break
+        
+    clear_window(ver_os_info)
+
+    log("This menu is not done yet, please uninstall and reinstall the model to change its config")
+
