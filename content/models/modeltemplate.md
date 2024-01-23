@@ -16,7 +16,7 @@ Some info about training if you want to add that here
 |---|---|
 |Q3_K_L| Smallest, significant quality loss - not recommended|
 |Q4_K_M| Medium, balanced quality|
-|Q5_K_M| Large, very low quality loss|
+|Q5_K_M| Large, very low quality loss - recommended|
 |Q6_K| Very large, extremely low quality loss|
 |None| Extremely large, No quality loss, hard to install - not recommended|
 

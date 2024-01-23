@@ -15,7 +15,7 @@ We are actively working on developing cluster based AI training, and use. This i
 
 ## Assistance for AI setup:
 
-We offer comprehensive support for setting up programs like [LocalAI](https://github.com/mudler/LocalAI) and [AnythingLLM](https://github.com/Mintplex-Labs/anything-llm). These programs provide user-friendly interfaces and tools to easily set up and manage AI models on local machines. Our support includes documentation, tutorials, troubleshooting assistance, and a dedicated community forum where users can share their experiences and seek help from our team.
+We offer comprehensive support for setting up programs like [LocalAI](https://github.com/mudler/LocalAI) and [AnythingLLM](https://github.com/Mintplex-Labs/anything-llm). These programs provide user-friendly interfaces and tools to easily set up and manage AI models on local machines. Our support includes documentation, tutorials, troubleshooting assistance, and a community discord where users can share their experiences and seek help from our team.
 
 ## AI Development:
 
