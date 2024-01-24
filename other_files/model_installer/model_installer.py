@@ -1,6 +1,7 @@
 import os
 import json
 import yaml
+import openai
 import docker
 import requests
 import datetime
