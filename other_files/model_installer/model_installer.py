@@ -1393,7 +1393,7 @@ if answerstartup == 4:
 
         filtered_model_ids = []
 
-        for  model_id in model_ids:
+        for model_id in model_ids:
             if "yaml" in model_id:
                 filtered_model_ids.append(model_id)
 
