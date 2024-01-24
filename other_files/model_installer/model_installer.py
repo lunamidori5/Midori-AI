@@ -834,6 +834,7 @@ if answerstartup == 5:
 
     bearer_token = str(input("If you have a API Key, please put it here. Else type no: "))
     ip_address = str(input("What is the LocalAI's IP? (192.168.x.x): "))
+    models_ports = str(input(f"What is the LocalAI's Port? (8080): "))
 
     headers = {
         "Authorization": f"Bearer {bearer_token}"
@@ -1377,6 +1378,7 @@ if answerstartup == 4:
 
     bearer_token = str(input("If you have a API Key, please put it here. Else type no: "))
     ip_address = str(input("What is the LocalAI's IP? (192.168.x.x): "))
+    models_ports = str(input(f"What is the LocalAI's Port? (8080): "))
 
     headers = {"Authorization": f"Bearer {bearer_token}"}
 
