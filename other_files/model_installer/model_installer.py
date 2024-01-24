@@ -1395,9 +1395,11 @@ if answerstartup == 4:
 
         for model_id in model_ids:
             log(f"Checking {model_id} in {model_ids}")
-            if "yaml" in model_id:
-                log(f"Yaml found in {model_id} : {model_ids}")
-                filtered_model_ids.append(model_id)
+            for item in model_id:
+                log(f"Checking {item} in {model_id}")
+                if "yaml" in item:
+                    log(f"Yaml found in {item} : {model_id}")
+                    filtered_model_ids.append(item)
 
         log(filtered_model_ids)
 
