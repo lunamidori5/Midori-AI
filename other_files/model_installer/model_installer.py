@@ -1377,7 +1377,16 @@ if answerstartup == 4:
     clear_window(ver_os_info)
 
     bearer_token = str(input("If you have a API Key, please put it here. Else type no: "))
-    ip_address = str(input("What is the LocalAI's IP? (192.168.x.x): "))
+
+    while True:
+        try:
+            ip_address = str(input("What is the LocalAI's IP? (192.168.x.x): "))
+            if "localhost" in ip_address:
+                raise ValueError("Localhost is not a valid IP address.")
+            break
+        except ValueError as e:
+            log(f"Error: {e}. Please try again.")
+
     models_ports = str(input(f"What is the LocalAI's Port? (8080): "))
 
     headers = {"Authorization": f"Bearer {bearer_token}"}
