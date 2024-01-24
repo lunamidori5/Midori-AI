@@ -22,7 +22,7 @@ missing_cuda_toolkit = True
 
 compose_path = "docker-compose.yaml"
 
-localai_ver_number = "v2.6.0"
+localai_ver_number = "latest"
 base_image_name = "quay.io/go-skynet/local-ai:"
 
 user_image = ""
@@ -30,7 +30,7 @@ user_image = ""
 ver_info = "changemelunaplease"
 
 now = datetime.datetime.now()
-timestamp = now.strftime("%m%d%Y%H%M%S")
+timestamp = now.strftime("%m%d%Y%H")
 log_file_name = "log_" + timestamp + ".txt"
 
 ver_file_name = "midori_program_ver.txt"
@@ -56,6 +56,19 @@ about_model_q_size = str("""
                          
 Note: If the model does not support a quant mode, the server will return the next lowest one it has...
 """)
+
+response_git = requests.get("https://github.com/lunamidori5/Midori-AI/blob/b9a74490f5b5ad0ecce56dbd7718fab3e31ece1b/data/version.json")
+
+if response_git.status_code != 200:
+    print(f"Github seem to be down, please try again in a moment...")
+    exit(418)
+
+current_version_git = response_git.text.strip()
+
+with open('version.json', 'r') as f:
+         version_data = json.load(f)
+
+localai_ver_number = version_data['version']
 
 def log(message):
     # Read the current contents of  the file
@@ -90,6 +103,7 @@ def check_for_update(ver_os_info):
     if response.status_code != 200:
         log(f"Servers seem to be down, please try again in a moment...")
         exit(418)
+
 
     # Get the current model version.
     current_version = response.text.strip()

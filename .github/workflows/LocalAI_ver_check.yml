@@ -1,0 +1,20 @@
+name: Copy File from Another Repo
+
+on: [push]
+
+jobs:
+  copy-file:
+    runs-on: self-hosted
+    steps:
+      - uses: actions/checkout@v3
+      - name: Download version.json from source repo
+        uses: actions/download-artifact@v2
+        with:
+          name: version-data
+          url: https://api.github.com/repos/mudler/LocalAI/artifacts/latest/docs/data/version.json
+      - name: Move file to destination
+        run: |
+          mv version.json data/version.json
+          git add data/version.json
+          git commit -m "Moved version.json from mudler/LocalAI"
+          git push
