@@ -1416,7 +1416,7 @@ if answerstartup == 4:
             
             clear_window(ver_os_info)
 
-            questionbasic = "What model would you like to edit?: "
+            questionbasic = "What setting would you like to edit?: "
             valid_answers = ["gpu_layers", "f16", "threads", "low_vram", "mmap", "mmlock", "name", "cuda", "numa", "no_mulmatq"]
             answeryamleditor_two = check_str(questionbasic, valid_answers)
             
