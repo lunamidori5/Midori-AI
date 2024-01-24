@@ -1373,5 +1373,29 @@ if answerstartup == 4:
         
     clear_window(ver_os_info)
 
+    bearer_token = str(input("If you have a API Key, please put it here. Else type no: "))
+    ip_address = str(input("What is the LocalAI's IP? (192.168.x.x): "))
+
+    headers = {"Authorization": f"Bearer {bearer_token}"}
+
+    response = requests.get(f"http://{ip_address}:{models_ports}/models", headers=headers)
+
+    if response.status_code == 200:
+        response_data = json.loads(response.text)
+        models = response_data["data"]
+
+        # Extract model IDs
+        model_ids = [model["id"] for model in models]
+
+        model_ids = [model_id for model_id in model_ids if ".yaml" in model_id]
+        clear_window(ver_os_info)
+
+        log(f"Available model IDs: {model_ids}")
+
+        questionbasic = "What model would you like to edit?: "
+        valid_answers = model_ids
+        answeruninstallmodel = check_str(questionbasic, valid_answers)
+
+
     log("This menu is not done yet, please uninstall and reinstall the model to change its config")
 

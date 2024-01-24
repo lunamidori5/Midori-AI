@@ -7,7 +7,7 @@ weight = 1
 
 {{% notice note %}}
 
-- Due to an unexpected outage from Cloudflare, which resulted in our servers becoming inaccessible, we have promptly rectified the routing issue, thereby restoring normal service.
+- Servers are overloaded at this time, deeply sorry for the slow download speeds. More servers are on their way! - Luna
 
 **Windows Users**
 - There seems to be a bug where the manager is adding ``140_1.dll`` to file request. We are working on a fix.
