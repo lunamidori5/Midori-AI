@@ -8,13 +8,15 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - name: Download version.json from source repo
-        uses: actions/download-artifact@v2
-        with:
-          name: version-data
-          url: https://github.com/mudler/LocalAI/blob/7690caf02035c911af8ad3e56766c578833d651e/docs/data/version.json
+        run: |
+          curl -sSL https://github.com/mudler/LocalAI/blob/7690caf02035c911af8ad3e56766c578833d651e/docs/data/version.json -o version.json
       - name: Move file to destination
         run: |
           mv version.json data/version.json
+      - name: Git add the File
+        run: |
           git add data/version.json
+      - name: Git commit the File
+        run: |
           git commit -m "Moved version.json from mudler/LocalAI"
-          git push
+          echo "git push"
