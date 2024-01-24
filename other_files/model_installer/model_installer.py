@@ -1391,15 +1391,7 @@ if answerstartup == 4:
         # Extract model IDs
         model_ids = [model["id"] for model in models]
 
-        filtered_model_ids = []
-
-        for model_id in model_ids:
-            log(f"Checking {model_id} in {model_ids}")
-            for item in model_id:
-                log(f"Checking {item} in {model_id}")
-                if "yaml" in item:
-                    log(f"Yaml found in {item} : {model_id}")
-                    filtered_model_ids.append(item)
+        filtered_model_ids = model_ids
 
         log(filtered_model_ids)
 
@@ -1414,6 +1406,9 @@ if answerstartup == 4:
             questionbasic = "What model would you like to edit?: "
             valid_answers = filtered_model_ids
             answeryamleditor = check_str(questionbasic, valid_answers)
+
+            if ".yaml" in answeryamleditor or ".gguf" in answeryamleditor:
+                answeryamleditor = answeryamleditor.replace(".yaml", "").replace(".gguf", "")
 
             if answeryamleditor == "exit":
                 log("exiting...")
@@ -1433,7 +1428,7 @@ if answerstartup == 4:
             clear_window(ver_os_info)
 
             inside_model_folder = models_folder_container
-            yaml_path_temp = inside_model_folder + f"/{answeryamleditor}"
+            yaml_path_temp = inside_model_folder + f"/{answeryamleditor}.yaml"
 
             docker_commands = [
                 ["rm", "-f", "yaml_edit.py"],
