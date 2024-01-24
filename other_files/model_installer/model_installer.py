@@ -632,7 +632,8 @@ if answerstartup == 3:
             ["rm", "-f", f"{inside_model_folder}/localai-chat.tmpl"],
             ["rm", "-f", f"{inside_model_folder}/localai-chatmsg.tmpl"],
             ["rm", "-f", f"{inside_model_folder}/{answer4}.yaml"],
-            ["wget", "-O", f"helper_app.py", f"https://tea-cup.midori-ai.xyz/download/helper_app.py"],
+            ["rm", "-f", "helper_app.py"],
+            ["wget", "-O", "helper_app.py", "https://tea-cup.midori-ai.xyz/download/helper_app.py"],
             ["python3", "helper_app.py", "localai-chat.tmpl"],
             ["python3", "helper_app.py", "localai-chatmsg.tmpl"],
             ["python3", "helper_app.py", "models.yaml"],
@@ -659,7 +660,8 @@ if answerstartup == 3:
             ["rm", "-f", f"{inside_model_folder}/localai-chat.tmpl"],
             ["rm", "-f", f"{inside_model_folder}/localai-chatmsg.tmpl"],
             ["rm", "-f", f"{inside_model_folder}/{answer4}.yaml"],
-            ["wget", "-O", f"helper_app.py", f"https://tea-cup.midori-ai.xyz/download/helper_app.py"],
+            ["rm", "-f", "helper_app.py"],
+            ["wget", "-O", "helper_app.py", "https://tea-cup.midori-ai.xyz/download/helper_app.py"],
             ["python3", "helper_app.py", "localai-chat.tmpl"],
             ["python3", "helper_app.py", "localai-chatmsg.tmpl"],
             ["python3", "helper_app.py", "models-gpu.yaml"],
@@ -1388,14 +1390,52 @@ if answerstartup == 4:
         model_ids = [model["id"] for model in models]
 
         model_ids = [model_id for model_id in model_ids if ".yaml" in model_id]
+        model_ids.append("exit")
+        
         clear_window(ver_os_info)
 
-        log(f"Available model IDs: {model_ids}")
+        while True:
+            log(f"Available model IDs: {model_ids}")
+            log("Type ``exit`` to exit")
 
-        questionbasic = "What model would you like to edit?: "
-        valid_answers = model_ids
-        answeruninstallmodel = check_str(questionbasic, valid_answers)
+            questionbasic = "What model would you like to edit?: "
+            valid_answers = model_ids
+            answeryamleditor = check_str(questionbasic, valid_answers)
 
+            if answeryamleditor == "exit":
+                log("exiting...")
+                exit(0)
+            
+            clear_window(ver_os_info)
 
-    log("This menu is not done yet, please uninstall and reinstall the model to change its config")
+            questionbasic = "What model would you like to edit?: "
+            valid_answers = ["gpu_layers", "f16", "threads", "low_vram", "mmap", "mmlock", "name", "cuda", "numa", "no_mulmatq"]
+            answeryamleditor_two = check_str(questionbasic, valid_answers)
+            
+            clear_window(ver_os_info)
+
+            questionbasic = f"What would you like to set ``{answeryamleditor_two}`` to (NO TYPECHECKING use at your own risk)?: "
+            answeryamleditor_three = str(input(questionbasic))
+            
+            clear_window(ver_os_info)
+
+            inside_model_folder = models_folder_container
+            yaml_path_temp = inside_model_folder + f"/{answeryamleditor}"
+
+            docker_commands = [
+                ["rm", "-f", "yaml_edit.py"],
+                ["wget", "-O", "yaml_edit.py", "https://tea-cup.midori-ai.xyz/download/yaml_edit.py"],
+                ["python3", "yaml_edit.py", "-i", answeryamleditor_two, "-d", f"\"{answeryamleditor_three.lower()}\"", yaml_path_temp],
+            ]
+
+            # Run a command inside the container
+            log("editing model from inside the docker")
+            for command in docker_commands:
+                log(f"Running {command}: ")
+                command_output = container.exec_run(command)
+                log(command_output.output.decode("utf-8"))
+
+            log("All done, I am now rebooting LocalAI")
+            container.restart()
+            log("Thank you! Models edited!")
 
