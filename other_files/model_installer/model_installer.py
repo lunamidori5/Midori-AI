@@ -1391,17 +1391,24 @@ if answerstartup == 4:
         # Extract model IDs
         model_ids = [model["id"] for model in models]
 
-        model_ids = [model_id for model_id in model_ids if ".yaml" in model_id]
-        model_ids.append("exit")
+        filtered_model_ids = []
+
+        for  model_id in model_ids:
+            if "yaml" in model_id:
+                filtered_model_ids.append(model_id)
+
+        print(filtered_model_ids)
+
+        filtered_model_ids.append("exit")
         
         clear_window(ver_os_info)
 
         while True:
-            log(f"Available model IDs: {model_ids}")
+            log(f"Available model IDs: {filtered_model_ids}")
             log("Type ``exit`` to exit")
 
             questionbasic = "What model would you like to edit?: "
-            valid_answers = model_ids
+            valid_answers = filtered_model_ids
             answeryamleditor = check_str(questionbasic, valid_answers)
 
             if answeryamleditor == "exit":
