@@ -25,4 +25,4 @@ jobs:
       - name: Git commit the File
         run: |
           git commit -m "Moved version.json from mudler/LocalAI"
-          echo "git push"
+          git push
