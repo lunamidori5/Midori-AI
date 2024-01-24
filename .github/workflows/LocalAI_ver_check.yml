@@ -38,7 +38,7 @@ jobs:
         uses: peter-evans/create-pull-request@v5
         with:
           token: ${{ secrets.LUNAEMAIL }}
-          push-to-fork: ci-forks/LocalAI
+          push-to-fork: ci-forks/Midori-AI
           commit-message: 'Update docs version ${{ matrix.repository }}'
           title: 'Update docs version ${{ matrix.repository }}'
           branch: "update/docs"
