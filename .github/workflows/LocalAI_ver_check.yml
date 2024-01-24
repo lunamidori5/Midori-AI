@@ -11,7 +11,7 @@ jobs:
         uses: actions/download-artifact@v2
         with:
           name: version-data
-          url: https://api.github.com/repos/mudler/LocalAI/artifacts/latest/docs/data/version.json
+          url: https://github.com/mudler/LocalAI/blob/7690caf02035c911af8ad3e56766c578833d651e/docs/data/version.json
       - name: Move file to destination
         run: |
           mv version.json data/version.json
