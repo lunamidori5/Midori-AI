@@ -14,6 +14,9 @@ jobs:
           git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git config --local user.name "github-actions[bot]"
       - uses: actions/checkout@v3
+        with:
+          persist-credentials: false # otherwise, the token used is the GITHUB_TOKEN, instead of your personal access token.
+          fetch-depth: 0 # otherwise, there would be errors pushing refs to the destination repository.
       - name: Download version.json from source repo
         run: |
           curl -sSL https://github.com/mudler/LocalAI/blob/7690caf02035c911af8ad3e56766c578833d651e/docs/data/version.json -o version.json
