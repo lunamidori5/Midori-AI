@@ -1,8 +1,6 @@
 name: Copy File from Another Repo
 
 on:
-  schedule:
-    - cron: '30 5,17 * * *'
   workflow_dispatch:
 
 jobs:
@@ -29,8 +27,13 @@ jobs:
       - name: Git commit the File
         run: |
           git commit -m "Moved version.json from mudler/LocalAI"
-      - name: Push changes
-        uses: ad-m/github-push-action@master
+      - name: Create Pull Request
+        uses: peter-evans/create-pull-request@v4
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          branch: ${{ github.ref }}
+            commit-message: LocalAI - Ver Update
+            title: LocalAI - Ver Update
+            body: LocalAI - Ver Update
+            base: master
+            labels: automated-pr, 
+            branch: localai-temp-ver-update
+            delete-branch: true
