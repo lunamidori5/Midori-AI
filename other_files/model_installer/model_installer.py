@@ -70,10 +70,7 @@ if response_git.status_code != 200:
 
 current_version_git = response_git.text.strip()
 
-with open('version.json', 'r') as f:
-         version_data = json.load(f)
-
-localai_ver_number = version_data['version']
+# localai_ver_number = version_data['version']
 
 def log(message):
     # Read the current contents of  the file
