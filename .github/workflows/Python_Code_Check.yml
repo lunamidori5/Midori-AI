@@ -5,7 +5,7 @@ on: [push, pull_request]
 jobs:
         
   check-linux-easy:
-    runs-on: [self-hosted, ubuntu-latest]
+    runs-on: [self-hosted]
     strategy:
       max-parallel: 5
 
