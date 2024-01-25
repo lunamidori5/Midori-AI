@@ -20,7 +20,7 @@ jobs:
         echo $CONDA/bin >> $GITHUB_PATH
     - name: Make Conda ENV
       run: |
-        create -n conda_env python=3.10
+        conda create -n conda_env python=3.10
         conda activate conda_env
     - name: Install dependencies
       run: |
