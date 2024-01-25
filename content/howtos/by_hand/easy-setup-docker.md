@@ -6,7 +6,7 @@ weight = 2
 +++
 
 {{% notice note %}}
-It is highly recommended to check out the [docker auto installer]({{%relref "howtos/easy-localai-installer" %}}) for setting up LocalAI. It does all of this for you!
+It is highly recommended to check out the [LocalAI Manager]({{%relref "howtos/easy-model-installer" %}}) for setting up LocalAI. It does all of this for you!
 {{% /notice %}}
 
 {{% notice Note %}}

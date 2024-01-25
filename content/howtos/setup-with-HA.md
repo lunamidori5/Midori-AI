@@ -25,7 +25,7 @@ Before adding the Llama Conversation agent in Home Assistant, you must download 
 
 The models can be found on the Midori AI model repo, as a part of the LocalAI manager.
 
-Use the [LocalAI Manager]({{%relref "howtos/easy-model-installer" %}}) for a easy time installing models or follow [Seting up a Model]({{%relref "howtos/easy-model" %}})
+Use the [LocalAI Manager]({{%relref "howtos/easy-model-installer" %}}) for a easy time installing models or follow [Seting up a Model]({{%relref "howtos/by_hand/easy-model" %}})
 
 ## Setting up the "remote" backend:
 
