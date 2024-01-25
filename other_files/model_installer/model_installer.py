@@ -42,7 +42,7 @@ about_model_size = str("""
 7b [CPU Friendly!] (Small and okay quality) - https://huggingface.co/TheBloke/dolphin-2.6-mistral-7B-GGUF
 43b (Normal sized, great quality) - https://huggingface.co/TheBloke/dolphin-2.7-mixtral-8x7b-GGUF
 70b (Large, hard to run but significant quality) - https://huggingface.co/TheBloke/dolphin-2.2-70B-GGUF
-ID (These are models from the Midori AI model repo) - https://io.midori-ai.xyz/models/
+ID (These are models from the Midori AI model repo) - https://io.midori-ai.xyz/models/offsite_models/
 """)
 
 about_model_q_size = str("""
@@ -54,7 +54,10 @@ about_model_q_size = str("""
 |Q8| Extremely large, extremely low quality loss, hard to use - not recommended|
 |None| Extremely large, No quality loss, super hard to use - really not recommended|
                          
-Note: If the model does not support a quant mode, the server will return the next lowest one it has...
+Note: 
+That some models may deviate from our conventional model formatting standards (Quantized/Non-Quantized), 
+and will be served using a rounding-down approach. For instance, if you request a Q8 model and none is available, 
+the Q6 model will be served instead, and so on.
 """)
 
 response_git = requests.get("https://github.com/lunamidori5/Midori-AI/blob/b9a74490f5b5ad0ecce56dbd7718fab3e31ece1b/data/version.json")
