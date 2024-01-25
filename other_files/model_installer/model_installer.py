@@ -7,6 +7,8 @@ import requests
 import datetime
 import platform
 
+from colorama import Fore
+
 from cpuinfo import get_cpu_info
 from multiprocessing import freeze_support
 
