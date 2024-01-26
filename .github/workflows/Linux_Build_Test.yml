@@ -1,10 +1,10 @@
-name: Windows Build Test
+name: Linux Build Test
 
 on: [push, pull_request]
 
 jobs:
         
-  Windows-LocalAI-Manager:
+  Linux-LocalAI-Manager:
     runs-on: [self-hosted]
     strategy:
       max-parallel: 5
@@ -25,7 +25,7 @@ jobs:
     - name: Edit LocalAI Manager VER
       run: |
         python python_ver.py
-        del python_ver.py
+        rm -f python_ver.py
     - name: Make EXE file
       run: |
         pyinstaller --onefile --clean model_installer.py
