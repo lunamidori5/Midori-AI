@@ -248,7 +248,7 @@ try:
         log("If this fails please try running me as root user")
         client = docker.from_env()
 
-except docker.errors.DockerException as e:
+except Exception as e:
     log("Looks like I was unable to log into the docker subsystem...")
     log("Do you have docker installed? / Please try running me as root user, Linux users.")
     input("Please press enter to exit: ")
