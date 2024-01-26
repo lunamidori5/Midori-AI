@@ -5,7 +5,7 @@ on: [push, pull_request]
 jobs:
         
   Linux-LocalAI-Manager:
-    runs-on: [self-hosted]
+    runs-on: [ubuntu-latest]
     strategy:
       max-parallel: 5
 
