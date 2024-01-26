@@ -21,7 +21,6 @@ Note that model downloads may be slow because they are hitting Midori Ai's serve
 
 {{< tabs >}}
 {{% tab title="Windows" %}}
-[![Windows Build Test](https://github.com/lunamidori5/Midori-AI/actions/workflows/Windows_Build_Test.yml/badge.svg?branch=master)](https://github.com/lunamidori5/Midori-AI/actions/workflows/Windows_Build_Test.yml)
 ### Prerequisites
 [Docker Desktop Windows](https://docs.docker.com/desktop/install/windows-install/)
 
@@ -48,10 +47,10 @@ curl -sSL https://tea-cup.midori-ai.xyz/download/model_installer_windows.zip -o 
 powershell Expand-Archive model_installer.zip -DestinationPath .
 model_installer.exe
 ```
+[![Windows Build Test](https://github.com/lunamidori5/Midori-AI/actions/workflows/Windows_Build_Test.yml/badge.svg?branch=master)](https://github.com/lunamidori5/Midori-AI/actions/workflows/Windows_Build_Test.yml)
 {{% /tab %}}
 
 {{% tab title="Linux" %}}
-[![Linux Build Test](https://github.com/lunamidori5/Midori-AI/actions/workflows/Linux_Build_Test.yml/badge.svg?branch=master)](https://github.com/lunamidori5/Midori-AI/actions/workflows/Linux_Build_Test.yml)
 ### Prerequisites
 [Docker Desktop Linux](https://docs.docker.com/desktop/install/linux-install/) 
 
@@ -75,7 +74,7 @@ tar -xzf model_installer.tar.gz
 chmod +x model_installer
 ./model_installer
 ```
-
+[![Linux Build Test](https://github.com/lunamidori5/Midori-AI/actions/workflows/Linux_Build_Test.yml/badge.svg?branch=master)](https://github.com/lunamidori5/Midori-AI/actions/workflows/Linux_Build_Test.yml)
 {{% /tab %}}
 {{< /tabs >}}
 
