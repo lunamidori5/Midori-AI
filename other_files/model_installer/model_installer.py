@@ -24,7 +24,7 @@ missing_cuda_toolkit = True
 
 compose_path = "docker-compose.yaml"
 
-localai_ver_number = "latest"
+localai_ver_number = "v2.6.1"
 base_image_name = "quay.io/go-skynet/local-ai:"
 
 user_image = ""
@@ -260,9 +260,9 @@ containers = client.containers.list()
 
 check_for_update(ver_os_info)
 
-log(f"-----------------------------------------------------------------------------------------------")
+log("-----------------------------------------------------------------------------------------------")
 log(f"------------------------------ Main Menu (Ver: {ver_info}) ------------------------------------")
-log(f"-----------------------------------------------------------------------------------------------")
+log("-----------------------------------------------------------------------------------------------")
 
 log("``1`` - Setup LocalAI / AnythingLLM")
 log("``2`` - Uninstall or Upgrade LocalAI / AnythingLLM")
