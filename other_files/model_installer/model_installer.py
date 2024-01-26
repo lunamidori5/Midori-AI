@@ -600,7 +600,7 @@ if answerstartup == 3:
             ["wget", "-O", f"localai-chatmsg.tmpl", f"https://tea-cup.midori-ai.xyz/download/localai-chatmsg.tmpl"],
             ["wget", "-O", f"{answer4}.yaml", f"https://tea-cup.midori-ai.xyz/download/models.yaml"],
             ["echo", f"This next step will take 10+ mins, please do not exit or close this program"],
-            ["wget", "-O", f"{answer4}.gguf", f"https://tea-cup.midori-ai.xyz/download/{answer2}model{answer1}.gguf"],
+            ["wget", "-t", "2", "-O", f"{answer4}.gguf", f"https://tea-cup.midori-ai.xyz/download/{answer2}model{answer1}.gguf"],
             ["cp", f"localai-chat.tmpl", f"{temp_chat_path}"],
             ["cp", f"localai-chatmsg.tmpl", f"{temp_chatmsg_path}"],
             ["cp", f"{answer4}.yaml", f"{yaml_path_temp}"],
@@ -626,7 +626,7 @@ if answerstartup == 3:
             ["wget", "-O", f"localai-chatmsg.tmpl", f"https://tea-cup.midori-ai.xyz/download/localai-chatmsg.tmpl"],
             ["wget", "-O", f"{answer4}.yaml", f"https://tea-cup.midori-ai.xyz/download/models-gpu.yaml"],
             ["echo", f"This next step will take 10+ mins, please do not exit or close this program"],
-            ["wget", "-O", f"{answer4}.gguf", f"https://tea-cup.midori-ai.xyz/download/{answer2}model{answer1}.gguf"],
+            ["wget", "-t", "2", "-O", f"{answer4}.gguf", f"https://tea-cup.midori-ai.xyz/download/{answer2}model{answer1}.gguf"],
             ["cp", f"localai-chat.tmpl", f"{temp_chat_path}"],
             ["cp", f"localai-chatmsg.tmpl", f"{temp_chatmsg_path}"],
             ["cp", f"{answer4}.yaml", f"{yaml_path_temp}"],
@@ -667,7 +667,7 @@ if answerstartup == 3:
             ["python3", "helper_app.py", "localai-chatmsg.tmpl"],
             ["python3", "helper_app.py", "models.yaml"],
             ["echo", f"This next step will take 10+ mins, please do not exit or close this program"],
-            ["wget", "-O", f"{answer2}model{answer1}.gguf", f"https://tea-cup.midori-ai.xyz/download/{answer2}model{answer1}.gguf"],
+            ["wget", "-t", "2", "-O", f"{answer2}model{answer1}.gguf", f"https://tea-cup.midori-ai.xyz/download/{answer2}model{answer1}.gguf"],
             ["cp", f"localai-chat.tmpl", f"{temp_chat_path}"],
             ["cp", f"localai-chatmsg.tmpl", f"{temp_chatmsg_path}"],
             ["cp", f"models.yaml", f"{yaml_path_temp}"],
@@ -696,7 +696,7 @@ if answerstartup == 3:
             ["python3", "helper_app.py", "localai-chatmsg.tmpl"],
             ["python3", "helper_app.py", "models-gpu.yaml"],
             ["echo", f"This next step will take 10+ mins, please do not exit or close this program"],
-            ["wget", "-O", f"{answer2}model{answer1}.gguf", f"https://tea-cup.midori-ai.xyz/download/{answer2}model{answer1}.gguf"],
+            ["wget", "-t", "2", "-O", f"{answer2}model{answer1}.gguf", f"https://tea-cup.midori-ai.xyz/download/{answer2}model{answer1}.gguf"],
             ["cp", f"localai-chat.tmpl", f"{temp_chat_path}"],
             ["cp", f"localai-chatmsg.tmpl", f"{temp_chatmsg_path}"],
             ["cp", f"models-gpu.yaml", f"{yaml_path_temp}"],
@@ -1085,6 +1085,11 @@ if answerstartup == 1:
     if use_core == "true":
         log("looks like you wish to use the smaller core image. Ill add that to your docker-compose.yaml")
         user_image = user_image + "-core"
+
+    log("I am now going to install everything you requested, please wait for me to get done.")
+    log("Hit enter to start")
+
+    input()
 
     os.makedirs("models", exist_ok=True)
     os.makedirs("photos", exist_ok=True)
