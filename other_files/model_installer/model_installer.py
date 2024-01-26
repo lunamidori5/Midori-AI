@@ -106,7 +106,6 @@ def check_for_update(ver_os_info):
         log(f"Servers seem to be down, please try again in a moment...")
         exit(418)
 
-
     # Get the current model version.
     current_version = response.text.strip()
 
@@ -600,6 +599,7 @@ if answerstartup == 3:
             ["wget", "-O", f"localai-chat.tmpl", f"https://tea-cup.midori-ai.xyz/download/localai-chat.tmpl"],
             ["wget", "-O", f"localai-chatmsg.tmpl", f"https://tea-cup.midori-ai.xyz/download/localai-chatmsg.tmpl"],
             ["wget", "-O", f"{answer4}.yaml", f"https://tea-cup.midori-ai.xyz/download/models.yaml"],
+            ["echo", f"This next step will take 10+ mins, please do not exit or close this program"],
             ["wget", "-O", f"{answer4}.gguf", f"https://tea-cup.midori-ai.xyz/download/{answer2}model{answer1}.gguf"],
             ["cp", f"localai-chat.tmpl", f"{temp_chat_path}"],
             ["cp", f"localai-chatmsg.tmpl", f"{temp_chatmsg_path}"],
@@ -625,6 +625,7 @@ if answerstartup == 3:
             ["wget", "-O", f"localai-chat.tmpl", f"https://tea-cup.midori-ai.xyz/download/localai-chat.tmpl"],
             ["wget", "-O", f"localai-chatmsg.tmpl", f"https://tea-cup.midori-ai.xyz/download/localai-chatmsg.tmpl"],
             ["wget", "-O", f"{answer4}.yaml", f"https://tea-cup.midori-ai.xyz/download/models-gpu.yaml"],
+            ["echo", f"This next step will take 10+ mins, please do not exit or close this program"],
             ["wget", "-O", f"{answer4}.gguf", f"https://tea-cup.midori-ai.xyz/download/{answer2}model{answer1}.gguf"],
             ["cp", f"localai-chat.tmpl", f"{temp_chat_path}"],
             ["cp", f"localai-chatmsg.tmpl", f"{temp_chatmsg_path}"],
@@ -665,6 +666,7 @@ if answerstartup == 3:
             ["python3", "helper_app.py", "localai-chat.tmpl"],
             ["python3", "helper_app.py", "localai-chatmsg.tmpl"],
             ["python3", "helper_app.py", "models.yaml"],
+            ["echo", f"This next step will take 10+ mins, please do not exit or close this program"],
             ["wget", "-O", f"{answer2}model{answer1}.gguf", f"https://tea-cup.midori-ai.xyz/download/{answer2}model{answer1}.gguf"],
             ["cp", f"localai-chat.tmpl", f"{temp_chat_path}"],
             ["cp", f"localai-chatmsg.tmpl", f"{temp_chatmsg_path}"],
@@ -693,6 +695,7 @@ if answerstartup == 3:
             ["python3", "helper_app.py", "localai-chat.tmpl"],
             ["python3", "helper_app.py", "localai-chatmsg.tmpl"],
             ["python3", "helper_app.py", "models-gpu.yaml"],
+            ["echo", f"This next step will take 10+ mins, please do not exit or close this program"],
             ["wget", "-O", f"{answer2}model{answer1}.gguf", f"https://tea-cup.midori-ai.xyz/download/{answer2}model{answer1}.gguf"],
             ["cp", f"localai-chat.tmpl", f"{temp_chat_path}"],
             ["cp", f"localai-chatmsg.tmpl", f"{temp_chatmsg_path}"],
@@ -750,6 +753,7 @@ if answerstartup == 3:
 
     if use_llava == "true":
         llava_commands = [
+            ["echo", f"This next step will take 5+ mins, please do not exit or close this program"],
             ["wget", "-O", inside_model_folder + f"/ggml-model-q4_k.gguf", f"https://huggingface.co/mys/ggml_bakllava-1/resolve/main/ggml-model-q4_k.gguf"],
             ["wget", "-O", inside_model_folder + f"/mmproj-model-f16.gguf", f"https://huggingface.co/mys/ggml_bakllava-1/resolve/main/mmproj-model-f16.gguf"],
             ["wget", "-O", inside_model_folder + f"/chat-simple.tmpl", f"https://github.com/mudler/LocalAI/blob/b8240b4c1839089b9d06a3e2b1c629a294cff87e/examples/configurations/llava/chat-simple.tmpl"],
