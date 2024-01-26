@@ -271,8 +271,11 @@ log("``4`` - Edit Models Congifs")
 log("``5`` - Uninstall Models")
 
 questionbasic = "What would you like to do?: "
-sd_valid_answers = ["1", "2", "3", "4", "5"]
+sd_valid_answers = ["1", "2", "3", "4", "5", "exit"]
 answerstartup = check_str(questionbasic, sd_valid_answers)
+
+if answerstartup.lower() == "exit":
+    exit(0)
 
 answerstartup = int(answerstartup)
 
