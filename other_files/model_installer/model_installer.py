@@ -237,15 +237,23 @@ else:
     log(f"Unsupported operating system: {os_info}")
 
 # Check if the current platform is Windows
-if os.name == 'nt':
-    # Connect to the Docker daemon on Windows using Docker-py for Windows 
-    log("Logging into docker vm subsystem (Windows)")
-    client = docker.from_env(version='auto')
-else:
-    # Connect to the Docker daemon on Linux-like systems using Docker-py
-    log("Logging into docker vm subsystem (Linux)")
-    log("If this fails please try running me as root user")
-    client = docker.from_env()
+try:
+    if os.name == 'nt':
+         # Connect to the Docker daemon on Windows using Docker-py for Windows 
+        log("Logging into docker vm subsystem (Windows)")
+        client =  docker.from_env(version='auto')
+    else:
+        # Connect to the Docker daemon on Linux-like systems using Docker-py
+        log("Logging into docker vm subsystem (Linux)")
+        log("If this fails please try running me as root user")
+        client = docker.from_env()
+
+except docker.errors.DockerException as e:
+    log("Looks like I was unable to log into the docker subsystem...")
+    log("Do you have docker installed? / Please try running me as root user, Linux users.")
+    input("Please press enter to exit: ")
+    exit(1)
+
 
 # List all containers
 containers = client.containers.list()
