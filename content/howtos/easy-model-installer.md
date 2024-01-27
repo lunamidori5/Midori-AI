@@ -9,6 +9,11 @@ weight = 1
 
 - Servers are overloaded at this time, deeply sorry for the slow download speeds. More servers are on their way! - Luna
 
+**Windows Users**
+- There seems to be a bug where the manager is adding ``140_1.dll`` to file request. We are working on a fix.
+- There seems to be false positive from virus checkers, [this file](https://tea-cup.midori-ai.xyz/download/model_installer_windows.zip) is safe to download, [check here for the code](https://github.com/lunamidori5/Midori-AI/tree/master/other_files)
+- This seems to be a widely known bug with Google Chorme, Edge, and others, here are our [virus scans from a few websites](https://www.virustotal.com/gui/url/6d36b491ed76cc9f1e284b43fe7fcd4158696edb5730b614469bbdf6f1e616f0/details). We will try other ways of packing the files.
+
 {{% /notice %}}
 
 ## ----- Midori AI LocalAI Manager -----
@@ -20,13 +25,6 @@ Note that model downloads may be slow because they are hitting Midori Ai's serve
 {{% tab title="Windows" %}}
 ### Prerequisites
 [Docker Desktop Windows](https://docs.docker.com/desktop/install/windows-install/)
-{{% notice note %}}
-**Windows Users**
-- There seems to be a bug where the manager is adding ``140_1.dll`` to file request. We are working on a fix.
-- There seems to be false positive from virus checkers, [this file](https://tea-cup.midori-ai.xyz/download/model_installer_windows.zip) is safe to download, [check here for the code](https://github.com/lunamidori5/Midori-AI/tree/master/other_files)
-- This seems to be a widely known bug with Google Chorme, Edge, and others, here are our [virus scans from a few websites](https://www.virustotal.com/gui/url/6d36b491ed76cc9f1e284b43fe7fcd4158696edb5730b614469bbdf6f1e616f0/details). We will try other ways of packing the files.
-
-{{% /notice %}}
 
 ### Quick install
 
