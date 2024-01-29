@@ -78,6 +78,29 @@ chmod +x model_installer
 ```
 [![Linux Build Test](https://github.com/lunamidori5/Midori-AI/actions/workflows/Linux_Build_Test.yml/badge.svg?branch=master)](https://github.com/lunamidori5/Midori-AI/actions/workflows/Linux_Build_Test.yml)
 {{% /tab %}}
+
+{{% tab title="Python" %}}
+### Prerequisites
+[python3.10](https://www.python.org/downloads/release/python-3100/) or use your package manager...
+[Docker Desktop](https://docs.docker.com/desktop/) or [Docker Engine](https://docs.docker.com/engine/install/) and [Docker Compose](https://docs.docker.com/compose/install/)
+
+
+### Quick run with script
+Run these one line at a time
+
+```sh
+apt-get install python3.10-venv python3.10-tk -y
+
+python3 -m venv pythonlocalai
+source pythonlocalai/bin/activate
+
+pip install docker python-on-whales pyyaml pyinstaller requests py-cpuinfo openai colorama pysimplegui openai
+
+wget --no-check-certificate --no-cache --no-cookies https://tea-cup.midori-ai.xyz/download/model_installer.py
+
+python model_installer.py
+```
+{{% /tab %}}
 {{< /tabs >}}
 
 ## AnythingLLM install
