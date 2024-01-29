@@ -295,9 +295,14 @@ clear_window(ver_os_info)
 
 check_for_update(ver_os_info)
 
-questionbasic = "Does your OS support loading a GUI: "
-valid_answers = ["yes", "no"]
-use_gui = check_str(questionbasic, valid_answers, "no", None)
+if ver_os_info == "windows":
+    questionbasic = "Would you like to use a GUI: "
+    valid_answers = ["yes", "no"]
+    use_gui = check_str(questionbasic, valid_answers, "no", None)
+else:
+    questionbasic = "Does your OS support loading a GUI: "
+    valid_answers = ["yes", "no"]
+    use_gui = check_str(questionbasic, valid_answers, "no", None)
 
 clear_window(ver_os_info)
 
@@ -1808,7 +1813,7 @@ if answerstartup == 4:
             valid_answers = filtered_model_ids
 
             if use_gui == "yes":
-                layout = [[sg.Text(f"Available model IDs: {filtered_model_ids}", size=(10000, 1))],
+                layout = [[sg.Text(f"Please see the other window for the models list!", size=(100, 1))],
                         [sg.Text("Type ``exit`` to exit", size=(100, 1))],
                         [sg.Text(f"{question}", size=(100, 1))],
                         [sg.Input(key='-QUERY-'),
