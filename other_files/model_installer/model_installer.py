@@ -233,7 +233,7 @@ def check_str(question, valid_answers, use_gui="no", layout=None):
     """
 
     if use_gui == "yes":
-        window = sg.Window('LocalAI Manager', layout, font=('Helvetica', ' 13'), default_button_element_size=(8,2), use_default_focus=True)
+        window = sg.Window('LocalAI Manager', layout, font=('Helvetica', ' 13'), default_button_element_size=(8,2), use_default_focus=False, resizable=True, margins=(0,0), use_custom_titlebar=True, finalize=True, keep_on_top=True)
 
         while True:     # The Event Loop
             event, values = window.read()
