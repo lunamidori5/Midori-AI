@@ -1,1 +1,1 @@
-cd /D F:\Programming-HHD\Midori_Model_Installer_setup && call Startmake.bat
+cd /D F:\Programming-HHD\Midori_Model_Installer_setup && start Startmake.bat
