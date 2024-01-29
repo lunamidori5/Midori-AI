@@ -24,6 +24,8 @@ use_core = "False"
 missing_cuda = True
 missing_cuda_toolkit = True
 
+layout = None
+
 sg.theme('DarkAmber')
 
 compose_path = "docker-compose.yaml"
@@ -102,13 +104,24 @@ def check_for_update(ver_os_info):
     """
     placeholder_link = f"https://io.midori-ai.xyz/howtos/easy-model-installer/"
 
-    # Send a request to the server for the model version.
-    response = requests.get("https://tea-cup.midori-ai.xyz/download/midori_program_ver.txt")
+    servers_replyed = True
 
-    # Check if the request was successful.
-    if response.status_code != 200:
-        log(f"Servers seem to be down, please try again in a moment...")
-        exit(418)
+    retry = 0
+
+    while retry < 15:
+        # Send a request to the server for the model version.
+        response = requests.get("https://tea-cup.midori-ai.xyz/download/midori_program_ver.txt")
+
+        # Check if the request was successful.
+        if response.status_code != 200:
+            log(f"Servers seem to be down, please try again in a moment...")
+            servers_replyed = False
+            retry = retry + 1
+            if retry > 10:
+                exit(404)
+        
+        if servers_replyed:
+            break
 
     # Get the current model version.
     current_version = response.text.strip()
@@ -123,7 +136,7 @@ def check_for_update(ver_os_info):
         log(f"-----------------------------------------------------------------------------------------------")
         log(f"A update is available. Please update using the following link: {placeholder_link}")
         log(f"-----------------------------------------------------------------------------------------------")
-        exit(15)
+        input("Please hit enter to update: ")
         
         # Run commands based on the OS
         if ver_os_info == 'windows':
@@ -131,13 +144,13 @@ def check_for_update(ver_os_info):
             os.system("del model_installer.exe")
             os.system("del model_installer.bat")
             os.system(f"curl -sSL https://raw.githubusercontent.com/lunamidori5/Midori-AI/master/other_files/model_installer/model_installer.bat -o model_installer.bat && start model_installer.bat")
-            log(f"If the model manager failed to start, just run ``call model_installer.bat``")
+            log(f"If the localai manager failed to start, just run ``call model_installer.bat``")
         elif ver_os_info == 'linux':
             os.system("rm -f model_installer.tar.gz model_installer model_installer.sh")
             os.system(f"curl -sSL https://raw.githubusercontent.com/lunamidori5/Midori-AI/master/other_files/model_installer/model_installer.sh | sh")
-            log(f"If the model manager failed to start, just run ``./model_installer.sh``")
+            log(f"If the localai manager failed to start, just run ``./model_installer.sh``")
 
-        exit(1)
+        exit(0)
 
 def check_cpu_support():
 
@@ -207,7 +220,7 @@ def check_model_ids_file():
     return lines
 
 
-def check_str(question, valid_answers):
+def check_str(question, valid_answers, use_gui="no", layout=None):
     """
     Checks if the user input is valid.
 
@@ -219,13 +232,30 @@ def check_str(question, valid_answers):
     The user's input if it is valid, or None otherwise.
     """
 
-    while True:
-        answer = input(f"\n{question}\n").lower()
-        if answer in valid_answers:
-            log(f"I asked {question} / you replied {answer}")
-            return answer
-        else:
-            log(f"\nInvalid input. Please enter one of the following: {', '.join(valid_answers)}\n")
+    if use_gui == "yes":
+        window = sg.Window('LocalAI Manager', layout, font=('Helvetica', ' 13'), default_button_element_size=(8,2), use_default_focus=True)
+
+        while True:     # The Event Loop
+            event, values = window.read()
+            if event in (sg.WIN_CLOSED, 'EXIT'):            # quit if exit button or X
+                break
+            if event == 'SEND':
+                query = str(values['-QUERY-'].rstrip())
+                if query in valid_answers:
+                    log(f"I asked {question} / you replied {query}")
+                    window.close()
+                    return query
+
+        window.close()
+
+    else:
+        while True:
+            answer = input(f"\n{question}\n").lower()
+            if answer in valid_answers:
+                log(f"I asked {question} / you replied {answer}")
+                return answer
+            else:
+                log(f"\nInvalid input. Please enter one of the following: {', '.join(valid_answers)}\n")
 
 # Get the operating system.
 os_info = platform.system()
@@ -261,7 +291,15 @@ except Exception as e:
 # List all containers
 containers = client.containers.list()
 
+clear_window(ver_os_info)
+
 check_for_update(ver_os_info)
+
+questionbasic = "Does your OS support loading a GUI: "
+valid_answers = ["yes", "no"]
+use_gui = check_str(questionbasic, valid_answers, "no", None)
+
+clear_window(ver_os_info)
 
 log("-----------------------------------------------------------------------------------------------")
 log(f"------------------------------ Main Menu (Ver: {ver_info}) ------------------------------------")
@@ -270,12 +308,25 @@ log("---------------------------------------------------------------------------
 log("``1`` - Setup LocalAI / AnythingLLM")
 log("``2`` - Uninstall or Upgrade LocalAI / AnythingLLM")
 log("``3`` - Setup or Upgrade Models")
-log("``4`` - Edit Models Congifs")
+log("``4`` - Edit Models Configs")
 log("``5`` - Uninstall Models")
 
 questionbasic = "What would you like to do?: "
 sd_valid_answers = ["1", "2", "3", "4", "5", "exit"]
-answerstartup = check_str(questionbasic, sd_valid_answers)
+
+if use_gui == "yes":
+    layout = [[sg.Text(f"Main Menu (Ver: {ver_info})", size=(40, 1))],
+            [sg.Text(f"``1`` - Setup LocalAI / AnythingLLM", size=(30, 1)), 
+             sg.Text(f"``2`` - Uninstall or Upgrade LocalAI / AnythingLLM", size=(45, 1)),],
+            [sg.Text(f"``3`` - Setup or Upgrade Models", size=(30, 1)),
+             sg.Text(f"``4`` - Edit Models Configs", size=(30, 1)),
+             sg.Text(f"``5`` - Uninstall Models", size=(30, 1))],
+            [sg.Text(f"{questionbasic}", size=(100, 1))],
+            [sg.Input(key='-QUERY-'),
+            sg.Button('SEND', button_color=(sg.YELLOWS[0], sg.BLUES[0]), bind_return_key=True),]
+            ]
+    
+answerstartup = check_str(questionbasic, sd_valid_answers, use_gui, layout)
 
 if answerstartup.lower() == "exit":
     exit(0)
@@ -398,7 +449,14 @@ if answerstartup == 3:
 
     questionbasic = "Would you like to install a LLM?: "
     sd_valid_answers = ["yes", "no", "true", "false"]
-    answerbasic = check_str(questionbasic, sd_valid_answers)
+
+    if use_gui == "yes":
+        layout = [[sg.Text(f"{questionbasic}", size=(100, 1))],
+                [sg.Input(key='-QUERY-'),
+                sg.Button('SEND', button_color=(sg.YELLOWS[0], sg.BLUES[0]), bind_return_key=True),]
+                ]
+        
+    answerbasic = check_str(questionbasic, sd_valid_answers, use_gui, layout)
 
     if answerbasic.lower() == "no":
         answerbasic = "False"
@@ -412,7 +470,27 @@ if answerstartup == 3:
 
     if answerbasic:
         question4 = "What would you like to name the models file?: \n"
-        answer4 = input(question4)
+
+        if use_gui == "yes":
+            layout = [[sg.Text(f"{question4}", size=(100, 1))],
+                    [sg.Input(key='-QUERY-'),
+                    sg.Button('SEND', button_color=(sg.YELLOWS[0], sg.BLUES[0]), bind_return_key=True),]
+                ]
+            
+            window = sg.Window('LocalAI Manager', layout, font=('Helvetica', ' 13'), default_button_element_size=(8,2), use_default_focus=True)
+
+            while True:     # The Event Loop
+                event, values = window.read()
+                if event in (sg.WIN_CLOSED, 'EXIT'):            # quit if exit button or X
+                    break
+                if event == 'SEND':
+                    answer4 = str(values['-QUERY-'].rstrip())
+                    break
+
+            window.close()
+        else:
+            answer4 = input(question4)
+        
         answer4 = str(answer4.lower())
 
         clear_window(ver_os_info)
@@ -420,7 +498,15 @@ if answerstartup == 3:
         log(about_model_size)
         valid_answers2 = ["7b", "43b", "70b", "id"]
         question2 = f"What size of known and supported model would you like to setup ({', '.join(valid_answers2)}): "
-        answer2 = check_str(question2, valid_answers2)
+
+        if use_gui == "yes":
+            layout = [[sg.Text(f"{about_model_size}", size=(100, 1))],
+                    [sg.Text(f"{question2}", size=(100, 1))],
+                    [sg.Input(key='-QUERY-'),
+                    sg.Button('SEND', button_color=(sg.YELLOWS[0], sg.BLUES[0]), bind_return_key=True),]
+                    ]
+            
+        answer2 = check_str(question2, valid_answers2, use_gui, layout)
         answer2 = str(answer2.lower())
 
         valid_answers1 = ["q3", "q4", "q5", "q6", "q8"] 
@@ -437,15 +523,30 @@ if answerstartup == 3:
             clear_window(ver_os_info)
             valid_answers2 = check_model_ids_file()
             question2 = f"What is the id of the model you would like to install? ({', '.join(valid_answers2)}): "
-            answer2 = check_str(question2, valid_answers2)
+
+            if use_gui == "yes":
+                layout = [[sg.Text(f"{question2}", size=(100, 1))],
+                        [sg.Input(key='-QUERY-'),
+                        sg.Button('SEND', button_color=(sg.YELLOWS[0], sg.BLUES[0]), bind_return_key=True),]
+                        ]
+                
+            answer2 = check_str(question2, valid_answers2, use_gui, layout)
             answer2 = str(answer2.lower())
 
         clear_window(ver_os_info)
 
         log(about_model_q_size)
 
-        question1 = f"What type of quantised model would you like to setup? ({', '.join(valid_answers1)}): "
-        answer1 = check_str(question1, valid_answers1)
+        question = f"What type of quantised model would you like to setup? ({', '.join(valid_answers1)}): "
+
+        if use_gui == "yes":
+            layout = [[sg.Text(f"{about_model_q_size}", size=(100, 1))],
+                    [sg.Text(f"{question}", size=(100, 1))],
+                    [sg.Input(key='-QUERY-'),
+                    sg.Button('SEND', button_color=(sg.YELLOWS[0], sg.BLUES[0]), bind_return_key=True),]
+                    ]
+            
+        answer1 = check_str(question, valid_answers1, use_gui, layout)
 
         if answer1.lower() == "none":
             answer1 = str(answer1.lower())
@@ -465,8 +566,28 @@ if answerstartup == 3:
             clear_window(ver_os_info)
             # Ask the user the third question
             if not answer1 == "none":
-                question3 = "\nNumber of GPU layers to give the model?  (0 to 2000): \n"
-                answer3 = input(question3)
+                question = "\nNumber of GPU layers to give the model?  (0 to 2000): \n"
+                
+                if use_gui == "yes":
+                    layout = [[sg.Text(f"{question}", size=(100, 1))],
+                            [sg.Input(key='-QUERY-'),
+                            sg.Button('SEND', button_color=(sg.YELLOWS[0], sg.BLUES[0]), bind_return_key=True),]
+                        ]
+                    
+                    window = sg.Window('LocalAI Manager', layout, font=('Helvetica', ' 13'), default_button_element_size=(8,2), use_default_focus=True)
+
+                    while True:     # The Event Loop
+                        event, values = window.read()
+                        if event in (sg.WIN_CLOSED, 'EXIT'):            # quit if exit button or X
+                            break
+                        if event == 'SEND':
+                            answer3 = str(values['-QUERY-'].rstrip())
+                            break
+
+                    window.close()
+                else:
+                    answer3 = input(question)
+
                 answer3 = int(answer3)
                 use_gpu = True
         else:
@@ -477,16 +598,43 @@ if answerstartup == 3:
         clear_window(ver_os_info)
 
         if not answer1 == "none":
-            question3 = "\nNumber of CPU Cores to give the model?  (0 to 2000): \n"
-            answercpu = input(question3)
+            question = "\nNumber of CPU Cores to give the model?  (0 to 2000): \n"
+                
+            if use_gui == "yes":
+                layout = [[sg.Text(f"{question}", size=(100, 1))],
+                        [sg.Input(key='-QUERY-'),
+                        sg.Button('SEND', button_color=(sg.YELLOWS[0], sg.BLUES[0]), bind_return_key=True),]
+                    ]
+                
+                window = sg.Window('LocalAI Manager', layout, font=('Helvetica', ' 13'), default_button_element_size=(8,2), use_default_focus=True)
+
+                while True:     # The Event Loop
+                    event, values = window.read()
+                    if event in (sg.WIN_CLOSED, 'EXIT'):            # quit if exit button or X
+                        break
+                    if event == 'SEND':
+                        answer3 = str(values['-QUERY-'].rstrip())
+                        break
+
+                window.close()
+            else:
+                answercpu = input(question)
+
             answercpu = int(answercpu)
 
         clear_window(ver_os_info)
 
     if "ffmpeg" in service_image:
-        questionsd = "Would you like me to install a few Text to Speech models?: "
+        question = "Would you like me to install a few Text to Speech models?: "
         sd_valid_answers = ["yes", "no", "true", "false"]
-        answertts = check_str(questionsd, sd_valid_answers)
+
+        if use_gui == "yes":
+            layout = [[sg.Text(f"{question}", size=(100, 1))],
+                        [sg.Input(key='-QUERY-'),
+                        sg.Button('SEND', button_color=(sg.YELLOWS[0], sg.BLUES[0]), bind_return_key=True),]
+                    ]
+    
+        answertts = check_str(question, sd_valid_answers, use_gui, layout)
 
         if answertts.lower() == "no":
             answertts = "False"
@@ -499,9 +647,16 @@ if answerstartup == 3:
 
         clear_window(ver_os_info)
 
-    questionsd = "Would you like me to install the embedding model?: "
+    question = "Would you like me to install the embedding model?: "
     sd_valid_answers = ["yes", "no", "true", "false"]
-    answerenbed = check_str(questionsd, sd_valid_answers)
+
+    if use_gui == "yes":
+        layout = [[sg.Text(f"{question}", size=(100, 1))],
+                    [sg.Input(key='-QUERY-'),
+                    sg.Button('SEND', button_color=(sg.YELLOWS[0], sg.BLUES[0]), bind_return_key=True),]
+                ]
+        
+    answerenbed = check_str(question, sd_valid_answers, use_gui, layout)
 
     if answerenbed.lower() == "no":
         answerenbed = "False"
@@ -518,9 +673,16 @@ if answerstartup == 3:
         log("Looks like you are running a Core Image, Skipping: Stable diffusion, Llava, Huggingface Models")
     else:
         if "cuda11" in service_image or "cuda12" in service_image:
-            questionsd = "Would you like me to install a Stable diffusion model?: "
+            question = "Would you like me to install a Stable diffusion model?: "
             sd_valid_answers = ["yes", "no", "true", "false"]
-            answersd = check_str(questionsd, sd_valid_answers)
+
+            if use_gui == "yes":
+                layout = [[sg.Text(f"{question}", size=(100, 1))],
+                            [sg.Input(key='-QUERY-'),
+                            sg.Button('SEND', button_color=(sg.YELLOWS[0], sg.BLUES[0]), bind_return_key=True),]
+                        ]
+
+            answersd = check_str(question, sd_valid_answers, use_gui, layout)
 
             if answersd.lower() == "no":
                 answersd = "False"
@@ -533,9 +695,16 @@ if answerstartup == 3:
 
             clear_window(ver_os_info)
             
-            questionsd = "Would you like me to install the Llava model?: "
+            question = "Would you like me to install the Llava model?: "
             sd_valid_answers = ["yes", "no", "true", "false"]
-            answerllava = check_str(questionsd, sd_valid_answers)
+
+            if use_gui == "yes":
+                layout = [[sg.Text(f"{question}", size=(100, 1))],
+                            [sg.Input(key='-QUERY-'),
+                            sg.Button('SEND', button_color=(sg.YELLOWS[0], sg.BLUES[0]), bind_return_key=True),]
+                        ]
+
+            answerllava = check_str(question, sd_valid_answers, use_gui, layout)
 
             if answerllava.lower() == "no":
                 answerllava = "False"
@@ -550,9 +719,16 @@ if answerstartup == 3:
         else:
             log("Looks like you are running on CPU only, Skipping: Stable diffusion, Llava, Huggingface Models")
         
-        questionsd = "Would you like to use our slower but encrypted endpoint for LocalAI to serve and setup the model's files (Not the models file itself)?: "
+        question = "Would you like to use our slower but encrypted endpoint for LocalAI to serve and setup the model's files (Not the models file itself)?: "
         sd_valid_answers = ["yes", "no", "true", "false"]
-        answerencrypted = check_str(questionsd, sd_valid_answers)
+
+        if use_gui == "yes":
+            layout = [[sg.Text(f"{question}", size=(100, 1))],
+                        [sg.Input(key='-QUERY-'),
+                        sg.Button('SEND', button_color=(sg.YELLOWS[0], sg.BLUES[0]), bind_return_key=True),]
+                    ]
+
+        answerencrypted = check_str(question, sd_valid_answers, use_gui, layout)
 
         if answerencrypted.lower() == "no":
             answerencrypted = "False"
@@ -868,9 +1044,74 @@ if answerstartup == 5:
         
     clear_window(ver_os_info)
 
-    bearer_token = str(input("If you have a API Key, please put it here. Else type no: "))
-    ip_address = str(input("What is the LocalAI's IP? (192.168.x.x): "))
-    models_ports = str(input(f"What is the LocalAI's Port? (8080): "))
+    if use_gui == "yes":
+        layout = [[sg.Text(f"If you have a API Key, please put it here. Else hit enter:", size=(100, 1))],
+                    [sg.Input(key='-QUERY-'),
+                    sg.Button('SEND', button_color=(sg.YELLOWS[0], sg.BLUES[0]), bind_return_key=True),]
+                ]
+        
+        window = sg.Window('LocalAI Manager', layout, font=('Helvetica', ' 13'), default_button_element_size=(8,2), use_default_focus=True)
+
+        while True:     # The Event Loop
+            event, values = window.read()
+            if event in (sg.WIN_CLOSED, 'EXIT'):            # quit if exit button or X
+                break
+            if event == 'SEND':
+                bearer_token = str(values['-QUERY-'].rstrip())
+                break
+
+        window.close()
+
+        layout = [[sg.Text(f"What is the LocalAI's IP? (192.168.x.x)", size=(100, 1))],
+                    [sg.Input(key='-QUERY-'),
+                    sg.Button('SEND', button_color=(sg.YELLOWS[0], sg.BLUES[0]), bind_return_key=True),]
+                ]
+        
+        window = sg.Window('LocalAI Manager', layout, font=('Helvetica', ' 13'), default_button_element_size=(8,2), use_default_focus=True)
+
+        while True:     # The Event Loop
+            event, values = window.read()
+            if event in (sg.WIN_CLOSED, 'EXIT'):            # quit if exit button or X
+                break
+            if event == 'SEND':
+                ip_address = str(values['-QUERY-'].rstrip())
+
+                if "localhost" in ip_address:
+                    log("Localhost is not a IP address... Please try again...")
+                else:
+                    break
+
+        window.close()
+
+        layout = [[sg.Text(f"What is the LocalAI's Port? (8080): ", size=(100, 1))],
+                    [sg.Input(key='-QUERY-'),
+                    sg.Button('SEND', button_color=(sg.YELLOWS[0], sg.BLUES[0]), bind_return_key=True),]
+                ]
+        
+        window = sg.Window('LocalAI Manager', layout, font=('Helvetica', ' 13'), default_button_element_size=(8,2), use_default_focus=True)
+
+        while True:     # The Event Loop
+            event, values = window.read()
+            if event in (sg.WIN_CLOSED, 'EXIT'):            # quit if exit button or X
+                break
+            if event == 'SEND':
+                models_ports = str(values['-QUERY-'].rstrip())
+                break
+
+        window.close()
+    else:
+        bearer_token = str(input("If you have a API Key, please put it here. Else type no: "))
+
+        while True:
+            try:
+                ip_address = str(input("What is the LocalAI's IP? (192.168.x.x): "))
+                if "localhost" in ip_address:
+                    raise ValueError("Localhost is not a valid IP address.")
+                break
+            except ValueError as e:
+                log(f"Error: {e}. Please try again.")
+
+        models_ports = str(input(f"What is the LocalAI's Port? (8080): "))
 
     headers = {
         "Authorization": f"Bearer {bearer_token}"
@@ -960,9 +1201,16 @@ if answerstartup == 1:
     log(f"I am going to save our chat here and every thing I do to a file called ``{log_file_name}``, check it out if you like <3")
     log("Here are a few questions about how you want me to setup your LocalAI docker image...")
 
-    questionbasic = "Would you like me to install LocalAI in docker to this computer?: "
+    question = "Would you like me to install LocalAI in docker to this computer?: "
     valid_answers = ["yes", "no", "true", "false"]
-    answerbasic = check_str(questionbasic, valid_answers)
+
+    if use_gui == "yes":
+        layout = [[sg.Text(f"{question}", size=(100, 1))],
+                [sg.Input(key='-QUERY-'),
+                sg.Button('SEND', button_color=(sg.YELLOWS[0], sg.BLUES[0]), bind_return_key=True),]
+                ]
+        
+    answerbasic = check_str(question, valid_answers, use_gui, layout)
 
     if answerbasic.lower() == "no":
         answerbasic = "False"
@@ -981,9 +1229,18 @@ if answerstartup == 1:
     log("LocalAI offers a ``master`` image.")
     log("This image maybe unstable or have bugs but will let you test out the newer models.")
 
-    questionbasic = "Would you like to try the ``master`` image?: "
+    question = "Would you like to try the ``master`` image?: "
     valid_answers = ["yes", "no", "true", "false"]
-    answermaster = check_str(questionbasic, valid_answers)
+
+    if use_gui == "yes":
+        layout = [[sg.Text(f"LocalAI offers a ``master`` image.", size=(100, 1))],
+                [sg.Text(f"This image maybe unstable or have bugs but will let you test out the newer models.", size=(100, 1))],
+                [sg.Text(f"{question}", size=(100, 1))],
+                [sg.Input(key='-QUERY-'),
+                sg.Button('SEND', button_color=(sg.YELLOWS[0], sg.BLUES[0]), bind_return_key=True),]
+                ]
+        
+    answermaster = check_str(question, valid_answers, use_gui, layout)
 
     if answermaster.lower() == "no":
         answermaster = "False"
@@ -999,9 +1256,19 @@ if answerstartup == 1:
     log("If not please stop by ``https://developer.nvidia.com/cuda-downloads`` and get it for your OS, WSL is Linux")
     log("If you do not have CUDA installed or use a card that does not support it please type no...")
 
-    questionbasic = ("Would you like to use GPU with LocalAI? It speeds up LLMs and SD models by 25x: ")
+    question = ("Would you like to use GPU with LocalAI? It speeds up LLMs and SD models by 25x: ")
     valid_answers = ["yes", "no", "true", "false"]
-    answer_cuda = check_str(questionbasic, valid_answers)
+
+    if use_gui == "yes":
+        layout = [[sg.Text(f"Sadly I am unable to check your CUDA install for GPU, If you have it already installed good!", size=(100, 1))],
+                [sg.Text(f"If not please stop by ``https://developer.nvidia.com/cuda-downloads`` and get it for your OS, WSL is Linux", size=(100, 1))],
+                [sg.Text(f"If you do not have CUDA installed or use a card that does not support it please type no...", size=(100, 1))],
+                [sg.Text(f"{question}", size=(100, 1))],
+                [sg.Input(key='-QUERY-'),
+                sg.Button('SEND', button_color=(sg.YELLOWS[0], sg.BLUES[0]), bind_return_key=True),]
+                ]
+        
+    answer_cuda = check_str(question, valid_answers, use_gui, layout)
 
     if answer_cuda.lower() == "no":
         answer_cuda = "False"
@@ -1015,15 +1282,22 @@ if answerstartup == 1:
         clear_window(ver_os_info)
         os.system("nvidia-smi")
         log('I ran the cuda command, it "should" show you if you have CUDA11 or CUDA12')
-        questionbasic = "Do you have CUDA11 or CUDA12? (Type just 11 or 12): "
+        question = "Do you have CUDA11 or CUDA12? (Type just 11 or 12): "
         valid_answers = ["11", "12"]
-        version = check_str(questionbasic, valid_answers)
+        version = check_str(question, valid_answers)
 
     clear_window(ver_os_info)
 
-    questionbasic = "Would you like me to add TTS / Audio support to LocalAI?: "
+    question = "Would you like me to add TTS / Audio support to LocalAI?: "
     valid_answers = ["yes", "no", "true", "false"]
-    answertts = check_str(questionbasic, valid_answers)
+
+    if use_gui == "yes":
+        layout = [[sg.Text(f"{question}", size=(100, 1))],
+                [sg.Input(key='-QUERY-'),
+                sg.Button('SEND', button_color=(sg.YELLOWS[0], sg.BLUES[0]), bind_return_key=True),]
+                ]
+        
+    answertts = check_str(question, valid_answers, use_gui, layout)
 
     if answertts.lower() == "no":
         answertts = "False"
@@ -1036,9 +1310,16 @@ if answerstartup == 1:
 
     clear_window(ver_os_info)
 
-    questionbasic = "LocalAI offers a ``core`` image that lowers the image size by more than 60% \nInstalling this image removes support for all non LLM, Embedding, or TTS models.\nThis also removes the encrypted endpoint of the model installer. \nWould you like to use the core image? (Not Recommended): "
+    question = "LocalAI offers a ``core`` image that lowers the image size by more than 60% \nInstalling this image removes support for all non LLM, Embedding, or TTS models.\nThis also removes the encrypted endpoint of the model installer. \nWould you like to use the core image? (Not Recommended): "
     valid_answers = ["yes", "no", "true", "false"]
-    answercore = check_str(questionbasic, valid_answers)
+
+    if use_gui == "yes":
+        layout = [[sg.Text(f"{question}", size=(100, 1))],
+                [sg.Input(key='-QUERY-'),
+                sg.Button('SEND', button_color=(sg.YELLOWS[0], sg.BLUES[0]), bind_return_key=True),]
+                ]
+        
+    answercore = check_str(question, valid_answers, use_gui, layout)
 
     if answercore.lower() == "no":
         answercore = "False"
@@ -1053,9 +1334,16 @@ if answerstartup == 1:
     log("We have a docker ready if you would like to try it, its called AnythingLLM, its a GUI or WebUI for LocalAI. It comes highly recommened for new users.")
     log("If you already have a AnythingLLM or WebUI image installed please type ``no``")
 
-    questionbasic = "Would you like me to install AnythingLLM in a docker next to LocalAI?"
+    question = "Would you like me to install AnythingLLM in a docker next to LocalAI?"
     valid_answers = ["yes", "no", "true", "false"]
-    answeranything = check_str(questionbasic, valid_answers)
+
+    if use_gui == "yes":
+        layout = [[sg.Text(f"{question}", size=(100, 1))],
+                [sg.Input(key='-QUERY-'),
+                sg.Button('SEND', button_color=(sg.YELLOWS[0], sg.BLUES[0]), bind_return_key=True),]
+                ]
+        
+    answeranything = check_str(question, valid_answers, use_gui, layout)
 
     if answeranything.lower() == "no":
         answeranything = "False"
@@ -1277,9 +1565,16 @@ if answerstartup == 2:
 
     clear_window(ver_os_info)
 
-    questionbasic = "What would you like to do? (Uninstall or Upgrade): "
+    question = "What would you like to do? (Uninstall or Upgrade): "
     valid_answers = ["uninstall", "upgrade", "reinstall", "purge", "down", "up"]
-    answeruninstaller = check_str(questionbasic, valid_answers)
+
+    if use_gui == "yes":
+        layout = [[sg.Text(f"{question}", size=(100, 1))],
+                [sg.Input(key='-QUERY-'),
+                sg.Button('SEND', button_color=(sg.YELLOWS[0], sg.BLUES[0]), bind_return_key=True),]
+                ]
+        
+    answeruninstaller = check_str(question, valid_answers, use_gui, layout)
 
     if answeruninstaller == "uninstall":
         answeruninstaller = "down"
@@ -1417,18 +1712,74 @@ if answerstartup == 4:
         
     clear_window(ver_os_info)
 
-    bearer_token = str(input("If you have a API Key, please put it here. Else type no: "))
+    if use_gui == "yes":
+        layout = [[sg.Text(f"If you have a API Key, please put it here. Else hit enter:", size=(100, 1))],
+                    [sg.Input(key='-QUERY-'),
+                    sg.Button('SEND', button_color=(sg.YELLOWS[0], sg.BLUES[0]), bind_return_key=True),]
+                ]
+        
+        window = sg.Window('LocalAI Manager', layout, font=('Helvetica', ' 13'), default_button_element_size=(8,2), use_default_focus=True)
 
-    while True:
-        try:
-            ip_address = str(input("What is the LocalAI's IP? (192.168.x.x): "))
-            if "localhost" in ip_address:
-                raise ValueError("Localhost is not a valid IP address.")
-            break
-        except ValueError as e:
-            log(f"Error: {e}. Please try again.")
+        while True:     # The Event Loop
+            event, values = window.read()
+            if event in (sg.WIN_CLOSED, 'EXIT'):            # quit if exit button or X
+                break
+            if event == 'SEND':
+                bearer_token = str(values['-QUERY-'].rstrip())
+                break
 
-    models_ports = str(input(f"What is the LocalAI's Port? (8080): "))
+        window.close()
+
+        layout = [[sg.Text(f"What is the LocalAI's IP? (192.168.x.x)", size=(100, 1))],
+                    [sg.Input(key='-QUERY-'),
+                    sg.Button('SEND', button_color=(sg.YELLOWS[0], sg.BLUES[0]), bind_return_key=True),]
+                ]
+        
+        window = sg.Window('LocalAI Manager', layout, font=('Helvetica', ' 13'), default_button_element_size=(8,2), use_default_focus=True)
+
+        while True:     # The Event Loop
+            event, values = window.read()
+            if event in (sg.WIN_CLOSED, 'EXIT'):            # quit if exit button or X
+                break
+            if event == 'SEND':
+                ip_address = str(values['-QUERY-'].rstrip())
+
+                if "localhost" in ip_address:
+                    log("Localhost is not a valid IP address... Please try again...")
+                else:
+                    break
+
+        window.close()
+
+        layout = [[sg.Text(f"What is the LocalAI's Port? (8080): ", size=(100, 1))],
+                    [sg.Input(key='-QUERY-'),
+                    sg.Button('SEND', button_color=(sg.YELLOWS[0], sg.BLUES[0]), bind_return_key=True),]
+                ]
+        
+        window = sg.Window('LocalAI Manager', layout, font=('Helvetica', ' 13'), default_button_element_size=(8,2), use_default_focus=True)
+
+        while True:     # The Event Loop
+            event, values = window.read()
+            if event in (sg.WIN_CLOSED, 'EXIT'):            # quit if exit button or X
+                break
+            if event == 'SEND':
+                models_ports = str(values['-QUERY-'].rstrip())
+                break
+
+        window.close()
+    else:
+        bearer_token = str(input("If you have a API Key, please put it here. Else type no: "))
+
+        while True:
+            try:
+                ip_address = str(input("What is the LocalAI's IP? (192.168.x.x): "))
+                if "localhost" in ip_address:
+                    raise ValueError("Localhost is not a valid IP address.")
+                break
+            except ValueError as e:
+                log(f"Error: {e}. Please try again.")
+
+        models_ports = str(input(f"What is the LocalAI's Port? (8080): "))
 
     headers = {"Authorization": f"Bearer {bearer_token}"}
 
@@ -1453,9 +1804,18 @@ if answerstartup == 4:
             log(f"Available model IDs: {filtered_model_ids}")
             log("Type ``exit`` to exit")
 
-            questionbasic = "What model would you like to edit?: "
+            question = "What model would you like to edit?: "
             valid_answers = filtered_model_ids
-            answeryamleditor = check_str(questionbasic, valid_answers)
+
+            if use_gui == "yes":
+                layout = [[sg.Text(f"Available model IDs: {filtered_model_ids}", size=(10000, 1))],
+                        [sg.Text("Type ``exit`` to exit", size=(100, 1))],
+                        [sg.Text(f"{question}", size=(100, 1))],
+                        [sg.Input(key='-QUERY-'),
+                        sg.Button('SEND', button_color=(sg.YELLOWS[0], sg.BLUES[0]), bind_return_key=True),]
+                        ]
+                
+            answeryamleditor = check_str(question, valid_answers, use_gui, layout)
 
             if ".yaml" in answeryamleditor or ".gguf" in answeryamleditor:
                 answeryamleditor = answeryamleditor.replace(".yaml", "").replace(".gguf", "")
@@ -1466,9 +1826,17 @@ if answerstartup == 4:
             
             clear_window(ver_os_info)
 
-            questionbasic = "What setting would you like to edit?: "
+            question = "What setting would you like to edit?: "
             valid_answers = ["gpu_layers", "f16", "threads", "low_vram", "mmap", "mmlock", "name", "cuda", "numa", "no_mulmatq"]
-            answeryamleditor_two = check_str(questionbasic, valid_answers)
+
+            if use_gui == "yes":
+                layout = [[sg.Text(f"Available settings: {str(valid_answers)}", size=(10000, 1))],
+                        [sg.Text(f"{question}", size=(100, 1))],
+                        [sg.Input(key='-QUERY-'),
+                        sg.Button('SEND', button_color=(sg.YELLOWS[0], sg.BLUES[0]), bind_return_key=True),]
+                        ]
+                
+            answeryamleditor_two = check_str(question, valid_answers, use_gui, layout)
             
             clear_window(ver_os_info)
 

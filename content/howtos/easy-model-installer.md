@@ -7,7 +7,7 @@ weight = 1
 
 {{% notice note %}}
 
-- Servers are overloaded at this time, deeply sorry for the slow download speeds. More servers are on their way! - Luna
+- **FILE SERVERS ARE DOWN... WE ARE WORKING ON A FIX**
 
 **Windows Users**
 - There seems to be a bug where the manager is adding ``140_1.dll`` to file request. We are working on a fix.
