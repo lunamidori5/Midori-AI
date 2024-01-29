@@ -7,7 +7,7 @@ weight = 1
 
 {{% notice note %}}
 
-- **FILE SERVERS ARE DOWN... WE ARE WORKING ON A FIX**
+- File Servers are back up, thank you!
 
 **Windows Users**
 - There seems to be a bug where the manager is adding ``140_1.dll`` to file request. We are working on a fix.
