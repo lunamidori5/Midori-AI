@@ -7,6 +7,8 @@ import requests
 import datetime
 import platform
 
+import PySimpleGUI as sg
+
 from colorama import Fore
 
 from cpuinfo import get_cpu_info
@@ -21,6 +23,8 @@ use_core = "False"
 
 missing_cuda = True
 missing_cuda_toolkit = True
+
+sg.theme('DarkAmber')
 
 compose_path = "docker-compose.yaml"
 

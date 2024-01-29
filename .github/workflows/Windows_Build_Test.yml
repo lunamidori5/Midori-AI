@@ -16,7 +16,7 @@ jobs:
         python-version: '3.10'
     - name: Install dependencies
       run: |
-        pip install docker python-on-whales pyyaml PyInstaller requests py-cpuinfo nicegui openai colorama 
+        pip install docker python-on-whales pyyaml PyInstaller requests py-cpuinfo pysimplegui openai colorama 
     - name: Download Files
       run: |
         curl -O https://raw.githubusercontent.com/lunamidori5/Midori-AI/master/other_files/model_installer/model_installer.py
