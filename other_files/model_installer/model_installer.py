@@ -3,6 +3,7 @@ import json
 import yaml
 import openai
 import docker
+import Tkinter
 import requests
 import datetime
 import platform
