@@ -1601,21 +1601,21 @@ if answerstartup == 2:
 
     if answeruninstaller == "down":
         try:
-            localai_docker.compose.down(remove_images=True)
+            localai_docker.compose.down(remove_images="all")
             log("Uninstalled LocalAI fully! Thank you for trying LocalAI out!")
         except Exception as e:
             log(f"Error occurred while running docker-compose down: {e}")
 
         if anything_llm_installed:
             try:
-                anythingllm_docker.compose.down(remove_images=True)
+                anythingllm_docker.compose.down(remove_images="all")
                 log("Uninstalled AnythingLLM fully! Thank you for trying AnythingLLM out!")
             except Exception as e:
                 log(f"Error occurred while running docker-compose down: {e}")
 
     if answeruninstaller == "up":
         try:
-            localai_docker.compose.down(remove_images=True)
+            localai_docker.compose.down(remove_images="all")
             localai_docker.compose.up(build=False, detach=True, no_build=False, color=True, log_prefix=True, start=True, pull="always")
             log("Reinstalled LocalAI fully! If it must rebuild please wait about 10mins or more!")
         except Exception as e:
@@ -1623,7 +1623,7 @@ if answerstartup == 2:
 
         if anything_llm_installed:
             try:
-                anythingllm_docker.compose.down(remove_images=True)
+                anythingllm_docker.compose.down(remove_images="all")
                 anythingllm_docker.compose.up(build=False, detach=True, no_build=False, color=True, log_prefix=True, start=True, pull="always")
                 log("Reinstalled AnythingLLM fully!")
             except Exception as e:
