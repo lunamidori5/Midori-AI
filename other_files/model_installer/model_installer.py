@@ -129,25 +129,27 @@ def check_for_update(ver_os_info):
     if current_version == ver_info:
         log("Your installer is up to date.")
         clear_window(ver_os_info)
-    else: 
+    else:
+        bypass = "none"
         log(f"-----------------------------------------------------------------------------------------------")
         log(f"A update is available. Please update using the following link: {placeholder_link}")
         log(f"-----------------------------------------------------------------------------------------------")
-        input("Please hit enter to update: ")
+        bypass = str(input("Please hit enter to update: "))
         
         # Run commands based on the OS
-        if ver_os_info == 'windows':
-            os.system("del model_installer.zip")
-            os.system("del model_installer.exe")
-            os.system("del model_installer.bat")
-            os.system(f"curl -sSL https://raw.githubusercontent.com/lunamidori5/Midori-AI/master/other_files/model_installer/model_installer.bat -o model_installer.bat && start model_installer.bat")
-            log(f"If the localai manager failed to start, just run ``call model_installer.bat``")
-        elif ver_os_info == 'linux':
-            os.system("rm -f model_installer.tar.gz model_installer model_installer.sh")
-            os.system(f"curl -sSL https://raw.githubusercontent.com/lunamidori5/Midori-AI/master/other_files/model_installer/model_installer.sh | sh")
-            log(f"If the localai manager failed to start, just run ``./model_installer.sh``")
+        if bypass == "none":
+            if ver_os_info == 'windows':
+                os.system("del model_installer.zip")
+                os.system("del model_installer.exe")
+                os.system("del model_installer.bat")
+                os.system(f"curl -sSL https://raw.githubusercontent.com/lunamidori5/Midori-AI/master/other_files/model_installer/model_installer.bat -o model_installer.bat && start model_installer.bat")
+                log(f"If the localai manager failed to start, just run ``call model_installer.bat``")
+            elif ver_os_info == 'linux':
+                os.system("rm -f model_installer.tar.gz model_installer model_installer.sh")
+                os.system(f"curl -sSL https://raw.githubusercontent.com/lunamidori5/Midori-AI/master/other_files/model_installer/model_installer.sh | sh")
+                log(f"If the localai manager failed to start, just run ``./model_installer.sh``")
 
-        exit(0)
+            exit(0)
 
 def check_cpu_support():
 
