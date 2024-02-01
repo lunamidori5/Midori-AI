@@ -149,7 +149,7 @@ def check_for_update(ver_os_info):
                 os.system(f"curl -sSL https://raw.githubusercontent.com/lunamidori5/Midori-AI/master/other_files/model_installer/model_installer.sh | sh")
                 log(f"If the localai manager failed to start, just run ``./model_installer.sh``")
 
-            exit(0)
+        exit(0)
 
 def check_cpu_support():
 
