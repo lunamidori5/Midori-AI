@@ -8,8 +8,6 @@ import requests
 import datetime
 import platform
 
-import PySimpleGUI as sg
-
 from colorama import Fore
 
 from cpuinfo import get_cpu_info
@@ -26,8 +24,6 @@ missing_cuda = True
 missing_cuda_toolkit = True
 
 layout = None
-
-sg.theme('DarkAmber')
 
 compose_path = "docker-compose.yaml"
 
@@ -302,9 +298,7 @@ if ver_os_info == "windows":
     valid_answers = ["yes", "no"]
     use_gui = check_str(questionbasic, valid_answers, "no", None)
 else:
-    questionbasic = "Does your OS support loading a GUI: "
-    valid_answers = ["yes", "no"]
-    use_gui = check_str(questionbasic, valid_answers, "no", None)
+    use_gui = "no"
 
 clear_window(ver_os_info)
 
@@ -322,6 +316,8 @@ questionbasic = "What would you like to do?: "
 sd_valid_answers = ["1", "2", "3", "4", "5", "exit"]
 
 if use_gui == "yes":
+    import PySimpleGUI as sg
+    sg.theme('DarkAmber')
     layout = [[sg.Text(f"Main Menu (Ver: {ver_info})", size=(40, 1))],
             [sg.Text(f"``1`` - Setup LocalAI / AnythingLLM", size=(30, 1)), 
              sg.Text(f"``2`` - Uninstall or Upgrade LocalAI / AnythingLLM", size=(45, 1)),],
