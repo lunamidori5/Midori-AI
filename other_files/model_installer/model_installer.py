@@ -134,7 +134,7 @@ def check_for_update(ver_os_info):
         log(f"-----------------------------------------------------------------------------------------------")
         log(f"A update is available. Please update using the following link: {placeholder_link}")
         log(f"-----------------------------------------------------------------------------------------------")
-        bypass = str(input("Please hit enter to update: "))
+        bypass = str(input("Please hit enter to update: ")) + "none"
         
         # Run commands based on the OS
         if bypass == "none":
