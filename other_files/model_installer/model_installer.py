@@ -49,7 +49,8 @@ with open(log_file_name, "w") as f:
 
 about_model_size = str("""
 7b [CPU Friendly!] (Small and okay quality) - https://huggingface.co/TheBloke/dolphin-2.6-mistral-7B-GGUF
-8x7b (Normal sized, great quality) - https://huggingface.co/TheBloke/dolphin-2.7-mixtral-8x7b-GGUF
+2x7b (Normal sized, good quality) - https://huggingface.co/TheBloke/laser-dolphin-mixtral-2x7b-dpo-GGUF
+8x7b (Big, great quality) - https://huggingface.co/TheBloke/dolphin-2.7-mixtral-8x7b-GGUF
 70b (Large, hard to run but significant quality) - https://huggingface.co/TheBloke/dolphin-2.2-70B-GGUF
 ID (These are models from the Midori AI model repo) - https://io.midori-ai.xyz/models/offsite_models/
 """)
@@ -502,7 +503,7 @@ if answerstartup == 3:
         clear_window(ver_os_info)
 
         log(about_model_size)
-        valid_answers2 = ["7b", "8x7b", "70b", "id"]
+        valid_answers2 = ["7b", "2x7b", "8x7b", "70b", "id"]
         question2 = f"What size of known and supported model would you like to setup ({', '.join(valid_answers2)}): "
 
         if use_gui == "yes":
@@ -772,6 +773,9 @@ if answerstartup == 3:
 
         if answer2 == "8x7b":
             answer2 = "43b"
+
+        if answer2 == "2x7b":
+            answer2 = "14b"
 
         inside_model_folder = models_folder_container
         temp_chat_path =  inside_model_folder + "/localai-chat.tmpl"
