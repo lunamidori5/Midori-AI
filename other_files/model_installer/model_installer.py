@@ -1,5 +1,4 @@
 import os
-import tk
 import json
 import yaml
 import openai
