@@ -17,6 +17,10 @@ jobs:
     - name: Download Files
       run: |
         curl -O https://raw.githubusercontent.com/lunamidori5/Midori-AI/master/other_files/model_installer/model_installer.py
+        curl -O https://raw.githubusercontent.com/lunamidori5/Midori-AI/master/other_files/model_installer/carly_help.py
+        curl -O https://raw.githubusercontent.com/lunamidori5/Midori-AI/master/other_files/model_installer/setup_docker.py
+        curl -O https://raw.githubusercontent.com/lunamidori5/Midori-AI/master/other_files/model_installer/setup_models.py
+        curl -O https://raw.githubusercontent.com/lunamidori5/Midori-AI/master/other_files/model_installer/edit_models.py
         curl -O https://raw.githubusercontent.com/lunamidori5/Midori-AI/master/other_files/model_installer/requirements.txt
         curl -O https://raw.githubusercontent.com/lunamidori5/Midori-AI/master/other_files/midori_program_ver.txt
         curl -O https://raw.githubusercontent.com/lunamidori5/Midori-AI/master/other_files/python_ver.py

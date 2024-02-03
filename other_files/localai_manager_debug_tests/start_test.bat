@@ -1,1 +1,0 @@
-conda create -n conda_env python=3.10 -y && conda activate conda_env && call test.bat
