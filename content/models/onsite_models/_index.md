@@ -7,6 +7,13 @@ weight = 154
 
 All models are highly recommened for newer users as they are super easy to use and use the CHAT templ files from [Twinz](https://github.com/TwinFinz)
 
+| Model Size | Description |
+|---|---|
+| 7b | CPU Friendly, small, okay quality |
+| 2x7b | Normal sized, good quality |
+| 8x7b | Big, great quality |
+| 70b | Large, hard to run, significant quality |
+
 | Quant Mode | Description |
 |---|---|
 | Q3 | Smallest , significant quality loss - not recommended |
@@ -16,7 +23,7 @@ All models are highly recommened for newer users as they are super easy to use a
 | Q8 | Extremely large, extremely low quality loss, hard to use - not recommended |
 | None | Extremely large, No quality loss, super hard to use - really not recommended |
 
-The models used by this program as of right now are
+The models used by this program as of right now are:
 
 - 7b: [TheBloke/dolphin-2.6-mistral-7B-GGUF](https://huggingface.co/TheBloke/dolphin-2.6-mistral-7B-GGUF)
 - 2x7b: [TheBloke/laser-dolphin-mixtral-2x7b-dpo-GGUF](https://huggingface.co/TheBloke/laser-dolphin-mixtral-2x7b-dpo-GGUF)
