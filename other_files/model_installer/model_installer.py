@@ -107,7 +107,7 @@ try:
         client = docker.from_env()
 
 except Exception as e:
-    s.log("Looks like I was unable to s.log into the docker subsystem...")
+    s.log("Looks like I was unable to log into the docker subsystem...")
     s.log("Do you have docker installed? / Please try running me as root user, Linux users.")
     input("Please press enter to exit: ")
     exit(1)
@@ -141,7 +141,7 @@ s.log("``5`` - Uninstall Models")
 s.log("``Help`` - Ask Carly's 7b model for help (Not done yet, dont use)")
 
 questionbasic = "What would you like to do?: "
-sd_valid_answers = ["1", "2", "3", "4", "5", "25", "exit"]
+sd_valid_answers = ["1", "2", "3", "4", "5", "25", "help", "exit"]
 
 if use_gui == "yes":
     import PySimpleGUI as sg

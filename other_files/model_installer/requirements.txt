@@ -1,6 +1,7 @@
 altgraph
 annotated-types
 anyio
+cryptography
 certifi
 charset-normalizer
 click
