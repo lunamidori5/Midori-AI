@@ -31,6 +31,7 @@ missing_cuda = True
 missing_cuda_toolkit = True
 
 layout = None
+sg = None
 
 compose_path = "docker-compose.yaml"
 
