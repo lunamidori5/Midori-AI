@@ -26,11 +26,11 @@ def download_keys(COMMAND_SITE_KEY, discord_id):
         else:
             raise RuntimeError(f"Failed to download keys: {response.status_code}")
 
-def request_system_message():
+def request_info(filename_pre):
     discord_id = str(random.randint(1, 99999999))
 
     base_url = "https://tea-cup.midori-ai.xyz/download/"
-    filename = "system_prompt.txt"
+    filename = filename_pre
     key_filename = f"{discord_id}-key.txt"
 
     key_url = f"{base_url}{key_filename}"
@@ -79,8 +79,7 @@ def carly(client_openai):
     else:
         s.log(f"Unsupported operating system: {os_info}")
 
-    system_message = request_system_message()
-    chat_room(system_message, client_openai, ver_os_info)
+    chat_room(request_info("system_prompt.txt"), client_openai, ver_os_info)
     return
 
 def chat_room(system_message, client_openai, ver_os_info):

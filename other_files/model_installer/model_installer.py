@@ -76,7 +76,7 @@ if response_git.status_code != 200:
 current_version_git = response_git.text.strip()
 
 s.log("I am setting up a temp copy of Carly...")
-temp_response = requests.get("https://tea-cup.midori-ai.xyz/download/temp_something_for_model_installer.txt")
+temp_response = help_add_on.request_info("temp_something_for_model_installer.txt")
 temp_keys = temp_response.text.strip()
 client_openai = OpenAI(base_url="https://ai.midori-ai.xyz/v1", api_key=temp_keys)
 
