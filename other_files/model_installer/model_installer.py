@@ -183,14 +183,4 @@ if answerstartup == 5:
     models_add_on.models_uninstall(compose_path, ver_os_info, containers, client, use_gui, sg)
 
 if answerstartup == 25:
-    completion = client_openai.chat.completions.create(
-    model="gpt-4.1-turbo",
-    messages=[
-        {"role": "system", "content": "You are a helpful assistant."},
-        {"role": "user", "content": "Hello!"}
-    ],
-    stream=True
-    )
-
-    for chunk in completion:
-        print(chunk.choices[0].delta)
+    help_add_on.carly(client_openai)
