@@ -3,10 +3,7 @@ import yaml
 
 import support as s
 
-layout = None
-sg = None
-
-def setup_docker(DockerClient, compose_path, ver_os_info, containers, use_gui, sg, base_image_name, localai_ver_number):
+def setup_docker(DockerClient, compose_path, ver_os_info, containers, use_gui, sg, base_image_name, localai_ver_number, layout):
     try:
         localai_docker = DockerClient(compose_files=["./docker-compose.yaml"])
         
@@ -378,7 +375,7 @@ def setup_docker(DockerClient, compose_path, ver_os_info, containers, use_gui, s
     s.log("Alright all done, please try out our model installer if you would like us to install some starting models for you <3")
     s.log("Thank you for using Midori AI's Auto LocalAI installer!")
 
-def change_docker(DockerClient, compose_path, ver_os_info, containers, use_gui, sg):
+def change_docker(DockerClient, compose_path, ver_os_info, containers, use_gui, sg, layout):
     try:
         localai_docker = DockerClient(compose_files=["./docker-compose.yaml"])
         

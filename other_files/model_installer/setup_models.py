@@ -5,10 +5,7 @@ import requests
 
 import support as s
 
-layout = None
-sg = None
-
-def models_install(compose_path, ver_os_info, containers, client, use_gui, sg, about_model_size, about_model_q_size):
+def models_install(compose_path, ver_os_info, containers, client, use_gui, sg, about_model_size, about_model_q_size, layout):
     # Try to load the Docker Compose file
     s.log("Docker Server error, trying to check your docker-compose.yaml file...")
     docker_compose_found = False
@@ -633,7 +630,7 @@ def models_install(compose_path, ver_os_info, containers, client, use_gui, sg, a
     container.restart()
     s.log("Thank you! Please enjoy your new models!")
 
-def models_uninstall(compose_path, ver_os_info, containers, client, use_gui, sg):
+def models_uninstall(compose_path, ver_os_info, containers, client, use_gui, sg, layout):
     # Try to load the Docker Compose file
     s.log("Docker Server error, trying to check your docker-compose.yaml file...")
     docker_compose_found = False

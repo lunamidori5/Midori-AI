@@ -5,10 +5,7 @@ import requests
 
 import support as s
 
-layout = None
-sg = None
-
-def edit(compose_path, ver_os_info, containers, client, use_gui, sg):
+def edit(compose_path, ver_os_info, containers, client, use_gui, sg, layout):
     # Try to load the Docker Compose file
     s.log("Docker Server error, trying to check your docker-compose.yaml file...")
     docker_compose_found = False
