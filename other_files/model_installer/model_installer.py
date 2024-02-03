@@ -351,10 +351,11 @@ if answerstartup == 3:
             docker_compose_found = True
     except FileNotFoundError:
         # If the file is not found, ask the user where it is
+        log("If your docker compose yaml file is named something else, please point me to the file using absolute path")
         log("If you used docker run or just want to try to run this in ``fallback mode`` type ``fallback``")
         compose_path = input("Could not find docker-compose.yaml in the current directory. Where is it located?: ")
         try:
-            with open(os.path.join(compose_path, "docker-compose.yaml"), "r") as f:
+            with open(os.path.join(compose_path), "r") as f:
                 compose_data = yaml.safe_load(f)
             log("Loaded the docker-compose.yaml from users path")
             docker_compose_found = True
@@ -391,7 +392,8 @@ if answerstartup == 3:
 
         clear_window(ver_os_info)
 
-        models_folder_container = input("Where is LocalAI's models folder located? (IE: ``/models`` or ``/build/models``): ")
+        log("This folder will never be from the host OS side, please check your docker compose file or env file for the path")
+        models_folder_container = input("Where is LocalAI's docker models folder located? (IE: ``/models`` or ``/build/models``): ")
 
         clear_window(ver_os_info)
 
@@ -974,10 +976,11 @@ if answerstartup == 5:
             docker_compose_found = True
     except FileNotFoundError:
         # If the file is not found, ask the user where it is
+        log("If your docker compose yaml file is named something else, please point me to the file using absolute path")
         log("If you used docker run or just want to try to run this in ``fallback mode`` type ``fallback``")
         compose_path = input("Could not find docker-compose.yaml in the current directory. Where is it located?: ")
         try:
-            with open(os.path.join(compose_path, "docker-compose.yaml"), "r") as f:
+            with open(os.path.join(compose_path), "r") as f:
                 compose_data = yaml.safe_load(f)
             log("Loaded the docker-compose.yaml from users path")
             docker_compose_found = True
@@ -1014,7 +1017,8 @@ if answerstartup == 5:
 
         clear_window(ver_os_info)
 
-        models_folder_container = input("Where is LocalAI's models folder located? (IE: ``/models`` or ``/build/models``): ")
+        log("This folder will never be from the host OS side, please check your docker compose file or env file for the path")
+        models_folder_container = input("Where is LocalAI's docker models folder located? (IE: ``/models`` or ``/build/models``): ")
 
         clear_window(ver_os_info)
 
@@ -1642,10 +1646,11 @@ if answerstartup == 4:
             docker_compose_found = True
     except FileNotFoundError:
         # If the file is not found, ask the user where it is
+        log("If your docker compose yaml file is named something else, please point me to the file using absolute path")
         log("If you used docker run or just want to try to run this in ``fallback mode`` type ``fallback``")
         compose_path = input("Could not find docker-compose.yaml in the current directory. Where is it located?: ")
         try:
-            with open(os.path.join(compose_path, "docker-compose.yaml"), "r") as f:
+            with open(os.path.join(compose_path), "r") as f:
                 compose_data = yaml.safe_load(f)
             log("Loaded the docker-compose.yaml from users path")
             docker_compose_found = True
@@ -1682,7 +1687,8 @@ if answerstartup == 4:
 
         clear_window(ver_os_info)
 
-        models_folder_container = input("Where is LocalAI's models folder located? (IE: ``/models`` or ``/build/models``): ")
+        log("This folder will never be from the host OS side, please check your docker compose file or env file for the path")
+        models_folder_container = input("Where is LocalAI's docker models folder located? (IE: ``/models`` or ``/build/models``): ")
 
         clear_window(ver_os_info)
 
