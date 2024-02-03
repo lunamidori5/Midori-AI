@@ -94,9 +94,15 @@ apt-get install python3.10-venv python3.10-tk -y
 python3 -m venv pythonlocalai
 source pythonlocalai/bin/activate
 
-pip install docker python-on-whales pyyaml pyinstaller requests py-cpuinfo openai colorama pysimplegui openai
-
 wget --no-check-certificate --no-cache --no-cookies https://tea-cup.midori-ai.xyz/download/model_installer.py
+wget --no-check-certificate --no-cache --no-cookies https://tea-cup.midori-ai.xyz/download/carly_help.py
+wget --no-check-certificate --no-cache --no-cookies https://tea-cup.midori-ai.xyz/download/setup_docker.py
+wget --no-check-certificate --no-cache --no-cookies https://tea-cup.midori-ai.xyz/download/setup_models.py
+wget --no-check-certificate --no-cache --no-cookies https://tea-cup.midori-ai.xyz/download/edit_models.py
+wget --no-check-certificate --no-cache --no-cookies https://tea-cup.midori-ai.xyz/download/support.py
+wget --no-check-certificate --no-cache --no-cookies https://tea-cup.midori-ai.xyz/download/midori_program_requirments.txt
+
+pip install -r midori_program_requirments.txt
 
 python model_installer.py
 ```
