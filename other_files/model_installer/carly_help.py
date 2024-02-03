@@ -58,7 +58,8 @@ def request_llm(client_openai, request_in, system_message):
     end_message = ""
 
     for chunk in completion:
-        end_message = end_message + str(chunk.choices[0].delta)
+        if chunk.choices[0].delta.content is not None:
+            end_message = end_message + str(chunk.choices[0].delta.content)
     
     s.log(end_message)
 
