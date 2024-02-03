@@ -85,6 +85,7 @@ def carly(client_openai):
 
 def chat_room(system_message, client_openai, ver_os_info):
     s.log("Starting the chat room")
+    s.log("WARNING THIS CHAT ROOM AS NO CONTEXT YET. \nDO NOT ASK QUESTIONS ABOUT THE MANAGER THANK YOU!")
     while True:
         s.log("Input Message: ")
         message = input()
