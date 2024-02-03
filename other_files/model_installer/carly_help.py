@@ -2,6 +2,7 @@ import os
 import time
 import random
 import requests
+import platform
 
 from cryptography.fernet import Fernet
 
@@ -60,21 +61,34 @@ def request_llm(client_openai, request_in, system_message):
     for chunk in completion:
         if chunk.choices[0].delta.content is not None:
             end_message = end_message + str(chunk.choices[0].delta.content)
-    
-    s.log(end_message)
+            print(str(chunk.choices[0].delta.content), end="")
 
     return end_message
 
 def carly(client_openai):
     #this is the main def for the carly api requests
+
+    os_info = platform.system()
+
+    # Set the ver_os_info variable accordingly.
+    if os_info == "Windows":
+        ver_os_info = "windows"
+        os.system('title Chat with Carly')
+    elif os_info == "Linux":
+        ver_os_info = "linux"
+    else:
+        s.log(f"Unsupported operating system: {os_info}")
+
     system_message = request_system_message()
-    chat_room(system_message, client_openai)
+    chat_room(system_message, client_openai, ver_os_info)
     return
 
-def chat_room(system_message, client_openai):
+def chat_room(system_message, client_openai, ver_os_info):
     s.log("Starting the chat room")
     while True:
-        s.log("Hello please type a message to Carly: ")
+        s.log("Input Message: ")
         message = input()
+        s.log("Carly is typing...")
         reply = request_llm(client_openai, message, system_message)
+        s.clear_window(ver_os_info)
         s.log(reply)
