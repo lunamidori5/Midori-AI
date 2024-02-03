@@ -3,6 +3,9 @@ import yaml
 
 import support as s
 
+layout = None
+sg = None
+
 def setup_docker(DockerClient, compose_path, ver_os_info, containers, use_gui, sg, base_image_name, localai_ver_number):
     try:
         localai_docker = DockerClient(compose_files=["./docker-compose.yaml"])

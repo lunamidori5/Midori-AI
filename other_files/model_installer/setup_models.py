@@ -5,6 +5,9 @@ import requests
 
 import support as s
 
+layout = None
+sg = None
+
 def models_install(compose_path, ver_os_info, containers, client, use_gui, sg, about_model_size, about_model_q_size):
     # Try to load the Docker Compose file
     s.log("Docker Server error, trying to check your docker-compose.yaml file...")
