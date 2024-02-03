@@ -8,12 +8,13 @@ weight = 154
 All models are highly recommened for newer users as they are super easy to use and use the CHAT templ files from [Twinz](https://github.com/TwinFinz)
 
 | Quant Mode | Description |
-|Q3| Smallest, significant quality loss - not recommended|
-|Q4| Medium, balanced quality|
-|Q5| Large, very low quality loss - recommended for most users|
-|Q6| Very large, extremely low quality loss|
-|Q8| Extremely large, extremely low quality loss, hard to use - not recommended|
-|None| Extremely large, No quality loss, super hard to use - really not recommended|
+|---|---|
+| Q3 | Smallest , significant quality loss - not recommended |
+| Q4 | Medium, balanced quality |
+| Q5 | Large, very low quality loss - recommended for  most users |
+| Q6 | Very large, extremely low quality loss |
+| Q8 | Extremely large, extremely low quality loss, hard to use - not recommended |
+| None | Extremely large, No quality loss, super hard to use - really not recommended |
 
 The models used by this program as of right now are
 
