@@ -22,8 +22,6 @@ pyinstaller
 pyinstaller-hooks-contrib
 PySimpleGUI
 python-on-whales
-pywin32
-pywin32-ctypes
 PyYAML
 requests
 sniffio
