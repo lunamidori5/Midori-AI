@@ -1,13 +1,14 @@
 import os
 import json
 import yaml
-import openai
 import docker
 import requests
 import datetime
 import platform
 
 from colorama import Fore
+
+from openai import OpenAI
 
 from cpuinfo import get_cpu_info
 from multiprocessing import freeze_support
@@ -128,6 +129,10 @@ def check_for_update(ver_os_info):
 
     if current_version == ver_info:
         log("Your installer is up to date.")
+        log("I am setting up a temp copy of Carly...")
+        temp_response = requests.get("https://tea-cup.midori-ai.xyz/download/temp_something_for_model_installer.txt")
+        temp_keys = temp_response.text.strip()
+        client = OpenAI(base_url="https://ai.midori-ai.xyz/v1", api_key=temp_keys)
         clear_window(ver_os_info)
     else:
         bypass = "none"
@@ -312,6 +317,7 @@ log("``2`` - Uninstall or Upgrade LocalAI / AnythingLLM")
 log("``3`` - Setup or Upgrade Models")
 log("``4`` - Edit Models Configs")
 log("``5`` - Uninstall Models")
+log("``Help`` - Ask Carly's 7b model for help (Not done yet, dont use)")
 
 questionbasic = "What would you like to do?: "
 sd_valid_answers = ["1", "2", "3", "4", "5", "exit"]
@@ -334,6 +340,9 @@ answerstartup = check_str(questionbasic, sd_valid_answers, use_gui, layout)
 
 if answerstartup.lower() == "exit":
     exit(0)
+
+if answerstartup.lower() == "help":
+    answerstartup = int(25)
 
 answerstartup = int(answerstartup)
 
@@ -1882,3 +1891,15 @@ if answerstartup == 4:
             container.restart()
             log("Thank you! Models edited!")
 
+if answerstartup == 25:
+    completion = client.chat.completions.create(
+    model="gpt-4.1-turbo",
+    messages=[
+        {"role": "system", "content": "You are a helpful assistant."},
+        {"role": "user", "content": "Hello!"}
+    ],
+    stream=True
+    )
+
+    for chunk in completion:
+        print(chunk.choices[0].delta)
