@@ -247,7 +247,7 @@ def edit(compose_path, ver_os_info, containers, client, use_gui, sg, layout):
             for command in docker_commands:
                 s.log(f"Running {command}: ")
                 command_output = container.exec_run(command)
-                s.log(command_output.output.decode("utf-8"))
+                s.log(command_output.output.decode("utf-8", errors="ignore"))
 
             s.log("All done, I am now rebooting LocalAI")
             container.restart()
