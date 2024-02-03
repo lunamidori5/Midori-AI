@@ -169,19 +169,19 @@ answerstartup = int(answerstartup)
 s.clear_window(ver_os_info)
 
 if answerstartup == 1:
-    docker_add_on.setup_docker(DockerClient, compose_path, ver_os_info, containers, use_gui, sg, base_image_name, localai_ver_number)
+    docker_add_on.setup_docker(DockerClient, compose_path, ver_os_info, containers, use_gui, sg, base_image_name, localai_ver_number, layout)
     
 if answerstartup == 2:
-    docker_add_on.change_docker(DockerClient, compose_path, ver_os_info, containers, use_gui, sg)
+    docker_add_on.change_docker(DockerClient, compose_path, ver_os_info, containers, use_gui, sg, layout)
 
 if answerstartup == 3:
-    models_add_on.models_install(compose_path, ver_os_info, containers, client, use_gui, sg, about_model_size, about_model_q_size)
+    models_add_on.models_install(compose_path, ver_os_info, containers, client, use_gui, sg, about_model_size, about_model_q_size, layout)
 
 if answerstartup == 4:
-    models_edit_add_on.edit(compose_path, ver_os_info, containers, client, use_gui, sg)
+    models_edit_add_on.edit(compose_path, ver_os_info, containers, client, use_gui, sg, layout)
 
 if answerstartup == 5:
-    models_add_on.models_uninstall(compose_path, ver_os_info, containers, client, use_gui, sg)
+    models_add_on.models_uninstall(compose_path, ver_os_info, containers, client, use_gui, sg, layout)
 
 if answerstartup == 25:
     help_add_on.carly(client_openai)
