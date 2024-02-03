@@ -10,8 +10,6 @@ base_image_name = "quay.io/go-skynet/local-ai:"
 
 user_image = ""
 
-ver_info = "changemelunaplease"
-
 now = datetime.datetime.now()
 timestamp = now.strftime("%m%d%Y%H")
 log_file_name = "log_" + timestamp + ".txt"
@@ -41,7 +39,7 @@ def clear_window(ver_os):
     if ver_os == 'linux':
         os.system('clear')
 
-def check_for_update(ver_os_info):
+def check_for_update(ver_os_info, ver_info):
     """
     Sends a request to the server to check for a installer update.
     """

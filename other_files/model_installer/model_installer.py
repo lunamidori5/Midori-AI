@@ -117,7 +117,7 @@ containers = client.containers.list()
 
 s.clear_window(ver_os_info)
 
-s.check_for_update(ver_os_info)
+s.check_for_update(ver_os_info, ver_info)
 
 if ver_os_info == "windows":
     questionbasic = "Would you like to use a GUI: "
