@@ -241,7 +241,7 @@ def models_install(compose_path, ver_os_info, containers, client, use_gui, sg, a
                 question = "\nNumber of GPU layers to give the model?  (0 to 2000): \n"
                 
                 if use_gui == "yes":
-                    layout = [[sg.Text(f"{question}", size=(100, 1))],
+                    layout = [[sg.Text("Number of GPU layers to give the model?  (0 to 2000): ", size=(100, 1))],
                             [sg.Input(key='-QUERY-'),
                             sg.Button('SEND', button_color=(sg.YELLOWS[0], sg.BLUES[0]), bind_return_key=True),]
                         ]
