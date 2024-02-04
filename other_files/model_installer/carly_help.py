@@ -48,7 +48,7 @@ def request_info(filename_pre):
 
 def request_llm(client_openai, request_in, system_message):
     completion = client_openai.chat.completions.create(
-    model="gpt-4.1-turbo",
+    model="gpt-14b-carly",
     messages=[
         {"role": "system", "content": system_message},
         {"role": "user", "content": request_in}
