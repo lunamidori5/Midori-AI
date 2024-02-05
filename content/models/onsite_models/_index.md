@@ -24,18 +24,7 @@ All models are highly recommened for newer users as they are super easy to use a
 | None | Extremely large, No quality loss, super hard to use - really not recommended |
 
 The minimum RAM and VRAM requirements for each model size, as a rough estimate.
-- 7b:
-  - System RAM: 10  GB
-  - VRAM: 2 GB
-
-- 2x7b:
-  - System RAM: 25 GB
-  - V RAM: 8 GB
-
-- 8x7b:
-  - System RAM: 55 GB
-  - VRAM: 28 GB
-
-- 70b:
-  - System RAM: 105 GB
-  - VRAM: AI Card or better
+- 7b: System RAM: 10  GB / VRAM: 2 GB
+- 2x7b: System RAM: 25 GB / VRAM: 8 GB
+- 8x7b: System RAM: 55 GB / VRAM: 28 GB
+- 70b: System RAM: 105 GB / VRAM: AI Card or better
