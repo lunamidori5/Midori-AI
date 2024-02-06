@@ -45,10 +45,10 @@ ver_info = "changemelunaplease"
 ver_file_name = "midori_program_ver.txt"
 
 about_model_size = str("""
-7b [CPU Friendly!] (Small and okay quality) - https://huggingface.co/TheBloke/dolphin-2.6-mistral-7B-GGUF
-2x7b (Normal sized, good quality) - https://huggingface.co/TheBloke/laser-dolphin-mixtral-2x7b-dpo-GGUF
-8x7b (Big, great quality) - https://huggingface.co/TheBloke/dolphin-2.7-mixtral-8x7b-GGUF
-70b (Large, hard to run but significant quality) - https://huggingface.co/TheBloke/dolphin-2.2-70B-GGUF
+7b - Recommend for lowerend PC (6gb of Vram or less / 10gb of system ram) - https://huggingface.co/TheBloke/dolphin-2.6-mistral-7B-GGUF
+2x7b - Recommended for home PC (8gb or more of Vram needed / 25gb of system ram) - https://huggingface.co/TheBloke/laser-dolphin-mixtral-2x7b-dpo-GGUF
+8x7b - Recommended for highend PC (24gb or more Vram needed / 55gb of system ram) - https://huggingface.co/TheBloke/dolphin-2.7-mixtral-8x7b-GGUF
+70b - Recommended for high end servers only (AI card or better with 48gb Vram + 100gb system ram) - https://huggingface.co/TheBloke/dolphin-2.2-70B-GGUF
 ID (These are models from the Midori AI model repo) - https://io.midori-ai.xyz/models/offsite_models/
 """)
 
@@ -60,6 +60,8 @@ about_model_q_size = str("""
 |Q6| Very large, extremely low quality loss|
 |Q8| Extremely large, extremely low quality loss, hard to use - not recommended|
 |None| Extremely large, No quality loss, super hard to use - really not recommended|
+                         
+If unsure what you need, type ``q5``
 
 Note: 
 That some models may deviate from our conventional model formatting standards (Quantized/Non-Quantized), 
