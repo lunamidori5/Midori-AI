@@ -229,10 +229,10 @@ def edit(compose_path, ver_os_info, containers, client, use_gui, sg, layout, cli
             context_temp = f"{context_temp}\ngpu_layers = How much GPU the model can use, recommended starting at 5 then adding more if there is free vram"
             context_temp = f"{context_temp}\nthreads = CPU cores for the model, recommended to keep this to under 50% their real core count"
             context_temp = f"{context_temp}\nname = the name that the model goes by when being requested by OpenAI V1"
-            context_temp = f"{context_temp}\ncuda = to use the GPU or Not, is a bool"
+            context_temp = f"{context_temp}\ncuda = For the model to use the GPU or Not, is a bool"
             context_temp = f"{context_temp}\nlow_vram = Sets the model into low vram use mode, recommended for lower end computers, is a bool"
-            context_temp = f"{context_temp}\nmmap = mmap is a system call that maps a file into memory, allowing direct access to the file's contents, is a bool"
-            context_temp = f"{context_temp}\nmmlock = mmlock is a Linux kernel feature that allows users to lock pages in memory, is a bool"
+            context_temp = f"{context_temp}\nmmap = mmap is a system call that maps the model into memory, allowing direct access to the models files, is a bool"
+            context_temp = f"{context_temp}\nmmlock = mmlock is a Linux kernel feature that allows users to lock pages in memory, keeping the model in memory, is a bool"
                 
             answeryamleditor_two = s.check_str(question, valid_answers, use_gui, layout, sg, context_temp, client_openai)
             
