@@ -55,7 +55,7 @@ def request_llm(client_openai, request_in, system_message):
         {"role": "user", "content": request_in}
     ])
 
-    end_message = str(completion)
+    end_message = str(client_openai.extract_text_or_completion_object(completion))
 
     print(client_openai.extract_text_or_completion_object(completion))
 
