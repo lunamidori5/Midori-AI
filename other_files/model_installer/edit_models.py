@@ -228,7 +228,7 @@ def edit(compose_path, ver_os_info, containers, client, use_gui, sg, layout, cli
             context_temp = f"The user was asked what setting of the {answeryamleditor} llm model they have installed. Here is a full list of thing they can edit"
             context_temp = f"{context_temp}\ngpu_layers = How much GPU the model can use, recommended starting at 5 then adding more if there is free vram"
             context_temp = f"{context_temp}\nthreads = CPU cores for the model, recommended to keep this to under 50% their real core count"
-            context_temp = f"{context_temp}\name = the name that the model goes by when being requested by OpenAI V1"
+            context_temp = f"{context_temp}\nname = the name that the model goes by when being requested by OpenAI V1"
                 
             answeryamleditor_two = s.check_str(question, valid_answers, use_gui, layout, sg, context_temp, client_openai)
             
