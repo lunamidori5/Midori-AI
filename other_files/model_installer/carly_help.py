@@ -1,7 +1,6 @@
 import os
 import time
 import random
-import winsound
 import requests
 import platform
 
@@ -93,5 +92,4 @@ def chat_room(system_message, client_openai, ver_os_info, added_context):
         requested_context = added_context
         reply = request_llm(client_openai, message, system_message, requested_context)
         s.clear_window(ver_os_info)
-        winsound.Beep(2000, 200)
         s.log(reply)
