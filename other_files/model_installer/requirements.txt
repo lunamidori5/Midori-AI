@@ -13,7 +13,7 @@ h11
 httpcore
 httpx
 idna
-openai
+pyautogen
 packaging
 pefile
 py-cpuinfo

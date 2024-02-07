@@ -48,21 +48,14 @@ def request_info(filename_pre):
     return system_message
 
 def request_llm(client_openai, request_in, system_message):
-    completion = client_openai.chat.completions.create(
+    completion = client_openai.create(
     model="gpt-14b-carly",
     messages=[
         {"role": "system", "content": system_message},
         {"role": "user", "content": request_in}
-    ],
-    stream=True
-    )
+    ])
 
-    end_message = ""
-
-    for chunk in completion:
-        if chunk.choices[0].delta.content is not None:
-            end_message = end_message + str(chunk.choices[0].delta.content)
-            print(str(chunk.choices[0].delta.content), end="")
+    end_message = client_openai.extract_text_or_completion_object(completion)
 
     return end_message
 

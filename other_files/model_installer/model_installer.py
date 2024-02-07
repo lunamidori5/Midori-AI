@@ -15,7 +15,7 @@ import edit_models as models_edit_add_on
 
 from colorama import Fore
 
-from openai import OpenAI
+from autogen import OpenAIWrapper
 
 from cpuinfo import get_cpu_info
 from multiprocessing import freeze_support
@@ -80,7 +80,7 @@ current_version_git = response_git.text.strip()
 s.log("I am setting up a temp copy of Carly...")
 temp_response = help_add_on.request_info("temp_something_for_model_installer.txt")
 temp_keys = temp_response.strip()
-client_openai = OpenAI(base_url="https://ai.midori-ai.xyz/v1", api_key=temp_keys)
+client_openai = OpenAIWrapper(base_url="https://ai.midori-ai.xyz/v1", api_key=temp_keys)
 
 # localai_ver_number = version_data['version']
 
@@ -135,12 +135,12 @@ s.log("-------------------------------------------------------------------------
 s.log(f"------------------------------ Main Menu (Ver: {ver_info}) ------------------------------------")
 s.log("-----------------------------------------------------------------------------------------------")
 
-s.log("``1`` - Setup LocalAI / AnythingLLM")
+s.log("``1`` - LocalAI / AnythingLLM Manager")
 s.log("``2`` - Uninstall or Upgrade LocalAI / AnythingLLM")
 s.log("``3`` - Setup or Upgrade Models")
 s.log("``4`` - Edit Models Configs")
 s.log("``5`` - Uninstall Models")
-s.log("``Help`` - Ask Carly's 7b model for help (Not done yet, dont use)")
+s.log("``Help`` - Ask Carly's 14b model for help (Not done yet, dont use)")
 
 questionbasic = "What would you like to do?: "
 sd_valid_answers = ["1", "2", "3", "4", "5", "25", "help", "exit"]
@@ -148,12 +148,12 @@ sd_valid_answers = ["1", "2", "3", "4", "5", "25", "help", "exit"]
 if use_gui == "yes":
     import PySimpleGUI as sg
     layout = [[sg.Text(f"Main Menu (Ver: {ver_info})", size=(40, 1))],
-            [sg.Text(f"``1`` - Setup LocalAI / AnythingLLM", size=(30, 1)), 
+            [sg.Text(f"``1`` - LocalAI / AnythingLLM Manager", size=(30, 1)), 
              sg.Text(f"``2`` - Uninstall or Upgrade LocalAI / AnythingLLM", size=(45, 1)),],
             [sg.Text(f"``3`` - Setup or Upgrade Models", size=(30, 1)),
              sg.Text(f"``4`` - Edit Models Configs", size=(30, 1)),
              sg.Text(f"``5`` - Uninstall Models", size=(30, 1)),
-             sg.Text(f"``Help`` - Ask Carly's 7b model for help (Not done yet, dont use)", size=(30, 1))],
+             sg.Text(f"``Help`` - Ask Carly's 14b model for help (Not done yet, dont use)", size=(30, 1))],
             [sg.Text(f"{questionbasic}", size=(100, 1))],
             [sg.Input(key='-QUERY-'),
             sg.Button('SEND', button_color=(sg.YELLOWS[0], sg.BLUES[0]), bind_return_key=True),]
