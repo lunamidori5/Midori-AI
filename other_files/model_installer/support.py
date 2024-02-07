@@ -30,7 +30,7 @@ def log(message):
     with open(log_file_name, "r") as f:
         contents = f.read()
     
-    message = remove_non_printable_chars(message)
+    message = remove_non_printable_chars(str(message))
 
     print(str(message))
 
