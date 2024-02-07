@@ -47,11 +47,12 @@ def request_info(filename_pre):
 
     return system_message
 
-def request_llm(client_openai, request_in, system_message):
+def request_llm(client_openai, request_in, system_message, added_context):
     completion = client_openai.create(
     model="gpt-14b-carly",
     messages=[
         {"role": "system", "content": system_message},
+        {"role": "system", "content": added_context},
         {"role": "user", "content": request_in}
     ])
 
@@ -75,17 +76,22 @@ def carly(client_openai):
     else:
         s.log(f"Unsupported operating system: {os_info}")
 
-    chat_room(request_info("system_prompt.txt"), client_openai, ver_os_info)
+    chat_room(request_info("system_prompt.txt"), client_openai, ver_os_info, "This is a open chat room with Carly, no added context is needed.")
     return
 
-def chat_room(system_message, client_openai, ver_os_info):
+def chat_room(system_message, client_openai, ver_os_info, added_context):
     s.log("Starting the chat room")
-    s.log("WARNING THIS CHAT ROOM AS NO CONTEXT YET. \nDO NOT ASK QUESTIONS ABOUT THE MANAGER THANK YOU!")
     while True:
+        s.log("Type ``exit`` to exit the help chat...")
         s.log("Input Message: ")
         message = input()
-        s.log("Carly is typing...")
-        reply = request_llm(client_openai, message, system_message)
+
+        if message == "exit":
+            break
+
+        s.log("Carly is thinking...")
+        requested_context = added_context
+        reply = request_llm(client_openai, message, system_message, requested_context)
         s.clear_window(ver_os_info)
         winsound.Beep(2000, 200)
         s.log(reply)

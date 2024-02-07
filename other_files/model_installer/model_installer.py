@@ -125,7 +125,7 @@ s.clear_window(ver_os_info)
 
 s.check_for_update(ver_os_info, ver_info)
 
-if ver_os_info == "windows":
+if ver_os_info == "turned-off":
     questionbasic = "Would you like to use a GUI: "
     valid_answers = ["yes", "no"]
     use_gui = s.check_str(questionbasic, valid_answers, "no", None, None)
