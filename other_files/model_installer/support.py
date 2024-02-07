@@ -2,6 +2,9 @@ import os
 import string
 import requests
 import datetime
+import platform
+
+import carly_help as support_chat
 
 from cpuinfo import get_cpu_info
 from multiprocessing import freeze_support
@@ -143,6 +146,21 @@ def check_cpu_support():
     # If all checks pass, return False
     return False
 
+def get_os_info():
+    # Get the operating system.
+    os_info = platform.system()
+
+    # Set the ver_os_info variable accordingly.
+    if os_info == "Windows":
+        ver_os_info = "windows"
+        os.system('title LocalAI Manager')
+    elif os_info == "Linux":
+        ver_os_info = "linux"
+    else:
+        log(f"Unsupported operating system: {os_info}")
+    
+    return ver_os_info
+
 def check_model_ids_file():
     """Downloads a file from a server and loads it into a list 1 line at a time.
 
@@ -169,7 +187,7 @@ def check_model_ids_file():
     # Return the list.
     return lines
 
-def check_str(question, valid_answers, use_gui="no", layout=None, sg=None):
+def check_str(question, valid_answers, use_gui="no", layout=None, sg=None, support_context="Oops context missing", client_openai=None):
     """
     Checks if the user input is valid.
 
@@ -204,4 +222,8 @@ def check_str(question, valid_answers, use_gui="no", layout=None, sg=None):
                 log(f"I asked {question} / you replied {answer}")
                 return answer
             else:
-                log(f"\nInvalid input. Please enter one of the following: {', '.join(valid_answers)}\n")
+                if answer == "help":
+                    ver_os_info = get_os_info(platform)
+                    support_chat.chat_room(support_chat.request_info("system_prompt.txt"), client_openai, ver_os_info, support_context)
+                else:
+                    log(f"\nInvalid input. Please enter one of the following: {', '.join(valid_answers)}\n")

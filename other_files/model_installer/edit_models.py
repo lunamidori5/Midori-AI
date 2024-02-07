@@ -5,7 +5,7 @@ import requests
 
 import support as s
 
-def edit(compose_path, ver_os_info, containers, client, use_gui, sg, layout):
+def edit(compose_path, ver_os_info, containers, client, use_gui, sg, layout, client_openai):
     # Try to load the Docker Compose file
     s.log("Docker Server error, trying to check your docker-compose.yaml file...")
     docker_compose_found = False
@@ -201,8 +201,10 @@ def edit(compose_path, ver_os_info, containers, client, use_gui, sg, layout):
                         [sg.Input(key='-QUERY-'),
                         sg.Button('SEND', button_color=(sg.YELLOWS[0], sg.BLUES[0]), bind_return_key=True),]
                         ]
+    
+            context_temp = f"The user was asked what model they would like to edit. Please tell them to pick from the list.\n{str(valid_answers)}"
                 
-            answeryamleditor = s.check_str(question, valid_answers, use_gui, layout, sg)
+            answeryamleditor = s.check_str(question, valid_answers, use_gui, layout, sg, context_temp, client_openai)
 
             if ".yaml" in answeryamleditor or ".gguf" in answeryamleditor:
                 answeryamleditor = answeryamleditor.replace(".yaml", "").replace(".gguf", "")
@@ -222,8 +224,13 @@ def edit(compose_path, ver_os_info, containers, client, use_gui, sg, layout):
                         [sg.Input(key='-QUERY-'),
                         sg.Button('SEND', button_color=(sg.YELLOWS[0], sg.BLUES[0]), bind_return_key=True),]
                         ]
+    
+            context_temp = f"The user was asked what setting of the {answeryamleditor} llm model they have installed. Here is a full list of thing they can edit"
+            context_temp = f"{context_temp}\ngpu_layers = How much GPU the model can use, recommended starting at 5 then adding more if there is free vram"
+            context_temp = f"{context_temp}\nthreads = CPU cores for the model, recommended to keep this to under 50% their real core count"
+            context_temp = f"{context_temp}\name = the name that the model goes by when being requested by OpenAI V1"
                 
-            answeryamleditor_two = s.check_str(question, valid_answers, use_gui, layout, sg)
+            answeryamleditor_two = s.check_str(question, valid_answers, use_gui, layout, sg, context_temp, client_openai)
             
             s.clear_window(ver_os_info)
 

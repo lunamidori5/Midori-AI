@@ -5,7 +5,7 @@ import requests
 
 import support as s
 
-def models_install(compose_path, ver_os_info, containers, client, use_gui, sg, about_model_size, about_model_q_size, layout):
+def models_install(compose_path, ver_os_info, containers, client, use_gui, sg, about_model_size, about_model_q_size, layout, client_openai):
     # Try to load the Docker Compose file
     s.log("Docker Server error, trying to check your docker-compose.yaml file...")
     docker_compose_found = False
@@ -127,8 +127,10 @@ def models_install(compose_path, ver_os_info, containers, client, use_gui, sg, a
                 [sg.Input(key='-QUERY-'),
                 sg.Button('SEND', button_color=(sg.YELLOWS[0], sg.BLUES[0]), bind_return_key=True),]
                 ]
+    
+    context_temp = "The user was asked if they would like to install a large language model for LocalAI, its a yes or no question"
         
-    answerbasic = s.check_str(questionbasic, sd_valid_answers, use_gui, layout, sg)
+    answerbasic = s.check_str(questionbasic, sd_valid_answers, use_gui, layout, sg, context_temp, client_openai)
 
     if answerbasic.lower() == "no":
         answerbasic = "False"
@@ -177,8 +179,11 @@ def models_install(compose_path, ver_os_info, containers, client, use_gui, sg, a
                     [sg.Input(key='-QUERY-'),
                     sg.Button('SEND', button_color=(sg.YELLOWS[0], sg.BLUES[0]), bind_return_key=True),]
                     ]
+        
+        context_temp = "The user was asked what size of model they would like to install... here is a list of sizes they can pick from "
+        context_temp = f"{context_temp}\n{about_model_size}"
             
-        answer2 = s.check_str(question2, valid_answers2, use_gui, layout, sg)
+        answer2 = s.check_str(question2, valid_answers2, use_gui, layout, sg, context_temp, client_openai)
         answer2 = str(answer2.lower())
 
         valid_answers1 = ["q3", "q4", "q5", "q6", "q8"] 
@@ -202,7 +207,9 @@ def models_install(compose_path, ver_os_info, containers, client, use_gui, sg, a
                         sg.Button('SEND', button_color=(sg.YELLOWS[0], sg.BLUES[0]), bind_return_key=True),]
                         ]
                 
-            answer2 = s.check_str(question2, valid_answers2, use_gui, layout, sg)
+            context_temp = f"this is a offsite model request, this is not recommended by midori ai. Here is a list of models they can install {valid_answers2}"
+
+            answer2 = s.check_str(question2, valid_answers2, use_gui, layout, sg, context_temp, client_openai)
             answer2 = str(answer2.lower())
 
         s.clear_window(ver_os_info)
@@ -217,8 +224,11 @@ def models_install(compose_path, ver_os_info, containers, client, use_gui, sg, a
                     [sg.Input(key='-QUERY-'),
                     sg.Button('SEND', button_color=(sg.YELLOWS[0], sg.BLUES[0]), bind_return_key=True),]
                     ]
+        
+        context_temp = "The user was asked what type of quantised model they would like to install... here is a list of quantised model they can pick from "
+        context_temp = f"{context_temp}\n{about_model_q_size}"
             
-        answer1 = s.check_str(question, valid_answers1, use_gui, layout, sg)
+        answer1 = s.check_str(question, valid_answers1, use_gui, layout, sg, context_temp, client_openai)
 
         if answer1.lower() == "none":
             answer1 = str(answer1.lower())
@@ -270,7 +280,7 @@ def models_install(compose_path, ver_os_info, containers, client, use_gui, sg, a
         s.clear_window(ver_os_info)
 
         if not answer1 == "none":
-            question = "\nNumber of CPU Cores to give the model?  (0 to 2000): \n"
+            question = "\nNumber of CPU Cores to give the model? (0 to 2000): \n"
                 
             if use_gui == "yes":
                 layout = [[sg.Text(f"{question}", size=(100, 1))],
@@ -305,8 +315,10 @@ def models_install(compose_path, ver_os_info, containers, client, use_gui, sg, a
                         [sg.Input(key='-QUERY-'),
                         sg.Button('SEND', button_color=(sg.YELLOWS[0], sg.BLUES[0]), bind_return_key=True),]
                     ]
+        
+        context_temp = "The user was asked if they would like to install a TTS or Text to Speach model. This is a yes or no question"
     
-        answertts = s.check_str(question, sd_valid_answers, use_gui, layout, sg)
+        answertts = s.check_str(question, sd_valid_answers, use_gui, layout, sg, context_temp, client_openai)
 
         if answertts.lower() == "no":
             answertts = "False"
@@ -328,7 +340,9 @@ def models_install(compose_path, ver_os_info, containers, client, use_gui, sg, a
                     sg.Button('SEND', button_color=(sg.YELLOWS[0], sg.BLUES[0]), bind_return_key=True),]
                 ]
         
-    answerenbed = s.check_str(question, sd_valid_answers, use_gui, layout, sg)
+    context_temp = "The user was asked if they would like to install the vector store embedding model. This is a yes or no question"
+        
+    answerenbed = s.check_str(question, sd_valid_answers, use_gui, layout, sg, context_temp, client_openai)
 
     if answerenbed.lower() == "no":
         answerenbed = "False"
@@ -353,8 +367,10 @@ def models_install(compose_path, ver_os_info, containers, client, use_gui, sg, a
                             [sg.Input(key='-QUERY-'),
                             sg.Button('SEND', button_color=(sg.YELLOWS[0], sg.BLUES[0]), bind_return_key=True),]
                         ]
+        
+            context_temp = "The user was asked if they would like to install a Stable diffusion (for making photos) model. This is a yes or no question"
 
-            answersd = s.check_str(question, sd_valid_answers, use_gui, layout, sg)
+            answersd = s.check_str(question, sd_valid_answers, use_gui, layout, sg, context_temp, client_openai)
 
             if answersd.lower() == "no":
                 answersd = "False"
@@ -375,8 +391,10 @@ def models_install(compose_path, ver_os_info, containers, client, use_gui, sg, a
                             [sg.Input(key='-QUERY-'),
                             sg.Button('SEND', button_color=(sg.YELLOWS[0], sg.BLUES[0]), bind_return_key=True),]
                         ]
+        
+            context_temp = "The user was asked if they would like to install the llava model, its a sight based model to help programs see photos. This is a yes or no question"
 
-            answerllava = s.check_str(question, sd_valid_answers, use_gui, layout, sg)
+            answerllava = s.check_str(question, sd_valid_answers, use_gui, layout, sg, context_temp, client_openai)
 
             if answerllava.lower() == "no":
                 answerllava = "False"
@@ -399,8 +417,10 @@ def models_install(compose_path, ver_os_info, containers, client, use_gui, sg, a
                         [sg.Input(key='-QUERY-'),
                         sg.Button('SEND', button_color=(sg.YELLOWS[0], sg.BLUES[0]), bind_return_key=True),]
                     ]
+        
+        context_temp = "The user was asked if they would like to use Midori AI slower but encrypted endpoint. This is a yes or no question"
 
-        answerencrypted = s.check_str(question, sd_valid_answers, use_gui, layout, sg)
+        answerencrypted = s.check_str(question, sd_valid_answers, use_gui, layout, sg, context_temp, client_openai)
 
         if answerencrypted.lower() == "no":
             answerencrypted = "False"

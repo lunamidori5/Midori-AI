@@ -3,7 +3,7 @@ import yaml
 
 import support as s
 
-def setup_docker(DockerClient, compose_path, ver_os_info, containers, use_gui, sg, base_image_name, localai_ver_number, layout):
+def setup_docker(DockerClient, compose_path, ver_os_info, containers, use_gui, sg, base_image_name, localai_ver_number, layout, client_openai):
     try:
         localai_docker = DockerClient(compose_files=["./docker-compose.yaml"])
         
@@ -51,8 +51,10 @@ def setup_docker(DockerClient, compose_path, ver_os_info, containers, use_gui, s
                 [sg.Input(key='-QUERY-'),
                 sg.Button('SEND', button_color=(sg.YELLOWS[0], sg.BLUES[0]), bind_return_key=True),]
                 ]
+    
+    context_temp = f"The user was asked if they would like to install LocalAI. This is a yes or no question."
         
-    answerbasic = s.check_str(question, valid_answers, use_gui, layout)
+    answerbasic = s.check_str(question, valid_answers, use_gui, layout, sg, context_temp, client_openai)
 
     if answerbasic.lower() == "no":
         answerbasic = "False"
@@ -81,8 +83,10 @@ def setup_docker(DockerClient, compose_path, ver_os_info, containers, use_gui, s
                 [sg.Input(key='-QUERY-'),
                 sg.Button('SEND', button_color=(sg.YELLOWS[0], sg.BLUES[0]), bind_return_key=True),]
                 ]
+    
+    context_temp = f"The user was asked if they would like to use master (nightly) image of LocalAI. This is a yes or no question."
         
-    answermaster = s.check_str(question, valid_answers, use_gui, layout)
+    answermaster = s.check_str(question, valid_answers, use_gui, layout, sg, context_temp, client_openai)
 
     if answermaster.lower() == "no":
         answermaster = "False"
@@ -109,8 +113,10 @@ def setup_docker(DockerClient, compose_path, ver_os_info, containers, use_gui, s
                 [sg.Input(key='-QUERY-'),
                 sg.Button('SEND', button_color=(sg.YELLOWS[0], sg.BLUES[0]), bind_return_key=True),]
                 ]
+    
+    context_temp = f"The user was asked if they would like to use GPU with LocalAI using Cuda. This is a yes or no question."
         
-    answer_cuda = s.check_str(question, valid_answers, use_gui, layout)
+    answer_cuda = s.check_str(question, valid_answers, use_gui, layout, sg, context_temp, client_openai)
 
     if answer_cuda.lower() == "no":
         answer_cuda = "False"
@@ -126,7 +132,9 @@ def setup_docker(DockerClient, compose_path, ver_os_info, containers, use_gui, s
         s.log('I ran the cuda command, it "should" show you if you have CUDA11 or CUDA12')
         question = "Do you have CUDA11 or CUDA12? (Type just 11 or 12): "
         valid_answers = ["11", "12"]
-        version = s.check_str(question, valid_answers)
+        context_temp = f"The user was asked if they would like to use GPU with LocalAI using Cuda."
+        context_temp = f"{context_temp}\nThis is the output of the nvidia-smi command\n{str(os.popen('nvidia-smi').read())}\nThe user needs to know if they have cuda 11 or cuda 12"
+        version = s.check_str(question, valid_answers, "no", layout, sg, context_temp, client_openai)
 
     s.clear_window(ver_os_info)
 
@@ -138,8 +146,10 @@ def setup_docker(DockerClient, compose_path, ver_os_info, containers, use_gui, s
                 [sg.Input(key='-QUERY-'),
                 sg.Button('SEND', button_color=(sg.YELLOWS[0], sg.BLUES[0]), bind_return_key=True),]
                 ]
+    
+    context_temp = f"The user was asked if they would like to add TTS aka Text to Speach support to LocalAI. This is a yes or no question."
         
-    answertts = s.check_str(question, valid_answers, use_gui, layout)
+    answertts = s.check_str(question, valid_answers, use_gui, layout, sg, context_temp, client_openai)
 
     if answertts.lower() == "no":
         answertts = "False"
@@ -160,8 +170,10 @@ def setup_docker(DockerClient, compose_path, ver_os_info, containers, use_gui, s
                 [sg.Input(key='-QUERY-'),
                 sg.Button('SEND', button_color=(sg.YELLOWS[0], sg.BLUES[0]), bind_return_key=True),]
                 ]
+    
+    context_temp = f"The user was asked if they would like to use the core image of LocalAI. This is a yes or no question. This is HIGHLY NOT recommended."
         
-    answercore = s.check_str(question, valid_answers, use_gui, layout)
+    answercore = s.check_str(question, valid_answers, use_gui, layout, sg, context_temp, client_openai)
 
     if answercore.lower() == "no":
         answercore = "False"
@@ -184,8 +196,10 @@ def setup_docker(DockerClient, compose_path, ver_os_info, containers, use_gui, s
                 [sg.Input(key='-QUERY-'),
                 sg.Button('SEND', button_color=(sg.YELLOWS[0], sg.BLUES[0]), bind_return_key=True),]
                 ]
+    
+    context_temp = f"The user was asked if they would like to install AnythingLLM, a chat app that goes with LocalAI. This is a yes or no question."
         
-    answeranything = s.check_str(question, valid_answers, use_gui, layout)
+    answeranything = s.check_str(question, valid_answers, use_gui, layout, sg, context_temp, client_openai)
 
     if answeranything.lower() == "no":
         answeranything = "False"
@@ -375,7 +389,7 @@ def setup_docker(DockerClient, compose_path, ver_os_info, containers, use_gui, s
     s.log("Alright all done, please try out our model installer if you would like us to install some starting models for you <3")
     s.log("Thank you for using Midori AI's Auto LocalAI installer!")
 
-def change_docker(DockerClient, compose_path, ver_os_info, containers, use_gui, sg, layout):
+def change_docker(DockerClient, compose_path, ver_os_info, containers, use_gui, sg, layout, client_openai):
     try:
         localai_docker = DockerClient(compose_files=["./docker-compose.yaml"])
         
@@ -415,8 +429,10 @@ def change_docker(DockerClient, compose_path, ver_os_info, containers, use_gui, 
                 [sg.Input(key='-QUERY-'),
                 sg.Button('SEND', button_color=(sg.YELLOWS[0], sg.BLUES[0]), bind_return_key=True),]
                 ]
+    
+    context_temp = f"The user was asked if they would like to uninstall or reinstall the docker image for LocalAI. These are the things they can pick from {str(valid_answers)}"
         
-    answeruninstaller = s.check_str(question, valid_answers, use_gui, layout, sg)
+    answeruninstaller = s.check_str(question, valid_answers, use_gui, layout, sg, context_temp, client_openai)
 
     if answeruninstaller == "uninstall":
         answeruninstaller = "down"

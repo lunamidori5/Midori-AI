@@ -4,7 +4,6 @@ import yaml
 import docker
 import requests
 import datetime
-import platform
 
 import support as s
 
@@ -86,20 +85,9 @@ temp_keys = temp_response.strip()
 client_openai = OpenAIWrapper(base_url="https://ai.midori-ai.xyz/v1", api_key=temp_keys)
 
 # localai_ver_number = version_data['version']
-
-# Get the operating system.
-os_info = platform.system()
-
-# Set the ver_os_info variable accordingly.
-if os_info == "Windows":
-    ver_os_info = "windows"
-    os.system('title LocalAI Manager')
-elif os_info == "Linux":
-    ver_os_info = "linux"
-else:
-    s.log(f"Unsupported operating system: {os_info}")
-
+ver_os_info = s.get_os_info()
 # Check if the current platform is Windows
+
 try:
     if os.name == 'nt':
          # Connect to the Docker daemon on Windows using Docker-py for Windows 
@@ -175,19 +163,19 @@ answerstartup = int(answerstartup)
 s.clear_window(ver_os_info)
 
 if answerstartup == 1:
-    docker_add_on.setup_docker(DockerClient, compose_path, ver_os_info, containers, use_gui, sg, base_image_name, localai_ver_number, layout)
+    docker_add_on.setup_docker(DockerClient, compose_path, ver_os_info, containers, use_gui, sg, base_image_name, localai_ver_number, layout, client_openai)
     
 if answerstartup == 2:
-    docker_add_on.change_docker(DockerClient, compose_path, ver_os_info, containers, use_gui, sg, layout)
+    docker_add_on.change_docker(DockerClient, compose_path, ver_os_info, containers, use_gui, sg, layout, client_openai)
 
 if answerstartup == 3:
-    models_add_on.models_install(compose_path, ver_os_info, containers, client, use_gui, sg, about_model_size, about_model_q_size, layout)
+    models_add_on.models_install(compose_path, ver_os_info, containers, client, use_gui, sg, about_model_size, about_model_q_size, layout, client_openai)
 
 if answerstartup == 4:
-    models_edit_add_on.edit(compose_path, ver_os_info, containers, client, use_gui, sg, layout)
+    models_edit_add_on.edit(compose_path, ver_os_info, containers, client, use_gui, sg, layout, client_openai)
 
 if answerstartup == 5:
-    models_add_on.models_uninstall(compose_path, ver_os_info, containers, client, use_gui, sg, layout)
+    models_add_on.models_uninstall(compose_path, ver_os_info, containers, client, use_gui, sg, layout, client_openai)
 
 if answerstartup == 25:
     help_add_on.carly(client_openai)
