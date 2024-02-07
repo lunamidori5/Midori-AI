@@ -223,7 +223,7 @@ def check_str(question, valid_answers, use_gui="no", layout=None, sg=None, suppo
                 return answer
             else:
                 if answer == "help":
-                    ver_os_info = get_os_info(platform)
+                    ver_os_info = get_os_info()
                     support_chat.chat_room(support_chat.request_info("system_prompt.txt"), client_openai, ver_os_info, support_context)
                 else:
                     log(f"\nInvalid input. Please enter one of the following: {', '.join(valid_answers)}\n")
