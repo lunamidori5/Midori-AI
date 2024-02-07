@@ -215,8 +215,8 @@ def edit(compose_path, ver_os_info, containers, client, use_gui, sg, layout, cli
             
             s.clear_window(ver_os_info)
 
-            question = "What setting would you like to edit?: "
             valid_answers = ["gpu_layers", "f16", "threads", "low_vram", "mmap", "mmlock", "name", "cuda", "numa", "no_mulmatq"]
+            question = f"{str(valid_answers)}\nWhat setting would you like to edit?: "
 
             if use_gui == "yes":
                 layout = [[sg.Text(f"Available settings: {str(valid_answers)}", size=(10000, 1))],
@@ -225,10 +225,14 @@ def edit(compose_path, ver_os_info, containers, client, use_gui, sg, layout, cli
                         sg.Button('SEND', button_color=(sg.YELLOWS[0], sg.BLUES[0]), bind_return_key=True),]
                         ]
     
-            context_temp = f"The user was asked what setting of the {answeryamleditor} llm model they have installed. Here is a full list of thing they can edit"
+            context_temp = f"The user was asked what setting of the {answeryamleditor} llm model they have installed would they like to edit. Here is a full list of thing they can edit"
             context_temp = f"{context_temp}\ngpu_layers = How much GPU the model can use, recommended starting at 5 then adding more if there is free vram"
             context_temp = f"{context_temp}\nthreads = CPU cores for the model, recommended to keep this to under 50% their real core count"
             context_temp = f"{context_temp}\nname = the name that the model goes by when being requested by OpenAI V1"
+            context_temp = f"{context_temp}\ncuda = to use the GPU or Not, is a bool"
+            context_temp = f"{context_temp}\nlow_vram = Sets the model into low vram use mode, recommended for lower end computers, is a bool"
+            context_temp = f"{context_temp}\nmmap = mmap is a system call that maps a file into memory, allowing direct access to the file's contents, is a bool"
+            context_temp = f"{context_temp}\nmmlock = mmlock is a Linux kernel feature that allows users to lock pages in memory, is a bool"
                 
             answeryamleditor_two = s.check_str(question, valid_answers, use_gui, layout, sg, context_temp, client_openai)
             
