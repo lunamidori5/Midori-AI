@@ -79,17 +79,10 @@ def carly(client_openai):
     return
 
 def chat_room(system_message, client_openai, ver_os_info, added_context):
-    s.log("Starting the chat room")
-    while True:
-        s.log("Type ``exit`` to exit the help chat...")
-        s.log("Input Message: ")
-        message = input()
-
-        if message == "exit":
-            break
-
-        s.log("Carly is thinking...")
-        requested_context = added_context
-        reply = request_llm(client_openai, message, system_message, requested_context)
-        s.clear_window(ver_os_info)
-        s.log(reply)
+    s.log("Input Question: ")
+    message = input()
+    s.log("Carly is thinking...")
+    requested_context = added_context
+    reply = request_llm(client_openai, message, system_message, requested_context)
+    s.clear_window(ver_os_info)
+    s.log(reply)

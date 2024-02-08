@@ -177,4 +177,4 @@ if answerstartup == 5:
     models_add_on.models_uninstall(compose_path, ver_os_info, containers, client, use_gui, sg, layout, client_openai)
 
 if answerstartup == 25:
-    help_add_on.carly(client_openai)
+    help_add_on.chat_room(help_add_on.request_info("system_prompt.txt"), client_openai, ver_os_info, "This is the main menu, let the user know they need to type help into other menus for you to get context")
