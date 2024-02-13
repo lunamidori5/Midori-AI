@@ -7,7 +7,7 @@ weight = 1
 
 {{% notice note %}}
 
-- File Servers are back up, thank you!
+- Servers seem to be timeing out for users, we are working on a fix, deeply sorry for the failed logins
 
 **Windows Users**
 - There seems to be a bug where the manager is adding ``140_1.dll`` to file request. We are working on a fix.
