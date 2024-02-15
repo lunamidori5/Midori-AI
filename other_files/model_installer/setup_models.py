@@ -470,6 +470,7 @@ def models_install(compose_path, ver_os_info, containers, client, use_gui, sg, a
 
         docker_commands_cpu = [
             ["echo", f"Setting up the {answer2} model you requested"],
+            ["apt-get", "-y", "install", "wget"],
             ["rm", "-f", f"{inside_model_folder}/{answer4}.gguf"],
             ["rm", "-f", f"{inside_model_folder}/localai-chat.tmpl"],
             ["rm", "-f", f"{inside_model_folder}/localai-chatmsg.tmpl"],
@@ -496,6 +497,7 @@ def models_install(compose_path, ver_os_info, containers, client, use_gui, sg, a
 
         docker_commands_gpu = [
             ["echo", f"Setting up the {answer2} model you requested"],
+            ["apt-get", "-y", "install", "wget"],
             ["rm", "-f", f"{inside_model_folder}/{answer4}.gguf"],
             ["rm", "-f", f"{inside_model_folder}/localai-chat.tmpl"],
             ["rm", "-f", f"{inside_model_folder}/localai-chatmsg.tmpl"],
@@ -523,6 +525,7 @@ def models_install(compose_path, ver_os_info, containers, client, use_gui, sg, a
 
         docker_commands_vllm = [
             ["echo", f"Setting up the {answer2} model you requested"],
+            ["apt-get", "-y", "install", "wget"],
             ["rm", "-f", f"{inside_model_folder}/{answer4}.yaml"],
             ["wget", "-O", f"{answer4}.yaml", f"https://tea-cup.midori-ai.xyz/download/models-{answer2}-vllm.yaml"],
             ["cp", f"{answer4}.yaml", f"{yaml_path_temp}"],
@@ -534,6 +537,7 @@ def models_install(compose_path, ver_os_info, containers, client, use_gui, sg, a
         
         encrypted_docker_commands_cpu = [
             ["echo", f"Setting up the {answer2} model you requested"],
+            ["apt-get", "-y", "install", "wget"],
             ["pip", "install", "psutil", "requests", "diskcache", "cryptography", "aiohttp"],
             ["rm", "-f", f"{inside_model_folder}/{answer4}.gguf"],
             ["rm", "-f", f"{inside_model_folder}/localai-chat.tmpl"],
@@ -563,6 +567,7 @@ def models_install(compose_path, ver_os_info, containers, client, use_gui, sg, a
 
         encrypted_docker_commands_gpu = [
             ["echo", f"Setting up the {answer2} model you requested"],
+            ["apt-get", "-y", "install", "wget"],
             ["pip", "install", "psutil", "requests", "diskcache", "cryptography", "aiohttp"],
             ["rm", "-f", f"{inside_model_folder}/{answer4}.gguf"],
             ["rm", "-f", f"{inside_model_folder}/localai-chat.tmpl"],
@@ -609,6 +614,7 @@ def models_install(compose_path, ver_os_info, containers, client, use_gui, sg, a
 
     if use_tts == "true":
         tts_commands = [
+            ["apt-get", "-y", "install", "wget"],
             ["wget", "-O", inside_model_folder + f"/en_US-amy-medium.onnx.json", f"https://tea-cup.midori-ai.xyz/download/en_US-amy-medium.onnx.json"],
             ["wget", "-O", inside_model_folder + f"/en_US-amy-medium.onnx", f"https://tea-cup.midori-ai.xyz/download/en_US-amy-medium.onnx"],
             ["wget", "-O", inside_model_folder + f"/en-us-kathleen-low.onnx.json", f"https://tea-cup.midori-ai.xyz/download/en-us-kathleen-low.onnx.json"],
@@ -618,12 +624,14 @@ def models_install(compose_path, ver_os_info, containers, client, use_gui, sg, a
 
     if use_sd == "true":
         sd_commands = [
+            ["apt-get", "-y", "install", "wget"],
             ["wget", "-O", inside_model_folder + f"/diffusers.yaml", f"https://tea-cup.midori-ai.xyz/download/diffusers.yaml"]
         ]
         docker_commands.extend(sd_commands)
 
     if use_enbed == "true":
         embed_commands = [
+            ["apt-get", "-y", "install", "wget"],
             ["wget", "-O", inside_model_folder + f"/embedding.yaml", f"https://tea-cup.midori-ai.xyz/download/bert-embeddings.yaml"],
             ["wget", "-O", inside_model_folder + f"/bert-MiniLM-L6-v2q4_0.bin", f"https://tea-cup.midori-ai.xyz/download/bert-MiniLM-L6-v2q4_0.bin"],
         ]
@@ -632,6 +640,7 @@ def models_install(compose_path, ver_os_info, containers, client, use_gui, sg, a
     if use_llava == "true":
         llava_commands = [
             ["echo", f"This next step will take 5+ mins, please do not exit or close this program"],
+            ["apt-get", "-y", "install", "wget"],
             ["wget", "-O", inside_model_folder + f"/ggml-model-q4_k.gguf", f"https://huggingface.co/mys/ggml_bakllava-1/resolve/main/ggml-model-q4_k.gguf"],
             ["wget", "-O", inside_model_folder + f"/mmproj-model-f16.gguf", f"https://huggingface.co/mys/ggml_bakllava-1/resolve/main/mmproj-model-f16.gguf"],
             ["wget", "-O", inside_model_folder + f"/chat-simple.tmpl", f"https://github.com/mudler/LocalAI/blob/b8240b4c1839089b9d06a3e2b1c629a294cff87e/examples/configurations/llava/chat-simple.tmpl"],

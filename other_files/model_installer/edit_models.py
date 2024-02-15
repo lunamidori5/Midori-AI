@@ -248,6 +248,7 @@ def edit(compose_path, ver_os_info, containers, client, use_gui, sg, layout, cli
 
             docker_commands = [
                 ["rm", "-f", "yaml_edit.py"],
+                ["apt-get", "-y", "install", "wget"],
                 ["pip", "install", "pyyaml"],
                 ["wget", "-O", "yaml_edit.py", "https://tea-cup.midori-ai.xyz/download/yaml_edit.py"],
                 ["python3", "yaml_edit.py", "-i", answeryamleditor_two, "-d", f"{answeryamleditor_three.lower()}", yaml_path_temp],
