@@ -21,7 +21,6 @@ pydantic
 pydantic_core
 pyinstaller
 pyinstaller-hooks-contrib
-PySimpleGUI
 python-on-whales
 PyYAML
 requests
