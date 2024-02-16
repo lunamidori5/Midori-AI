@@ -359,7 +359,7 @@ def setup_docker(DockerClient, compose_path, ver_os_info, containers, use_gui, s
         anythingllm_docker = DockerClient(compose_files=["./anythingllm-docker-compose.yaml"])
 
     s.log("yaml saved spinning up the docker compose...")
-    localai_docker = DockerClient(compose_files=["./docker-compose.yaml"])
+    localai_docker = DockerClient(compose_files=["./localai-docker-compose.yaml"])
 
     localai_docker.compose.up(
         build=False,
@@ -391,7 +391,7 @@ def setup_docker(DockerClient, compose_path, ver_os_info, containers, use_gui, s
 
 def change_docker(DockerClient, compose_path, ver_os_info, containers, use_gui, sg, layout, client_openai):
     try:
-        localai_docker = DockerClient(compose_files=["./docker-compose.yaml"])
+        localai_docker = DockerClient(compose_files=["./localai-docker-compose.yaml"])
         
         with open(compose_path, "r") as f:
             compose_yaml = f.read()
