@@ -5,6 +5,13 @@ title = "LocalAI Manager"
 weight = 1
 +++
 
+## ----- Midori AI LocalAI Manager -----
+The LocalAI manager  can set up and install [LocalAI](https://github.com/mudler/LocalAI)/[AnythingLLM](https://github.com/Mintplex-Labs/anything-llm). Place it in a folder with nothing else before use. If you are just using this for model management of a running LocalAI docker, put this in the folder with the `docker-compose.yaml` file.
+
+If you need help, most menus now support Carly 14b Mixed model. Just type ``help`` into the menu and ask Carly about that menu!
+
+Note that model downloads may be slow because they are hitting Midori Ai's servers. If the servers are down, please inform Luna.
+
 {{% notice note %}}
 
 - Webserver Upgrades have happened. Sorry for the downtime
@@ -15,13 +22,6 @@ weight = 1
 - This seems to be a widely known bug with Google Chorme, Edge, and others, here are our [virus scans from a few websites](https://www.virustotal.com/gui/url/6d36b491ed76cc9f1e284b43fe7fcd4158696edb5730b614469bbdf6f1e616f0/details). We will try other ways of packing the files.
 
 {{% /notice %}}
-
-## ----- Midori AI LocalAI Manager -----
-The LocalAI manager  can set up and install [LocalAI](https://github.com/mudler/LocalAI)/[AnythingLLM](https://github.com/Mintplex-Labs/anything-llm). Place it in a folder with nothing else before use. If you are just using this for model management of a running LocalAI docker, put this in the folder with the `docker-compose.yaml` file.
-
-If you need help, most menus now support Carly 14b Mixed model. Just type ``help`` into the menu and ask Carly about that menu!
-
-Note that model downloads may be slow because they are hitting Midori Ai's servers. If the servers are down, please inform Luna.
 
 {{< tabs >}}
 {{% tab title="Windows" %}}
