@@ -1,4 +1,5 @@
 Programs to support
+- Modular Compatibility (Midori AI Docker Subsystem)
 - LocalAI (Docker)
 - InvokeAI (Docker)
 - AnythingLLM (Docker)
@@ -9,6 +10,9 @@ Programs to support
 
 UI Frameworks
 - React
+- No UI
+Notes:
+Id love to add a chat room type of webui, but I am not sure how id want to do that...
 
 AI Frameworks
 - Google Gem EX (OpenAPI)
