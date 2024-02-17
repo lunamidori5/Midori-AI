@@ -1,0 +1,30 @@
+Programs to support
+- LocalAI (Docker)
+- InvokeAI (Docker)
+- AnythingLLM (Docker)
+- Ollama (Docker)
+- LM Studio (Unknown)
+- Oobabooga (Docker)
+- Home Assistant (Docker or VM)
+
+UI Frameworks
+- React
+
+AI Frameworks
+- Google Gem EX (OpenAPI)
+- Carly V3 (Autogen / OpenAI)
+
+AI QNA
+
+Q: What are the advantages and disadvantages of using Docker for LocalAI, InvokeAI, AnythingLLM, Ollama, and Oobabooga?
+A: Being able to control them with out inpacting the users computer
+
+Q: How does LM Studio differ from the other programs in terms of its deployment method?
+A: It does not offer docker support
+
+Q: What are the pros and cons of using React as a UI framework for these programs?
+A: I am not sure, some help on this would be lovely, I know python really well tho... but I would like to make it look really nice
+
+Q: How does Google Gem EX differ from Carly V3 in terms of its capabilities and interoperability?
+A: Carly is the better AI, but she is slower and runs on my local servers. Id like to get some more servers to run her.
+Google Gem would be great use of this as other than the super hard to hit rate limit, I dont really have much risk
