@@ -63,7 +63,8 @@ def request_llm(client_openai, request_in, system_message, added_context):
 
                 completion = client_openai.create(
                 model="gpt-14b-carly",
-                messages=messages
+                messages=messages,
+                request_timeout=6000
                 )
                 temp_str_memory = str(list(client_openai.extract_text_or_completion_object(completion))[0]).strip()
                 session_inside = []
@@ -89,7 +90,8 @@ def request_llm(client_openai, request_in, system_message, added_context):
         try:
             completion = client_openai.create(
             model="gpt-14b-carly",
-            messages=messages
+            messages=messages,
+            request_timeout=6000
             )
             break
 
