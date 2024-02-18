@@ -40,6 +40,8 @@ base_image_name = "quay.io/go-skynet/local-ai:"
 
 user_image = ""
 
+answer_backup_compose ="no"
+
 ver_info = "changemelunaplease"
 
 ver_file_name = "midori_program_ver.txt"
