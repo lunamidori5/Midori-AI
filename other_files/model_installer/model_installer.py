@@ -128,48 +128,54 @@ s.check_for_update(ver_os_info, ver_info)
 
 use_gui = "no"
 
-s.clear_window(ver_os_info)
+while True:
+    s.clear_window(ver_os_info)
 
-s.log("-----------------------------------------------------------------------------------------------")
-s.log(f"------------------------------ Main Menu (Ver: {ver_info}) ------------------------------------")
-s.log("-----------------------------------------------------------------------------------------------")
+    s.log("-----------------------------------------------------------------------------------------------")
+    s.log(f"------------------------------ Main Menu (Ver: {ver_info}) ------------------------------------")
+    s.log("-----------------------------------------------------------------------------------------------")
 
-s.log("``1`` - LocalAI / AnythingLLM Manager")
-s.log("``2`` - Uninstall or Upgrade LocalAI / AnythingLLM")
-s.log("``3`` - Setup or Upgrade Models")
-s.log("``4`` - Edit Models Configs")
-s.log("``5`` - Uninstall Models")
-s.log("If you need assistance with most menus, type help.")
+    s.log("``1`` - LocalAI / AnythingLLM Manager")
+    s.log("``2`` - Uninstall or Upgrade LocalAI / AnythingLLM")
+    s.log("``3`` - Setup or Upgrade Models")
+    s.log("``4`` - Edit Models Configs")
+    s.log("``5`` - Uninstall Models")
+    s.log("``chat`` - Chat with Carly")
+    s.log("If you need assistance with most menus, type help.")
 
-questionbasic = "What would you like to do?: "
-sd_valid_answers = ["1", "2", "3", "4", "5", "exit"]
-    
-answerstartup = s.check_str(questionbasic, sd_valid_answers, use_gui, layout, sg, "This is the main menu they are asking for help on...", client_openai)
+    questionbasic = "What would you like to do?: "
+    sd_valid_answers = ["1", "2", "3", "4", "5", "chat", "exit"]
+        
+    answerstartup = s.check_str(questionbasic, sd_valid_answers, use_gui, layout, sg, "This is the main menu they are asking for help on...", client_openai)
 
-if answerstartup.lower() == "exit":
-    exit(0)
+    if answerstartup.lower() == "exit":
+        break
 
-if answerstartup.lower() == "help":
-    answerstartup = int(25)
+    if answerstartup.lower() == "chat":
+        answerstartup = int(25)
 
-answerstartup = int(answerstartup)
+    answerstartup = int(answerstartup)
 
-s.clear_window(ver_os_info)
+    s.clear_window(ver_os_info)
 
-if answerstartup == 1:
-    docker_add_on.setup_docker(DockerClient, compose_path, ver_os_info, containers, use_gui, sg, base_image_name, localai_ver_number, layout, client_openai)
-    
-if answerstartup == 2:
-    docker_add_on.change_docker(DockerClient, compose_path, ver_os_info, containers, use_gui, sg, layout, client_openai)
+    if answerstartup == 1:
+        docker_add_on.setup_docker(DockerClient, compose_path, ver_os_info, containers, use_gui, sg, base_image_name, localai_ver_number, layout, client_openai)
+        
+    if answerstartup == 2:
+        docker_add_on.change_docker(DockerClient, compose_path, ver_os_info, containers, use_gui, sg, layout, client_openai)
 
-if answerstartup == 3:
-    models_add_on.models_install(compose_path, ver_os_info, containers, client, use_gui, sg, about_model_size, about_model_q_size, layout, client_openai)
+    if answerstartup == 3:
+        models_add_on.models_install(compose_path, ver_os_info, containers, client, use_gui, sg, about_model_size, about_model_q_size, layout, client_openai)
 
-if answerstartup == 4:
-    models_edit_add_on.edit(compose_path, ver_os_info, containers, client, use_gui, sg, layout, client_openai)
+    if answerstartup == 4:
+        models_edit_add_on.edit(compose_path, ver_os_info, containers, client, use_gui, sg, layout, client_openai)
 
-if answerstartup == 5:
-    models_add_on.models_uninstall(compose_path, ver_os_info, containers, client, use_gui, sg, layout, client_openai)
+    if answerstartup == 5:
+        models_add_on.models_uninstall(compose_path, ver_os_info, containers, client, use_gui, sg, layout, client_openai)
 
-if answerstartup == 25:
-    help_add_on.chat_room(help_add_on.request_info("system_prompt.txt"), client_openai, ver_os_info, "This is the main menu, let the user know they need to type help into other menus for you to get context")
+    if answerstartup == 25:
+        while True:
+            help_add_on.chat_room(help_add_on.request_info("system_prompt.txt"), client_openai, ver_os_info, "This is the main menu, let the user know they need to type help into other menus for you to get context")
+            keep_chatting = s.check_str("Would you like to keep chatting?", ["yes", "no"], use_gui, layout, sg, "This is the main menu they are asking for help on...", client_openai)
+            if keep_chatting == "no":
+                break
