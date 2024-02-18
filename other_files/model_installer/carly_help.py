@@ -66,6 +66,7 @@ def request_llm(client_openai, request_in, system_message, added_context):
                 messages=messages
                 )
                 temp_str_memory = str(list(client_openai.extract_text_or_completion_object(completion))[0]).strip()
+                session_inside = []
                 break
 
             except:
