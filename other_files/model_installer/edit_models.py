@@ -218,13 +218,6 @@ def edit(compose_path, ver_os_info, containers, client, use_gui, sg, layout, cli
             valid_answers = ["gpu_layers", "f16", "threads", "low_vram", "mmap", "mmlock", "name", "cuda", "numa", "no_mulmatq"]
             question = f"{str(valid_answers)}\nWhat setting would you like to edit?: "
 
-            if use_gui == "yes":
-                layout = [[sg.Text(f"Available settings: {str(valid_answers)}", size=(10000, 1))],
-                        [sg.Text(f"{question}", size=(100, 1))],
-                        [sg.Input(key='-QUERY-'),
-                        sg.Button('SEND', button_color=(sg.YELLOWS[0], sg.BLUES[0]), bind_return_key=True),]
-                        ]
-    
             context_temp = f"The user was asked what setting of the {answeryamleditor} llm model they have installed would they like to edit. Here is a full list of thing they can edit"
             context_temp = f"{context_temp}\ngpu_layers = How much GPU the model can use, recommended starting at 5 then adding more if there is free vram"
             context_temp = f"{context_temp}\nthreads = CPU cores for the model, recommended to keep this to under 50% their real core count"
@@ -233,6 +226,8 @@ def edit(compose_path, ver_os_info, containers, client, use_gui, sg, layout, cli
             context_temp = f"{context_temp}\nlow_vram = Sets the model into low vram use mode, recommended for lower end computers, is a bool"
             context_temp = f"{context_temp}\nmmap = mmap is a system call that maps the model into memory, allowing direct access to the models files, is a bool"
             context_temp = f"{context_temp}\nmmlock = mmlock is a Linux kernel feature that allows users to lock pages in memory, keeping the model in memory, is a bool"
+            context_temp = f"{context_temp}\nno_mulmatq = The ``no_mulmtq`` parameter controls whether or not XLA's MatMul will be used. Setting this to True may save memory, but may reduce performance and/or numerical precision. Is a bool"
+            context_temp = f"{context_temp}\nnuma = NUMA (Non-Uniform Memory Access) optimizes memory access in systems with multiple memory controllers, improving performance by ensuring processes access data from the closest memory node, is a bool"
                 
             answeryamleditor_two = s.check_str(question, valid_answers, use_gui, layout, sg, context_temp, client_openai)
             

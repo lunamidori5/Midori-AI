@@ -1,5 +1,6 @@
 import os
 import time
+import json
 import random
 import requests
 import platform
@@ -47,17 +48,63 @@ def request_info(filename_pre):
     return system_message
 
 def request_llm(client_openai, request_in, system_message, added_context):
-    completion = client_openai.create(
-    model="gpt-14b-carly",
-    messages=[
-        {"role": "system", "content": system_message},
-        {"role": "system", "content": added_context},
-        {"role": "user", "content": request_in}
-    ])
+
+    if os.path.exists("memory.ram"):
+        for i in range(5):
+            try:
+                with open('memory.ram', 'r') as jsonfile:
+                    session_inside = json.load(jsonfile)
+
+                message_gpt = [
+                        *session_inside,
+                        {"role": "user", "content": "Please Summarize these conversations into one paragraph. You may add, remove, or forget somethings as you see fit."}]
+
+                messages = [{" role": msg["role"], "content": msg["content"]} for msg in message_gpt]
+
+                completion = client_openai.create(
+                model="gpt-14b-carly",
+                messages=messages
+                )
+                temp_str_memory = str(list(client_openai.extract_text_or_completion_object(completion))[0]).strip()
+                break
+
+            except:
+                continue
+
+    else:
+        session_inside = []
+        temp_str_memory = "Carly has just meet these user... This is a new chat!"
+    
+    message_gpt = [
+            {"role": "system", "content": system_message},
+            {"role": "system", "content": temp_str_memory},
+            {"role": "system", "content": added_context},
+            {"role": "user", "content": request_in}
+            ]
+
+    messages = [{"role": msg["role"], "content": msg["content"]} for msg in message_gpt]
+
+    for i in range(5):
+        try:
+            completion = client_openai.create(
+            model="gpt-14b-carly",
+            messages=messages
+            )
+            break
+
+        except:
+            continue
 
     end_message = str(list(client_openai.extract_text_or_completion_object(completion))[0]).strip()
 
     print(client_openai.extract_text_or_completion_object(completion))
+
+    print(f"Trying to save memory...")
+    session_inside.append({"role": "memory", "content": f"The User said ``{request_in}``"})
+    session_inside.append({"role": "assistant", "content": f"Carly replied with ``{end_message}``"})
+
+    with open('memory.ram', 'w') as jsonfile:
+        json.dump(session_inside, jsonfile)
 
     return end_message
 
