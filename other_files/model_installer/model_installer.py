@@ -33,6 +33,7 @@ layout = None
 sg = None
 
 compose_path = "localai-docker-compose.yaml"
+compose_backup_path = "docker-compose.yaml"
 
 localai_ver_number = "v2.8.0"
 base_image_name = "quay.io/go-skynet/local-ai:"
@@ -88,6 +89,18 @@ client_openai = OpenAIWrapper(base_url="https://ai.midori-ai.xyz/v1", api_key=te
 ver_os_info = s.get_os_info()
 # Check if the current platform is Windows
 
+if os.path.exists(compose_backup_path):
+    backup_compose_question = "I see that you have a ``docker-compose.yaml`` file in this folder. Is this LocalAI's docker compose file?: "
+    backup_compose_valid_answers = ["yes", "no"]
+        
+    answer_backup_compose = s.check_str(backup_compose_question, backup_compose_valid_answers, "no", layout, sg, "This is the main menu they are asking for help on...", client_openai)
+
+if answer_backup_compose == "yes":
+    s.log("Renaming the compose file to our new safe format! Thank you!")
+    s.log(f"Current file name: {compose_backup_path}")
+    s.log(f"New file name: {compose_path}")
+    os.rename(compose_backup_path, compose_path)
+
 try:
     if os.name == 'nt':
          # Connect to the Docker daemon on Windows using Docker-py for Windows 
@@ -130,20 +143,6 @@ s.log("If you need assistance with most menus, type help.")
 
 questionbasic = "What would you like to do?: "
 sd_valid_answers = ["1", "2", "3", "4", "5", "exit"]
-
-if use_gui == "yes":
-    #pysimp is now a payed api...
-    #import PySimpleGUI as sg
-    layout = [[sg.Text(f"Main Menu (Ver: {ver_info})", size=(40, 1))],
-            [sg.Text(f"``1`` - LocalAI / AnythingLLM Manager", size=(30, 1)), 
-             sg.Text(f"``2`` - Uninstall or Upgrade LocalAI / AnythingLLM", size=(45, 1)),],
-            [sg.Text(f"``3`` - Setup or Upgrade Models", size=(30, 1)),
-             sg.Text(f"``4`` - Edit Models Configs", size=(30, 1)),
-             sg.Text(f"``5`` - Uninstall Models", size=(30, 1)),]
-            [sg.Text(f"{questionbasic}", size=(100, 1))],
-            [sg.Input(key='-QUERY-'),
-            sg.Button('SEND', button_color=(sg.YELLOWS[0], sg.BLUES[0]), bind_return_key=True),]
-            ]
     
 answerstartup = s.check_str(questionbasic, sd_valid_answers, use_gui, layout, sg, "This is the main menu they are asking for help on...", client_openai)
 
