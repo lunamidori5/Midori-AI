@@ -48,6 +48,7 @@ def request_info(filename_pre):
     return system_message
 
 def request_llm(client_openai, request_in, system_message, added_context):
+    temp_str_memory = "There was a really big error..."
 
     if os.path.exists("memory.ram"):
         for i in range(5):
@@ -63,8 +64,7 @@ def request_llm(client_openai, request_in, system_message, added_context):
 
                 completion = client_openai.create(
                 model="gpt-14b-carly",
-                messages=messages,
-                request_timeout=6000
+                messages=messages
                 )
                 temp_str_memory = str(list(client_openai.extract_text_or_completion_object(completion))[0]).strip()
                 session_inside = []
@@ -90,8 +90,7 @@ def request_llm(client_openai, request_in, system_message, added_context):
         try:
             completion = client_openai.create(
             model="gpt-14b-carly",
-            messages=messages,
-            request_timeout=6000
+            messages=messages
             )
             break
 
