@@ -100,6 +100,7 @@ if answer_backup_compose == "yes":
     s.log(f"Current file name: {compose_backup_path}")
     s.log(f"New file name: {compose_path}")
     os.rename(compose_backup_path, compose_path)
+    input("Please press enter to go to main menu: ")
 
 try:
     if os.name == 'nt':
