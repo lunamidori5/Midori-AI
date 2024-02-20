@@ -1,4 +1,3 @@
-
 +++
 disableToc = false
 title = "Home Assistant x LocalAI"
@@ -9,7 +8,14 @@ Home Assistant is an open-source home automation platform that allows users to c
 
 Currently, Home Assistant supports conversation-based agents and services. As of writing this, OpenAIs API is supported as a conversation agent; however, access to your homes devices and entities is possible through custom components. Local based services, such as LocalAI, are also available as a drop-in replacement for OpenAI services.
 
-An example custom integration to utilize Local-based services in Home-LLM. Home-LLM is a Home Assistant integration developed by Alex O'Connell ([acon96](https://github.com/acon96)) that allows for a completely local Large Language Model acting as a personal assistant. Using LocalAI as the backend is one of the supported platforms .
+## There are multiple custom integrations available:
+
+Please note that both of the projects are similar in term of visual interfaces, they seem to be derived from the official Home Assistant plugin: [OpenAI Conversation](https://www.home-assistant.io/integrations/openai_conversation/) (to be confirmed)
+
+- Home-LLM is a Home Assistant integration developed by Alex O'Connell ([acon96](https://github.com/acon96)) that allows for a completely local Large Language Model acting as a personal assistant. Using LocalAI as the backend is one of the supported platforms. The provided Large Language Models are specifically trained for home assistant and are therefore smaller in size.
+- Extended OpenAI Conversation uses OpenAI API’s feature of function calling to call service of Home Assistant. Is more generic and work with most of the Large Language Model.
+
+# Home-LLM
 
 ## Installation Instructions – LocalAI
 
@@ -47,6 +53,22 @@ In order to utilize the conversation agent in HomeAssistant, you will need to co
 ANY DEVICES THAT YOU SELECT TO BE EXPOSED TO THE MODEL WILL BE ADDED AS CONTEXT AND POTENTIALLY HAVE THEIR STATE CHANGED BY THE MODEL. ONLY EXPOSE DEVICES THAT YOU ARE OK WITH THE MODEL MODIFYING THE STATE OF, EVEN IF IT IS NOT WHAT YOU REQUESTED. THE MODEL MAY OCCASIONALLY HALLUCINATE AND ISSUE COMMANDS TO THE WRONG DEVICE! USE AT YOUR OWN RISK.
 {{% /notice %}}
 
-## Changing the prompt.
+## Changing the prompt
 
 Example on how to use the prompt can be seen [here](https://github.com/acon96/home-llm?tab=readme-ov-file#model).
+
+# Extended OpenAI Conversation
+
+The project has been introduced [here](https://community.home-assistant.io/t/custom-component-extended-openai-conversation-lets-control-entities-via-chatgpt/636500), and the Documentation is available directly [on the author github project](https://github.com/jekalmin/extended_openai_conversation)
+
+# Setup summary
+
+LocalAI must be working with an installed LLM.
+You can directly ask the model if he is compatible with Home Assistant. To be confirmed: the model may work evene if it says he is not compatible. Mistral and Mixtral are compatible.
+Then install the Home Assistant integration, and follow the documentation provided above.
+High level Overview of the setup:
+
+- add the repository in HACS.
+- install the integration.
+- fill the needed information. You must fill something in the API key (if you don't use api key just check the box "ignore authentication"), put the full url e.g. https://myLocalAIHostHere:8080/v1 (including /v1), Not sure: let the API version empty.
+- configure the Home Assistant [Assist](https://www.home-assistant.io/voice_control/) using the new conversation agent.
