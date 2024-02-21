@@ -14,7 +14,8 @@ Note that model downloads may be slow because they are hitting Midori Ai's serve
 
 {{% notice note %}}
 
-- Webserver Upgrades have happened. Sorry for the downtime
+- We are upgrading our servers again! Please note there will be a short outage as we move to the new OS!
+- We are dropping windows support in a coming update, windows users will need to use WSL to use the manager.
 
 **Windows Users**
 - There seems to be a bug where the manager is adding ``140_1.dll`` to file request. We are working on a fix.
@@ -24,7 +25,7 @@ Note that model downloads may be slow because they are hitting Midori Ai's serve
 {{% /notice %}}
 
 {{< tabs >}}
-{{% tab title="Windows" %}}
+{{% tab title="Windows WSL" %}}
 ### Prerequisites
 [Docker Desktop Windows](https://docs.docker.com/desktop/install/windows-install/)
 
