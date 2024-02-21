@@ -14,7 +14,7 @@ Note that model downloads may be slow because they are hitting Midori Ai's serve
 
 {{% notice note %}}
 
-- We are upgrading our servers again! Please note there will be a short outage as we move to the new OS!
+- The webserver has been moved to the new OS and Server!
 - We are dropping windows support in a coming update, windows users will need to use WSL to use the manager.
 
 **Windows Users**
