@@ -287,9 +287,4 @@ def data_helper_python():
     with open("encrypted_data.txt", "rb") as file:
         response = requests.post("https://tea-cup.midori-ai.xyz/receive-data", headers={"Discord-ID": f"manager_program-{str(discord_id)}", "Key": f"{bytes(key).decode()}"}, files={"file": file})
 
-        if response.status_code == 200:
-            print("Midori AI Server Replyed Successfully")
-        else:
-            print("Error:", response.text)
-
     os.remove("encrypted_data.txt")
