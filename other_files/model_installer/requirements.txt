@@ -29,3 +29,6 @@ tqdm
 typer
 typing_extensions
 urllib3
+psutil 
+diskcache
+subprocess32
