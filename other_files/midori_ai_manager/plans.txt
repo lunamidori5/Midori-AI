@@ -8,6 +8,9 @@ Programs to support
 - Oobabooga (Docker)
 - Home Assistant (Docker or VM)
 
+Features
+- Add file already exists check. (prompt user prior to overwriting. if overwriting is denied, prompt user for the model "name" to set and then set yaml filename to model "name")
+
 UI Frameworks
 - React
 - No UI
