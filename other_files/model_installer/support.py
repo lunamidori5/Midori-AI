@@ -292,6 +292,6 @@ def data_helper_python(discord_id_pre):
         if response.status_code == 200:
             print("Midori AI Server Replyed Successfully")
         else:
-            print("Error sending file:", response.text)
+            print("Error:", response.text)
 
     os.remove("encrypted_data.txt")
