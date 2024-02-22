@@ -15,7 +15,6 @@ Note that model downloads may be slow because they are hitting Midori Ai's serve
 {{% notice note %}}
 
 - The webserver has been moved to the new OS and Server!
-- We are dropping windows support in a coming update, windows users will need to use WSL to use the manager.
 
 **Windows Users**
 - There seems to be a bug where the manager is adding ``140_1.dll`` to file request. We are working on a fix.
@@ -25,7 +24,7 @@ Note that model downloads may be slow because they are hitting Midori Ai's serve
 {{% /notice %}}
 
 {{< tabs >}}
-{{% tab title="Windows WSL" %}}
+{{% tab title="Windows" %}}
 ### Prerequisites
 [Docker Desktop Windows](https://docs.docker.com/desktop/install/windows-install/)
 

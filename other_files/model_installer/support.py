@@ -1,6 +1,4 @@
 import os
-import pwd
-import grp
 import json
 import shutil
 import psutil
@@ -273,8 +271,6 @@ def data_helper_python(discord_id_pre):
         "disk_total": shutil.disk_usage("/").total,
         "disk_used": shutil.disk_usage("/").used,
         "disk_free_space": shutil.disk_usage("/").free,
-        "user": pwd.getpwuid(os.getuid()). pw_name,
-        "primary_group": grp.getgrgid(os.getgid()).gr_name,
         "ssh_installed": shutil.which("ssh"),
         "python_installed": shutil.which("python3.11"),
         "pip_installed": shutil.which("pip"),
