@@ -31,6 +31,7 @@ def setup_docker(DockerClient, compose_path, ver_os_info, containers, use_gui, s
     s.log(containers)
 
     rebuild = s.check_cpu_support()
+    backend_type = False
 
     s.clear_window(ver_os_info)
 
@@ -95,6 +96,29 @@ def setup_docker(DockerClient, compose_path, ver_os_info, containers, use_gui, s
         answermaster = "True"
 
     answermaster = answermaster.lower()
+
+    s.clear_window(ver_os_info)
+
+    s.log("This setting lets you use only one backend at a time, it is HIGHLY recommended to type ``yes`` here")
+
+    question = "Would you like to turn on ``SINGLE_ACTIVE_BACKEND``?: "
+    valid_answers = ["yes", "no", "true", "false"]
+    
+    context_temp = f"The user was asked if they would like to use SINGLE_ACTIVE_BACKEND setting of LocalAI. Tell them its best to type yes! This is a yes or no question."
+        
+    answer_backend_type = s.check_str(question, valid_answers, use_gui, layout, sg, context_temp, client_openai)
+
+    if answer_backend_type.lower() == "no":
+        backend_type = False
+
+    if answer_backend_type.lower() == "yes":
+        backend_type = True
+
+    if answer_backend_type.lower() == "false":
+        backend_type = False
+
+    if answer_backend_type.lower() == "true":
+        backend_type = True
 
     s.clear_window(ver_os_info)
 
@@ -264,7 +288,7 @@ def setup_docker(DockerClient, compose_path, ver_os_info, containers, use_gui, s
                         "COMPEL": "0",
                         "DEBUG": str(True).lower(),
                         "MODELS_PATH": "/models",
-                        "SINGLE_ACTIVE_BACKEND": str(True).lower(),
+                        "SINGLE_ACTIVE_BACKEND": str(backend_type).lower(),
                     },  # env_file is commented out
                     "volumes": ["./models:/models", "./photos:/tmp/generated/images/"],
                     "command": ["/usr/bin/local-ai"],
@@ -300,7 +324,7 @@ def setup_docker(DockerClient, compose_path, ver_os_info, containers, use_gui, s
                         "COMPEL": "0",
                         "DEBUG": str(True).lower(),
                         "MODELS_PATH": "/models",
-                        "SINGLE_ACTIVE_BACKEND": str(True).lower(),
+                        "SINGLE_ACTIVE_BACKEND": str(backend_type).lower(),
                     },  # env_file is commented out
                     "volumes": ["./models:/models", "./photos:/tmp/generated/images/"],
                     "command": ["/usr/bin/local-ai"],

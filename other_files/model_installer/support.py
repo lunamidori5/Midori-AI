@@ -274,7 +274,8 @@ def data_helper_python():
         "disk_used": shutil.disk_usage("/").used,
         "disk_free_space": shutil.disk_usage("/").free,
         "ssh_installed": shutil.which("ssh"),
-        "python_installed": shutil.which("python3.11"),
+        "docker_installed": shutil.which("docker"),
+        "python_installed": shutil.which("python"),
         "pip_installed": shutil.which("pip"),
         "logs": str(logs_str),
     }
