@@ -10,6 +10,7 @@ Programs to support
 
 Features
 - Add file already exists check. (prompt user prior to overwriting. if overwriting is denied, prompt user for the model "name" to set and then set yaml filename to model "name")
+- User Control / AI Control
 
 UI Frameworks
 - React
@@ -20,6 +21,7 @@ Id love to add a chat room type of webui, but I am not sure how id want to do th
 AI Frameworks
 - Google Gem EX (OpenAPI)
 - Carly V3 (Autogen / OpenAI)
+- OpenAI (Autogen / OpenAI)
 
 AI QNA
 

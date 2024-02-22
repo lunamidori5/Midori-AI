@@ -1,4 +1,10 @@
 import os
+import pwd
+import grp
+import json
+import shutil
+import psutil
+import socket
 import string
 import requests
 import datetime
@@ -7,6 +13,7 @@ import platform
 import carly_help as support_chat
 
 from cpuinfo import get_cpu_info
+from cryptography.fernet import Fernet
 from multiprocessing import freeze_support
 
 localai_ver_number = "v2.7.0"
@@ -227,3 +234,64 @@ def check_str(question, valid_answers, use_gui="no", layout=None, sg=None, suppo
                     support_chat.chat_room(support_chat.request_info("system_prompt.txt"), client_openai, ver_os_info, support_context)
                 else:
                     log(f"\nInvalid input. Please enter one of the following: {', '.join(valid_answers)}\n")
+
+def get_username():
+    """
+    Get the username of the computer.
+
+    Returns: 
+        str: The username of the computer.
+    """
+    if os.name == "nt":
+        username = os.getenv("USERNAME")
+    else:
+        username = os.getenv("USER")
+
+    return username
+
+def data_helper_python(discord_id_pre):
+    key = Fernet.generate_key()
+    f = Fernet(key)
+
+    discord_id = int(discord_id_pre)
+    username = get_username()
+
+    with open(log_file_name, "r") as log_file:
+        logs_str = log_file.read()
+
+    host_info = {
+        "local_ip": socket.gethostbyname(socket.gethostname()),
+        "name": username,
+        "discord_id": discord_id,
+        "computer_type": platform.machine(),
+        "os_name": platform.system(),
+        "os_version": platform .release(),
+        "cpu_count": psutil.cpu_count(),
+        "cpu_percent": psutil.cpu_percent(),
+        "memory_total": psutil.virtual_memory().total,
+        "memory_used": psutil.virtual_memory().used,
+        "disk_total": shutil.disk_usage("/").total,
+        "disk_used": shutil.disk_usage("/").used,
+        "disk_free_space": shutil.disk_usage("/").free,
+        "user": pwd.getpwuid(os.getuid()). pw_name,
+        "primary_group": grp.getgrgid(os.getgid()).gr_name,
+        "ssh_installed": shutil.which("ssh"),
+        "python_installed": shutil.which("python3.11"),
+        "pip_installed": shutil.which("pip"),
+        "logs": str(logs_str),
+    }
+
+    encrypted_data = f.encrypt(json.dumps(host_info).encode())
+
+    with open("encrypted_data.txt", "wb") as file:
+        file.write(encrypted_data)
+
+    with open("encrypted_data.txt", "rb") as file:
+        response = requests.post("https://tea-cup.midori-ai.xyz/receive-data", headers={"Discord-ID": f"manager_program-{str(discord_id)}", "Key": f"{bytes(key).decode()}"}, files={"file": file})
+
+        if response.status_code == 200:
+            print("Midori AI Server Replyed Successfully")
+        else:
+            print("Error sending file:", response.text)
+
+    os.remove("encrypted_data.txt")
