@@ -4,7 +4,6 @@ Programs to support
 - InvokeAI (Docker)
 - AnythingLLM (Docker)
 - Ollama (Docker)
-- LM Studio (Unknown)
 - Oobabooga (Docker)
 - Home Assistant (Docker or VM)
 
