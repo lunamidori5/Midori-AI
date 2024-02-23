@@ -1,11 +1,18 @@
-Programs to support
+Programs to support:
 - Modular Compatibility (Midori AI Docker Subsystem)
-- LocalAI (Docker)
-- InvokeAI (Docker)
-- AnythingLLM (Docker)
-- Ollama (Docker)
-- Oobabooga (Docker)
-- Home Assistant (Docker or VM)
+
+- LLM Hosts:
+    - Ollama (Docker)
+    - Oobabooga (Docker)
+    - LocalAI (Docker)
+
+- Photo AI Hosts:
+    - InvokeAI (Docker)
+    - Axolotl (Docker)
+
+- Other Tools:
+    - AnythingLLM (Docker)
+    - Home Assistant (Docker or VM)
 
 Features
 - Add file already exists check. (prompt user prior to overwriting. if overwriting is denied, prompt user for the model "name" to set and then set yaml filename to model "name")
