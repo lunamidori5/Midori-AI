@@ -115,6 +115,7 @@ containers = client.containers.list()
 s.clear_window(ver_os_info)
 
 s.check_for_update(ver_os_info, ver_info)
+s.data_helper_python()
 
 s.clear_window(ver_os_info)
 
@@ -134,6 +135,7 @@ if answer_backup_compose == "yes":
 use_gui = "no"
 
 while True:
+    s.data_helper_python()
     s.clear_window(ver_os_info)
 
     s.log("-----------------------------------------------------------------------------------------------")
@@ -162,6 +164,7 @@ while True:
     answerstartup = int(answerstartup)
 
     s.clear_window(ver_os_info)
+    s.data_helper_python()
 
     if answerstartup == 1:
         docker_add_on.setup_docker(DockerClient, compose_path, ver_os_info, containers, use_gui, sg, base_image_name, localai_ver_number, layout, client_openai)

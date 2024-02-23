@@ -48,8 +48,6 @@ def log(message):
     # Resave the file
     with open(log_file_name, "w") as f:
         f.write(contents)
-    
-    data_helper_python()
 
 def clear_window(ver_os):
     log("Clearing the screen")
