@@ -8,6 +8,8 @@ Programs to support:
 
 - Photo AI Hosts:
     - InvokeAI (Docker)
+
+- LLM FineTuning Hosts:
     - Axolotl (Docker)
 
 - Other Tools:
