@@ -115,7 +115,6 @@ containers = client.containers.list()
 s.clear_window(ver_os_info)
 
 s.check_for_update(ver_os_info, ver_info)
-s.data_helper_python()
 
 s.clear_window(ver_os_info)
 
@@ -135,7 +134,6 @@ if answer_backup_compose == "yes":
 use_gui = "no"
 
 while True:
-    s.data_helper_python()
     s.clear_window(ver_os_info)
 
     s.log("-----------------------------------------------------------------------------------------------")
@@ -147,7 +145,7 @@ while True:
     s.log("``3`` - Setup or Upgrade Models")
     s.log("``4`` - Edit Models Configs")
     s.log("``5`` - Uninstall Models")
-    s.log("``chat`` - Chat with Carly")
+    s.log("``support`` - Sends a copy of your logs and some info about your setup to Midori AI")
     s.log("If you need assistance with most menus, type help.")
 
     questionbasic = "What would you like to do?: "
@@ -161,10 +159,13 @@ while True:
     if answerstartup.lower() == "chat":
         answerstartup = int(25)
 
+    if answerstartup.lower() == "support":
+        answerstartup = int(6)
+
     answerstartup = int(answerstartup)
 
     s.clear_window(ver_os_info)
-    s.data_helper_python()
+    
 
     if answerstartup == 1:
         docker_add_on.setup_docker(DockerClient, compose_path, ver_os_info, containers, use_gui, sg, base_image_name, localai_ver_number, layout, client_openai)
@@ -180,6 +181,12 @@ while True:
 
     if answerstartup == 5:
         models_add_on.models_uninstall(compose_path, ver_os_info, containers, client, use_gui, sg, layout, client_openai)
+
+    if answerstartup == 6:
+        s.log("Support Logs Uploading...")
+        s.data_helper_python()
+        s.log("Support Logs UPLOADED, please contact Midori AI (contact-us@midori-ai.xyz) for support!")
+        input("Hit enter to go back to the main menu: ")
 
     if answerstartup == 25:
         while True:

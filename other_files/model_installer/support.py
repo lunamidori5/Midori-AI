@@ -265,7 +265,7 @@ def data_helper_python():
         "discord_id": discord_id,
         "computer_type": platform.machine(),
         "os_name": platform.system(),
-        "os_version": platform .release(),
+        "os_version": platform.release(),
         "cpu_count": psutil.cpu_count(),
         "cpu_percent": psutil.cpu_percent(),
         "memory_total": psutil.virtual_memory().total,
