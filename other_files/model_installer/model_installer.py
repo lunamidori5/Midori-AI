@@ -86,7 +86,6 @@ s.log("I am setting up a temp copy of Carly...")
 temp_response = help_add_on.request_info("temp_something_for_model_installer.txt")
 temp_keys = temp_response.strip()
 client_openai = OpenAIWrapper(base_url="https://ai.midori-ai.xyz/v1", api_key=temp_keys, timeout=6000)
-s.data_helper_python()
 
 # localai_ver_number = version_data['version']
 ver_os_info = s.get_os_info()
@@ -155,7 +154,6 @@ while True:
     answerstartup = s.check_str(questionbasic, sd_valid_answers, use_gui, layout, sg, "This is the main menu they are asking for help on...", client_openai)
 
     if answerstartup.lower() == "exit":
-        s.data_helper_python()
         break
 
     if answerstartup.lower() == "chat":
