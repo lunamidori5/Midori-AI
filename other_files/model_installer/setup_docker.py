@@ -635,7 +635,7 @@ def dev_setup_docker(DockerClient, compose_path, ver_os_info, containers, use_gu
         config = {
             "version": "3.6",
             "services": {
-                "api": {
+                "midori_ai_subsystem": {
                     "deploy": {
                         "resources": {
                             "reservations": {
@@ -670,7 +670,7 @@ def dev_setup_docker(DockerClient, compose_path, ver_os_info, containers, use_gu
         config = {
             "version": "3.6",
             "services": {
-                "api": {
+                "midori_ai_subsystem": {
                     "image": f"{base_image_name}",
                     "tty": True,
                     "restart": "always",
