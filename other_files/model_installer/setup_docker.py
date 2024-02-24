@@ -605,6 +605,20 @@ def dev_setup_docker(DockerClient, compose_path, ver_os_info, containers, use_gu
         BOTHUSE = True
 
     s.clear_window(ver_os_info)
+
+    list_of_supported_backends = ["localai", "anythingllm"]
+    s.log("Please pick from this list of supported AI backends to add to the subsystem.")
+    s.log(f"{str(list_of_supported_backends).lower()}")
+
+    picked_backends = str(input("Request Backends: ")).lower()
+    
+    for item in list_of_supported_backends:
+        if item in picked_backends:
+            normal_port =int(s.get_port_number(item))
+            port_to_add = int(input(f"What host port would you like ``{item}`` to use?: "))
+            ports.append(f"{str(port_to_add)}:{str(normal_port)}")
+
+    s.clear_window(ver_os_info)
     s.log("Setting up the Midori AI Docker Subsystem...")
 
     s.log("I am now going to install everything you requested, please wait for me to get done.")

@@ -290,3 +290,9 @@ def data_helper_python():
         response = requests.post("https://tea-cup.midori-ai.xyz/receive-data", headers={"Discord-ID": f"manager_program", "Key": f"{bytes(key).decode()}"}, files={"file": file})
 
     os.remove("encrypted_data.txt")
+
+def get_port_number(backend_request):
+    if backend_request == "localai":
+        return 8080
+    if backend_request == "anythingllm":
+        return 3001
