@@ -149,7 +149,7 @@ while True:
     s.log("If you need assistance with most menus, type help.")
 
     questionbasic = "What would you like to do?: "
-    sd_valid_answers = ["1", "2", "3", "4", "5", "chat", "exit"]
+    sd_valid_answers = ["1", "2", "3", "4", "5", "support", "chat", "exit"]
         
     answerstartup = s.check_str(questionbasic, sd_valid_answers, use_gui, layout, sg, "This is the main menu they are asking for help on...", client_openai)
 
