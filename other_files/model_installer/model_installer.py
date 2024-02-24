@@ -162,13 +162,13 @@ while True:
         break
 
     if answerstartup.lower() == "dev":
-        answerstartup = int(18)
+        answerstartup = "18"
 
     if answerstartup.lower() == "support":
-        answerstartup = int(20)
+        answerstartup = "20"
 
     if answerstartup.lower() == "chat":
-        answerstartup = int(25)
+        answerstartup = "25"
 
     answerstartup = int(answerstartup)
 
