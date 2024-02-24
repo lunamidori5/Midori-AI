@@ -211,7 +211,7 @@ def edit(compose_path, ver_os_info, containers, client, use_gui, sg, layout, cli
 
             if answeryamleditor == "exit":
                 s.log("exiting...")
-                exit(0)
+                return
             
             s.clear_window(ver_os_info)
 

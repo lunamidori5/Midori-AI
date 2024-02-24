@@ -76,7 +76,7 @@ def check_for_update(ver_os_info, ver_info):
             servers_replyed = False
             retry = retry + 1
             if retry > 10:
-                exit(404)
+                break
         
         if servers_replyed:
             break
@@ -183,7 +183,7 @@ def check_model_ids_file():
     # Check if the request was successful.
     if response.status_code != 200:
         log(f"Servers seem to be down, please try again in a moment...")
-        exit(418)
+        return
 
     # Load the file into a list.
     lines = [] 

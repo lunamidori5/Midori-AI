@@ -12,7 +12,7 @@ def setup_docker(DockerClient, compose_path, ver_os_info, containers, use_gui, s
 
         s.log(f"You Already have localai setup in docker please use the uninstall / reinstall menu to update or remove it")
         input("Hit enter to exit")
-        exit()
+        return
     except Exception as e:
         s.log(f"Failed docker check... good")
 
@@ -24,7 +24,7 @@ def setup_docker(DockerClient, compose_path, ver_os_info, containers, use_gui, s
 
         s.log(f"You Already have anythingllm setup in docker please use the uninstall / reinstall menu to update or remove it")
         input("Hit enter to exit")
-        exit()
+        return
     except Exception as e:
         s.log(f"Failed docker check... good")
         
@@ -67,7 +67,7 @@ def setup_docker(DockerClient, compose_path, ver_os_info, containers, use_gui, s
 
     if answerbasic == "false":
         s.log("Alright then ill go ahead and exit! Thank you!")
-        exit(1)
+        return
 
     s.clear_window(ver_os_info)
 
@@ -425,7 +425,7 @@ def change_docker(DockerClient, compose_path, ver_os_info, containers, use_gui, 
         s.log(f"Failed docker check... Please pick to install LocalAI from the main menu...")
         s.log(f"If you used ``docker run`` please ask on the discord for help on uninstalling the docker")
         input("Hit enter to exit")
-        exit()
+        return
     
     anything_llm_installed = False
 
