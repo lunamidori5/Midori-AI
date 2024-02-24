@@ -502,7 +502,7 @@ def change_docker(DockerClient, compose_path, ver_os_info, containers, use_gui, 
             except Exception as e:
                 s.log(f"Error occurred while running docker-compose: {e}")
 
-def dev_setup_docker(DockerClient, compose_path, ver_os_info, containers, use_gui, sg, base_image_name_removed, localai_ver_number, layout, client_openai):
+def dev_setup_docker(DockerClient, compose_path, ver_os_info, containers, use_gui, sg, client, localai_ver_number, layout, client_openai):
     
     CPUCORES = 1
     GPUUSE = False
@@ -717,5 +717,39 @@ def dev_setup_docker(DockerClient, compose_path, ver_os_info, containers, use_gu
         start=True,
         pull="always",
     )
+
+    s.log("Loading your docker-compose.yaml")
+    with open(docker_compose_yaml, "r") as f:
+        compose_data  = yaml.safe_load(f)
+        s.log("Auto loaded the docker-compose.yaml")
+
+    for service_name, service_data in compose_data["services"].items():
+        s.log(f"Checking... Service Name: {service_name}, Service Data: {service_data}")
+        if service_data["image"].startswith("lunamidori5"):
+            break
+    
+    for container in containers:
+        s.log(f"Checking Name: {container.name}, ID: {container.id}")
+
+        # Check if there is a container with a name containing `service_name`
+        if service_name in container.name:
+            # Get the container object
+            s.log(f"Found the subsystem, logging into: {container.name} / {container.id}")
+            container = client.containers.get(container.name)
+            break
+    
+    docker_commands = [
+                ["echo", f"Hi! {user_name}"],
+            ]
+
+    # Run a command inside the container
+    s.log("editing model from inside the docker")
+    for command in docker_commands:
+        s.log(f"Running {command}: ")
+        command_output = container.exec_run(command)
+        s.log(command_output.output.decode("utf-8", errors="ignore"))
+
+    s.log("All done, I am now rebooting the subsystem")
+    container.restart()
 
     s.log("Thank you for using Midori AI's Docker SubSystem!")
