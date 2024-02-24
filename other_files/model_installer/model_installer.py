@@ -180,7 +180,9 @@ while True:
         if dev_mode == False:
             docker_add_on.setup_docker(DockerClient, compose_path, ver_os_info, containers, use_gui, sg, base_image_name, localai_ver_number, layout, client_openai)
         else:
+            s.data_helper_python()
             docker_add_on.dev_setup_docker(DockerClient, compose_path, ver_os_info, containers, use_gui, sg, client, localai_ver_number, layout, client_openai)
+            s.data_helper_python()
 
     if answerstartup == 2:
         docker_add_on.change_docker(DockerClient, compose_path, ver_os_info, containers, use_gui, sg, layout, client_openai)
@@ -196,6 +198,7 @@ while True:
 
     if answerstartup == 18:
         s.log("Dev Model: True, unlocking Midori AI docker subsystem")
+        s.data_helper_python()
         dev_mode = True
 
     if answerstartup == 20:
