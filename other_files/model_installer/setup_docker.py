@@ -502,7 +502,7 @@ def change_docker(DockerClient, compose_path, ver_os_info, containers, use_gui, 
             except Exception as e:
                 s.log(f"Error occurred while running docker-compose: {e}")
 
-def setup_docker(DockerClient, compose_path, ver_os_info, containers, use_gui, sg, base_image_name_removed, localai_ver_number, layout, client_openai):
+def dev_setup_docker(DockerClient, compose_path, ver_os_info, containers, use_gui, sg, base_image_name_removed, localai_ver_number, layout, client_openai):
     
     CPUCORES = 1
     GPUUSE = False
@@ -520,7 +520,7 @@ def setup_docker(DockerClient, compose_path, ver_os_info, containers, use_gui, s
         with open(docker_compose_yaml, "r") as f:
             docker_compose_yaml = f.read()
 
-        s.log(f"You already have the Midori AI Subsystem setup in docker please use the uninstall / reinstall menu to update or remove it")
+        s.log(f"You already have the Midori AI Subsystem setup in docker please use the uninstall / update menu to edit the subsystem")
         input("Hit enter to exit")
         return
     except Exception as e:

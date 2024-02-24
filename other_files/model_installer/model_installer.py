@@ -141,7 +141,11 @@ while True:
     s.log(f"------------------------------ Main Menu (Ver: {ver_info}) ------------------------------------")
     s.log("-----------------------------------------------------------------------------------------------")
 
-    s.log("``1`` - LocalAI / AnythingLLM Manager")
+    if dev_mode == False:
+        s.log("``1`` - LocalAI / AnythingLLM Installer")
+    else:
+        s.log("``1`` - Midori AI Subsystem Installer")
+
     s.log("``2`` - Uninstall or Upgrade LocalAI / AnythingLLM")
     s.log("``3`` - Setup or Upgrade Models")
     s.log("``4`` - Edit Models Configs")
@@ -170,14 +174,12 @@ while True:
 
     s.clear_window(ver_os_info)
     
-
     if answerstartup == 1:
         if dev_mode == False:
             docker_add_on.setup_docker(DockerClient, compose_path, ver_os_info, containers, use_gui, sg, base_image_name, localai_ver_number, layout, client_openai)
         else:
-            docker_add_on.setup_docker(DockerClient, compose_path, ver_os_info, containers, use_gui, sg, base_image_name, localai_ver_number, layout, client_openai)
+            docker_add_on.dev_setup_docker(DockerClient, compose_path, ver_os_info, containers, use_gui, sg, base_image_name, localai_ver_number, layout, client_openai)
 
-        
     if answerstartup == 2:
         docker_add_on.change_docker(DockerClient, compose_path, ver_os_info, containers, use_gui, sg, layout, client_openai)
 
