@@ -501,3 +501,207 @@ def change_docker(DockerClient, compose_path, ver_os_info, containers, use_gui, 
                 s.log("Reinstalled AnythingLLM fully!")
             except Exception as e:
                 s.log(f"Error occurred while running docker-compose: {e}")
+
+def setup_docker(DockerClient, compose_path, ver_os_info, containers, use_gui, sg, base_image_name_removed, localai_ver_number, layout, client_openai):
+    
+    CPUCORES = 1
+    GPUUSE = False
+    BOTHUSE = False
+    user_name = "placeholder"
+    discord_id = 1
+    base_image_name = "lunamidori5/midori_ai_subsystem"
+    ports = ["8085:8080"]
+
+    docker_compose_yaml = "midori-docker-compose.yaml"
+
+    try:
+        midori_ai_subsystem = DockerClient(compose_files=[f"./{docker_compose_yaml}"])
+        
+        with open(docker_compose_yaml, "r") as f:
+            docker_compose_yaml = f.read()
+
+        s.log(f"You already have the Midori AI Subsystem setup in docker please use the uninstall / reinstall menu to update or remove it")
+        input("Hit enter to exit")
+        return
+    except Exception as e:
+        s.log(f"Failed subsystem check... good")
+        
+    s.log(containers)
+
+    s.clear_window(ver_os_info)
+
+    s.log("Your username will not get passed or shared with Midori AI, it is just a way to make sure your image is safe")
+
+    user_name = str(input("Please enter a Username: "))
+
+    s.log("Your Discord ID will be securely transmitted to Midori AI to facilitate download, upload, and web request processes.")
+
+    while True:
+        try:
+            discord_id_list = [354089955972087808, 1085014642067243038, 1087343493954945156]
+
+            discord_id = int(input("Please enter your discord id, it should be numbers (IE: 1085014642067243038): "))
+
+            for item in discord_id_list:
+                if discord_id == item:
+                    Exception("Discord ID matches Midori AI known bots list")
+            break
+
+        except Exception as e:
+            s.log(f"{str(e)} : Please enter your discord id")
+
+    s.clear_window(ver_os_info)
+
+    s.log("This is the menu to setup the Midori AI Docker Subsystem! ")
+
+    question = "Would you like me to install Subsystem in docker to this computer?: "
+    valid_answers = ["yes", "no", "true", "false"]
+    
+    context_temp = f"The user was asked if they would like to install the Midori AI Docker Subsystem. This is a yes or no question."
+        
+    answerbasic = s.check_str(question, valid_answers, use_gui, layout, sg, context_temp, client_openai)
+
+    if answerbasic.lower() == "no":
+        answerbasic = "False"
+
+    if answerbasic.lower() == "yes":
+        answerbasic = "True"
+
+    answerbasic = answerbasic.lower()
+
+    if answerbasic == "false":
+        s.log("Alright then ill go ahead and exit! Thank you!")
+        return
+
+    s.clear_window(ver_os_info)
+
+    s.log("Sadly I am unable to check your CUDA install for GPU, If you have it already installed good!")
+    s.log("If not please stop by ``https://developer.nvidia.com/cuda-downloads`` and get it for your OS, WSL is Linux")
+    s.log("If you do not have CUDA installed or use a card that does not support it please type no...")
+    s.log("This setting lets you use GPU and CPU for AI images in the subsystem.")
+
+    question = "Would you like to use GPU and CPU for mixed AI images?: "
+    valid_answers = ["yes", "no", "true", "false"]
+    
+    context_temp = f"The user was asked if they would like to use GPU for the Midori AI Docker Subsystem and other AI Images. This is a yes or no question."
+    context_temp = f"{context_temp}\nThis is the output of the nvidia-smi command\n{str(os.popen('nvidia-smi').read())}\nIf the user does not have cuda installed please tell them to type no"
+        
+    answer_backend_type = s.check_str(question, valid_answers, use_gui, layout, sg, context_temp, client_openai)
+
+    if answer_backend_type.lower() == "no":
+        GPUUSE = False
+        BOTHUSE = False
+
+    if answer_backend_type.lower() == "yes":
+        GPUUSE = True
+        BOTHUSE = True
+
+    if answer_backend_type.lower() == "false":
+        GPUUSE = False
+        BOTHUSE = False
+
+    if answer_backend_type.lower() == "true":
+        GPUUSE = True
+        BOTHUSE = True
+
+    s.clear_window(ver_os_info)
+    s.log("Setting up the Midori AI Docker Subsystem...")
+
+    s.log("I am now going to install everything you requested, please wait for me to get done.")
+    s.log("Hit enter to start")
+
+    input()
+
+    os.makedirs("files", exist_ok=True)
+
+    if ver_os_info == "linux":
+        os.chmod("files", 0o777)
+
+    if GPUUSE:
+        config = {
+            "version": "3.6",
+            "services": {
+                "api": {
+                    "deploy": {
+                        "resources": {
+                            "reservations": {
+                                "devices": [
+                                    {
+                                        "driver": "nvidia",
+                                        "count": 1,
+                                        "capabilities": "changeme",
+                                    }
+                                ]
+                            }
+                        }
+                    },
+                    "image": f"{base_image_name}",
+                    "tty": True,
+                    "restart": "always",
+                    "ports": ports,
+                    "environment": {
+                        "CPUCORES": CPUCORES,
+                        "GPUUSE": str(GPUUSE).lower(),
+                        "BOTHUSE": str(BOTHUSE).lower(),
+                        "USERNAME": user_name,
+                        "DISCORD_ID": discord_id,
+                    },  # env_file is commented out
+                    "volumes": ["./files:/app/files"],
+                }
+            },
+        }
+
+
+    else:
+        config = {
+            "version": "3.6",
+            "services": {
+                "api": {
+                    "image": f"{base_image_name}",
+                    "tty": True,
+                    "restart": "always",
+                    "ports": ports,
+                    "environment": {
+                        "CPUCORES": CPUCORES,
+                        "GPUUSE": str(GPUUSE).lower(),
+                        "BOTHUSE": str(BOTHUSE).lower(),
+                        "USERNAME": user_name,
+                        "DISCORD_ID": discord_id,
+                    },  # env_file is commented out
+                    "volumes": ["./files:/app/files"],
+                }
+            },
+        }
+
+    s.log(config)
+
+    # Dump the configuration to a YAML file
+    with open(compose_path, "w") as f:
+        yaml.dump(config, f, sort_keys=True)
+
+    if GPUUSE:
+        with open(compose_path, "r") as f:
+            # Read the entire contents of the file into a string
+            compose_yaml = f.read()
+
+        # Replace all occurrences of 'changeme ' with '["gpu"]' in the string
+        compose_yaml = compose_yaml.replace("changeme", '["gpu"]')
+
+        # Write the modified string back to the file
+        with open(compose_path, "w") as f:
+            f.write(compose_yaml)
+
+    s.log("yaml saved spinning up the docker compose...")
+    midori_ai_subsystem = DockerClient(compose_files=[f"./{docker_compose_yaml}"])
+
+    midori_ai_subsystem.compose.up(
+        build=False,
+        detach=True,
+        no_build=False,
+        remove_orphans=True,
+        color=True,
+        start=True,
+        pull="always",
+    )
+
+    s.log("Thank you for using Midori AI's Docker SubSystem!")

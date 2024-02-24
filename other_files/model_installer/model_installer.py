@@ -132,6 +132,7 @@ if answer_backup_compose == "yes":
     input("Please press enter to go to main menu: ")
 
 use_gui = "no"
+dev_mode = False
 
 while True:
     s.clear_window(ver_os_info)
@@ -156,11 +157,14 @@ while True:
     if answerstartup.lower() == "exit":
         break
 
-    if answerstartup.lower() == "chat":
-        answerstartup = int(25)
+    if answerstartup.lower() == "dev":
+        answerstartup = int(18)
 
     if answerstartup.lower() == "support":
-        answerstartup = int(6)
+        answerstartup = int(20)
+
+    if answerstartup.lower() == "chat":
+        answerstartup = int(25)
 
     answerstartup = int(answerstartup)
 
@@ -168,7 +172,11 @@ while True:
     
 
     if answerstartup == 1:
-        docker_add_on.setup_docker(DockerClient, compose_path, ver_os_info, containers, use_gui, sg, base_image_name, localai_ver_number, layout, client_openai)
+        if dev_mode == False:
+            docker_add_on.setup_docker(DockerClient, compose_path, ver_os_info, containers, use_gui, sg, base_image_name, localai_ver_number, layout, client_openai)
+        else:
+            docker_add_on.setup_docker(DockerClient, compose_path, ver_os_info, containers, use_gui, sg, base_image_name, localai_ver_number, layout, client_openai)
+
         
     if answerstartup == 2:
         docker_add_on.change_docker(DockerClient, compose_path, ver_os_info, containers, use_gui, sg, layout, client_openai)
@@ -182,7 +190,11 @@ while True:
     if answerstartup == 5:
         models_add_on.models_uninstall(compose_path, ver_os_info, containers, client, use_gui, sg, layout, client_openai)
 
-    if answerstartup == 6:
+    if answerstartup == 18:
+        s.log("Dev Model: True, unlocking Midori AI docker subsystem")
+        dev_mode = True
+
+    if answerstartup == 20:
         s.log("Support Logs Uploading...")
         s.data_helper_python()
         s.log("Support Logs UPLOADED, please contact Midori AI (contact-us@midori-ai.xyz) for support!")
