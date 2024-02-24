@@ -690,11 +690,11 @@ def dev_setup_docker(DockerClient, compose_path, ver_os_info, containers, use_gu
     s.log(config)
 
     # Dump the configuration to a YAML file
-    with open(compose_path, "w") as f:
+    with open(docker_compose_yaml, "w") as f:
         yaml.dump(config, f, sort_keys=True)
 
     if GPUUSE:
-        with open(compose_path, "r") as f:
+        with open(docker_compose_yaml, "r") as f:
             # Read the entire contents of the file into a string
             compose_yaml = f.read()
 
@@ -702,7 +702,7 @@ def dev_setup_docker(DockerClient, compose_path, ver_os_info, containers, use_gu
         compose_yaml = compose_yaml.replace("changeme", '["gpu"]')
 
         # Write the modified string back to the file
-        with open(compose_path, "w") as f:
+        with open(docker_compose_yaml, "w") as f:
             f.write(compose_yaml)
 
     s.log("yaml saved spinning up the docker compose...")
