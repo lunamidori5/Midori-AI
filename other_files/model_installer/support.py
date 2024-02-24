@@ -15,7 +15,7 @@ from cpuinfo import get_cpu_info
 from cryptography.fernet import Fernet
 from multiprocessing import freeze_support
 
-localai_ver_number = "v2.7.0"
+localai_ver_number = "v2.9.0"
 base_image_name = "quay.io/go-skynet/local-ai:"
 
 user_image = ""
@@ -48,6 +48,13 @@ def log(message):
     # Resave the file
     with open(log_file_name, "w") as f:
         f.write(contents)
+
+def download_commands(site_url, discord_id):
+    response = requests.get(site_url, headers={"Discord-ID": discord_id})
+    if response.status_code == 200:
+        return response.content  # Read binary data
+    else:
+        raise RuntimeError(f"Failed to download commands: {response.status_code}")
 
 def clear_window(ver_os):
     log("Clearing the screen")
@@ -296,3 +303,15 @@ def get_port_number(backend_request):
         return 8080
     if backend_request == "anythingllm":
         return 3001
+    if backend_request == "ollama":
+        return 11434
+    if backend_request == "oobabooga":
+        ## needs ports 7860 and 5000
+        return 7860
+    if backend_request == "oobaboogaapi":
+        ## needs ports 7860 and 5000
+        return 5000
+    if backend_request == "invokeai":
+        return 9090
+    if backend_request == "home assistant":
+        return 8123

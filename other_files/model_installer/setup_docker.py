@@ -606,17 +606,38 @@ def dev_setup_docker(DockerClient, compose_path, ver_os_info, containers, use_gu
 
     s.clear_window(ver_os_info)
 
-    list_of_supported_backends = ["localai", "anythingllm"]
-    s.log("Please pick from this list of supported AI backends to add to the subsystem.")
+    list_of_supported_backends = [
+        "localai", 
+        "anythingllm", 
+        "ollama",
+        "invokeai",
+        "oobabooga",
+        "home-assistant",
+        "midoricluster"
+        ]
+    
+    str_temp = f"``{list_of_supported_backends[0]} and {list_of_supported_backends[1]}`` or ``{list_of_supported_backends[1]}, {list_of_supported_backends[0]}, {list_of_supported_backends[5]}``"
     s.log(f"{str(list_of_supported_backends).lower()}")
+    s.log("Please pick from this list of supported AI backends to add to the subsystem.")
+    s.log(f"You can list them out like this. {str_temp}")
+    s.log(f"Or type ``all`` to install all supported backends")
 
     picked_backends = str(input("Request Backends: ")).lower()
+    requested_backends = []
+
+    if picked_backends == "all":
+        picked_backends = str(list_of_supported_backends)
+    
+    if "oobabooga" in picked_backends:
+        picked_backends = picked_backends + " oobaboogaapi"
     
     for item in list_of_supported_backends:
         if item in picked_backends:
             normal_port =int(s.get_port_number(item))
-            port_to_add = int(input(f"What host port would you like ``{item}`` to use?: "))
+            port_to_add = int(input(f"What host port would you like ``{item}`` to use? (Noramlly {normal_port}): "))
             ports.append(f"{str(port_to_add)}:{str(normal_port)}")
+            requested_backends.append(item)
+            s.log(f"Added {item} on port {str(port_to_add)}:{str(normal_port)} to subsystem")
 
     s.clear_window(ver_os_info)
     s.log("Setting up the Midori AI Docker Subsystem...")
@@ -712,7 +733,7 @@ def dev_setup_docker(DockerClient, compose_path, ver_os_info, containers, use_gu
         build=False,
         detach=True,
         no_build=False,
-        remove_orphans=True,
+        remove_orphans=False,
         color=True,
         start=True,
         pull="always",
@@ -739,11 +760,18 @@ def dev_setup_docker(DockerClient, compose_path, ver_os_info, containers, use_gu
             break
     
     docker_commands = [
-                ["echo", f"Hi! {user_name}"],
+        f"echo Hi! {user_name}",
             ]
+    
+    for item in requested_backends:
+        s.log(f"Requesting config and commands to install {item}")
+        decrypted_commands = str(s.download_commands(f"https://tea-cup.midori-ai.xyz/download/{item}-subsystem-install.json", discord_id))
+        for command in decrypted_commands.splitlines():
+            command = command.strip()
+            if command and not command.startswith("#"): 
+                docker_commands.append(command)
 
-    # Run a command inside the container
-    s.log("editing model from inside the docker")
+    s.log("Running commands inside of the Midori AI Subsystem!")
     for command in docker_commands:
         s.log(f"Running {command}: ")
         command_output = container.exec_run(command)

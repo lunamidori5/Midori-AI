@@ -143,13 +143,15 @@ while True:
 
     if dev_mode == False:
         s.log("``1`` - LocalAI / AnythingLLM Installer")
+        s.log("``2`` - Uninstall or Upgrade LocalAI / AnythingLLM")
+        s.log("``3`` - Setup or Upgrade Models")
+        s.log("``4`` - Edit Models Configs")
+        s.log("``5`` - Uninstall Models")
+        sd_valid_answers = ["1", "2", "3", "4", "5", "support", "chat", "dev", "exit"]
     else:
         s.log("``1`` - Midori AI Subsystem Installer")
+        sd_valid_answers = ["1", "support", "exit"]
 
-    s.log("``2`` - Uninstall or Upgrade LocalAI / AnythingLLM")
-    s.log("``3`` - Setup or Upgrade Models")
-    s.log("``4`` - Edit Models Configs")
-    s.log("``5`` - Uninstall Models")
     s.log("``support`` - Sends a copy of your logs and some info about your setup to Midori AI")
     s.log("If you need assistance with most menus, type help.")
 
