@@ -8,7 +8,7 @@ Programs to support:
 
 - Photo AI Hosts:
     - InvokeAI (Docker)
-    - Automatic1111 (Docker?)
+    - Automatic1111 (Docker?) | (Apply fix for extension install crashing due to file system permissions)
 
 - LLM FineTuning Hosts:
     - Axolotl (Docker)
