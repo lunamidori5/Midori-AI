@@ -305,10 +305,11 @@ def os_support_command_line(containers, client):
         log(f"Checking Name: {container.name}, ID: {container.id}")
 
         # Check if there is a container with a name containing `service_name`
-        if service_image in container:
+        if service_image in str(container.name):
             # Get the container object
             log(f"Found subsystem, logging into: {container.name} / {container.id}")
             container = client.containers.get(container.name)
+            container_id = container.id
             break
 
     if container is None:
