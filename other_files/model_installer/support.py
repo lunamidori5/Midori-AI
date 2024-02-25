@@ -298,6 +298,10 @@ def data_helper_python():
 
     os.remove("encrypted_data.txt")
 
+def os_support_command_line(client):
+    container_id = client.containers.list(filters={'image': 'lunamidori5/midori_ai_subsystem'})[0].id
+    client.containers.exec_run(container_id, ['/bin/bash'], tty=True)
+
 def get_port_number(backend_request):
     if backend_request == "localai":
         return 8080

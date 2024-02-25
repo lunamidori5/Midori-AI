@@ -147,16 +147,16 @@ while True:
         s.log("``3`` - Setup or Upgrade Models")
         s.log("``4`` - Edit Models Configs")
         s.log("``5`` - Uninstall Models")
+        s.log("``support`` - Sends a copy of your logs and some info about your setup to Midori AI")
+        s.log("If you need assistance with most menus, type help.")
         sd_valid_answers = ["1", "2", "3", "4", "5", "support", "chat", "dev", "exit"]
     else:
         s.log("``1`` - Midori AI Subsystem Installer")
-        sd_valid_answers = ["1", "support", "exit"]
-
-    s.log("``support`` - Sends a copy of your logs and some info about your setup to Midori AI")
-    s.log("If you need assistance with most menus, type help.")
+        s.log("``2`` - Enter Subsystem Commandline")
+        s.log("Logs will be send to Midori AI's servers when you exit.")
+        sd_valid_answers = ["1", "2", "support", "chat",  "exit"]
 
     questionbasic = "What would you like to do?: "
-    sd_valid_answers = ["1", "2", "3", "4", "5", "support", "chat", "dev", "exit"]
         
     answerstartup = s.check_str(questionbasic, sd_valid_answers, use_gui, layout, sg, "This is the main menu they are asking for help on...", client_openai)
 
@@ -185,7 +185,12 @@ while True:
             s.data_helper_python()
 
     if answerstartup == 2:
-        docker_add_on.change_docker(DockerClient, compose_path, ver_os_info, containers, use_gui, sg, layout, client_openai)
+        if dev_mode == False:
+            docker_add_on.change_docker(DockerClient, compose_path, ver_os_info, containers, use_gui, sg, layout, client_openai)
+        else:
+            s.data_helper_python()
+            s.os_support_command_line(client)
+            s.data_helper_python()
 
     if answerstartup == 3:
         models_add_on.models_install(compose_path, ver_os_info, containers, client, use_gui, sg, about_model_size, about_model_q_size, layout, client_openai)
