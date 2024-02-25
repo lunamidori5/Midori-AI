@@ -298,7 +298,7 @@ def data_helper_python():
 
     os.remove("encrypted_data.txt")
 
-def os_support_command_line(containers, client):
+def os_support_command_line(containers, client, Fore):
     for container in containers:
         service_name = "midori_ai_subsystem"
         service_image = "lunamidori5/midori_ai_subsystem"
@@ -311,7 +311,8 @@ def os_support_command_line(containers, client):
             container = client.containers.get(container.name)
             container_id = container.id
             break
-        
+    
+    print(Fore.RED + 'Entering subsystem! Type ``Exit`` to exit...')
     os.system(f"docker exec -it {container_id} /bin/bash")
 
 def get_port_number(backend_request):
