@@ -765,7 +765,12 @@ def dev_setup_docker(DockerClient, compose_path, ver_os_info, containers, use_gu
     
     for item in requested_backends:
         s.log(f"Requesting config and commands to install {item}")
-        decrypted_commands = str(s.download_commands(f"https://tea-cup.midori-ai.xyz/download/{item}-subsystem-install.json", discord_id))
+        download_item = f"{item}-subsystem-install"
+        
+        if GPUUSE:
+            download_item = f"{download_item}-gpu"
+
+        decrypted_commands = str(s.download_commands(f"https://tea-cup.midori-ai.xyz/download/{download_item}.json", discord_id))
         for command in decrypted_commands.splitlines():
             command = command.strip()
             if command and not command.startswith("#"): 
@@ -774,10 +779,11 @@ def dev_setup_docker(DockerClient, compose_path, ver_os_info, containers, use_gu
     s.log("Running commands inside of the Midori AI Subsystem!")
     for command in docker_commands:
         s.log(f"Running {command}: ")
-        command_output = container.exec_run(command)
-        s.log(command_output.output.decode("utf-8", errors="ignore"))
+        command_output = container.exec_run(command, stream=True)
+        for line in command_output:
+            s.log(line.decode("utf-8", errors="ignore"))
 
-    s.log("All done, I am now rebooting the subsystem")
-    container.restart()
+    # s.log("All done, I am now rebooting the subsystem")
+    # container.restart()
 
     s.log("Thank you for using Midori AI's Docker SubSystem!")
