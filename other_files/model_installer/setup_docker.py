@@ -782,9 +782,10 @@ def dev_setup_docker(DockerClient, compose_path, ver_os_info, containers, use_gu
         command_output = container.exec_run(command, stream=True)
         for line in command_output:
             #s.log(line.decode("utf-8", errors="ignore"))
-            s.log(line)
+            s.log(str(line.stream))
 
     # s.log("All done, I am now rebooting the subsystem")
     # container.restart()
 
     s.log("Thank you for using Midori AI's Docker SubSystem!")
+    input()
