@@ -189,7 +189,7 @@ while True:
             docker_add_on.change_docker(DockerClient, compose_path, ver_os_info, containers, use_gui, sg, layout, client_openai)
         else:
             s.data_helper_python()
-            s.os_support_command_line(client)
+            s.os_support_command_line(containers, client)
             s.data_helper_python()
 
     if answerstartup == 3:

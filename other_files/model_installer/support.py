@@ -298,8 +298,31 @@ def data_helper_python():
 
     os.remove("encrypted_data.txt")
 
-def os_support_command_line(client):
-    container_id = client.containers.list(filters={'image': 'lunamidori5/midori_ai_subsystem'})[0].id
+def os_support_command_line(containers, client):
+    for container in containers:
+        service_name = "midori_ai_subsystem"
+        service_image = "lunamidori5/midori_ai_subsystem"
+        log(f"Checking Name: {container.name}, ID: {container.id}")
+
+        # Check if there is a container with a name containing `service_name`
+        if service_image in container.image:
+            # Get the container object
+            log(f"Found subsystem, logging into: {container.name} / {container.id}")
+            container = client.containers.get(container.name)
+            break
+
+    if container is None:
+        log(f"Error: Could not find subsystem container with name {service_image}")
+        log("Checking images again with known names")
+        for container in containers:
+            log(f"Checking Name: {container.name}, ID: {container.id}")
+
+            if service_name in container.name:
+                log(f"Found subsystem, logging into: {container.name} / {container.id}")
+                container = client.containers.get(container.name)
+                container_id = container.id
+                break
+        
     client.containers.exec_run(container_id, ['/bin/bash'], tty=True)
 
 def get_port_number(backend_request):
