@@ -10,7 +10,7 @@ All models are highly recommened for newer users as they are super easy to use a
 | Model Size | Description | Links |
 |---|---|---|
 | 7b | CPU Friendly, small, okay quality | https://huggingface.co/TheBloke/dolphin-2.6-mistral-7B-GGUF |
-| 2x7b | Normal sized, good quality | https://huggingface.co/TheBloke/laser-dolphin-mixtral-2x7b-dpo-GGUF |
+| 2x7b | Normal sized, good quality | **Removed for the time being, the model was acting up** |
 | 8x7b | Big, great quality | https://huggingface.co/TheBloke/dolphin-2.7-mixtral-8x7b-GGUF |
 | 70b | Large, hard to run, significant quality | https://huggingface.co/TheBloke/dolphin-2.2-70B-GGUF |
 

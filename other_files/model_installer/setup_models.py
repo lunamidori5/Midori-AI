@@ -170,7 +170,7 @@ def models_install(compose_path, ver_os_info, containers, client, use_gui, sg, a
         s.clear_window(ver_os_info)
 
         s.log(about_model_size)
-        valid_answers2 = ["7b", "2x7b", "8x7b", "70b", "id"]
+        valid_answers2 = ["7b", "8x7b", "70b", "id"]
         question2 = f"What size of known and supported model would you like to setup ({', '.join(valid_answers2)}): "
 
         if use_gui == "yes":
