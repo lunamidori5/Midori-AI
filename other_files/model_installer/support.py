@@ -313,7 +313,9 @@ def os_support_command_line(containers, client, Fore):
             break
     
     print(Fore.RED + 'Entering subsystem! Type ``Exit`` to exit...')
+    print(Fore.WHITE + '------------------------------------------')
     os.system(f"docker exec -it {container_id} /bin/bash")
+    log(f"Leaving the subsystem shell, returning to host os...")
 
 def get_port_number(backend_request):
     if backend_request == "localai":
