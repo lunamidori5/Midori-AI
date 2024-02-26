@@ -6,7 +6,8 @@ weight = 1
 
 ![Midori AI photo](https://tea-cup.midori-ai.xyz/download/logo_color1.png)
 
-#How to Enter Beta
+## ----- How to Enter Beta -----
+
 When on the main menu of the manager program. Type ``dev`` into the menu.
 ![photo](https://tea-cup.midori-ai.xyz/download/917a29a7-9708-4a89-9927-1073537a8c56-WindowsTerminal_akkAhCFYwM.png)
 
