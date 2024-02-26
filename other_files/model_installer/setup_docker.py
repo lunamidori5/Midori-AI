@@ -677,8 +677,8 @@ def dev_setup_docker(DockerClient, compose_path, ver_os_info, containers, use_gu
                     "ports": ports,
                     "environment": {
                         "CPUCORES": CPUCORES,
-                        "GPUUSE": str(GPUUSE).lower(),
-                        "BOTHUSE": str(BOTHUSE).lower(),
+                        "GPUUSE": GPUUSE,
+                        "BOTHUSE": BOTHUSE,
                         "USERNAME": user_name,
                         "DISCORD_ID": discord_id,
                     },  # env_file is commented out
@@ -700,8 +700,8 @@ def dev_setup_docker(DockerClient, compose_path, ver_os_info, containers, use_gu
                     "ports": ports,
                     "environment": {
                         "CPUCORES": CPUCORES,
-                        "GPUUSE": str(GPUUSE).lower(),
-                        "BOTHUSE": str(BOTHUSE).lower(),
+                        "GPUUSE": GPUUSE,
+                        "BOTHUSE": BOTHUSE,
                         "USERNAME": user_name,
                         "DISCORD_ID": discord_id,
                     },  # env_file is commented out
