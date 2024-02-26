@@ -710,4 +710,4 @@ def dev_setup_docker(DockerClient, compose_path, ver_os_info, containers, use_gu
     # container.restart()
 
     s.log("Thank you for using Midori AI's Docker SubSystem!")
-    input()
+    input("Please press enter to go back to the main menu: ")
