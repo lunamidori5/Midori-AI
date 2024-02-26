@@ -777,9 +777,9 @@ def dev_setup_docker(DockerClient, compose_path, ver_os_info, containers, use_gu
                 docker_commands.append(command)
 
     s.log("Running commands inside of the Midori AI Subsystem!")
-    for command in docker_commands:
-        s.log(f"Running {command}: ")
-        void, stream = container.exec_run(command, stream=True)
+    for item_docker in docker_commands:
+        s.log(f"Running {item_docker}")
+        void, stream = container.exec_run(item_docker, stream=True)
         for data in stream:
             s.log(data.decode())
 
