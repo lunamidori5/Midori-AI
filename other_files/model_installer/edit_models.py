@@ -359,3 +359,5 @@ class subsystem_backend_manager:
             void, stream = container.exec_run(item_docker, stream=True)
             for data in stream:
                 s.log(data.decode())
+                
+        input("Please press enter to go back to the main menu: ")
