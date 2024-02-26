@@ -663,7 +663,7 @@ def dev_setup_docker(DockerClient, compose_path, ver_os_info, containers, use_gu
                                 "devices": [
                                     {
                                         "driver": "nvidia",
-                                        "count": 1,
+                                        "count": "all",
                                         "capabilities": "changeme",
                                     }
                                 ]
@@ -682,7 +682,7 @@ def dev_setup_docker(DockerClient, compose_path, ver_os_info, containers, use_gu
                         "USERNAME": user_name,
                         "DISCORD_ID": discord_id,
                     },  # env_file is commented out
-                    "volumes": ["./files:/app/files"],
+                    "volumes": ["./files:/app/files", "/var/run/docker.sock:/var/run/docker.sock"],
                 }
             },
         }
@@ -705,7 +705,7 @@ def dev_setup_docker(DockerClient, compose_path, ver_os_info, containers, use_gu
                         "USERNAME": user_name,
                         "DISCORD_ID": discord_id,
                     },  # env_file is commented out
-                    "volumes": ["./files:/app/files"],
+                    "volumes": ["./files:/app/files", "/var/run/docker.sock:/var/run/docker.sock"],
                 }
             },
         }
