@@ -301,7 +301,6 @@ def data_helper_python():
 def os_support_command_line(containers, client, Fore):
     for container in containers:
         service_name = "midori_ai_subsystem"
-        service_image = "lunamidori5/midori_ai_subsystem"
         log(f"Checking Name: {container.name}, ID: {container.id}")
 
         # Check if there is a container with a name containing `service_name`

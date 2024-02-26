@@ -259,3 +259,103 @@ def edit(compose_path, ver_os_info, containers, client, use_gui, sg, layout, cli
             s.log("All done, I am now rebooting LocalAI")
             container.restart()
             s.log("Thank you! Models edited!")
+
+class subsystem_backend_manager:
+    def backend_installer(self, docker_compose_yaml, containers, client, client_openai, ver_os_info):
+
+        list_of_supported_backends = [
+            "localai", 
+            "anythingllm", 
+            "ollama",
+            "invokeai",
+            "oobabooga",
+            "home-assistant",
+            "midoricluster"
+            ]
+        
+        s.clear_window(ver_os_info)
+        
+        question = "Would you like to use GPU and CPU for these new backends?: "
+        valid_answers = ["yes", "no", "true", "false"]
+        
+        context_temp = f"The user was asked if they would like to use GPU for the Midori AI Docker Subsystem and other AI Images. This is a yes or no question."
+        context_temp = f"{context_temp}\nThis is the output of the nvidia-smi command\n{str(os.popen('nvidia-smi').read())}\nIf the user does not have cuda installed please tell them to type no"
+            
+        answer_backend_type = s.check_str(question, valid_answers, "no", None, None, context_temp, client_openai)
+
+        if answer_backend_type.lower() == "no":
+            GPUUSE = False
+
+        if answer_backend_type.lower() == "yes":
+            GPUUSE = True
+
+        if answer_backend_type.lower() == "false":
+            GPUUSE = False
+
+        if answer_backend_type.lower() == "true":
+            GPUUSE = True
+        
+        s.clear_window(ver_os_info)
+        
+        str_temp = f"``{list_of_supported_backends[0]} and {list_of_supported_backends[1]}`` or ``{list_of_supported_backends[1]}, {list_of_supported_backends[0]}, {list_of_supported_backends[5]}``"
+        s.log(f"{str(list_of_supported_backends).lower()}")
+        s.log("Please pick from this list of supported AI backends to add to the subsystem.")
+        s.log(f"You can list them out like this. {str_temp}")
+        s.log(f"Or type ``all`` to install all supported backends")
+
+        picked_backends = str(input("Request Backends: ")).lower()
+        requested_backends = []
+
+        if picked_backends == "all":
+            picked_backends = str(list_of_supported_backends)
+        
+        if "oobabooga" in picked_backends:
+            picked_backends = picked_backends + " oobaboogaapi"
+        
+        for item in list_of_supported_backends:
+            if item in picked_backends:
+                requested_backends.append(item)
+
+        s.log("Loading your docker-compose.yaml")
+        with open(docker_compose_yaml, "r") as f:
+            compose_data  = yaml.safe_load(f)
+            s.log("Auto loaded the docker-compose.yaml")
+
+        for service_name, service_data in compose_data["services"].items():
+            s.log(f"Checking... Service Name: {service_name}, Service Data: {service_data}")
+            if service_data["image"].startswith("lunamidori5"):
+                break
+    
+        for container in containers:
+            s.log(f"Checking Name: {container.name}, ID: {container.id}")
+
+            # Check if there is a container with a name containing `service_name`
+            if service_name in container.name:
+                # Get the container object
+                s.log(f"Found the subsystem, logging into: {container.name} / {container.id}")
+                container = client.containers.get(container.name)
+                break
+        
+        docker_commands = [
+            f"echo Installing New Backends",
+                ]
+        
+        for item in requested_backends:
+            s.log(f"Requesting config and commands to install {item}")
+            download_item = f"{item}-subsystem-install"
+            
+            if GPUUSE:
+                download_item = f"{download_item}-gpu"
+
+            decrypted_commands = bytes(s.download_commands(f"https://tea-cup.midori-ai.xyz/download/{download_item}.json", str(discord_id))).decode()
+            for command in decrypted_commands.splitlines():
+                command = command.strip()
+                if command and not command.startswith("#"): 
+                    docker_commands.append(command)
+
+        s.log("Running commands inside of the Midori AI Subsystem!")
+        for item_docker in docker_commands:
+            s.log(f"Running {item_docker}")
+            void, stream = container.exec_run(item_docker, stream=True)
+            for data in stream:
+                s.log(data.decode())

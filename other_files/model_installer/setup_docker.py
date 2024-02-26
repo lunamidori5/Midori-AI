@@ -605,41 +605,6 @@ def dev_setup_docker(DockerClient, compose_path, ver_os_info, containers, use_gu
         BOTHUSE = True
 
     s.clear_window(ver_os_info)
-
-    list_of_supported_backends = [
-        "localai", 
-        "anythingllm", 
-        "ollama",
-        "invokeai",
-        "oobabooga",
-        "home-assistant",
-        "midoricluster"
-        ]
-    
-    str_temp = f"``{list_of_supported_backends[0]} and {list_of_supported_backends[1]}`` or ``{list_of_supported_backends[1]}, {list_of_supported_backends[0]}, {list_of_supported_backends[5]}``"
-    s.log(f"{str(list_of_supported_backends).lower()}")
-    s.log("Please pick from this list of supported AI backends to add to the subsystem.")
-    s.log(f"You can list them out like this. {str_temp}")
-    s.log(f"Or type ``all`` to install all supported backends")
-
-    picked_backends = str(input("Request Backends: ")).lower()
-    requested_backends = []
-
-    if picked_backends == "all":
-        picked_backends = str(list_of_supported_backends)
-    
-    if "oobabooga" in picked_backends:
-        picked_backends = picked_backends + " oobaboogaapi"
-    
-    for item in list_of_supported_backends:
-        if item in picked_backends:
-            normal_port =int(s.get_port_number(item))
-            port_to_add = int(input(f"What host port would you like ``{item}`` to use? (Noramlly {normal_port}): "))
-            ports.append(f"{str(port_to_add)}:{str(normal_port)}")
-            requested_backends.append(item)
-            s.log(f"Added {item} on port {str(port_to_add)}:{str(normal_port)} to subsystem")
-
-    s.clear_window(ver_os_info)
     s.log("Setting up the Midori AI Docker Subsystem...")
 
     s.log("I am now going to install everything you requested, please wait for me to get done.")
@@ -674,7 +639,6 @@ def dev_setup_docker(DockerClient, compose_path, ver_os_info, containers, use_gu
                     "tty": True,
                     "restart": "always",
                     "privileged": True,
-                    "ports": ports,
                     "environment": {
                         "CPUCORES": CPUCORES,
                         "GPUUSE": GPUUSE,
@@ -697,7 +661,6 @@ def dev_setup_docker(DockerClient, compose_path, ver_os_info, containers, use_gu
                     "tty": True,
                     "restart": "always",
                     "privileged": True,
-                    "ports": ports,
                     "environment": {
                         "CPUCORES": CPUCORES,
                         "GPUUSE": GPUUSE,
@@ -731,6 +694,8 @@ def dev_setup_docker(DockerClient, compose_path, ver_os_info, containers, use_gu
     s.log("yaml saved spinning up the docker compose...")
     midori_ai_subsystem = DockerClient(compose_files=[f"./{docker_compose_yaml}"])
 
+    midori_ai_subsystem.compose.down(remove_images="all")
+
     midori_ai_subsystem.compose.up(
         build=False,
         detach=True,
@@ -740,50 +705,6 @@ def dev_setup_docker(DockerClient, compose_path, ver_os_info, containers, use_gu
         start=True,
         pull="always",
     )
-
-    s.log("Loading your docker-compose.yaml")
-    with open(docker_compose_yaml, "r") as f:
-        compose_data  = yaml.safe_load(f)
-        s.log("Auto loaded the docker-compose.yaml")
-
-    for service_name, service_data in compose_data["services"].items():
-        s.log(f"Checking... Service Name: {service_name}, Service Data: {service_data}")
-        if service_data["image"].startswith("lunamidori5"):
-            break
-    
-    for container in containers:
-        s.log(f"Checking Name: {container.name}, ID: {container.id}")
-
-        # Check if there is a container with a name containing `service_name`
-        if service_name in container.name:
-            # Get the container object
-            s.log(f"Found the subsystem, logging into: {container.name} / {container.id}")
-            container = client.containers.get(container.name)
-            break
-    
-    docker_commands = [
-        f"echo Hi! {user_name}",
-            ]
-    
-    for item in requested_backends:
-        s.log(f"Requesting config and commands to install {item}")
-        download_item = f"{item}-subsystem-install"
-        
-        if GPUUSE:
-            download_item = f"{download_item}-gpu"
-
-        decrypted_commands = bytes(s.download_commands(f"https://tea-cup.midori-ai.xyz/download/{download_item}.json", str(discord_id))).decode()
-        for command in decrypted_commands.splitlines():
-            command = command.strip()
-            if command and not command.startswith("#"): 
-                docker_commands.append(command)
-
-    s.log("Running commands inside of the Midori AI Subsystem!")
-    for item_docker in docker_commands:
-        s.log(f"Running {item_docker}")
-        void, stream = container.exec_run(item_docker, stream=True)
-        for data in stream:
-            s.log(data.decode())
 
     # s.log("All done, I am now rebooting the subsystem")
     # container.restart()
