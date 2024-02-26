@@ -4,7 +4,7 @@ title = "Subsystem Manager"
 weight = 1
 +++
 
-![Midori AI photo](https://tea-cup.midori-ai.xyz/download/logo_color1.png)
+![Midori AI photo](https://tea-cup.midori-ai.xyz/download/logosubsystem.png)
 
 ## ----- How to Enter Beta -----
 
