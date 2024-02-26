@@ -171,9 +171,10 @@ while True:
     else:
         s.log("``1`` - Midori AI Subsystem Installer")
         s.log("``2`` - Install Backends to Subsystem")
+        s.log("``3`` - Uninstall Backends from Subsystem")
         s.log("``10`` - Enter Subsystem Commandline")
         s.log("Logs will be send to Midori AI's servers when you exit.")
-        sd_valid_answers = ["1", "2", "10", "support", "chat",  "exit"]
+        sd_valid_answers = ["1", "2", "3", "10", "support", "chat",  "exit"]
 
     s.log("``support`` - Sends a copy of your logs and some info about your setup to Midori AI")
     s.log("If you need assistance with most menus, type help.")
@@ -217,6 +218,10 @@ while True:
     if answerstartup == 3:
         if dev_mode == False:
             models_add_on.models_install(compose_path, ver_os_info, containers, client, use_gui, sg, about_model_size, about_model_q_size, layout, client_openai)
+        else:
+            s.data_helper_python()
+            models_edit_add_on.subsystem_backend_manager.backend_uninstaller(None, "midori-docker-compose.yaml", containers, client, ver_os_info)
+            s.data_helper_python()
 
     if answerstartup == 4:
         models_edit_add_on.edit(compose_path, ver_os_info, containers, client, use_gui, sg, layout, client_openai)

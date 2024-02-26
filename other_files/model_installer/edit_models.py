@@ -362,3 +362,71 @@ class subsystem_backend_manager:
             s.log(f"Normally {backend_port} runs on {normal_port}")
 
         input("Please press enter to go back to the main menu: ")
+
+    def backend_uninstaller(self, docker_compose_yaml, containers, client, ver_os_info):
+
+        list_of_supported_backends = [
+            "localai", 
+            "anythingllm", 
+            "ollama",
+            "invokeai",
+            "oobabooga",
+            "home-assistant",
+            "midoricluster"
+            ]
+        
+        s.clear_window(ver_os_info)
+        
+        str_temp = f"``{list_of_supported_backends[0]} and {list_of_supported_backends[1]}`` or ``{list_of_supported_backends[1]}, {list_of_supported_backends[0]}, {list_of_supported_backends[5]}``"
+        s.log(f"{str(list_of_supported_backends).lower()}")
+        s.log("Please pick from this list of supported AI backends to remove from the subsystem.")
+        s.log(f"You can list them out like this. {str_temp}")
+        s.log(f"Or type ``all`` to remove all supported backends")
+
+        picked_backends = str(input("Request Backends: ")).lower()
+        requested_backends = []
+
+        if picked_backends == "all":
+            picked_backends = str(list_of_supported_backends)
+        
+        for item in list_of_supported_backends:
+            if item in picked_backends:
+                requested_backends.append(item)
+
+        s.log("Loading your docker-compose.yaml")
+        with open(docker_compose_yaml, "r") as f:
+            compose_data  = yaml.safe_load(f)
+            s.log("Auto loaded the docker-compose.yaml")
+            s.log(str(compose_data))
+
+        for service_name, service_data in compose_data["services"].items():
+            s.log(f"Checking... Service Name: {service_name}, Service Data: {service_data}")
+            if service_data["image"].startswith("lunamidori5"):
+                for container in containers:
+                    s.log(f"Checking Name: {container.name}, ID: {container.id}")
+                    if service_name in container.name:
+                        s.log(f"Found the subsystem, logging into: {container.name} / {container.id}")
+                        container = client.containers.get(container.name)
+                    break
+                break
+    
+        docker_commands = [
+            f"echo removing backends",
+                ]
+        
+        for item in requested_backends:
+            s.log(f"Uninstalling {item}")
+            docker_commands.append(f"docker compose -f ./files/{item}/docker-compose.yaml down --rmi all")
+
+        s.log("Running commands inside of the Midori AI Subsystem!")
+        for item_docker in docker_commands:
+            s.log(f"Running {item_docker}")
+            void, stream = container.exec_run(item_docker, stream=True)
+            for data in stream:
+                s.log(data.decode())
+        
+        for backend_port in requested_backends:
+            normal_port = s.get_port_number(backend_port)
+            s.log(f"Normally {backend_port} runs on {normal_port}")
+
+        input("Please press enter to go back to the main menu: ")
