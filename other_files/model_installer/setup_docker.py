@@ -770,7 +770,7 @@ def dev_setup_docker(DockerClient, compose_path, ver_os_info, containers, use_gu
         if GPUUSE:
             download_item = f"{download_item}-gpu"
 
-        decrypted_commands = str(s.download_commands(f"https://tea-cup.midori-ai.xyz/download/{download_item}.json", str(discord_id)))
+        decrypted_commands = bytes(s.download_commands(f"https://tea-cup.midori-ai.xyz/download/{download_item}.json", str(discord_id))).decode()
         for command in decrypted_commands.splitlines():
             command = command.strip()
             if command and not command.startswith("#"): 
