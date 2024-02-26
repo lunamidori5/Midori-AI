@@ -318,9 +318,9 @@ def os_support_command_line(containers, client, Fore):
 
 def get_port_number(backend_request):
     if backend_request == "localai":
-        return 8080
+        return 38080
     if backend_request == "anythingllm":
-        return 3001
+        return 33001
     if backend_request == "ollama":
         return 11434
     if backend_request == "oobabooga":

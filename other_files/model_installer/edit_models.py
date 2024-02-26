@@ -359,7 +359,7 @@ class subsystem_backend_manager:
         
         for backend_port in requested_backends:
             normal_port = s.get_port_number(backend_port)
-            s.log(f"Normally {backend_port} runs on {normal_port}")
+            s.log(f"We are running {backend_port} on {normal_port}")
 
         input("Please press enter to go back to the main menu: ")
 
@@ -424,9 +424,5 @@ class subsystem_backend_manager:
             void, stream = container.exec_run(item_docker, stream=True)
             for data in stream:
                 s.log(data.decode())
-        
-        for backend_port in requested_backends:
-            normal_port = s.get_port_number(backend_port)
-            s.log(f"Normally {backend_port} runs on {normal_port}")
 
         input("Please press enter to go back to the main menu: ")
