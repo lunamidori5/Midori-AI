@@ -512,17 +512,7 @@ def dev_setup_docker(DockerClient, compose_path, ver_os_info, containers, use_gu
 
     docker_compose_yaml = "midori-docker-compose.yaml"
 
-    try:
-        midori_ai_subsystem = DockerClient(compose_files=[f"./{docker_compose_yaml}"])
-        
-        with open(docker_compose_yaml, "r") as f:
-            docker_compose_yaml = f.read()
-
-        s.log(f"You already have the Midori AI Subsystem setup in docker please use the uninstall / update menu to edit the subsystem")
-        input("Hit enter to exit")
-        return
-    except Exception as e:
-        s.log(f"Failed subsystem check... good")
+    s.log(f"Skipping subsystem check, will auto purge if its installed...")
         
     s.log(containers)
 

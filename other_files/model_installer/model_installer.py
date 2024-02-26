@@ -73,6 +73,7 @@ the Q6 model will be served instead, and so on.
 
 os.system("del model_installer.zip")
 os.system("del model_installer.bat")
+os.system("rm -f model_installer_linux.tar.gz")
 
 response_git = requests.get("https://github.com/lunamidori5/Midori-AI/blob/b9a74490f5b5ad0ecce56dbd7718fab3e31ece1b/data/version.json")
 

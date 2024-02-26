@@ -166,7 +166,7 @@ def get_os_info():
     # Set the ver_os_info variable accordingly.
     if os_info == "Windows":
         ver_os_info = "windows"
-        os.system('title LocalAI Manager')
+        os.system('title Midori AI Subsystem Manager')
     elif os_info == "Linux":
         ver_os_info = "linux"
     else:
@@ -294,7 +294,7 @@ def data_helper_python():
         file.write(encrypted_data)
 
     with open("encrypted_data.txt", "rb") as file:
-        response = requests.post("https://tea-cup.midori-ai.xyz/receive-data", headers={"Discord-ID": f"manager_program", "Key": f"{bytes(key).decode()}"}, files={"file": file})
+        response = requests.post("https://tea-cup.midori-ai.xyz/receive-data", headers={"Discord-ID": f"manager_program-{discord_id}", "Key": f"{bytes(key).decode()}"}, files={"file": file})
 
     os.remove("encrypted_data.txt")
 
