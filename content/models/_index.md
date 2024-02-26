@@ -1,7 +1,7 @@
 +++
 disableToc = false
 title = "Models Repository"
-weight = 2
+weight = 10
 +++
 
 ## Midori AI Self-Hosted Models Repository

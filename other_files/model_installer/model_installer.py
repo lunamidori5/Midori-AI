@@ -166,16 +166,17 @@ while True:
         s.log("``3`` - Setup or Upgrade Models")
         s.log("``4`` - Edit Models Configs")
         s.log("``5`` - Uninstall Models")
-        s.log("``support`` - Sends a copy of your logs and some info about your setup to Midori AI")
-        s.log("If you need assistance with most menus, type help.")
         sd_valid_answers = ["1", "2", "3", "4", "5", "support", "chat", "dev", "exit"]
     else:
         s.log("``1`` - Midori AI Subsystem Installer")
-        s.log("``2`` - Enter Subsystem Commandline")
-        s.log("``3`` - Install Backends to Subsystem")
+        s.log("``2`` - Install Backends to Subsystem")
+        s.log("``10`` - Enter Subsystem Commandline")
         s.log("Logs will be send to Midori AI's servers when you exit.")
-        sd_valid_answers = ["1", "2", "3", "support", "chat",  "exit"]
+        sd_valid_answers = ["1", "2", "10", "support", "chat",  "exit"]
 
+    s.log("``support`` - Sends a copy of your logs and some info about your setup to Midori AI")
+    s.log("If you need assistance with most menus, type help.")
+    
     questionbasic = "What would you like to do?: "
         
     answerstartup = s.check_str(questionbasic, sd_valid_answers, use_gui, layout, sg, "This is the main menu they are asking for help on...", client_openai)
@@ -201,7 +202,7 @@ while True:
             docker_add_on.setup_docker(DockerClient, compose_path, ver_os_info, containers, use_gui, sg, base_image_name, localai_ver_number, layout, client_openai)
         else:
             s.data_helper_python()
-            docker_add_on.dev_setup_docker(DockerClient, compose_path, ver_os_info, containers, use_gui, sg, client, localai_ver_number, layout, client_openai)
+            docker_add_on.dev_setup_docker(DockerClient, compose_path, ver_os_info, containers, use_gui, sg, client, localai_ver_number, layout, client_openai, discord_id)
             s.data_helper_python()
 
     if answerstartup == 2:
@@ -209,22 +210,25 @@ while True:
             docker_add_on.change_docker(DockerClient, compose_path, ver_os_info, containers, use_gui, sg, layout, client_openai)
         else:
             s.data_helper_python()
-            s.os_support_command_line(containers, client, Fore)
+            models_edit_add_on.subsystem_backend_manager.backend_installer(None, "midori-docker-compose.yaml", containers, client, client_openai, ver_os_info, discord_id)
             s.data_helper_python()
 
     if answerstartup == 3:
         if dev_mode == False:
             models_add_on.models_install(compose_path, ver_os_info, containers, client, use_gui, sg, about_model_size, about_model_q_size, layout, client_openai)
-        else:
-            s.data_helper_python()
-            models_edit_add_on.subsystem_backend_manager.backend_installer(None, "midori-docker-compose.yaml", containers, client, client_openai, ver_os_info, discord_id)
-            s.data_helper_python()
 
     if answerstartup == 4:
         models_edit_add_on.edit(compose_path, ver_os_info, containers, client, use_gui, sg, layout, client_openai)
 
     if answerstartup == 5:
         models_add_on.models_uninstall(compose_path, ver_os_info, containers, client, use_gui, sg, layout, client_openai)
+    
+    if answerstartup == 10:
+        if dev_mode == True:
+            s.data_helper_python()
+            s.os_support_command_line(containers, client, Fore)
+            s.data_helper_python()
+
 
     if answerstartup == 18:
         s.log("Dev Model: True, unlocking Midori AI docker subsystem")

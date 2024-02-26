@@ -320,22 +320,19 @@ class subsystem_backend_manager:
         with open(docker_compose_yaml, "r") as f:
             compose_data  = yaml.safe_load(f)
             s.log("Auto loaded the docker-compose.yaml")
+            s.log(str(compose_data))
 
         for service_name, service_data in compose_data["services"].items():
             s.log(f"Checking... Service Name: {service_name}, Service Data: {service_data}")
             if service_data["image"].startswith("lunamidori5"):
+                for container in containers:
+                    s.log(f"Checking Name: {container.name}, ID: {container.id}")
+                    if service_name in container.name:
+                        s.log(f"Found the subsystem, logging into: {container.name} / {container.id}")
+                        container = client.containers.get(container.name)
+                    break
                 break
     
-        for container in containers:
-            s.log(f"Checking Name: {container.name}, ID: {container.id}")
-
-            # Check if there is a container with a name containing `service_name`
-            if service_name in container.name:
-                # Get the container object
-                s.log(f"Found the subsystem, logging into: {container.name} / {container.id}")
-                container = client.containers.get(container.name)
-                break
-        
         docker_commands = [
             f"echo Installing New Backends",
                 ]
@@ -359,5 +356,9 @@ class subsystem_backend_manager:
             void, stream = container.exec_run(item_docker, stream=True)
             for data in stream:
                 s.log(data.decode())
-                
+        
+        for backend_port in requested_backends:
+            normal_port = s.get_port_number(backend_port)
+            s.log(f"Normally {backend_port} runs on {normal_port}")
+
         input("Please press enter to go back to the main menu: ")

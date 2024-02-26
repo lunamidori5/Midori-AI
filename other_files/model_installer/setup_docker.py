@@ -502,15 +502,13 @@ def change_docker(DockerClient, compose_path, ver_os_info, containers, use_gui, 
             except Exception as e:
                 s.log(f"Error occurred while running docker-compose: {e}")
 
-def dev_setup_docker(DockerClient, compose_path, ver_os_info, containers, use_gui, sg, client, localai_ver_number, layout, client_openai):
+def dev_setup_docker(DockerClient, compose_path, ver_os_info, containers, use_gui, sg, client, localai_ver_number, layout, client_openai, discord_id):
     
     CPUCORES = 1
     GPUUSE = False
     BOTHUSE = False
     user_name = "placeholder"
-    discord_id = 1
     base_image_name = "lunamidori5/midori_ai_subsystem"
-    ports = ["8085:8080"]
 
     docker_compose_yaml = "midori-docker-compose.yaml"
 
