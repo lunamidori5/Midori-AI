@@ -1,7 +1,7 @@
 +++
 disableToc = false
 title = "LocalAI"
-weight = 1
+weight = 2
 +++
 
 ![Midori AI photo](https://tea-cup.midori-ai.xyz/download/logo_color1.png)
