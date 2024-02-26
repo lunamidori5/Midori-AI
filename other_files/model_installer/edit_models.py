@@ -261,7 +261,8 @@ def edit(compose_path, ver_os_info, containers, client, use_gui, sg, layout, cli
             s.log("Thank you! Models edited!")
 
 class subsystem_backend_manager:
-    def backend_installer(self, docker_compose_yaml, containers, client, client_openai, ver_os_info, discord_id):
+    def backend_installer(self, docker_compose_yaml, client, client_openai, ver_os_info, discord_id):
+        containers = client.containers.list()
 
         list_of_supported_backends = [
             "localai", 
@@ -363,7 +364,8 @@ class subsystem_backend_manager:
 
         input("Please press enter to go back to the main menu: ")
 
-    def backend_uninstaller(self, docker_compose_yaml, containers, client, ver_os_info):
+    def backend_uninstaller(self, docker_compose_yaml, client, ver_os_info):
+        containers = client.containers.list()
 
         list_of_supported_backends = [
             "localai", 

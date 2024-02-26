@@ -212,7 +212,7 @@ while True:
             docker_add_on.change_docker(DockerClient, compose_path, ver_os_info, containers, use_gui, sg, layout, client_openai)
         else:
             s.data_helper_python()
-            models_edit_add_on.subsystem_backend_manager.backend_installer(None, "midori-docker-compose.yaml", containers, client, client_openai, ver_os_info, discord_id)
+            models_edit_add_on.subsystem_backend_manager.backend_installer(None, "midori-docker-compose.yaml", client, client_openai, ver_os_info, discord_id)
             s.data_helper_python()
 
     if answerstartup == 3:
@@ -220,7 +220,7 @@ while True:
             models_add_on.models_install(compose_path, ver_os_info, containers, client, use_gui, sg, about_model_size, about_model_q_size, layout, client_openai)
         else:
             s.data_helper_python()
-            models_edit_add_on.subsystem_backend_manager.backend_uninstaller(None, "midori-docker-compose.yaml", containers, client, ver_os_info)
+            models_edit_add_on.subsystem_backend_manager.backend_uninstaller(None, "midori-docker-compose.yaml", client, ver_os_info)
             s.data_helper_python()
 
     if answerstartup == 4:
