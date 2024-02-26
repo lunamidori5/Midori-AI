@@ -534,22 +534,6 @@ def dev_setup_docker(DockerClient, compose_path, ver_os_info, containers, use_gu
 
     user_name = str(input("Please enter a Username: "))
 
-    s.log("Your Discord ID will be securely transmitted to Midori AI to facilitate download, upload, and web request processes.")
-
-    while True:
-        try:
-            discord_id_list = [354089955972087808, 1085014642067243038, 1087343493954945156]
-
-            discord_id = int(input("Please enter your discord id, it should be numbers (IE: 1085014642067243038): "))
-
-            for item in discord_id_list:
-                if discord_id == item:
-                    Exception("Discord ID matches Midori AI known bots list")
-            break
-
-        except Exception as e:
-            s.log(f"{str(e)} : Please enter your discord id")
-
     s.clear_window(ver_os_info)
 
     s.log("This is the menu to setup the Midori AI Docker Subsystem! ")

@@ -118,6 +118,25 @@ s.check_for_update(ver_os_info, ver_info)
 
 s.clear_window(ver_os_info)
 
+s.log(f"Please Login to Midori AI's AI Manager (Ver: {ver_info})")
+s.log("Your Discord ID will be securely transmitted to Midori AI to facilitate download, upload, and web request processes.")
+
+while True:
+    try:
+        discord_id_list = [354089955972087808, 1085014642067243038, 1087343493954945156]
+
+        discord_id = int(input("Please enter your discord id, it should be numbers (IE: 1085014642067243038): "))
+
+        for item in discord_id_list:
+            if discord_id == item:
+                Exception("Discord ID matches Midori AI known bots list")
+        break
+
+    except Exception as e:
+        s.log(f"{str(e)} : Please enter your discord id")
+
+s.clear_window(ver_os_info)
+
 if os.path.exists(compose_backup_path):
     backup_compose_question = "I see that you have a ``docker-compose.yaml`` file in this folder. Is this LocalAI's docker compose file?: "
     backup_compose_valid_answers = ["yes", "no"]
@@ -190,7 +209,7 @@ while True:
             docker_add_on.change_docker(DockerClient, compose_path, ver_os_info, containers, use_gui, sg, layout, client_openai)
         else:
             s.data_helper_python()
-            s.os_support_command_line(containers, client, Fore)
+            s.os_support_command_line(containers, client, Fore, discord_id)
             s.data_helper_python()
 
     if answerstartup == 3:
@@ -198,7 +217,7 @@ while True:
             models_add_on.models_install(compose_path, ver_os_info, containers, client, use_gui, sg, about_model_size, about_model_q_size, layout, client_openai)
         else:
             s.data_helper_python()
-            models_edit_add_on.subsystem_backend_manager.backend_installer("midori-docker-compose.yaml", containers, client, client_openai, ver_os_info)
+            models_edit_add_on.subsystem_backend_manager.backend_installer("midori-docker-compose.yaml", containers, client, client_openai, ver_os_info, discord_id)
             s.data_helper_python()
 
     if answerstartup == 4:
