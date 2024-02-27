@@ -119,25 +119,6 @@ s.check_for_update(ver_os_info, ver_info)
 
 s.clear_window(ver_os_info)
 
-s.log(f"Please Login to Midori AI's AI Manager (Ver: {ver_info})")
-s.log("Your User ID will be securely transmitted to Midori AI to facilitate download, upload, and web request processes.")
-
-while True:
-    try:
-        discord_id_list = [354089955972087808, 1085014642067243038, 1087343493954945156]
-
-        discord_id = int(input("Please enter a User id, it should be numbers (IE: 1085014642067243038): "))
-
-        for item in discord_id_list:
-            if discord_id == item:
-                Exception("User ID matches Midori AI known bots list")
-        break
-
-    except Exception as e:
-        s.log(f"{str(e)} : Please enter a User id")
-
-s.clear_window(ver_os_info)
-
 if os.path.exists(compose_backup_path):
     backup_compose_question = "I see that you have a ``docker-compose.yaml`` file in this folder. Is this LocalAI's docker compose file?: "
     backup_compose_valid_answers = ["yes", "no"]
@@ -155,6 +136,25 @@ use_gui = "no"
 dev_mode = False
 
 while True:
+    if dev_mode:
+        s.log(f"Please Login to Midori AI's AI Manager (Ver: {ver_info})")
+        s.log("This ID can be your Discord ID or a random number, just make sure to share if it you need help with the dev beta")
+        s.log("Your User ID will be securely transmitted to Midori AI to facilitate download, upload, and web request processes.")
+
+        while True:
+            try:
+                discord_id_list = [354089955972087808, 1085014642067243038, 1087343493954945156]
+
+                discord_id = int(input("Please enter a User id, it should be numbers (IE: 1085014642067243038): "))
+
+                for item in discord_id_list:
+                    if discord_id == item:
+                        Exception("User ID matches Midori AI known bots list")
+                break
+
+            except Exception as e:
+                s.log(f"{str(e)} : Please enter a User id")
+
     s.clear_window(ver_os_info)
 
     s.log("-----------------------------------------------------------------------------------------------")

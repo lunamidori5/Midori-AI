@@ -28,6 +28,9 @@ Note that model downloads may be slow because they are hitting Midori Ai's serve
 ### Prerequisites
 [Docker Desktop Windows](https://docs.docker.com/desktop/install/windows-install/)
 
+### Recommanded
+Please make a folder for the Manager program with nothing in it, do not use the user folder.
+
 ### Quick install
 
 1. Download - https://tea-cup.midori-ai.xyz/download/model_installer_windows.zip
