@@ -242,6 +242,25 @@ def check_str(question, valid_answers, use_gui="no", layout=None, sg=None, suppo
                     log(f"\nInvalid input. Please enter one of the following: {', '.join(valid_answers)}\n")
                     log(f"\nIf you need help, please type ``help`` or restart the program and type ``support`` into the main menu.\n")
 
+class backends_checking():
+    def load_installed_backends(self, path):
+        with open(path, 'r') as f:
+            return json.load(f)
+
+
+    def save_installed_backends(self, path, backends):
+        with open(path, 'w') as f:
+            json.dump(backends, f, indent=2)
+    
+    def check_json(self):
+        path = os.path.join("files", "backends.json")
+        if os.path.exists(path):
+            backends = self.load_installed_backends(path)
+        else:
+            backends = []
+            self.save_installed_backends(path, backends)
+        return backends
+
 def get_username():
     """
     Get the username of the computer.

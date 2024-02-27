@@ -90,6 +90,7 @@ client_openai = OpenAIWrapper(base_url="https://ai.midori-ai.xyz/v1", api_key=te
 
 # localai_ver_number = version_data['version']
 ver_os_info = s.get_os_info()
+backend_checker = s.backends_checking()
 # Check if the current platform is Windows
 
 try:
@@ -134,6 +135,14 @@ if answer_backup_compose == "yes":
 
 use_gui = "no"
 dev_mode = False
+dash = '~'
+num_dash = int(76)
+blank_line = dash * num_dash
+
+main_menu_text = f" Main Menu (Ver: {ver_info}) "
+main_menu_text_len = len(main_menu_text)
+main_menu_dash = int((num_dash - main_menu_text_len) / 2)
+main_menu_text_done = f"{main_menu_dash}{main_menu_text}{main_menu_dash}"
 
 while True:
     if dev_mode:
@@ -154,12 +163,17 @@ while True:
 
             except Exception as e:
                 s.log(f"{str(e)} : Please enter a User id")
+    
+    installed_backends = backend_checker.check_json()
+
+    temp_main_menu_dash = dash * main_menu_dash
 
     s.clear_window(ver_os_info)
 
-    s.log("-----------------------------------------------------------------------------------------------")
-    s.log(f"------------------------------ Main Menu (Ver: {ver_info}) ------------------------------------")
-    s.log("-----------------------------------------------------------------------------------------------")
+    s.log(blank_line)
+    s.log(main_menu_text_done)
+    s.log(blank_line)
+    s.log(f"--- You have {installed_backends} installed ---")
 
     if dev_mode == False:
         s.log("``1`` - LocalAI / AnythingLLM Installer")
