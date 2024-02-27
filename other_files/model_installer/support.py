@@ -247,7 +247,6 @@ class backends_checking():
         with open(path, 'r') as f:
             return json.load(f)
 
-
     def save_installed_backends(self, path, backends):
         with open(path, 'w') as f:
             json.dump(backends, f, indent=2)
@@ -260,6 +259,19 @@ class backends_checking():
             backends = []
             self.save_installed_backends(path, backends)
         return backends
+    
+    def add_backend(self, backend):
+        path = os.path.join("files", "backends.json")
+        known_backends = self.check_json()
+        known_backends.append(backend)
+        self.save_installed_backends(path, known_backends)
+        
+    def remove_backend(self, backend):
+        path =  os.path.join("files", "backends.json")
+        known_backends = self.check_json()
+        if backend in known_backends:
+            known_backends.remove(backend)
+            self.save_installed_backends(path, known_backends)
 
 def get_username():
     """

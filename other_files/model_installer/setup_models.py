@@ -883,15 +883,24 @@ class backend_programs_manager:
         localai = localai_model_manager(self.ver_os_info, self.client, self.about_model_size, self.about_model_q_size, self.client_openai)
 
         s.log("This menu will only show items supported.")
+        ### LocalAI
         s.log("``1`` - LocalAI (Install Models)")
         s.log("``2`` - LocalAI (Edit Models)")
         s.log("``3`` - LocalAI (Remove Models)")
+        ### Ollma
+        ### Invoke AI
+        ### On Subsystem Programs
+            ### Axlot
+            ### Auto111
+            ### Llama.cpp? (command line maybe?)
+        s.log("``back`` - Go back to the main menu")
 
-        valid_answers = ["1", "2", "3", "exit"]
+        valid_answers = ["1", "2", "3", "back"]
         questionbasic = "What would you like to do?: "
-        answerstartup = s.check_str(questionbasic, valid_answers, "no", None, None, "This is the main menu they are asking for help on...", self.client_openai)
+        temp_cxt = "This is the menu for running backend programs in the Midori AI subsystem, please let the user know are you not trained to help with this menu..."
+        answerstartup = s.check_str(questionbasic, valid_answers, "no", None, None, temp_cxt, self.client_openai)
 
-        if answerstartup.lower() == "exit":
+        if answerstartup.lower() == "back":
             return
 
         answerstartup = int(answerstartup)

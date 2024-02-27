@@ -141,6 +141,7 @@ backend_menu = models_add_on.backend_programs_manager(ver_os_info, client, about
 
 use_gui = "no"
 dev_mode = False
+login_midori_ai = False
 dash = '~'
 num_dash = int(76)
 blank_line = dash * num_dash
@@ -158,7 +159,7 @@ while True:
         s.log("This ID can be your Discord ID or a random number, just make sure to share if it you need help with the dev beta")
         s.log("Your User ID will be securely transmitted to Midori AI to facilitate download, upload, and web request processes.")
 
-        while True:
+        while login_midori_ai == False:
             try:
                 discord_id_list = [354089955972087808, 1085014642067243038, 1087343493954945156]
 
@@ -167,12 +168,19 @@ while True:
                 for item in discord_id_list:
                     if discord_id == item:
                         Exception("User ID matches Midori AI known bots list")
+                login_midori_ai = True
                 break
 
             except Exception as e:
+                login_midori_ai = False
                 s.log(f"{str(e)} : Please enter a User id")
     
     installed_backends = backend_checker.check_json()
+
+    if len(installed_backends) < 1:
+        backends_text = f"~~~ You have no backends installed ~~~"
+    else:
+        backends_text = f"~~~ You have {installed_backends} backends installed ~~~"
 
     temp_main_menu_dash = dash * main_menu_dash
 
@@ -181,7 +189,7 @@ while True:
     s.log(blank_line)
     s.log(main_menu_text_done)
     s.log(blank_line)
-    s.log(f"~~~ You have {installed_backends} installed ~~~")
+    s.log(backends_text)
 
     if dev_mode == False:
         s.log("``1`` - LocalAI / AnythingLLM Installer")
@@ -189,18 +197,18 @@ while True:
         s.log("``3`` - Setup or Upgrade Models")
         s.log("``4`` - Edit Models Configs")
         s.log("``5`` - Uninstall Models")
+        s.log("``support`` - Sends a copy of your logs and some info about your setup to Midori AI")
         sd_valid_answers = ["1", "2", "3", "4", "5", "support", "chat", "dev", "exit"]
     else:
         s.log("``1`` - Midori AI Subsystem Installer")
         s.log("``2`` - Install Backends to Subsystem")
         s.log("``3`` - Uninstall Backends from Subsystem")
         s.log("``4`` - Backend Programs (install models / edit backends)")
-        s.log("``5`` - Setuping up Backends Help")
+        s.log("``5`` - Seting up Backends Help")
         s.log("``10`` - Enter Subsystem Commandline")
         s.log("Logs will be send to Midori AI's servers when you exit.")
-        sd_valid_answers = ["1", "2", "3", "4", "5", "10", "support", "chat",  "exit"]
+        sd_valid_answers = ["1", "2", "3", "4", "5", "10", "chat",  "exit"]
 
-    s.log("``support`` - Sends a copy of your logs and some info about your setup to Midori AI")
     s.log("If you need assistance with most menus, type help.")
     
     questionbasic = "What would you like to do?: "

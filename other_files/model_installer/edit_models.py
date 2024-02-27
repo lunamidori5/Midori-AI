@@ -263,6 +263,7 @@ def edit(compose_path, ver_os_info, containers, client, use_gui, sg, layout, cli
 class subsystem_backend_manager:
     def backend_installer(self, docker_compose_yaml, client, client_openai, ver_os_info, discord_id):
         containers = client.containers.list()
+        backend_checker = s.backends_checking()
 
         list_of_supported_backends = [
             "localai", 
@@ -337,10 +338,11 @@ class subsystem_backend_manager:
         docker_commands = [
             f"echo Installing New Backends",
                 ]
-        
+        backends = backend_checker.check_json()
         for item in requested_backends:
             s.log(f"Requesting config and commands to install {item}")
             download_item = f"{item}-subsystem-install"
+            backend_checker.add_backend(item)
             
             if GPUUSE:
                 download_item = f"{download_item}-gpu"
@@ -366,6 +368,7 @@ class subsystem_backend_manager:
 
     def backend_uninstaller(self, docker_compose_yaml, client, ver_os_info):
         containers = client.containers.list()
+        backend_checker = s.backends_checking()
 
         list_of_supported_backends = [
             "localai", 
@@ -418,7 +421,9 @@ class subsystem_backend_manager:
         
         for item in requested_backends:
             s.log(f"Uninstalling {item}")
+            backend_checker.remove_backend(item)
             docker_commands.append(f"docker compose -f ./files/{item}/docker-compose.yaml down --rmi all")
+            docker_commands.append(f"rm -rf ./files/{item}")
 
         s.log("Running commands inside of the Midori AI Subsystem!")
         for item_docker in docker_commands:
