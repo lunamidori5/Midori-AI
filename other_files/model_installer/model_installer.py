@@ -142,7 +142,7 @@ blank_line = dash * num_dash
 main_menu_text = f" Main Menu (Ver: {ver_info}) "
 main_menu_text_len = len(main_menu_text)
 main_menu_dash = int((num_dash - main_menu_text_len) / 2)
-main_menu_text_done = f"{main_menu_dash}{main_menu_text}{main_menu_dash}"
+main_menu_text_done = f"{main_menu_dash * dash}{main_menu_text}{main_menu_dash * dash}"
 
 while True:
     if dev_mode:
@@ -173,7 +173,7 @@ while True:
     s.log(blank_line)
     s.log(main_menu_text_done)
     s.log(blank_line)
-    s.log(f"--- You have {installed_backends} installed ---")
+    s.log(f"~~~ You have {installed_backends} installed ~~~")
 
     if dev_mode == False:
         s.log("``1`` - LocalAI / AnythingLLM Installer")
