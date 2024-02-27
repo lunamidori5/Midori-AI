@@ -232,7 +232,7 @@ while True:
     if answerstartup == 10:
         if dev_mode == True:
             s.data_helper_python()
-            s.os_support_command_line(containers, client, Fore)
+            s.os_support_command_line(client, Fore)
             s.data_helper_python()
 
 

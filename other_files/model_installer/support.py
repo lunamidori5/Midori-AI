@@ -298,7 +298,8 @@ def data_helper_python():
 
     os.remove("encrypted_data.txt")
 
-def os_support_command_line(containers, client, Fore):
+def os_support_command_line(client, Fore):
+    containers = client.containers.list()
     for container in containers:
         service_name = "midori_ai_subsystem"
         log(f"Checking Name: {container.name}, ID: {container.id}")
