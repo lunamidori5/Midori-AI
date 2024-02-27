@@ -9,6 +9,7 @@ def models_install(compose_path, ver_os_info, containers, client, use_gui, sg, a
     # Try to load the Docker Compose file
     s.log("Docker Server error, trying to check your docker-compose.yaml file...")
     docker_compose_found = False
+    containers = client.containers.list()
     try:
         s.log("Loading your docker-compose.yaml")
         with open(compose_path, "r") as f:
