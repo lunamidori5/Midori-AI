@@ -26,9 +26,6 @@ log_file_name = str(socket.gethostbyname(socket.gethostname())) + "_log_" + time
 
 ver_file_name = "midori_program_ver.txt"
 
-with open(log_file_name, "w") as f:
-    f.write("Booted and Running Model Installer")
-
 def remove_non_printable_chars(input_string):
     printable_chars = set(string.printable)
     cleaned_string = ''.join(char for char in input_string if char in printable_chars)
