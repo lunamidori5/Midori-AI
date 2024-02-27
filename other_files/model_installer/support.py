@@ -317,7 +317,7 @@ def data_helper_python():
 
     os.remove("encrypted_data.txt")
 
-def os_support_command_line(client, Fore):
+def get_subsystem(client):
     containers = client.containers.list()
     for container in containers:
         service_name = "midori_ai_subsystem"
@@ -328,9 +328,13 @@ def os_support_command_line(client, Fore):
             # Get the container object
             log(f"Found subsystem, logging into: {container.name} / {container.id}")
             container = client.containers.get(container.name)
-            container_id = container.id
-            break
-    
+            return container
+        
+    log("If you are seeing this message, the program will crash...")
+
+def os_support_command_line(client, Fore):
+    container = get_subsystem(client)
+    container_id = container.id
     print(Fore.RED + 'Entering subsystem! Type ``Exit`` to exit...')
     print(Fore.WHITE + '------------------------------------------')
     os.system(f"docker exec -it {container_id} /bin/bash")

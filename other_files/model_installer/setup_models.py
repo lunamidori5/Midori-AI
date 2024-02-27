@@ -870,3 +870,54 @@ def models_uninstall(compose_path, ver_os_info, containers, client, use_gui, sg,
     else:
         s.log("Request failed with status code:", response.status_code)
         s.log("Response text:", response.text)
+
+class backend_programs_manager:
+    def __init__(self, ver_os_info, client, about_model_size, about_model_q_size, client_openai):
+        self.client = client
+        self.ver_os_info = ver_os_info
+        self.client_openai = client_openai
+        self.about_model_size = about_model_size
+        self.about_model_q_size = about_model_q_size
+    
+    def main_menu(self):
+        localai = localai_model_manager(self.ver_os_info, self.client, self.about_model_size, self.about_model_q_size, self.client_openai)
+
+        s.log("This menu will only show items supported.")
+        s.log("``1`` - LocalAI (Install Models)")
+        s.log("``2`` - LocalAI (Edit Models)")
+        s.log("``3`` - LocalAI (Remove Models)")
+
+        valid_answers = ["1", "2", "3", "exit"]
+        questionbasic = "What would you like to do?: "
+        answerstartup = s.check_str(questionbasic, valid_answers, "no", None, None, "This is the main menu they are asking for help on...", self.client_openai)
+
+        if answerstartup.lower() == "exit":
+            return
+
+        answerstartup = int(answerstartup)
+
+        if answerstartup == 1:
+            localai.install_models()
+
+        if answerstartup == 2:
+            localai.edit_models()
+
+        if answerstartup == 3:
+            localai.remove_models()
+
+class localai_model_manager:
+    def __init__(self, ver_os_info, client, about_model_size, about_model_q_size, client_openai):
+        self.client = client
+        self.ver_os_info = ver_os_info
+        self.client_openai = client_openai
+        self.about_model_size = about_model_size
+        self.about_model_q_size = about_model_q_size
+
+    def install_models(self):
+        s.log("hello this menu is not ready yet")
+
+    def edit_models(self):
+        s.log("hello this menu is not ready yet")
+
+    def remove_models(self):
+        s.log("hello this menu is not ready yet")

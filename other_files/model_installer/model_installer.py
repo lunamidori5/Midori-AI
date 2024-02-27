@@ -88,10 +88,13 @@ temp_response = help_add_on.request_info("temp_something_for_model_installer.txt
 temp_keys = temp_response.strip()
 client_openai = OpenAIWrapper(base_url="https://ai.midori-ai.xyz/v1", api_key=temp_keys, timeout=6000)
 
-# localai_ver_number = version_data['version']
 ver_os_info = s.get_os_info()
 backend_checker = s.backends_checking()
-# Check if the current platform is Windows
+
+os.makedirs("files", exist_ok=True)
+
+if ver_os_info == "linux":
+    os.chmod("files", 0o777)
 
 try:
     if os.name == 'nt':
@@ -112,19 +115,20 @@ except Exception as e:
 
 
 # List all containers
-containers = client.containers.list()
-
 s.clear_window(ver_os_info)
 
 s.check_for_update(ver_os_info, ver_info)
 
 s.clear_window(ver_os_info)
 
-if os.path.exists(compose_backup_path):
+if os.path.exists("docker-compose.yaml"):
     backup_compose_question = "I see that you have a ``docker-compose.yaml`` file in this folder. Is this LocalAI's docker compose file?: "
     backup_compose_valid_answers = ["yes", "no"]
         
-    answer_backup_compose = s.check_str(backup_compose_question, backup_compose_valid_answers, "no", layout, sg, "This is the main menu they are asking for help on...", client_openai)
+    answer_backup_compose = s.check_str(
+        backup_compose_question, backup_compose_valid_answers, "no", layout, sg, 
+        "The users docker-compose.yaml is in a unsafe format for the manager program, please tell them to type yes or no based on if they want the manager to get control of the file.", 
+        client_openai)
 
 if answer_backup_compose == "yes":
     s.log("Renaming the compose file to our new safe format! Thank you!")
@@ -132,6 +136,8 @@ if answer_backup_compose == "yes":
     s.log(f"New file name: {compose_path}")
     os.rename(compose_backup_path, compose_path)
     input("Please press enter to go to main menu: ")
+
+backend_menu = models_add_on.backend_programs_manager(ver_os_info, client, about_model_size, about_model_q_size, client_openai)
 
 use_gui = "no"
 dev_mode = False
@@ -145,6 +151,8 @@ main_menu_dash = int((num_dash - main_menu_text_len) / 2)
 main_menu_text_done = f"{main_menu_dash * dash}{main_menu_text}{main_menu_dash * dash}"
 
 while True:
+    containers = client.containers.list()
+
     if dev_mode:
         s.log(f"Please Login to Midori AI's AI Manager (Ver: {ver_info})")
         s.log("This ID can be your Discord ID or a random number, just make sure to share if it you need help with the dev beta")
@@ -186,9 +194,11 @@ while True:
         s.log("``1`` - Midori AI Subsystem Installer")
         s.log("``2`` - Install Backends to Subsystem")
         s.log("``3`` - Uninstall Backends from Subsystem")
+        s.log("``4`` - Backend Programs (install models / edit backends)")
+        s.log("``5`` - Setuping up Backends Help")
         s.log("``10`` - Enter Subsystem Commandline")
         s.log("Logs will be send to Midori AI's servers when you exit.")
-        sd_valid_answers = ["1", "2", "3", "10", "support", "chat",  "exit"]
+        sd_valid_answers = ["1", "2", "3", "4", "5", "10", "support", "chat",  "exit"]
 
     s.log("``support`` - Sends a copy of your logs and some info about your setup to Midori AI")
     s.log("If you need assistance with most menus, type help.")
@@ -238,10 +248,19 @@ while True:
             s.data_helper_python()
 
     if answerstartup == 4:
-        models_edit_add_on.edit(compose_path, ver_os_info, containers, client, use_gui, sg, layout, client_openai)
+        if dev_mode == False:
+            models_edit_add_on.edit(compose_path, ver_os_info, containers, client, use_gui, sg, layout, client_openai)
+        else:
+            s.data_helper_python()
+            backend_menu.main_menu()
 
     if answerstartup == 5:
-        models_add_on.models_uninstall(compose_path, ver_os_info, containers, client, use_gui, sg, layout, client_openai)
+        if dev_mode == False:
+            models_add_on.models_uninstall(compose_path, ver_os_info, containers, client, use_gui, sg, layout, client_openai)
+        else:
+            s.data_helper_python()
+            s.log("this menu is not ready dropping to shell...")
+            s.os_support_command_line(client, Fore)
     
     if answerstartup == 10:
         if dev_mode == True:
