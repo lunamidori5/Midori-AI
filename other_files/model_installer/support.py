@@ -21,8 +21,8 @@ base_image_name = "quay.io/go-skynet/local-ai:"
 user_image = ""
 
 now = datetime.datetime.now()
-timestamp = now.strftime("%m%d%Y%H")
-log_file_name = "log_" + timestamp + ".txt"
+timestamp = now.strftime("%m%d%Y")
+log_file_name = str(socket.gethostbyname(socket.gethostname())) + "_log_" + timestamp + ".txt"
 
 ver_file_name = "midori_program_ver.txt"
 
@@ -36,8 +36,11 @@ def remove_non_printable_chars(input_string):
 
 def log(message):
     # Read the current contents of  the file
-    with open(log_file_name, "r") as f:
-        contents = f.read()
+    if os.path.exists(log_file_name):
+        with open(log_file_name, "r") as f:
+            contents = f.read()
+    else:
+        contents = "This is the start of a new log"
     
     message = remove_non_printable_chars(str(message).strip())
 
@@ -265,7 +268,7 @@ class backends_checking():
         known_backends = self.check_json()
         known_backends.append(backend)
         self.save_installed_backends(path, known_backends)
-        
+
     def remove_backend(self, backend):
         path =  os.path.join("files", "backends.json")
         known_backends = self.check_json()
@@ -349,7 +352,7 @@ def os_support_command_line(client, Fore):
     container_id = container.id
     print(Fore.RED + 'Entering subsystem! Type ``Exit`` to exit...')
     print(Fore.WHITE + '------------------------------------------')
-    os.system(f"docker exec -it {container_id} /bin/bash")
+    os.system(f"docker exec -it {container_id} /bin/tmux")
     log(f"Leaving the subsystem shell, returning to host os...")
 
 def get_port_number(backend_request):
