@@ -6,8 +6,6 @@ weight = 5
 
 ![Midori AI photo](https://tea-cup.midori-ai.xyz/download/logo_color1.png)
 
-# Invoke AI Install
-
 ## Step 1
 Type in ``2`` to enter the ``Installer / Upgrade Menu``
 ![photo](https://tea-cup.midori-ai.xyz/download/717d3ca5-e674-4b59-ad17-176e81503040-WindowsTerminal_TbMj0Vpfza.png)
