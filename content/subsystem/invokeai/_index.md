@@ -5,7 +5,6 @@ weight = 5
 +++
 
 ![Midori AI photo](https://tea-cup.midori-ai.xyz/download/logo_color1.png)
-![photo]()
 
 # Invoke AI Install
 
