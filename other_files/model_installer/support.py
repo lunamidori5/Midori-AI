@@ -347,8 +347,9 @@ def get_subsystem(client):
 def os_support_command_line(client, Fore):
     container = get_subsystem(client)
     container_id = container.id
-    print(Fore.RED + 'Entering subsystem! Type ``Exit`` to exit...')
+    print(Fore.RED + 'Entering subsystem shell! Type ``Exit`` to exit...')
     print(Fore.WHITE + '------------------------------------------')
+    input("Press enter to start the shell...")
     os.system(f"docker exec -it {container_id} /bin/tmux")
     log(f"Leaving the subsystem shell, returning to host os...")
 
