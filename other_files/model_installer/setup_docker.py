@@ -610,6 +610,7 @@ def dev_setup_docker(DockerClient, compose_path, ver_os_info, containers, use_gu
                     "image": f"{base_image_name}",
                     "tty": True,
                     "restart": "always",
+                    "ports": ["9090:9090"],
                     "privileged": True,
                     "environment": {
                         "CPUCORES": CPUCORES,
@@ -632,6 +633,7 @@ def dev_setup_docker(DockerClient, compose_path, ver_os_info, containers, use_gu
                     "image": f"{base_image_name}",
                     "tty": True,
                     "restart": "always",
+                    "ports": ["9090:9090"],
                     "privileged": True,
                     "environment": {
                         "CPUCORES": CPUCORES,
