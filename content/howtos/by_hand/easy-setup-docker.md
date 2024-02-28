@@ -199,12 +199,4 @@ You should see:
 └───────────────────────────────────────────────────┘
 ```
 
-```bash
-curl http://localhost:8080/models/available
-```
-
-Output will look like this:
-
-![](https://cdn.discordapp.com/attachments/1116933141895053322/1134037542845566976/image.png)
-
 Now that we got that setup, lets go setup a [model]({{%relref "easy-model" %}})
