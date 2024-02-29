@@ -1004,7 +1004,7 @@ class localai_model_manager:
             s.clear_window(ver_os_info)
 
             s.log(about_model_size)
-            valid_answers2 = ["7b", "8x7b", "70b", "id"]
+            valid_answers2 = ["7b", "8x7b", "70b", "id", "base"]
             question2 = f"What size of known and supported model would you like to setup ({', '.join(valid_answers2)}): "
             
             context_temp = "The user was asked what size of model they would like to install... here is a list of sizes they can pick from "
@@ -1035,147 +1035,152 @@ class localai_model_manager:
 
             s.clear_window(ver_os_info)
 
-            s.log(about_model_q_size)
+            if answer2.lower() != "base":
+                s.log(about_model_q_size)
 
-            question = f"What type of quantised model would you like to setup? ({', '.join(valid_answers1)}): "
-            
-            context_temp = "The user was asked what type of quantised model they would like to install... here is a list of quantised model they can pick from "
-            context_temp = f"{context_temp}\n{about_model_q_size}"
+                question = f"What type of quantised model would you like to setup? ({', '.join(valid_answers1)}): "
                 
-            answer1 = s.check_str(question, valid_answers1, use_gui, layout, sg, context_temp, client_openai)
-
-            if answer1.lower() == "none":
-                answer1 = str(answer1.lower())
-            else:
-                answer1 = str(answer1.upper())
-
-            # Check if the word "model" is in the answer
-            if "model" in answer4:
-                # Remove the word "model"  from the answer
-                answer4 = answer4.replace("model", "")
-
-                # Print a message to the user
-                s.log("\nThe word 'model' has been removed from the file name.")
-
-            # Check if GPU is turned on
-            if "-gpu" in named_docker:
-                s.clear_window(ver_os_info)
-                # Ask the user the third question
-                if not answer1 == "none":
-                    question = "\nNumber of GPU layers to give the model?  (0 to 2000): \n"
+                context_temp = "The user was asked what type of quantised model they would like to install... here is a list of quantised model they can pick from "
+                context_temp = f"{context_temp}\n{about_model_q_size}"
                     
-                    answer3 = input(question)
+                answer1 = s.check_str(question, valid_answers1, use_gui, layout, sg, context_temp, client_openai)
 
+                if answer1.lower() == "none":
+                    answer1 = str(answer1.lower())
+                else:
+                    answer1 = str(answer1.upper())
+
+                # Check if the word "model" is in the answer
+                if "model" in answer4:
+                    # Remove the word "model"  from the answer
+                    answer4 = answer4.replace("model", "")
+
+                    # Print a message to the user
+                    s.log("\nThe word 'model' has been removed from the file name.")
+
+                # Check if GPU is turned on
+                if "-gpu" in named_docker:
+                    s.clear_window(ver_os_info)
+                    # Ask the user the third question
+                    if not answer1 == "none":
+                        question = "\nNumber of GPU layers to give the model?  (0 to 2000): \n"
+                        
+                        answer3 = input(question)
+
+                        answer3 = int(answer3)
+                        use_gpu = True
+                else:
+                    answer3 = 0
                     answer3 = int(answer3)
-                    use_gpu = True
-            else:
-                answer3 = 0
-                answer3 = int(answer3)
-                use_gpu = False
-
-            s.clear_window(ver_os_info)
-
-            if not answer1 == "none":
-                question = "\nNumber of CPU Cores to give the model? (0 to 2000): \n"
+                    use_gpu = False
                     
-                answercpu = input(question)
+                s.clear_window(ver_os_info)
 
-                answercpu = int(answercpu)
+                if not answer1 == "none":
+                    question = "\nNumber of CPU Cores to give the model? (0 to 2000): \n"
+                        
+                    answercpu = input(question)
 
-            s.clear_window(ver_os_info)
+                    answercpu = int(answercpu)
 
-        if "-gpu" in named_docker:
-            question = "Would you like me to install a few Text to Speech models?: "
-            sd_valid_answers = ["yes", "no", "true", "false"]
+                s.clear_window(ver_os_info)
 
-            context_temp = "The user was asked if they would like to install a TTS or Text to Speach model. This is a yes or no question"
-        
-            answertts = s.check_str(question, sd_valid_answers, use_gui, layout, sg, context_temp, client_openai)
+                if "-gpu" in named_docker:
+                    question = "Would you like me to install a few Text to Speech models?: "
+                    sd_valid_answers = ["yes", "no", "true", "false"]
 
-            if answertts.lower() == "no":
-                answertts = "False"
+                    context_temp = "The user was asked if they would like to install a TTS or Text to Speach model. This is a yes or no question"
                 
-            if answertts.lower() == "yes":
-                answertts = "True"
+                    answertts = s.check_str(question, sd_valid_answers, use_gui, layout, sg, context_temp, client_openai)
 
-            answertts = answertts.lower()
-            use_tts = answertts
+                    if answertts.lower() == "no":
+                        answertts = "False"
+                        
+                    if answertts.lower() == "yes":
+                        answertts = "True"
 
-            s.clear_window(ver_os_info)
+                    answertts = answertts.lower()
+                    use_tts = answertts
 
-        question = "Would you like me to install the embedding model?: "
-        sd_valid_answers = ["yes", "no", "true", "false"]
-            
-        context_temp = "The user was asked if they would like to install the vector store embedding model. This is a yes or no question"
-            
-        answerenbed = s.check_str(question, sd_valid_answers, use_gui, layout, sg, context_temp, client_openai)
+                    s.clear_window(ver_os_info)
 
-        if answerenbed.lower() == "no":
-            answerenbed = "False"
+                question = "Would you like me to install the embedding model?: "
+                sd_valid_answers = ["yes", "no", "true", "false"]
+                    
+                context_temp = "The user was asked if they would like to install the vector store embedding model. This is a yes or no question"
+                    
+                answerenbed = s.check_str(question, sd_valid_answers, use_gui, layout, sg, context_temp, client_openai)
+
+                if answerenbed.lower() == "no":
+                    answerenbed = "False"
+                        
+                if answerenbed.lower() == "yes":
+                    answerenbed = "True"
+
+                answerenbed = answerenbed.lower()
+                use_enbed = answerenbed
+
+                s.clear_window(ver_os_info)
+
+                if "-gpu" in named_docker:
+                    question = "Would you like me to install a Stable diffusion model?: "
+                    sd_valid_answers = ["yes", "no", "true", "false"]
                 
-        if answerenbed.lower() == "yes":
-            answerenbed = "True"
+                    context_temp = "The user was asked if they would like to install a Stable diffusion (for making photos) model. This is a yes or no question"
 
-        answerenbed = answerenbed.lower()
-        use_enbed = answerenbed
+                    answersd = s.check_str(question, sd_valid_answers, use_gui, layout, sg, context_temp, client_openai)
 
-        s.clear_window(ver_os_info)
+                    if answersd.lower() == "no":
+                        answersd = "False"
+                    
+                    if answersd.lower() == "yes":
+                        answersd = "True"
 
-        if "-gpu" in named_docker:
-            question = "Would you like me to install a Stable diffusion model?: "
-            sd_valid_answers = ["yes", "no", "true", "false"]
-        
-            context_temp = "The user was asked if they would like to install a Stable diffusion (for making photos) model. This is a yes or no question"
+                    answersd = answersd.lower()
+                    use_sd = answersd
 
-            answersd = s.check_str(question, sd_valid_answers, use_gui, layout, sg, context_temp, client_openai)
+                    s.clear_window(ver_os_info)
+                    
+                    question = "Would you like me to install the Llava model?: "
+                    sd_valid_answers = ["yes", "no", "true", "false"]
+                
+                    context_temp = "The user was asked if they would like to install the llava model, its a sight based model to help programs see photos. This is a yes or no question"
 
-            if answersd.lower() == "no":
-                answersd = "False"
-            
-            if answersd.lower() == "yes":
-                answersd = "True"
+                    answerllava = s.check_str(question, sd_valid_answers, use_gui, layout, sg, context_temp, client_openai)
 
-            answersd = answersd.lower()
-            use_sd = answersd
+                    if answerllava.lower() == "no":
+                        answerllava = "False"
+                    
+                    if answerllava.lower() == "yes":
+                        answerllava = "True"
 
-            s.clear_window(ver_os_info)
-            
-            question = "Would you like me to install the Llava model?: "
-            sd_valid_answers = ["yes", "no", "true", "false"]
-        
-            context_temp = "The user was asked if they would like to install the llava model, its a sight based model to help programs see photos. This is a yes or no question"
+                    answerllava = answerllava.lower()
+                    use_llava = answerllava
 
-            answerllava = s.check_str(question, sd_valid_answers, use_gui, layout, sg, context_temp, client_openai)
+                    s.clear_window(ver_os_info)
+                else:
+                    s.log("Looks like you are running on CPU only, Skipping: Stable diffusion, Llava, Huggingface Models")
+                    
+                    question = "Would you like to use our slower but encrypted endpoint for LocalAI to serve and setup the model's files (Not the models file itself)?: "
+                    sd_valid_answers = ["yes", "no", "true", "false"]
+                    
+                    context_temp = "The user was asked if they would like to use Midori AI slower but encrypted endpoint. This is a yes or no question"
 
-            if answerllava.lower() == "no":
-                answerllava = "False"
-            
-            if answerllava.lower() == "yes":
-                answerllava = "True"
+                    answerencrypted = s.check_str(question, sd_valid_answers, use_gui, layout, sg, context_temp, client_openai)
 
-            answerllava = answerllava.lower()
-            use_llava = answerllava
+                    if answerencrypted.lower() == "no":
+                        answerencrypted = "False"
+                    
+                    if answerencrypted.lower() == "yes":
+                        answerencrypted = "True"
 
-            s.clear_window(ver_os_info)
-        else:
-            s.log("Looks like you are running on CPU only, Skipping: Stable diffusion, Llava, Huggingface Models")
-            
-            question = "Would you like to use our slower but encrypted endpoint for LocalAI to serve and setup the model's files (Not the models file itself)?: "
-            sd_valid_answers = ["yes", "no", "true", "false"]
-            
-            context_temp = "The user was asked if they would like to use Midori AI slower but encrypted endpoint. This is a yes or no question"
+                    answerencrypted = answerencrypted.lower()
 
-            answerencrypted = s.check_str(question, sd_valid_answers, use_gui, layout, sg, context_temp, client_openai)
+                    s.clear_window(ver_os_info)
 
-            if answerencrypted.lower() == "no":
-                answerencrypted = "False"
-            
-            if answerencrypted.lower() == "yes":
-                answerencrypted = "True"
-
-            answerencrypted = answerencrypted.lower()
-
-            s.clear_window(ver_os_info)
+            else:
+                s.log("For base models from the site, you can type all of the ones you want, like ``all-minilm-l6-v2 bert-cpp``")
+                base_model_install = input("Type Requested Base Models: ")
 
         s.log(f"I am now going to install everything you requested, please wait for me to get done. As ill be running commands inside of your docker image.")
         s.log("Hit enter to start")
@@ -1392,13 +1397,20 @@ class localai_model_manager:
                 ["wget", "-O", inside_model_folder + f"/llava.yaml", f"https://github.com/mudler/LocalAI/blob/b8240b4c1839089b9d06a3e2b1c629a294cff87e/examples/configurations/llava/llava.yaml"],
             ]
             docker_commands.extend(llava_commands)
+        
+        if answer1 == "base":
+            base_commands = [
+                ["./local-ai", f"{base_model_install}"],
+            ]
+            docker_commands.extend(base_commands)
 
         # Run a command inside the container
         s.log("Downloading and setting up model into the docker")
         for command in docker_commands:
             s.log(f"Running {command}: ")
-            command_output = container.exec_run(command)
-            s.log(command_output.output.decode("utf-8"))
+            void, stream = container.exec_run(command, stream=True)
+            for data in stream:
+                s.log(data.decode())
 
         s.log("All done, I am now rebooting LocalAI")
         container.restart()

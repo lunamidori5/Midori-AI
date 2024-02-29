@@ -52,6 +52,7 @@ about_model_size = str("""
 8x7b - Recommended for highend PC (24gb or more Vram needed / 55gb of system ram) - https://huggingface.co/TheBloke/dolphin-2.7-mixtral-8x7b-GGUF
 70b - Recommended for high end servers only (AI card or better with 48gb Vram + 100gb system ram) - https://huggingface.co/TheBloke/dolphin-2.2-70B-GGUF
 ID - (These are models from the Midori AI model repo) - https://io.midori-ai.xyz/models/offsite_models/
+Base - Models that are baked into LocalAI - https://localai.io/basics/getting_started/
 """)
 
 about_model_q_size = str("""
