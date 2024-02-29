@@ -318,21 +318,11 @@ class subsystem_backend_manager:
             if item in picked_backends:
                 requested_backends.append(item)
 
-        s.log("Loading your docker-compose.yaml")
-        with open(docker_compose_yaml, "r") as f:
-            compose_data  = yaml.safe_load(f)
-            s.log("Auto loaded the docker-compose.yaml")
-            s.log(str(compose_data))
-
-        for service_name, service_data in compose_data["services"].items():
-            s.log(f"Checking... Service Name: {service_name}, Service Data: {service_data}")
-            if service_data["image"].startswith("lunamidori5"):
-                for container in containers:
-                    s.log(f"Checking Name: {container.name}, ID: {container.id}")
-                    if service_name in container.name:
-                        s.log(f"Found the subsystem, logging into: {container.name} / {container.id}")
-                        container = client.containers.get(container.name)
-                    break
+        for container in containers:
+            s.log(f"Checking Name: {container.name}, ID: {container.id}")
+            if "midori_ai_subsystem" in container.name:
+                s.log(f"Found the subsystem, logging into: {container.name} / {container.id}")
+                container = client.containers.get(container.name)
                 break
     
         docker_commands = [
@@ -398,21 +388,11 @@ class subsystem_backend_manager:
             if item in picked_backends:
                 requested_backends.append(item)
 
-        s.log("Loading your docker-compose.yaml")
-        with open(docker_compose_yaml, "r") as f:
-            compose_data  = yaml.safe_load(f)
-            s.log("Auto loaded the docker-compose.yaml")
-            s.log(str(compose_data))
-
-        for service_name, service_data in compose_data["services"].items():
-            s.log(f"Checking... Service Name: {service_name}, Service Data: {service_data}")
-            if service_data["image"].startswith("lunamidori5"):
-                for container in containers:
-                    s.log(f"Checking Name: {container.name}, ID: {container.id}")
-                    if service_name in container.name:
-                        s.log(f"Found the subsystem, logging into: {container.name} / {container.id}")
-                        container = client.containers.get(container.name)
-                    break
+        for container in containers:
+            s.log(f"Checking Name: {container.name}, ID: {container.id}")
+            if "midori_ai_subsystem" in container.name:
+                s.log(f"Found the subsystem, logging into: {container.name} / {container.id}")
+                container = client.containers.get(container.name)
                 break
     
         docker_commands = [
