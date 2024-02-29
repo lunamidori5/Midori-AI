@@ -4,7 +4,7 @@ title = "LocalAI"
 weight = 2
 +++
 
-![Midori AI photo](https://tea-cup.midori-ai.xyz/download/logo_color1.png)
+![Midori AI photo](https://tea-cup.midori-ai.xyz/download/Midori_subsystem_x_localai.png)
 
 ## Installing LocalAI
 

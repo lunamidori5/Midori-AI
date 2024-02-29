@@ -128,6 +128,7 @@ def carly(client_openai):
     return
 
 def chat_room(system_message, client_openai, ver_os_info, added_context):
+    s.log("``Carly's servers are running in low power mode... Sorry for the slow replys`` - Luna")
     s.log("Input Question: ")
     message = input()
     s.log("Carly is thinking...")
