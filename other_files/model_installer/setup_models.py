@@ -887,6 +887,7 @@ class backend_programs_manager:
         s.log("``1`` - LocalAI (Install Models)")
         #s.log("``2`` - LocalAI (Edit Models)")
         #s.log("``3`` - LocalAI (Remove Models)")
+        s.log("``4`` - LocalAI (Backup Models)")
         ### Ollma
         ### Invoke AI
         ### On Subsystem Programs
@@ -895,7 +896,7 @@ class backend_programs_manager:
             ### Llama.cpp? (command line maybe?)
         s.log("``back`` - Go back to the main menu")
 
-        valid_answers = ["1", "back"]
+        valid_answers = ["1", "4", "back"]
         questionbasic = "What would you like to do?: "
         temp_cxt = "This is the menu for running backend programs in the Midori AI subsystem, please let the user know are you not trained to help with this menu..."
         answerstartup = s.check_str(questionbasic, valid_answers, "no", None, None, temp_cxt, self.client_openai)
@@ -912,6 +913,9 @@ class backend_programs_manager:
             localai.edit_models()
 
         if answerstartup == 3:
+            localai.remove_models()
+
+        if answerstartup == 4:
             localai.remove_models()
 
 class localai_model_manager:
@@ -1455,3 +1459,38 @@ class localai_model_manager:
             s.log(f"I could not find localai... did you install that backend?")
             input("Press Enter to go back to the menu: ")
             return
+
+    def backup_models(self):
+        containers = self.client.containers.list()
+        s.log(f"Checking for LocalAI Backend")
+
+        for container in containers:
+            s.log(f"Checking Name: {container.name}, ID: {container.id}")
+
+            # Check if there is a container with a name containing `service_name`
+            if "localai-midori-ai-backend" in container.name:
+                # Get the container object
+                s.log(f"Found LocalAI, Linking the Subsystem to: {container.name} / {container.id}")
+                container = self.client.containers.get(container.name)
+                s.log(f"Midori AI Subsystem linked to LocalAI")
+                break
+
+        if container is None:
+            s.log(f"I could not find localai... did you install that backend?")
+            input("Press Enter to go back to the menu: ")
+            return
+        
+        docker_commands = [
+            "mkdir files/backup",
+            "mkdir files/backup/models",
+            "chmod -R 777 files/backup",
+            "cp files/localai/models files/backup/models"
+        ]
+
+        # Run a command inside the container
+        s.log("Downloading and setting up model into the docker")
+        for command in docker_commands:
+            s.log(f"Running {command}: ")
+            void, stream = container.exec_run(command, stream=True)
+            for data in stream:
+                s.log(data.decode())
