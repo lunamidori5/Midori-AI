@@ -39,8 +39,27 @@ Your patience is greatly appreciated as the installation process may appear inac
 ## Starting the WebServer
 
 ### Step 1
-On the main menu type ``10``
+
+On the main menu, type `10`.
+
 ![photo](https://tea-cup.midori-ai.xyz/download/fd7d889e-b3a9-4b32-82d1-348c89c3253b-WindowsTerminal_yh2LURCGqN.png)
 
 ### Step 2
-Go to where you installed InvokeAI for this demo we installed in ``files/invokeai/data/``
+
+Navigate to the InvokeAI installation directory. In this demo, we installed it  in `files/invokeai/data/`. So, we would type `cd files/invokeai/data/` into that folder.
+
+![photo](https://tea-cup.midori-ai.xyz/download/e9493ced-2af2-4fb7-af65-1e0e96262b92-WindowsTerminal_xZrUyGmzj4.png)
+
+### Step 3
+
+Type `./invoke.sh` and follow Invoke's menus.
+
+![photo](https://tea-cup.midori-ai.xyz/download/0480bba9-ef12-4904-8b38-57610bf5297c-WindowsTerminal_gegnnUHEsj.png)
+
+### Step 4
+
+Enter your computer's IP address into your web browser with port 9090. For example, for our computer, that would be `http://192.168.10.10:9090`. You can try `http://localhost:9090` but that is not recommended when using the subsystem.
+
+### Step 5
+
+Enjoy using InvokeAI. If you need help, please reach out on our [Discord](https://discord.gg/xdgCx3VyHU) / [Email](mailto:contact-us@midori-ai.xyz); or reach out on their [Discord](https://discord.gg/invoke-ai).
