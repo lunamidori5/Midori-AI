@@ -16,6 +16,7 @@ Programs to support:
 - Other Tools:
     - AnythingLLM (Docker)
     - Home Assistant (Docker or VM)
+    - ChromaDB for LLM memory applications
 
 Features
 - Add file already exists check. (prompt user prior to overwriting. if overwriting is denied, prompt user for the model "name" to set and then set yaml filename to model "name")
