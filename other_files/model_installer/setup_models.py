@@ -962,7 +962,7 @@ class localai_model_manager:
         s.clear_window(ver_os_info)
 
         s.log("Alright, now that I am s.logged into the docker, lets get you started with installing the model...")
-        s.log("For more info on the models used, or links to the models, go to ``https://io.midori-ai.xyz/howtos/easy-model-installer/``")
+        s.log("For more info on the models used, or links to the models, go to ``https://io.midori-ai.xyz/models/onsite_models/``")
         s.log(f"I am going to save our chat here and every thing I do to a file called ``{s.log_file_name}``, check it out if you like <3")
         s.log("Here are a few questions to find out what model you would like to try")
 
