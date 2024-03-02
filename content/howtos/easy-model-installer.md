@@ -23,6 +23,10 @@ Note that model downloads may be slow because they are hitting Midori Ai's serve
 
 {{% /notice %}}
 
+## Subsystem Beta
+Please stop by our Subsystem Manager page if you are waiting to try out the beta!
+[Subsystem Manager](https://io.midori-ai.xyz/subsystem/manager/)
+
 {{< tabs >}}
 {{% tab title="Windows" %}}
 ### Prerequisites
