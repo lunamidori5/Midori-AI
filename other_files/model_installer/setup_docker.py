@@ -622,6 +622,11 @@ def dev_setup_docker(DockerClient, compose_path, ver_os_info, containers, use_gu
                     "volumes": ["./files:/app/files", "/var/run/docker.sock:/var/run/docker.sock"],
                 }
             },
+			"volumes": {
+				"midori-ai": {
+					"external": False
+				}
+			},
         }
 
 
@@ -645,6 +650,11 @@ def dev_setup_docker(DockerClient, compose_path, ver_os_info, containers, use_gu
                     "volumes": ["./files:/app/files", "/var/run/docker.sock:/var/run/docker.sock"],
                 }
             },
+			"volumes": {
+				"midori-ai": {
+					"external": False
+				}
+			},
         }
 
     s.log(config)
