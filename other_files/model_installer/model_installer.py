@@ -209,6 +209,7 @@ while True:
         s.log("``5`` - Seting up Backends Help")
         s.log("``10`` - Enter Subsystem Commandline")
         print(Fore.RED, "Starting after ver ``Red Satinbird`` this dev mode will be going away")
+        print(Fore.WHITE, "")
         s.log("Logs will be send to Midori AI's servers when you exit.")
         sd_valid_answers = ["1", "2", "3", "4", "5", "10", "chat",  "exit"]
 
