@@ -263,6 +263,7 @@ class subsystem_backend_manager:
     def backend_installer(self, docker_compose_yaml, client, client_openai, ver_os_info, discord_id):
         containers = client.containers.list()
         backend_checker = s.backends_checking()
+        installed_backends = backend_checker.check_json()
 
         list_of_supported_backends = [
             "localai", 
@@ -274,6 +275,10 @@ class subsystem_backend_manager:
             "home-assistant",
             "midoricluster"
             ]
+        
+        list_of_supported_backends = [
+            item for item in list_of_supported_backends if item not in installed_backends
+        ]
         
         s.clear_window(ver_os_info)
         
@@ -364,16 +369,7 @@ class subsystem_backend_manager:
         containers = client.containers.list()
         backend_checker = s.backends_checking()
 
-        list_of_supported_backends = [
-            "localai", 
-            "anythingllm", 
-            "ollama",
-            "invokeai",
-            "chromadb",
-            "oobabooga",
-            "home-assistant",
-            "midoricluster"
-            ]
+        list_of_supported_backends = backend_checker.check_json()
         
         s.clear_window(ver_os_info)
         

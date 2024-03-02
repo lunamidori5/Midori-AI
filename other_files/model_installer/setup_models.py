@@ -464,11 +464,11 @@ def models_install(compose_path, ver_os_info, containers, client, use_gui, sg, a
             ["rm", "-f", f"{inside_model_folder}/localai-chat.tmpl"],
             ["rm", "-f", f"{inside_model_folder}/localai-chatmsg.tmpl"],
             ["rm", "-f", f"{inside_model_folder}/{answer4}.yaml"],
-            ["wget", "-O", f"localai-chat.tmpl", f"https://tea-cup.midori-ai.xyz/download/localai-chat.tmpl"],
-            ["wget", "-O", f"localai-chatmsg.tmpl", f"https://tea-cup.midori-ai.xyz/download/localai-chatmsg.tmpl"],
-            ["wget", "-O", f"{answer4}.yaml", f"https://tea-cup.midori-ai.xyz/download/models.yaml"],
+            ["wget", "--show-progress=no", "-O", f"localai-chat.tmpl", f"https://tea-cup.midori-ai.xyz/download/localai-chat.tmpl"],
+            ["wget", "--show-progress=no", "-O", f"localai-chatmsg.tmpl", f"https://tea-cup.midori-ai.xyz/download/localai-chatmsg.tmpl"],
+            ["wget", "--show-progress=no", "-O", f"{answer4}.yaml", f"https://tea-cup.midori-ai.xyz/download/models.yaml"],
             ["echo", f"This next step will take 10+ mins, please do not exit or close this program"],
-            ["wget", "-O", f"{answer4}.gguf", f"https://tea-cup.midori-ai.xyz/download/{answer2}model{answer1}.gguf"],
+            ["wget", "--show-progress=no", "-O", f"{answer4}.gguf", f"https://tea-cup.midori-ai.xyz/download/{answer2}model{answer1}.gguf"],
             ["cp", f"localai-chat.tmpl", f"{temp_chat_path}"],
             ["cp", f"localai-chatmsg.tmpl", f"{temp_chatmsg_path}"],
             ["cp", f"{answer4}.yaml", f"{yaml_path_temp}"],
@@ -491,11 +491,11 @@ def models_install(compose_path, ver_os_info, containers, client, use_gui, sg, a
             ["rm", "-f", f"{inside_model_folder}/localai-chat.tmpl"],
             ["rm", "-f", f"{inside_model_folder}/localai-chatmsg.tmpl"],
             ["rm", "-f", f"{inside_model_folder}/{answer4}.yaml"],
-            ["wget", "-O", f"localai-chat.tmpl", f"https://tea-cup.midori-ai.xyz/download/localai-chat.tmpl"],
-            ["wget", "-O", f"localai-chatmsg.tmpl", f"https://tea-cup.midori-ai.xyz/download/localai-chatmsg.tmpl"],
-            ["wget", "-O", f"{answer4}.yaml", f"https://tea-cup.midori-ai.xyz/download/models-gpu.yaml"],
+            ["wget", "--show-progress=no", "-O", f"localai-chat.tmpl", f"https://tea-cup.midori-ai.xyz/download/localai-chat.tmpl"],
+            ["wget", "--show-progress=no", "-O", f"localai-chatmsg.tmpl", f"https://tea-cup.midori-ai.xyz/download/localai-chatmsg.tmpl"],
+            ["wget", "--show-progress=no", "-O", f"{answer4}.yaml", f"https://tea-cup.midori-ai.xyz/download/models-gpu.yaml"],
             ["echo", f"This next step will take 10+ mins, please do not exit or close this program"],
-            ["wget", "-O", f"{answer4}.gguf", f"https://tea-cup.midori-ai.xyz/download/{answer2}model{answer1}.gguf"],
+            ["wget", "--show-progress=no", "-O", f"{answer4}.gguf", f"https://tea-cup.midori-ai.xyz/download/{answer2}model{answer1}.gguf"],
             ["cp", f"localai-chat.tmpl", f"{temp_chat_path}"],
             ["cp", f"localai-chatmsg.tmpl", f"{temp_chatmsg_path}"],
             ["cp", f"{answer4}.yaml", f"{yaml_path_temp}"],
@@ -516,7 +516,7 @@ def models_install(compose_path, ver_os_info, containers, client, use_gui, sg, a
             ["echo", f"Setting up the {answer2} model you requested"],
             ["apt-get", "-y", "install", "wget"],
             ["rm", "-f", f"{inside_model_folder}/{answer4}.yaml"],
-            ["wget", "-O", f"{answer4}.yaml", f"https://tea-cup.midori-ai.xyz/download/models-{answer2}-vllm.yaml"],
+            ["wget", "--show-progress=no", "-O", f"{answer4}.yaml", f"https://tea-cup.midori-ai.xyz/download/models-{answer2}-vllm.yaml"],
             ["cp", f"{answer4}.yaml", f"{yaml_path_temp}"],
             ["sed", "-i", f"s/name.*/name: {answer4}/g", f"{yaml_path_temp}"],
             ["echo", f"Catting the yaml for easyer debuging..."],
@@ -533,12 +533,12 @@ def models_install(compose_path, ver_os_info, containers, client, use_gui, sg, a
             ["rm", "-f", f"{inside_model_folder}/localai-chatmsg.tmpl"],
             ["rm", "-f", f"{inside_model_folder}/{answer4}.yaml"],
             ["rm", "-f", "helper_app.py"],
-            ["wget", "-O", "helper_app.py", "https://tea-cup.midori-ai.xyz/download/helper_app.py"],
+            ["wget", "--show-progress=no", "-O", "helper_app.py", "https://tea-cup.midori-ai.xyz/download/helper_app.py"],
             ["python3", "helper_app.py", "localai-chat.tmpl"],
             ["python3", "helper_app.py", "localai-chatmsg.tmpl"],
             ["python3", "helper_app.py", "models.yaml"],
             ["echo", f"This next step will take 10+ mins, please do not exit or close this program"],
-            ["wget", "-O", f"{answer2}model{answer1}.gguf", f"https://tea-cup.midori-ai.xyz/download/{answer2}model{answer1}.gguf"],
+            ["wget", "--show-progress=no", "-O", f"{answer2}model{answer1}.gguf", f"https://tea-cup.midori-ai.xyz/download/{answer2}model{answer1}.gguf"],
             ["cp", f"localai-chat.tmpl", f"{temp_chat_path}"],
             ["cp", f"localai-chatmsg.tmpl", f"{temp_chatmsg_path}"],
             ["cp", f"models.yaml", f"{yaml_path_temp}"],
@@ -563,12 +563,12 @@ def models_install(compose_path, ver_os_info, containers, client, use_gui, sg, a
             ["rm", "-f", f"{inside_model_folder}/localai-chatmsg.tmpl"],
             ["rm", "-f", f"{inside_model_folder}/{answer4}.yaml"],
             ["rm", "-f", "helper_app.py"],
-            ["wget", "-O", "helper_app.py", "https://tea-cup.midori-ai.xyz/download/helper_app.py"],
+            ["wget", "--show-progress=no", "-O", "helper_app.py", "https://tea-cup.midori-ai.xyz/download/helper_app.py"],
             ["python3", "helper_app.py", "localai-chat.tmpl"],
             ["python3", "helper_app.py", "localai-chatmsg.tmpl"],
             ["python3", "helper_app.py", "models-gpu.yaml"],
             ["echo", f"This next step will take 10+ mins, please do not exit or close this program"],
-            ["wget", "-O", f"{answer2}model{answer1}.gguf", f"https://tea-cup.midori-ai.xyz/download/{answer2}model{answer1}.gguf"],
+            ["wget", "--show-progress=no", "-O", f"{answer2}model{answer1}.gguf", f"https://tea-cup.midori-ai.xyz/download/{answer2}model{answer1}.gguf"],
             ["cp", f"localai-chat.tmpl", f"{temp_chat_path}"],
             ["cp", f"localai-chatmsg.tmpl", f"{temp_chatmsg_path}"],
             ["cp", f"models-gpu.yaml", f"{yaml_path_temp}"],
@@ -604,25 +604,25 @@ def models_install(compose_path, ver_os_info, containers, client, use_gui, sg, a
     if use_tts == "true":
         tts_commands = [
             ["apt-get", "-y", "install", "wget"],
-            ["wget", "-O", inside_model_folder + f"/en_US-amy-medium.onnx.json", f"https://tea-cup.midori-ai.xyz/download/en_US-amy-medium.onnx.json"],
-            ["wget", "-O", inside_model_folder + f"/en_US-amy-medium.onnx", f"https://tea-cup.midori-ai.xyz/download/en_US-amy-medium.onnx"],
-            ["wget", "-O", inside_model_folder + f"/en-us-kathleen-low.onnx.json", f"https://tea-cup.midori-ai.xyz/download/en-us-kathleen-low.onnx.json"],
-            ["wget", "-O", inside_model_folder + f"/en-us-kathleen-low.onnx", f"https://tea-cup.midori-ai.xyz/download/en-us-kathleen-low.onnx"],
+            ["wget", "--show-progress=no", "-O", inside_model_folder + f"/en_US-amy-medium.onnx.json", f"https://tea-cup.midori-ai.xyz/download/en_US-amy-medium.onnx.json"],
+            ["wget", "--show-progress=no", "-O", inside_model_folder + f"/en_US-amy-medium.onnx", f"https://tea-cup.midori-ai.xyz/download/en_US-amy-medium.onnx"],
+            ["wget", "--show-progress=no", "-O", inside_model_folder + f"/en-us-kathleen-low.onnx.json", f"https://tea-cup.midori-ai.xyz/download/en-us-kathleen-low.onnx.json"],
+            ["wget", "--show-progress=no", "-O", inside_model_folder + f"/en-us-kathleen-low.onnx", f"https://tea-cup.midori-ai.xyz/download/en-us-kathleen-low.onnx"],
         ]
         docker_commands.extend(tts_commands)
 
     if use_sd == "true":
         sd_commands = [
             ["apt-get", "-y", "install", "wget"],
-            ["wget", "-O", inside_model_folder + f"/diffusers.yaml", f"https://tea-cup.midori-ai.xyz/download/diffusers.yaml"]
+            ["wget", "--show-progress=no", "-O", inside_model_folder + f"/diffusers.yaml", f"https://tea-cup.midori-ai.xyz/download/diffusers.yaml"]
         ]
         docker_commands.extend(sd_commands)
 
     if use_enbed == "true":
         embed_commands = [
             ["apt-get", "-y", "install", "wget"],
-            ["wget", "-O", inside_model_folder + f"/embedding.yaml", f"https://tea-cup.midori-ai.xyz/download/bert-embeddings.yaml"],
-            ["wget", "-O", inside_model_folder + f"/bert-MiniLM-L6-v2q4_0.bin", f"https://tea-cup.midori-ai.xyz/download/bert-MiniLM-L6-v2q4_0.bin"],
+            ["wget", "--show-progress=no", "-O", inside_model_folder + f"/embedding.yaml", f"https://tea-cup.midori-ai.xyz/download/bert-embeddings.yaml"],
+            ["wget", "--show-progress=no", "-O", inside_model_folder + f"/bert-MiniLM-L6-v2q4_0.bin", f"https://tea-cup.midori-ai.xyz/download/bert-MiniLM-L6-v2q4_0.bin"],
         ]
         docker_commands.extend(embed_commands)
 
@@ -630,10 +630,10 @@ def models_install(compose_path, ver_os_info, containers, client, use_gui, sg, a
         llava_commands = [
             ["echo", f"This next step will take 5+ mins, please do not exit or close this program"],
             ["apt-get", "-y", "install", "wget"],
-            ["wget", "-O", inside_model_folder + f"/ggml-model-q4_k.gguf", f"https://huggingface.co/mys/ggml_bakllava-1/resolve/main/ggml-model-q4_k.gguf"],
-            ["wget", "-O", inside_model_folder + f"/mmproj-model-f16.gguf", f"https://huggingface.co/mys/ggml_bakllava-1/resolve/main/mmproj-model-f16.gguf"],
-            ["wget", "-O", inside_model_folder + f"/chat-simple.tmpl", f"https://github.com/mudler/LocalAI/blob/b8240b4c1839089b9d06a3e2b1c629a294cff87e/examples/configurations/llava/chat-simple.tmpl"],
-            ["wget", "-O", inside_model_folder + f"/llava.yaml", f"https://github.com/mudler/LocalAI/blob/b8240b4c1839089b9d06a3e2b1c629a294cff87e/examples/configurations/llava/llava.yaml"],
+            ["wget", "--show-progress=no", "-O", inside_model_folder + f"/ggml-model-q4_k.gguf", f"https://huggingface.co/mys/ggml_bakllava-1/resolve/main/ggml-model-q4_k.gguf"],
+            ["wget", "--show-progress=no", "-O", inside_model_folder + f"/mmproj-model-f16.gguf", f"https://huggingface.co/mys/ggml_bakllava-1/resolve/main/mmproj-model-f16.gguf"],
+            ["wget", "--show-progress=no", "-O", inside_model_folder + f"/chat-simple.tmpl", f"https://github.com/mudler/LocalAI/blob/b8240b4c1839089b9d06a3e2b1c629a294cff87e/examples/configurations/llava/chat-simple.tmpl"],
+            ["wget", "--show-progress=no", "-O", inside_model_folder + f"/llava.yaml", f"https://github.com/mudler/LocalAI/blob/b8240b4c1839089b9d06a3e2b1c629a294cff87e/examples/configurations/llava/llava.yaml"],
         ]
         docker_commands.extend(llava_commands)
 
@@ -1219,11 +1219,11 @@ class localai_model_manager:
                 ["rm", "-f", f"{inside_model_folder}/localai-chat.tmpl"],
                 ["rm", "-f", f"{inside_model_folder}/localai-chatmsg.tmpl"],
                 ["rm", "-f", f"{inside_model_folder}/{answer4}.yaml"],
-                ["wget", "-O", f"localai-chat.tmpl", f"https://tea-cup.midori-ai.xyz/download/localai-chat.tmpl"],
-                ["wget", "-O", f"localai-chatmsg.tmpl", f"https://tea-cup.midori-ai.xyz/download/localai-chatmsg.tmpl"],
-                ["wget", "-O", f"{answer4}.yaml", f"https://tea-cup.midori-ai.xyz/download/models.yaml"],
+                ["wget", "--show-progress=no", "-O", f"localai-chat.tmpl", f"https://tea-cup.midori-ai.xyz/download/localai-chat.tmpl"],
+                ["wget", "--show-progress=no", "-O", f"localai-chatmsg.tmpl", f"https://tea-cup.midori-ai.xyz/download/localai-chatmsg.tmpl"],
+                ["wget", "--show-progress=no", "-O", f"{answer4}.yaml", f"https://tea-cup.midori-ai.xyz/download/models.yaml"],
                 ["echo", f"This next step will take 10+ mins, please do not exit or close this program"],
-                ["wget", "-O", f"{answer4}.gguf", f"https://tea-cup.midori-ai.xyz/download/{answer2}model{answer1}.gguf"],
+                ["wget", "--show-progress=no", "-O", f"{answer4}.gguf", f"https://tea-cup.midori-ai.xyz/download/{answer2}model{answer1}.gguf"],
                 ["cp", f"localai-chat.tmpl", f"{temp_chat_path}"],
                 ["cp", f"localai-chatmsg.tmpl", f"{temp_chatmsg_path}"],
                 ["cp", f"{answer4}.yaml", f"{yaml_path_temp}"],
@@ -1246,11 +1246,11 @@ class localai_model_manager:
                 ["rm", "-f", f"{inside_model_folder}/localai-chat.tmpl"],
                 ["rm", "-f", f"{inside_model_folder}/localai-chatmsg.tmpl"],
                 ["rm", "-f", f"{inside_model_folder}/{answer4}.yaml"],
-                ["wget", "-O", f"localai-chat.tmpl", f"https://tea-cup.midori-ai.xyz/download/localai-chat.tmpl"],
-                ["wget", "-O", f"localai-chatmsg.tmpl", f"https://tea-cup.midori-ai.xyz/download/localai-chatmsg.tmpl"],
-                ["wget", "-O", f"{answer4}.yaml", f"https://tea-cup.midori-ai.xyz/download/models-gpu.yaml"],
+                ["wget", "--show-progress=no", "-O", f"localai-chat.tmpl", f"https://tea-cup.midori-ai.xyz/download/localai-chat.tmpl"],
+                ["wget", "--show-progress=no", "-O", f"localai-chatmsg.tmpl", f"https://tea-cup.midori-ai.xyz/download/localai-chatmsg.tmpl"],
+                ["wget", "--show-progress=no", "-O", f"{answer4}.yaml", f"https://tea-cup.midori-ai.xyz/download/models-gpu.yaml"],
                 ["echo", f"This next step will take 10+ mins, please do not exit or close this program"],
-                ["wget", "-O", f"{answer4}.gguf", f"https://tea-cup.midori-ai.xyz/download/{answer2}model{answer1}.gguf"],
+                ["wget", "--show-progress=no", "-O", f"{answer4}.gguf", f"https://tea-cup.midori-ai.xyz/download/{answer2}model{answer1}.gguf"],
                 ["cp", f"localai-chat.tmpl", f"{temp_chat_path}"],
                 ["cp", f"localai-chatmsg.tmpl", f"{temp_chatmsg_path}"],
                 ["cp", f"{answer4}.yaml", f"{yaml_path_temp}"],
@@ -1271,7 +1271,7 @@ class localai_model_manager:
                 ["echo", f"Setting up the {answer2} model you requested"],
                 ["apt-get", "-y", "install", "wget"],
                 ["rm", "-f", f"{inside_model_folder}/{answer4}.yaml"],
-                ["wget", "-O", f"{answer4}.yaml", f"https://tea-cup.midori-ai.xyz/download/models-{answer2}-vllm.yaml"],
+                ["wget", "--show-progress=no", "-O", f"{answer4}.yaml", f"https://tea-cup.midori-ai.xyz/download/models-{answer2}-vllm.yaml"],
                 ["cp", f"{answer4}.yaml", f"{yaml_path_temp}"],
                 ["sed", "-i", f"s/name.*/name: {answer4}/g", f"{yaml_path_temp}"],
                 ["echo", f"Catting the yaml for easyer debuging..."],
@@ -1288,12 +1288,12 @@ class localai_model_manager:
                 ["rm", "-f", f"{inside_model_folder}/localai-chatmsg.tmpl"],
                 ["rm", "-f", f"{inside_model_folder}/{answer4}.yaml"],
                 ["rm", "-f", "helper_app.py"],
-                ["wget", "-O", "helper_app.py", "https://tea-cup.midori-ai.xyz/download/helper_app.py"],
+                ["wget", "--show-progress=no", "-O", "helper_app.py", "https://tea-cup.midori-ai.xyz/download/helper_app.py"],
                 ["python3", "helper_app.py", "localai-chat.tmpl"],
                 ["python3", "helper_app.py", "localai-chatmsg.tmpl"],
                 ["python3", "helper_app.py", "models.yaml"],
                 ["echo", f"This next step will take 10+ mins, please do not exit or close this program"],
-                ["wget", "-O", f"{answer2}model{answer1}.gguf", f"https://tea-cup.midori-ai.xyz/download/{answer2}model{answer1}.gguf"],
+                ["wget", "--show-progress=no", "-O", f"{answer2}model{answer1}.gguf", f"https://tea-cup.midori-ai.xyz/download/{answer2}model{answer1}.gguf"],
                 ["cp", f"localai-chat.tmpl", f"{temp_chat_path}"],
                 ["cp", f"localai-chatmsg.tmpl", f"{temp_chatmsg_path}"],
                 ["cp", f"models.yaml", f"{yaml_path_temp}"],
@@ -1318,12 +1318,12 @@ class localai_model_manager:
                 ["rm", "-f", f"{inside_model_folder}/localai-chatmsg.tmpl"],
                 ["rm", "-f", f"{inside_model_folder}/{answer4}.yaml"],
                 ["rm", "-f", "helper_app.py"],
-                ["wget", "-O", "helper_app.py", "https://tea-cup.midori-ai.xyz/download/helper_app.py"],
+                ["wget", "--show-progress=no", "-O", "helper_app.py", "https://tea-cup.midori-ai.xyz/download/helper_app.py"],
                 ["python3", "helper_app.py", "localai-chat.tmpl"],
                 ["python3", "helper_app.py", "localai-chatmsg.tmpl"],
                 ["python3", "helper_app.py", "models-gpu.yaml"],
                 ["echo", f"This next step will take 10+ mins, please do not exit or close this program"],
-                ["wget", "-O", f"{answer2}model{answer1}.gguf", f"https://tea-cup.midori-ai.xyz/download/{answer2}model{answer1}.gguf"],
+                ["wget", "--show-progress=no", "-O", f"{answer2}model{answer1}.gguf", f"https://tea-cup.midori-ai.xyz/download/{answer2}model{answer1}.gguf"],
                 ["cp", f"localai-chat.tmpl", f"{temp_chat_path}"],
                 ["cp", f"localai-chatmsg.tmpl", f"{temp_chatmsg_path}"],
                 ["cp", f"models-gpu.yaml", f"{yaml_path_temp}"],
@@ -1359,25 +1359,25 @@ class localai_model_manager:
         if use_tts == "true":
             tts_commands = [
                 ["apt-get", "-y", "install", "wget"],
-                ["wget", "-O", inside_model_folder + f"/en_US-amy-medium.onnx.json", f"https://tea-cup.midori-ai.xyz/download/en_US-amy-medium.onnx.json"],
-                ["wget", "-O", inside_model_folder + f"/en_US-amy-medium.onnx", f"https://tea-cup.midori-ai.xyz/download/en_US-amy-medium.onnx"],
-                ["wget", "-O", inside_model_folder + f"/en-us-kathleen-low.onnx.json", f"https://tea-cup.midori-ai.xyz/download/en-us-kathleen-low.onnx.json"],
-                ["wget", "-O", inside_model_folder + f"/en-us-kathleen-low.onnx", f"https://tea-cup.midori-ai.xyz/download/en-us-kathleen-low.onnx"],
+                ["wget", "--show-progress=no", "-O", inside_model_folder + f"/en_US-amy-medium.onnx.json", f"https://tea-cup.midori-ai.xyz/download/en_US-amy-medium.onnx.json"],
+                ["wget", "--show-progress=no", "-O", inside_model_folder + f"/en_US-amy-medium.onnx", f"https://tea-cup.midori-ai.xyz/download/en_US-amy-medium.onnx"],
+                ["wget", "--show-progress=no", "-O", inside_model_folder + f"/en-us-kathleen-low.onnx.json", f"https://tea-cup.midori-ai.xyz/download/en-us-kathleen-low.onnx.json"],
+                ["wget", "--show-progress=no", "-O", inside_model_folder + f"/en-us-kathleen-low.onnx", f"https://tea-cup.midori-ai.xyz/download/en-us-kathleen-low.onnx"],
             ]
             docker_commands.extend(tts_commands)
 
         if use_sd == "true":
             sd_commands = [
                 ["apt-get", "-y", "install", "wget"],
-                ["wget", "-O", inside_model_folder + f"/diffusers.yaml", f"https://tea-cup.midori-ai.xyz/download/diffusers.yaml"]
+                ["wget", "--show-progress=no", "-O", inside_model_folder + f"/diffusers.yaml", f"https://tea-cup.midori-ai.xyz/download/diffusers.yaml"]
             ]
             docker_commands.extend(sd_commands)
 
         if use_enbed == "true":
             embed_commands = [
                 ["apt-get", "-y", "install", "wget"],
-                ["wget", "-O", inside_model_folder + f"/embedding.yaml", f"https://tea-cup.midori-ai.xyz/download/bert-embeddings.yaml"],
-                ["wget", "-O", inside_model_folder + f"/bert-MiniLM-L6-v2q4_0.bin", f"https://tea-cup.midori-ai.xyz/download/bert-MiniLM-L6-v2q4_0.bin"],
+                ["wget", "--show-progress=no", "-O", inside_model_folder + f"/embedding.yaml", f"https://tea-cup.midori-ai.xyz/download/bert-embeddings.yaml"],
+                ["wget", "--show-progress=no", "-O", inside_model_folder + f"/bert-MiniLM-L6-v2q4_0.bin", f"https://tea-cup.midori-ai.xyz/download/bert-MiniLM-L6-v2q4_0.bin"],
             ]
             docker_commands.extend(embed_commands)
 
@@ -1385,10 +1385,10 @@ class localai_model_manager:
             llava_commands = [
                 ["echo", f"This next step will take 5+ mins, please do not exit or close this program"],
                 ["apt-get", "-y", "install", "wget"],
-                ["wget", "-O", inside_model_folder + f"/ggml-model-q4_k.gguf", f"https://huggingface.co/mys/ggml_bakllava-1/resolve/main/ggml-model-q4_k.gguf"],
-                ["wget", "-O", inside_model_folder + f"/mmproj-model-f16.gguf", f"https://huggingface.co/mys/ggml_bakllava-1/resolve/main/mmproj-model-f16.gguf"],
-                ["wget", "-O", inside_model_folder + f"/chat-simple.tmpl", f"https://github.com/mudler/LocalAI/blob/b8240b4c1839089b9d06a3e2b1c629a294cff87e/examples/configurations/llava/chat-simple.tmpl"],
-                ["wget", "-O", inside_model_folder + f"/llava.yaml", f"https://github.com/mudler/LocalAI/blob/b8240b4c1839089b9d06a3e2b1c629a294cff87e/examples/configurations/llava/llava.yaml"],
+                ["wget", "--show-progress=no", "-O", inside_model_folder + f"/ggml-model-q4_k.gguf", f"https://huggingface.co/mys/ggml_bakllava-1/resolve/main/ggml-model-q4_k.gguf"],
+                ["wget", "--show-progress=no", "-O", inside_model_folder + f"/mmproj-model-f16.gguf", f"https://huggingface.co/mys/ggml_bakllava-1/resolve/main/mmproj-model-f16.gguf"],
+                ["wget", "--show-progress=no", "-O", inside_model_folder + f"/chat-simple.tmpl", f"https://github.com/mudler/LocalAI/blob/b8240b4c1839089b9d06a3e2b1c629a294cff87e/examples/configurations/llava/chat-simple.tmpl"],
+                ["wget", "--show-progress=no", "-O", inside_model_folder + f"/llava.yaml", f"https://github.com/mudler/LocalAI/blob/b8240b4c1839089b9d06a3e2b1c629a294cff87e/examples/configurations/llava/llava.yaml"],
             ]
             docker_commands.extend(llava_commands)
         
