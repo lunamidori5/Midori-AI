@@ -1185,6 +1185,7 @@ class localai_model_manager:
             else:
                 s.log("For base models from the site, you can type all of the ones you want, like ``all-minilm-l6-v2 bert-cpp``")
                 s.log("https://localai.io/basics/getting_started/")
+                answer1 = "base"
                 base_model_install = input("Type Requested Base Models: ")
 
         s.log(f"I am now going to install everything you requested, please wait for me to get done. As ill be running commands inside of your docker image.")
