@@ -886,7 +886,7 @@ class backend_programs_manager:
         ### LocalAI
         s.log("``1`` - LocalAI (Install Models)")
         #s.log("``2`` - LocalAI (Edit Models)")
-        #s.log("``3`` - LocalAI (Remove Models)")
+        s.log("``3`` - LocalAI (Remove Models)")
         s.log("``4`` - LocalAI (Backup Models)")
         ### Ollma
         ### Invoke AI
@@ -896,7 +896,7 @@ class backend_programs_manager:
             ### Llama.cpp? (command line maybe?)
         s.log("``back`` - Go back to the main menu")
 
-        valid_answers = ["1", "4", "back"]
+        valid_answers = ["1", "3", "4", "back"]
         questionbasic = "What would you like to do?: "
         temp_cxt = "This is the menu for running backend programs in the Midori AI subsystem, please let the user know are you not trained to help with this menu..."
         answerstartup = s.check_str(questionbasic, valid_answers, "no", None, None, temp_cxt, self.client_openai)
@@ -916,7 +916,7 @@ class backend_programs_manager:
             localai.remove_models()
 
         if answerstartup == 4:
-            localai.remove_models()
+            localai.backup_models()
 
 class localai_model_manager:
     def __init__(self, ver_os_info, client, about_model_size, about_model_q_size, client_openai):
@@ -1454,6 +1454,13 @@ class localai_model_manager:
                 container = self.client.containers.get(container.name)
                 s.log(f"Midori AI Subsystem linked to LocalAI")
                 break
+
+            # Run a command inside the container
+            command = "ls /models"
+            s.log(f"Running {command}: ")
+            void, stream = container.exec_run(command, stream=True)
+            for data in stream:
+                s.log(data.decode())
 
         if container is None:
             s.log(f"I could not find localai... did you install that backend?")
