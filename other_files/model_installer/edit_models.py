@@ -350,6 +350,10 @@ class subsystem_backend_manager:
             for data in stream:
                 s.log(data.decode())
         
+        for item_os in requested_backends:
+            s.log(f"Running: docker compose -f ./files/{item_os}/docker-compose.yaml up -d")
+            os.system(f"docker compose -f ./files/{item_os}/docker-compose.yaml up -d")
+        
         for backend_port in requested_backends:
             normal_port = s.get_port_number(backend_port)
             s.log(f"We are running {backend_port} on {normal_port}")
