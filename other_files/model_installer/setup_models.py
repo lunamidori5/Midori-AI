@@ -1433,13 +1433,13 @@ class localai_model_manager:
 
     def remove_models(self):
         containers = self.client.containers.list()
-        s.log(f"Checking for LocalAI Backend")
+        s.log(f"Checking for Subsystem")
 
         for container in containers:
             s.log(f"Checking Name: {container.name}, ID: {container.id}")
 
             # Check if there is a container with a name containing `service_name`
-            if "localai-midori-ai-backend" in container.name:
+            if "midori_ai_subsystem" in container.name:
                 # Get the container object
                 s.log(f"Found LocalAI, Linking the Subsystem to: {container.name} / {container.id}")
                 container = self.client.containers.get(container.name)
@@ -1447,7 +1447,7 @@ class localai_model_manager:
                 break
 
             # Run a command inside the container
-            command = "ls /models"
+            command = "ls models/"
             s.log(f"Running {command}: ")
             void, stream = container.exec_run(command, stream=True)
             for data in stream:
@@ -1466,7 +1466,7 @@ class localai_model_manager:
         remove_model_list = remove_model_str.split()
 
         for item in remove_model_list:
-            docker_commands.append(f"rm -f /models/{item}.*")
+            docker_commands.append(f"rm -f models/{item}.*")
 
         # Run a command inside the container
         s.log("Removing the listed models")
