@@ -128,6 +128,10 @@ def carly(client_openai):
     return
 
 def chat_room(system_message, client_openai, ver_os_info, added_context):
+    s.log("Dev Note: This copy of Carly will get some context of your setup using the Subsystem Manager")
+    s.log("Dev Note: She can not however help you install, setup, or other tasks with non supported models.")
+    s.log("Dev Note: Questions like ``how to install xzy model`` will make her make something up.")
+    s.log("Dev Note: I am fully remaking this Subsystem manager api and am deeply sorry for the delay.")
     s.log("``Carly's servers are running in low power mode... Sorry for the slow replys`` - Luna")
     s.log("Input Question: ")
     message = input()
