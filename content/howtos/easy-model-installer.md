@@ -27,12 +27,13 @@ Note that model downloads may be slow because they are hitting Midori Ai's serve
 Please stop by our Subsystem Manager page if you are waiting to try out the beta!
 [Subsystem Manager](https://io.midori-ai.xyz/subsystem/manager/)
 
+## Install LocalAI Manager
 {{< tabs >}}
 {{% tab title="Windows" %}}
 ### Prerequisites
 [Docker Desktop Windows](https://docs.docker.com/desktop/install/windows-install/)
 
-### Recommanded
+### Recommended
 Please make a folder for the Manager program with nothing in it, do not use the user folder.
 
 ### Quick install

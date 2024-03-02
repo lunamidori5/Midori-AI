@@ -373,11 +373,9 @@ class subsystem_backend_manager:
         
         s.clear_window(ver_os_info)
         
-        str_temp = f"``{list_of_supported_backends[0]} and {list_of_supported_backends[1]}`` or ``{list_of_supported_backends[1]}, {list_of_supported_backends[0]}, {list_of_supported_backends[5]}``"
         s.log(f"{str(list_of_supported_backends).lower()}")
         s.log("Please pick from this list of supported AI backends to remove from the subsystem.")
-        s.log(f"You can list them out like this. {str_temp}")
-        s.log(f"Or type ``all`` to remove all supported backends")
+        s.log(f"Type ``all`` to remove all supported backends")
 
         picked_backends = str(input("Request Backends: ")).lower()
         requested_backends = []
