@@ -180,8 +180,9 @@ while True:
 
     if len(installed_backends) < 1:
         backends_text = f"~~~ You have no backends installed ~~~"
-    else:
-        backends_text = f"~~~ You have {installed_backends} backends installed ~~~"
+    else :
+        backends_text = (f"~~~ You have the following backends installed: \n{', '.join(installed_backends)} ~~~")
+
 
     temp_main_menu_dash = dash * main_menu_dash
 
