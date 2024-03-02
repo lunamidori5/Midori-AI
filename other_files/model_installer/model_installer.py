@@ -207,7 +207,8 @@ while True:
         s.log("``4`` - Backend Programs (install models / edit backends)")
         s.log("``5`` - Seting up Backends Help")
         s.log("``10`` - Enter Subsystem Commandline")
-        s.log("Logs will be send to Midori AI's servers when you exit.")
+        s.log(Fore.RED + "Starting after ver ``Red Satinbird`` this dev mode will be going away")
+        s.log(Fore.WHITE + "Logs will be send to Midori AI's servers when you exit.")
         sd_valid_answers = ["1", "2", "3", "4", "5", "10", "chat",  "exit"]
 
     s.log("If you need assistance with most menus, type help.")
