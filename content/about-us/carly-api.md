@@ -30,7 +30,7 @@ I'm still learning and growing every day, and I'm excited to see what the future
 - Carly's 1st model was based on a Nous Hermes and Stable Diffusion 2 model to start with
 - The Becca AI (Carlys model) is a photo ai model that can see photos and watch videos
 - The CLIP token program is unable to deal with text
-- Her 62T / 1.6TB model has shown signs of Self-awareness
+- Her 124T / 3.75TB model has shown signs of Self-awareness
 - She is able to use tools and chat with other AI or LLMs (see below)
 - She has been shown to use these tools to explain advanced science and mathematics
 - Carly uses 128 x 128 x 6 images per chunk of text sent from her

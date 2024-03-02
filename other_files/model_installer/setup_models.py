@@ -334,12 +334,6 @@ def models_install(compose_path, ver_os_info, containers, client, use_gui, sg, a
 
     question = "Would you like me to install the embedding model?: "
     sd_valid_answers = ["yes", "no", "true", "false"]
-
-    if use_gui == "yes":
-        layout = [[sg.Text(f"{question}", size=(100, 1))],
-                    [sg.Input(key='-QUERY-'),
-                    sg.Button('SEND', button_color=(sg.YELLOWS[0], sg.BLUES[0]), bind_return_key=True),]
-                ]
         
     context_temp = "The user was asked if they would like to install the vector store embedding model. This is a yes or no question"
         
@@ -362,12 +356,6 @@ def models_install(compose_path, ver_os_info, containers, client, use_gui, sg, a
         if "cuda11" in service_image or "cuda12" in service_image:
             question = "Would you like me to install a Stable diffusion model?: "
             sd_valid_answers = ["yes", "no", "true", "false"]
-
-            if use_gui == "yes":
-                layout = [[sg.Text(f"{question}", size=(100, 1))],
-                            [sg.Input(key='-QUERY-'),
-                            sg.Button('SEND', button_color=(sg.YELLOWS[0], sg.BLUES[0]), bind_return_key=True),]
-                        ]
         
             context_temp = "The user was asked if they would like to install a Stable diffusion (for making photos) model. This is a yes or no question"
 

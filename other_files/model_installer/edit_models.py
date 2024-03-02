@@ -29,7 +29,6 @@ def edit(compose_path, ver_os_info, containers, client, use_gui, sg, layout, cli
             # If the file is still not found, raise an error
             s.log("Could not find docker-compose.yaml at the specified location. Entering ``fallback mode``")
 
-
     # Extract service name and model folder path
     if docker_compose_found:
         for service_name, service_data in compose_data["services"].items():
@@ -271,6 +270,7 @@ class subsystem_backend_manager:
             "ollama",
             "invokeai",
             "oobabooga",
+            "chromadb",
             "home-assistant",
             "midoricluster"
             ]
@@ -365,6 +365,7 @@ class subsystem_backend_manager:
             "anythingllm", 
             "ollama",
             "invokeai",
+            "chromadb",
             "oobabooga",
             "home-assistant",
             "midoricluster"

@@ -57,9 +57,9 @@ model_installer.exe
 [![Windows Build Test](https://github.com/lunamidori5/Midori-AI/actions/workflows/Windows_Build_Test.yml/badge.svg?branch=master)](https://github.com/lunamidori5/Midori-AI/actions/workflows/Windows_Build_Test.yml)
 {{% /tab %}}
 
-{{% tab title="Linux" %}}
+{{% tab title="Linux / WSL" %}}
 ### Prerequisites
-[Docker Desktop Linux](https://docs.docker.com/desktop/install/linux-install/) 
+[Docker Desktop Linux](https://docs.docker.com/desktop/install/linux-install/) / [Docker Desktop Windows](https://docs.docker.com/desktop/install/windows-install/)
 
 or 
 
