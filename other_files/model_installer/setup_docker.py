@@ -1,5 +1,6 @@
 import os
 import yaml
+import GPUtil
 
 import support as s
 
@@ -507,12 +508,24 @@ def dev_setup_docker(DockerClient, compose_path, ver_os_info, containers, use_gu
     CPUCORES = 1
     GPUUSE = False
     BOTHUSE = False
+    setgpu = False
     user_name = "placeholder"
     base_image_name = "lunamidori5/midori_ai_subsystem"
 
     docker_compose_yaml = "midori-docker-compose.yaml"
 
     s.log(f"Skipping subsystem check, will auto purge if its installed...")
+
+    try:
+        gpus = GPUtil.getGPUs()
+
+        # Check if any of the GPUs are NVIDIA GPUs
+        for gpu in gpus:
+            if gpu.name.startswith("NVIDIA"):
+                setgpu = True
+                print("Found an NVIDIA GPU: {}".format(gpu.name))
+    except:
+        setgpu = False
         
     s.log(containers)
 
@@ -553,12 +566,15 @@ def dev_setup_docker(DockerClient, compose_path, ver_os_info, containers, use_gu
 
         s.clear_window(ver_os_info)
 
-        s.log("Sadly I am unable to check your CUDA install for GPU, If you have it already installed good!")
-        s.log("If not please stop by ``https://developer.nvidia.com/cuda-downloads`` and get it for your OS, WSL is Linux")
-        s.log("If you do not have CUDA installed or use a card that does not support it please type no...")
-        s.log("This setting lets you use GPU and CPU for AI images in the subsystem.")
+        if setgpu == True:
+            GPUUSE = True
+            BOTHUSE = True
+        else:
+            GPUUSE = False
+            BOTHUSE = False
 
-        question = "Would you like to use GPU and CPU for mixed AI images?: "
+
+        question = "Do you have the NVIDIA Toolkit (nvidia-smi) installed?: "
         valid_answers = ["yes", "no", "true", "false"]
         
         context_temp = f"The user was asked if they would like to use GPU for the Midori AI Docker Subsystem and other AI Images. This is a yes or no question."
@@ -566,21 +582,23 @@ def dev_setup_docker(DockerClient, compose_path, ver_os_info, containers, use_gu
             
         answer_backend_type = s.check_str(question, valid_answers, use_gui, layout, sg, context_temp, client_openai)
 
-        if answer_backend_type.lower() == "no":
-            GPUUSE = False
-            BOTHUSE = False
-
         if answer_backend_type.lower() == "yes":
-            GPUUSE = True
-            BOTHUSE = True
-
-        if answer_backend_type.lower() == "false":
+            s.log("Okay, let me assist with checking your install...")
+            s.log("I'll try to call ``nvidia-smi`` now, if you get an error or a message about it not being found then  it's not installed.")
+            rc = s.check_call("nvidia-smi -q")
+            if rc == 0:
+                s.log("Alright! You do have ``nvidia-smi`` installed and it looks good to use CUDA!")
+            else:
+                s.log("It seems ``nvidia-smi`` did not run correctly, please make sure it's installed and then if it is working properly, run this setup again.")
+                s.log("``https://developer.nvidia.com/cuda-downloads``")
+                GPUUSE = False
+                BOTHUSE = False
+                input("Press enter to keep going on CPU only / Exit and install Docker CUDA to use GPU:")
+        else:
+            s.log("Okay, that's totally fine! You do not need a GPU or CUDA to run this script.")
+            s.log("Just know that having one can speed things up a little.")
             GPUUSE = False
             BOTHUSE = False
-
-        if answer_backend_type.lower() == "true":
-            GPUUSE = True
-            BOTHUSE = True
         
         with open(os.path.join("files", 'booleans.txt'), 'w') as f:
             f.write(str(GPUUSE)  + '\n')

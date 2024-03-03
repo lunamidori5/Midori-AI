@@ -72,9 +72,11 @@ and will be served using a rounding-down approach. For instance, if you request 
 the Q6 model will be served instead, and so on.
 """)
 
-os.system("del model_installer.zip")
-os.system("del model_installer.bat")
-os.system("rm -f model_installer_linux.tar.gz")
+if os.name == 'nt':
+    os.system("del model_installer.zip")
+    os.system("del model_installer.bat")
+else:
+    os.system("rm -f model_installer_linux.tar.gz")
 
 response_git = requests.get("https://github.com/lunamidori5/Midori-AI/blob/b9a74490f5b5ad0ecce56dbd7718fab3e31ece1b/data/version.json")
 
@@ -180,8 +182,14 @@ while True:
 
     if len(installed_backends) < 1:
         backends_text = f"~~~ You have no backends installed ~~~"
+        backends_text_text_len = len(backends_text)
+        backends_text_dash = int((num_dash - backends_text_text_len) / 2)
+        backends_text_text_done = f"{backends_text_dash * dash}{installed_backends}{backends_text_dash * dash}"
     else :
-        backends_text = (f"~~~ You have the following backends installed: {', '.join(installed_backends)} ~~~")
+        backends_text = (f"~~~ You have the following backends installed: {', '.join(installed_backends).title()} ~~~")
+        backends_text_text_len = len(backends_text)
+        backends_text_dash = int((num_dash - backends_text_text_len) / 2)
+        backends_text_text_done = f"{backends_text_dash * dash}{installed_backends}{backends_text_dash * dash}"
 
 
     temp_main_menu_dash = dash * main_menu_dash
@@ -192,7 +200,7 @@ while True:
         s.log(blank_line)
         s.log(main_menu_text_done)
         s.log(blank_line)
-        s.log(backends_text)
+        print(Fore.RED, "Starting after ver ``Red Satinbird`` this menu will be going away, as we are entering 2.0", Fore.WHITE)
         s.log("``1`` - LocalAI / AnythingLLM Installer")
         s.log("``2`` - Uninstall or Upgrade LocalAI / AnythingLLM")
         s.log("``3`` - Setup or Upgrade Models")
@@ -205,15 +213,14 @@ while True:
         s.log(blank_line)
         s.log(main_menu_text_done)
         s.log(blank_line)
-        s.log(backends_text)
+        s.log(backends_text_text_done)
         s.log("``1`` - Midori AI Subsystem Installer")
         s.log("``2`` - Install Backends to Subsystem")
         s.log("``3`` - Uninstall Backends from Subsystem")
         s.log("``4`` - Backend Programs (install models / edit backends)")
         s.log("``5`` - Seting up Backends Help")
         s.log("``10`` - Enter Subsystem Commandline")
-        print(Fore.RED, "Starting after ver ``Red Satinbird`` this dev mode will be going away")
-        print(Fore.WHITE, "")
+        print(Fore.RED, "Starting after ver ``Red Satinbird`` this dev mode will be going away", Fore.WHITE)
         s.log("Logs will be send to Midori AI's servers when you exit.")
         sd_valid_answers = ["1", "2", "3", "4", "5", "10", "chat",  "exit"]
 

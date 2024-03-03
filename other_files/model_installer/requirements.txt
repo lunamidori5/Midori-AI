@@ -32,3 +32,4 @@ urllib3
 psutil 
 diskcache
 subprocess32
+gputil
