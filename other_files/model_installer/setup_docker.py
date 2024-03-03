@@ -1,6 +1,7 @@
 import os
 import yaml
 import GPUtil
+import subprocess
 
 import support as s
 
@@ -573,7 +574,6 @@ def dev_setup_docker(DockerClient, compose_path, ver_os_info, containers, use_gu
             GPUUSE = False
             BOTHUSE = False
 
-
         question = "Do you have the NVIDIA Toolkit (nvidia-smi) installed?: "
         valid_answers = ["yes", "no", "true", "false"]
         
@@ -584,8 +584,8 @@ def dev_setup_docker(DockerClient, compose_path, ver_os_info, containers, use_gu
 
         if answer_backend_type.lower() == "yes":
             s.log("Okay, let me assist with checking your install...")
-            s.log("I'll try to call ``nvidia-smi`` now, if you get an error or a message about it not being found then  it's not installed.")
-            rc = s.check_call("nvidia-smi -q")
+            s.log("I'll try to call ``nvidia-smi`` now, if you get an error or a message about it not being found then it's not installed.")
+            rc = subprocess.check_call("nvidia-smi -q", shell=True)
             if rc == 0:
                 s.log("Alright! You do have ``nvidia-smi`` installed and it looks good to use CUDA!")
             else:
