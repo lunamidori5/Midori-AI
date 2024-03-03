@@ -152,7 +152,6 @@ def check_for_subsystem_update(ver_os_info, ver_info, DockerClient, compose_path
 
     if current_version == ver_info:
         log("Your subsystem is up to date.")
-        clear_window(ver_os_info)
     else:
         bypass = "none"
         import setup_docker as docker_add_on
