@@ -184,12 +184,12 @@ while True:
         backends_text = f"~~~ You have no backends installed ~~~"
         backends_text_text_len = len(backends_text)
         backends_text_dash = int((num_dash - backends_text_text_len) / 2)
-        backends_text_text_done = f"{backends_text_dash * dash}{installed_backends}{backends_text_dash * dash}"
+        backends_text_text_done = f"{backends_text_dash * dash}{backends_text}{backends_text_dash * dash}"
     else :
         backends_text = (f"~~~ You have the following backends installed: {', '.join(installed_backends).title()} ~~~")
         backends_text_text_len = len(backends_text)
         backends_text_dash = int((num_dash - backends_text_text_len) / 2)
-        backends_text_text_done = f"{backends_text_dash * dash}{installed_backends}{backends_text_dash * dash}"
+        backends_text_text_done = f"{backends_text_dash * dash}{backends_text}{backends_text_dash * dash}"
 
 
     temp_main_menu_dash = dash * main_menu_dash
