@@ -11,7 +11,7 @@ Programs to support:
     - Automatic1111 (Docker?) | (Apply fix for extension install crashing due to file system permissions)
 
 - LLM FineTuning Hosts:
-    - Axolotl (Docker)
+    - Axolotl (Docker) | User will have to use command line to self install
 
 - Other Tools:
     - AnythingLLM (Docker)
