@@ -273,7 +273,6 @@ class subsystem_backend_manager:
             "oobabooga",
             "chromadb",
             "home-assistant",
-            "axolotl",
             "midoricluster"
             ]
         
