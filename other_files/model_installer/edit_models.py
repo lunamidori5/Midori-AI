@@ -79,7 +79,7 @@ def edit(compose_path, ver_os_info, containers, client, use_gui, sg, layout, cli
         # Check if there is a container with a name containing `service_name`
         if service_name in container.name:
             # Get the container object
-            s.log(f"Found LocalAI, s.logging into: {container.name} / {container.id}")
+            s.log(f"Found LocalAI, logging into: {container.name} / {container.id}")
             container = client.containers.get(container.name)
             break
 
@@ -92,7 +92,7 @@ def edit(compose_path, ver_os_info, containers, client, use_gui, sg, layout, cli
             # Check if there is a container with a name containing `service_name`
             if service_name in container.name:
                 # Get the container object
-                s.log(f"Found LocalAI, s.logging into: {container.name} / {container.id}")
+                s.log(f"Found LocalAI, logging into: {container.name} / {container.id}")
                 container = client.containers.get(container.name)
                 break
         
@@ -273,6 +273,7 @@ class subsystem_backend_manager:
             "oobabooga",
             "chromadb",
             "home-assistant",
+            "axolotl",
             "midoricluster"
             ]
         

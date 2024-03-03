@@ -502,7 +502,7 @@ def change_docker(DockerClient, compose_path, ver_os_info, containers, use_gui, 
             except Exception as e:
                 s.log(f"Error occurred while running docker-compose: {e}")
 
-def dev_setup_docker(DockerClient, compose_path, ver_os_info, containers, use_gui, sg, client, localai_ver_number, layout, client_openai, discord_id):
+def dev_setup_docker(DockerClient, compose_path, ver_os_info, containers, use_gui, sg, client, ver_info, layout, client_openai, discord_id):
     
     CPUCORES = 1
     GPUUSE = False
@@ -518,71 +518,81 @@ def dev_setup_docker(DockerClient, compose_path, ver_os_info, containers, use_gu
 
     s.clear_window(ver_os_info)
 
-    s.log("Your username will not get passed or shared with Midori AI, it is just a way to make sure your image is safe")
+    if os.path.exists(os.path.join("files", "subsystem.ram")):
+        s.log("You have already setup the Midori AI subsystem, Updating it!")
+        with open(os.path.join("files", 'booleans.txt'), 'r') as f:
+            GPUUSE = bool(f.readline())
+            BOTHUSE = bool(f.readline())
+    else:
+        s.log("Your username will not get passed or shared with Midori AI, it is just a way to make sure your image is safe")
 
-    user_name = str(input("Please enter a Username: "))
+        user_name = str(input("Please enter a Username: "))
 
-    s.clear_window(ver_os_info)
+        s.clear_window(ver_os_info)
 
-    s.log("This is the menu to setup the Midori AI Docker Subsystem! ")
+        s.log("This is the menu to setup the Midori AI Docker Subsystem! ")
 
-    question = "Would you like me to install Subsystem in docker to this computer?: "
-    valid_answers = ["yes", "no", "true", "false"]
-    
-    context_temp = f"The user was asked if they would like to install the Midori AI Docker Subsystem. This is a yes or no question."
+        question = "Would you like me to install Subsystem in docker to this computer?: "
+        valid_answers = ["yes", "no", "true", "false"]
         
-    answerbasic = s.check_str(question, valid_answers, use_gui, layout, sg, context_temp, client_openai)
+        context_temp = f"The user was asked if they would like to install the Midori AI Docker Subsystem. This is a yes or no question."
+            
+        answerbasic = s.check_str(question, valid_answers, use_gui, layout, sg, context_temp, client_openai)
 
-    if answerbasic.lower() == "no":
-        answerbasic = "False"
+        if answerbasic.lower() == "no":
+            answerbasic = "False"
 
-    if answerbasic.lower() == "yes":
-        answerbasic = "True"
+        if answerbasic.lower() == "yes":
+            answerbasic = "True"
 
-    answerbasic = answerbasic.lower()
+        answerbasic = answerbasic.lower()
 
-    if answerbasic == "false":
-        s.log("Alright then ill go ahead and exit! Thank you!")
-        return
+        if answerbasic == "false":
+            s.log("Alright then ill go ahead and exit! Thank you!")
+            return
 
-    s.clear_window(ver_os_info)
+        s.clear_window(ver_os_info)
 
-    s.log("Sadly I am unable to check your CUDA install for GPU, If you have it already installed good!")
-    s.log("If not please stop by ``https://developer.nvidia.com/cuda-downloads`` and get it for your OS, WSL is Linux")
-    s.log("If you do not have CUDA installed or use a card that does not support it please type no...")
-    s.log("This setting lets you use GPU and CPU for AI images in the subsystem.")
+        s.log("Sadly I am unable to check your CUDA install for GPU, If you have it already installed good!")
+        s.log("If not please stop by ``https://developer.nvidia.com/cuda-downloads`` and get it for your OS, WSL is Linux")
+        s.log("If you do not have CUDA installed or use a card that does not support it please type no...")
+        s.log("This setting lets you use GPU and CPU for AI images in the subsystem.")
 
-    question = "Would you like to use GPU and CPU for mixed AI images?: "
-    valid_answers = ["yes", "no", "true", "false"]
-    
-    context_temp = f"The user was asked if they would like to use GPU for the Midori AI Docker Subsystem and other AI Images. This is a yes or no question."
-    context_temp = f"{context_temp}\nThis is the output of the nvidia-smi command\n{str(os.popen('nvidia-smi').read())}\nIf the user does not have cuda installed please tell them to type no"
+        question = "Would you like to use GPU and CPU for mixed AI images?: "
+        valid_answers = ["yes", "no", "true", "false"]
         
-    answer_backend_type = s.check_str(question, valid_answers, use_gui, layout, sg, context_temp, client_openai)
+        context_temp = f"The user was asked if they would like to use GPU for the Midori AI Docker Subsystem and other AI Images. This is a yes or no question."
+        context_temp = f"{context_temp}\nThis is the output of the nvidia-smi command\n{str(os.popen('nvidia-smi').read())}\nIf the user does not have cuda installed please tell them to type no"
+            
+        answer_backend_type = s.check_str(question, valid_answers, use_gui, layout, sg, context_temp, client_openai)
 
-    if answer_backend_type.lower() == "no":
-        GPUUSE = False
-        BOTHUSE = False
+        if answer_backend_type.lower() == "no":
+            GPUUSE = False
+            BOTHUSE = False
 
-    if answer_backend_type.lower() == "yes":
-        GPUUSE = True
-        BOTHUSE = True
+        if answer_backend_type.lower() == "yes":
+            GPUUSE = True
+            BOTHUSE = True
 
-    if answer_backend_type.lower() == "false":
-        GPUUSE = False
-        BOTHUSE = False
+        if answer_backend_type.lower() == "false":
+            GPUUSE = False
+            BOTHUSE = False
 
-    if answer_backend_type.lower() == "true":
-        GPUUSE = True
-        BOTHUSE = True
+        if answer_backend_type.lower() == "true":
+            GPUUSE = True
+            BOTHUSE = True
+        
+        with open(os.path.join("files", 'booleans.txt'), 'w') as f:
+            f.write(str(GPUUSE)  + '\n')
+            f.write(str(BOTHUSE) + '\n')
 
-    s.clear_window(ver_os_info)
-    s.log("Setting up the Midori AI Docker Subsystem...")
+        s.clear_window(ver_os_info)
+        s.log("Setting up the Midori AI Docker Subsystem...")
 
-    s.log("I am now going to install everything you requested, please wait for me to get done.")
-    s.log("Hit enter to start")
+        s.log("I am now going to install everything you requested, please wait for me to get done.")
+        s.log("Hit enter to start")
 
-    input()
+        input()
 
     os.makedirs("files", exist_ok=True)
 
@@ -707,6 +717,9 @@ def dev_setup_docker(DockerClient, compose_path, ver_os_info, containers, use_gu
         start=True,
         pull="always",
     )
+
+    with open(os.path.join("files", "subsystem.ram"), "w") as f:
+        f.write(ver_info)
 
     # s.log("All done, I am now rebooting the subsystem")
     # container.restart()

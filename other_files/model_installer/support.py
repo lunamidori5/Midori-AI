@@ -123,29 +123,15 @@ def check_for_subsystem_update(ver_os_info, ver_info, DockerClient, compose_path
     """
     Sends a request to the server to check for a installer update.
     """
-    placeholder_link = f"https://io.midori-ai.xyz/howtos/easy-model-installer/"
 
-    servers_replyed = True
-
-    retry = 0
-
-    while retry < 15:
-        # Send a request to the server for the model version.
-        response = requests.get("https://tea-cup.midori-ai.xyz/download/midori_ai_subsystem_ver_number.txt")
-
-        # Check if the request was successful.
-        if response.status_code != 200:
-            log(f"Servers seem to be down, please try again in a moment...")
-            servers_replyed = False
-            retry = retry + 1
-            if retry > 10:
-                break
-        
-        if servers_replyed:
-            break
+    if os.path.exists(os.path.join("files", "subsystem.ram")):
+        with open(os.path.join("files", "subsystem.ram"), "r") as f:
+            response = f.read()
+    else:
+        response = "nul"
 
     # Get the current model version.
-    current_version = response.text.strip()
+    current_version = response.strip()
 
     # Check if the current version is the latest version.
     clear_window(ver_os_info)

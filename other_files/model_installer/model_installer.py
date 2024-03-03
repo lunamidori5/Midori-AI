@@ -87,7 +87,7 @@ current_version_git = response_git.text.strip()
 s.log("I am setting up a temp copy of Carly...")
 temp_response = help_add_on.request_info("temp_something_for_model_installer.txt")
 temp_keys = temp_response.strip()
-client_openai = OpenAIWrapper(base_url="https://ai.midori-ai.xyz/v1", api_key=temp_keys, timeout=60000)
+client_openai = OpenAIWrapper(base_url="https://ai.midori-ai.xyz/v1", api_key=temp_keys, timeout=6000)
 
 ver_os_info = s.get_os_info()
 backend_checker = s.backends_checking()
@@ -202,7 +202,7 @@ while True:
         s.log("``support`` - Sends a copy of your logs and some info about your setup to Midori AI")
         sd_valid_answers = ["1", "2", "3", "4", "5", "support", "chat", "dev", "exit"]
     else:
-        s.check_for_subsystem_update(ver_os_info, "0.0.1", DockerClient, compose_path, containers, use_gui, sg, client, localai_ver_number, layout, client_openai, discord_id)
+        s.check_for_subsystem_update(ver_os_info, ver_info, DockerClient, compose_path, containers, use_gui, sg, client, localai_ver_number, layout, client_openai, discord_id)
         s.log("``1`` - Midori AI Subsystem Installer")
         s.log("``2`` - Install Backends to Subsystem")
         s.log("``3`` - Uninstall Backends from Subsystem")
@@ -241,7 +241,7 @@ while True:
             docker_add_on.setup_docker(DockerClient, compose_path, ver_os_info, containers, use_gui, sg, base_image_name, localai_ver_number, layout, client_openai)
         else:
             s.data_helper_python()
-            docker_add_on.dev_setup_docker(DockerClient, compose_path, ver_os_info, containers, use_gui, sg, client, localai_ver_number, layout, client_openai, discord_id)
+            docker_add_on.dev_setup_docker(DockerClient, compose_path, ver_os_info, containers, use_gui, sg, client, ver_info, layout, client_openai, discord_id)
             s.data_helper_python()
 
     if answerstartup == 2:
