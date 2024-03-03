@@ -210,17 +210,18 @@ while True:
         sd_valid_answers = ["1", "2", "3", "4", "5", "support", "chat", "dev", "exit"]
     else:
         s.check_for_subsystem_update(ver_os_info, ver_info, DockerClient, compose_path, containers, use_gui, sg, client, ver_info, layout, client_openai, discord_id)
+        s.clear_window(ver_os_info)
         s.log(blank_line)
         s.log(main_menu_text_done)
         s.log(blank_line)
         s.log(backends_text_text_done)
+        print(Fore.RED, "Starting after ver ``Red Satinbird`` this dev mode will be going away", Fore.WHITE)
         s.log("``1`` - Midori AI Subsystem Installer")
         s.log("``2`` - Install Backends to Subsystem")
         s.log("``3`` - Uninstall Backends from Subsystem")
         s.log("``4`` - Backend Programs (install models / edit backends)")
         s.log("``5`` - Seting up Backends Help")
         s.log("``10`` - Enter Subsystem Commandline")
-        print(Fore.RED, "Starting after ver ``Red Satinbird`` this dev mode will be going away", Fore.WHITE)
         s.log("Logs will be send to Midori AI's servers when you exit.")
         sd_valid_answers = ["1", "2", "3", "4", "5", "10", "chat",  "exit"]
 
