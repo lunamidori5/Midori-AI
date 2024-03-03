@@ -934,7 +934,7 @@ class localai_model_manager:
             s.log(f"Checking Name: {container.name}, ID: {container.id}")
 
             # Check if there is a container with a name containing `service_name`
-            if "localai-midori-ai-backend" in container.name:
+            if "localai-midori-ai-backend" in str(container.name):
                 # Get the container object
                 s.log(f"Found LocalAI, Linking the Subsystem to: {container.name} / {container.id}")
                 container = self.client.containers.get(container.name)

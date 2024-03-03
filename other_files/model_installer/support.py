@@ -118,6 +118,51 @@ def check_for_update(ver_os_info, ver_info):
 
         exit(0)
 
+
+def check_for_subsystem_update(ver_os_info, ver_info, DockerClient, compose_path, containers, use_gui, sg, client, localai_ver_number, layout, client_openai, discord_id):
+    """
+    Sends a request to the server to check for a installer update.
+    """
+    placeholder_link = f"https://io.midori-ai.xyz/howtos/easy-model-installer/"
+
+    servers_replyed = True
+
+    retry = 0
+
+    while retry < 15:
+        # Send a request to the server for the model version.
+        response = requests.get("https://tea-cup.midori-ai.xyz/download/midori_ai_subsystem_ver_number.txt")
+
+        # Check if the request was successful.
+        if response.status_code != 200:
+            log(f"Servers seem to be down, please try again in a moment...")
+            servers_replyed = False
+            retry = retry + 1
+            if retry > 10:
+                break
+        
+        if servers_replyed:
+            break
+
+    # Get the current model version.
+    current_version = response.text.strip()
+
+    # Check if the current version is the latest version.
+    clear_window(ver_os_info)
+
+    if current_version == ver_info:
+        log("Your subsystem is up to date.")
+        clear_window(ver_os_info)
+    else:
+        bypass = "none"
+        import setup_docker as docker_add_on
+        log(f"-----------------------------------------------------------------------------------------------")
+        log(f"A subsystem update is available. Auto updating...")
+        log(f"-----------------------------------------------------------------------------------------------")
+        docker_add_on.dev_setup_docker(DockerClient, compose_path, ver_os_info, containers, use_gui, sg, client, localai_ver_number, layout, client_openai, discord_id)
+
+            
+
 def check_cpu_support():
 
     freeze_support()

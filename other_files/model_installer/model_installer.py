@@ -202,6 +202,7 @@ while True:
         s.log("``support`` - Sends a copy of your logs and some info about your setup to Midori AI")
         sd_valid_answers = ["1", "2", "3", "4", "5", "support", "chat", "dev", "exit"]
     else:
+        s.check_for_subsystem_update(ver_os_info, "0.0.1", DockerClient, compose_path, containers, use_gui, sg, client, localai_ver_number, layout, client_openai, discord_id)
         s.log("``1`` - Midori AI Subsystem Installer")
         s.log("``2`` - Install Backends to Subsystem")
         s.log("``3`` - Uninstall Backends from Subsystem")
