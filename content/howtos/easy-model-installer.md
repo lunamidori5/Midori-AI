@@ -47,7 +47,7 @@ Please make a folder for the Manager program with nothing in it, do not use the 
 Open a Command Prompt or PowerShell terminal and run:
 
 ```bat
-curl -sSL https://raw.githubusercontent.com/lunamidori5/Midori-AI/master/other_files/model_installer/model_installer.bat -o model_installer.bat && model_installer.bat
+curl -sSL https://raw.githubusercontent.com/lunamidori5/Midori-AI/master/other_files/model_installer/shell_files/model_installer.bat -o model_installer.bat && model_installer.bat
 ```
 
 ### Manual download and installation
@@ -73,7 +73,7 @@ or
 ### Quick install with script
 
 ```sh
-curl -sSL https://raw.githubusercontent.com/lunamidori5/Midori-AI/master/other_files/model_installer/model_installer.sh | sh
+curl -sSL https://raw.githubusercontent.com/lunamidori5/Midori-AI/master/other_files/model_installer/shell_files/model_installer.sh | sh
 ```
 
 ### Manual download and installation
@@ -88,42 +88,7 @@ chmod +x model_installer
 ```
 [![Linux Build Test](https://github.com/lunamidori5/Midori-AI/actions/workflows/Linux_Build_Test.yml/badge.svg?branch=master)](https://github.com/lunamidori5/Midori-AI/actions/workflows/Linux_Build_Test.yml)
 {{% /tab %}}
-
-{{% tab title="Python" %}}
-### Prerequisites
-[python3.10](https://www.python.org/downloads/release/python-3100/) or use your package manager...
-[Docker Desktop](https://docs.docker.com/desktop/) or [Docker Engine](https://docs.docker.com/engine/install/) and [Docker Compose](https://docs.docker.com/compose/install/)
-
-
-### Quick run with script
-Run these one line at a time
-
-```sh
-apt-get install python3.10-venv python3.10-tk -y
-
-python3 -m venv pythonlocalai
-source pythonlocalai/bin/activate
-
-wget --no-check-certificate --no-cache --no-cookies https://tea-cup.midori-ai.xyz/download/model_installer.py
-wget --no-check-certificate --no-cache --no-cookies https://tea-cup.midori-ai.xyz/download/carly_help.py
-wget --no-check-certificate --no-cache --no-cookies https://tea-cup.midori-ai.xyz/download/setup_docker.py
-wget --no-check-certificate --no-cache --no-cookies https://tea-cup.midori-ai.xyz/download/setup_models.py
-wget --no-check-certificate --no-cache --no-cookies https://tea-cup.midori-ai.xyz/download/edit_models.py
-wget --no-check-certificate --no-cache --no-cookies https://tea-cup.midori-ai.xyz/download/support.py
-wget --no-check-certificate --no-cache --no-cookies https://tea-cup.midori-ai.xyz/download/midori_program_requirments.txt
-
-pip install -r midori_program_requirments.txt
-
-python model_installer.py
-```
-{{% /tab %}}
 {{< /tabs >}}
-
-## AnythingLLM install
-
-When setting up this copy of AnythingLLM, please use the host computers ip. 
-- LocalAI - ``192.168.?.?:8080/v1``
-- AnythingLLM - ``192.168.?.?:3001``
 
 
 ## ----- Model Info and Links -----

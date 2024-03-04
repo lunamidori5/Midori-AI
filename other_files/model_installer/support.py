@@ -109,12 +109,12 @@ def check_for_update(ver_os_info, ver_info):
                 os.system("del model_installer.zip")
                 os.system("del model_installer.exe")
                 os.system("del model_installer.bat")
-                os.system(f"curl -sSL https://raw.githubusercontent.com/lunamidori5/Midori-AI/master/other_files/model_installer/model_installer.bat -o model_installer.bat && start model_installer.bat")
-                log(f"If the localai manager failed to start, just run ``call model_installer.bat``")
+                os.system(f"curl -sSL https://raw.githubusercontent.com/lunamidori5/Midori-AI/master/other_files/model_installer/shell_files/model_installer.bat -o model_installer.bat && start model_installer.bat")
+                log(f"If the subsystem manager failed to start, just run ``call model_installer.bat``")
             elif ver_os_info == 'linux':
                 os.system("rm -f model_installer.tar.gz model_installer model_installer.sh")
-                os.system(f"curl -sSL https://raw.githubusercontent.com/lunamidori5/Midori-AI/master/other_files/model_installer/model_installer.sh | sh")
-                log(f"If the localai manager failed to start, just run ``./model_installer.sh``")
+                os.system(f"curl -sSL https://raw.githubusercontent.com/lunamidori5/Midori-AI/master/other_files/model_installer/shell_files/model_installer.sh | sh")
+                log(f"If the subsystem manager failed to start, just run ``./model_installer.sh``")
 
         exit(0)
 
