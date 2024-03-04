@@ -1413,23 +1413,32 @@ class localai_model_manager:
 
     def edit_models(self):
         containers = self.client.containers.list()
-        s.log(f"Checking for LocalAI Backend")
+        s.log(f"Checking for Subsystem")
 
         for container in containers:
             s.log(f"Checking Name: {container.name}, ID: {container.id}")
 
             # Check if there is a container with a name containing `service_name`
-            if "localai-midori-ai-backend" in container.name:
+            if "midori_ai_subsystem" in container.name:
                 # Get the container object
                 s.log(f"Found LocalAI, Linking the Subsystem to: {container.name} / {container.id}")
                 container = self.client.containers.get(container.name)
                 s.log(f"Midori AI Subsystem linked to LocalAI")
                 break
 
+            # Run a command inside the container
+            command = "ls models/"
+            s.log(f"Running {command}: ")
+            void, stream = container.exec_run(command, stream=True)
+            for data in stream:
+                s.log(data.decode())
+
         if container is None:
-            s.log(f"I could not find localai... did you install that backend?")
+            s.log(f"I could not find LocalAI... did you install that backend?")
             input("Press Enter to go back to the menu: ")
             return
+        
+        docker_commands = []
 
     def remove_models(self):
         containers = self.client.containers.list()
@@ -1461,12 +1470,12 @@ class localai_model_manager:
         docker_commands = []
         
         s.log("Please type in the model you wish to remove with out the ``gguf`` or ``yaml``")
-        s.log("You may list more than one")
+        s.log("You may list more than one, To delete all type ``*``")
         remove_model_str = input("Remove model: ")
         remove_model_list = remove_model_str.split()
 
         for item in remove_model_list:
-            docker_commands.append(f"rm -f models/{item}.*")
+            docker_commands.append(f"rm -rf models/{item}.*")
 
         # Run a command inside the container
         s.log("Removing the listed models")

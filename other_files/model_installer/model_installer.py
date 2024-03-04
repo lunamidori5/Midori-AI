@@ -216,7 +216,7 @@ while True:
         s.log(blank_line)
         s.log(backends_text_text_done)
         print(Fore.RED, "Starting after ver ``Red Satinbird`` this dev mode will be going away", Fore.WHITE)
-        s.log("``1`` - Midori AI Subsystem Installer")
+        s.log("``1`` - Midori AI Subsystem Reinstaller")
         s.log("``2`` - Install Backends to Subsystem")
         s.log("``3`` - Uninstall Backends from Subsystem")
         s.log("``4`` - Backend Programs (install models / edit backends)")
