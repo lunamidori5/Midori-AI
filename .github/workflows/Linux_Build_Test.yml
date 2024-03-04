@@ -24,7 +24,7 @@ jobs:
         curl -O https://raw.githubusercontent.com/lunamidori5/Midori-AI/master/other_files/model_installer/requirements.txt
         curl -O https://raw.githubusercontent.com/lunamidori5/Midori-AI/master/other_files/midori_program_ver.txt
         curl -O https://raw.githubusercontent.com/lunamidori5/Midori-AI/master/other_files/python_ver.py
-        move subsystem_manager.py model_installer.py
+        mv subsystem_manager.py model_installer.py
     - name: Install dependencies
       run: |
         pip install -r requirements.txt
