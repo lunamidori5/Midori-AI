@@ -1,5 +1,6 @@
 @echo off
 
-curl -sSL https://tea-cup.midori-ai.xyz/download/model_installer_windows.zip -o model_installer.zip
-powershell Expand-Archive model_installer.zip -DestinationPath . -Force
-model_installer.exe
+echo "Please update via the site as a change has reworked the way that subsystem.exe works, thank you!"
+echo "https://io.midori-ai.xyz/howtos/easy-model-installer/"
+timeout 555
+exit

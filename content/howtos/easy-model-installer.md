@@ -40,7 +40,7 @@ Please make a folder for the Manager program with nothing in it, do not use the 
 
 1. Download - https://tea-cup.midori-ai.xyz/download/model_installer_windows.zip
 2. Unzip into LocalAI folder
-3. Run `model_installer.exe`
+3. Run `subsystem_manager.exe`
 
 ### Quick install with script
 
@@ -55,9 +55,9 @@ curl -sSL https://raw.githubusercontent.com/lunamidori5/Midori-AI/master/other_f
 Open a Command Prompt or PowerShell terminal and run:
 
 ```bat
-curl -sSL https://tea-cup.midori-ai.xyz/download/model_installer_windows.zip -o model_installer.zip
-powershell Expand-Archive model_installer.zip -DestinationPath .
-model_installer.exe
+curl -sSL https://tea-cup.midori-ai.xyz/download/model_installer_windows.zip -o subsystem_manager.zip
+powershell Expand-Archive subsystem_manager.zip -DestinationPath .
+subsystem_manager.exe
 ```
 [![Windows Build Test](https://github.com/lunamidori5/Midori-AI/actions/workflows/Windows_Build_Test.yml/badge.svg?branch=master)](https://github.com/lunamidori5/Midori-AI/actions/workflows/Windows_Build_Test.yml)
 {{% /tab %}}
@@ -81,10 +81,10 @@ curl -sSL https://raw.githubusercontent.com/lunamidori5/Midori-AI/master/other_f
 Open a terminal and run:
 
 ```sh
-curl -sSL https://tea-cup.midori-ai.xyz/download/model_installer_linux.tar.gz -o model_installer.tar.gz
-tar -xzf model_installer.tar.gz
-chmod +x model_installer
-./model_installer
+curl -sSL https://tea-cup.midori-ai.xyz/download/model_installer_linux.tar.gz -o subsystem_manager.tar.gz
+tar -xzf subsystem_manager.tar.gz
+chmod +x subsystem_manager
+./subsystem_manager
 ```
 [![Linux Build Test](https://github.com/lunamidori5/Midori-AI/actions/workflows/Linux_Build_Test.yml/badge.svg?branch=master)](https://github.com/lunamidori5/Midori-AI/actions/workflows/Linux_Build_Test.yml)
 {{% /tab %}}

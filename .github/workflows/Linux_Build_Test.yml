@@ -16,7 +16,7 @@ jobs:
         python-version: '3.10'
     - name: Download Files
       run: |
-        curl -O https://raw.githubusercontent.com/lunamidori5/Midori-AI/master/other_files/model_installer/model_installer.py
+        curl -O https://raw.githubusercontent.com/lunamidori5/Midori-AI/master/other_files/model_installer/subsystem_manager.py
         curl -O https://raw.githubusercontent.com/lunamidori5/Midori-AI/master/other_files/model_installer/carly_help.py
         curl -O https://raw.githubusercontent.com/lunamidori5/Midori-AI/master/other_files/model_installer/setup_docker.py
         curl -O https://raw.githubusercontent.com/lunamidori5/Midori-AI/master/other_files/model_installer/setup_models.py
@@ -24,10 +24,11 @@ jobs:
         curl -O https://raw.githubusercontent.com/lunamidori5/Midori-AI/master/other_files/model_installer/requirements.txt
         curl -O https://raw.githubusercontent.com/lunamidori5/Midori-AI/master/other_files/midori_program_ver.txt
         curl -O https://raw.githubusercontent.com/lunamidori5/Midori-AI/master/other_files/python_ver.py
+        move subsystem_manager.py model_installer.py
     - name: Install dependencies
       run: |
         pip install -r requirements.txt
-    - name: Edit LocalAI Manager VER
+    - name: Edit Subsystem Manager VER
       run: |
         python python_ver.py
         rm -f python_ver.py

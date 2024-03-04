@@ -1,7 +1,6 @@
 #!/bin/bash
 
-# download, extract and execute model_installer
-curl -sSL https://tea-cup.midori-ai.xyz/download/model_installer_linux.tar.gz -o model_installer.tar.gz
-tar -xzf model_installer.tar.gz
-chmod +x model_installer
-./model_installer
+echo "Please update via the site as a change has reworked the way that subsystem.exe works, thank you!"
+echo "https://io.midori-ai.xyz/howtos/easy-model-installer/"
+timeout 1000s
+exit 0
