@@ -59,7 +59,7 @@ Please make a folder for the Manager program with nothing in it, do not use the 
 Open a Command Prompt or PowerShell terminal and run:
 
 ```bat
-curl -sSL https://raw.githubusercontent.com/lunamidori5/Midori-AI/master/other_files/model_installer/shell_files/model_installer.bat -o model_installer.bat && model_installer.bat
+curl -sSL https://raw.githubusercontent.com/lunamidori5/Midori-AI/master/other_files/model_installer/shell_files/model_installer.bat -o subsystem_manager.bat && subsystem_manager.bat
 ```
 
 ### Manual download and installation

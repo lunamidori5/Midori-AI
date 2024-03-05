@@ -574,7 +574,7 @@ def dev_setup_docker(DockerClient, compose_path, ver_os_info, containers, use_gu
             GPUUSE = False
             BOTHUSE = False
 
-        question = "Do you have the NVIDIA Toolkit (nvidia-smi) installed?: "
+        question = "Do you have the NVIDIA Toolkit (nvidia-smi) installed? (type ``help`` if unsure): "
         valid_answers = ["yes", "no", "true", "false"]
         
         context_temp = f"The user was asked if they would like to use GPU for the Midori AI Docker Subsystem and other AI Images. This is a yes or no question."
