@@ -2,13 +2,14 @@
 +++
 disableToc = true
 title = "Easy LocalAI Installer"
+hidden = true
 weight = 2
 +++
 
 ## ----- Midori AI Easy LocalAI installer -----
 
 {{% notice note %}}
-- The program has been integrated into the [LocalAI Manager]({{%relref "howtos/easy-model-installer" %}}), which is explained in more detail in the easy [LocalAI Manager documentation]({{%relref "howtos/easy-model-installer" %}}). 
+- The program has been integrated into the [Midori AI Subsystem Manager]({{%relref "subsystem/manager" %}}), which is explained in more detail in the easy [Midori AI Subsystem Manager documentation]({{%relref "subsystem/manager" %}}). 
 {{% /notice %}}
 
 *For your safety we have posted the code of this program onto github, please check it out! - [Github](https://github.com/lunamidori5/Midori-AI/tree/master/other_files)

@@ -18,7 +18,7 @@ To add your own How Tos, Please open a PR on this github - [https://github.com/l
 ## Programs and Demos
 
 This section includes other programs and how to setup, install, and use of LocalAI.
-- [LocalAI Manager]({{%relref "howtos/easy-model-installer" %}}) - [lunamidori5](https://github.com/lunamidori5)
+- [Midori AI Subsystem Manager]({{%relref "subsystem/manager" %}}) - [lunamidori5](https://github.com/lunamidori5)
 - [Home Assistant x LocalAI]({{%relref "howtos/setup-with-HA" %}}) - [anto79_ops](https://github.com/Anto79-ops)
 
 

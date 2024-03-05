@@ -4,8 +4,8 @@ title = "Easy Setup - Stable Diffusion"
 weight = 2
 +++
 
-## ----- Midori AI Easy Model installer -----
-Use the model installer to install all of the base models like ``Llava``, ``tts``, ``Stable Diffusion``, and more! [Click Link]({{%relref "howtos/easy-model-installer" %}})
+## ----- Midori AI Subsystem Manager -----
+Use the model installer to install all of the base models like ``Llava``, ``tts``, ``Stable Diffusion``, and more! [Click Here]({{%relref "subsystem/manager" %}})
 
 ## ----- By Hand Setup -----
 *(You do not have to run these steps if you have already done the auto installer)*

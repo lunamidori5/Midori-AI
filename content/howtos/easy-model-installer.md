@@ -2,6 +2,7 @@
 +++
 disableToc = false
 title = "Midori AI Manager"
+hidden = true
 weight = 1
 +++
 
