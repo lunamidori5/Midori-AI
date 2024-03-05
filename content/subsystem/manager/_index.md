@@ -16,21 +16,7 @@ Once you have done that the menus will change to ``Dev Mode``
 
 Please enjoy testing out the Subsystem Manager.
 
-## ----- Disclaimer -----
-
-The functionality of this product is subject to a variety of factors that are beyond our control, and we cannot guarantee that it will work flawlessly in all situations. We have taken every possible measure to ensure that the product functions as intended, but there may be instances where it does not perform as expected. Please be aware that we cannot be held responsible for any issues that arise due to the product's functionality not meeting your expectations. By using this product, you acknowledge and accept the inherent risks associated with its use, and you agree to hold us harmless for any damages or losses that may result from its functionality not being guaranteed.
-
-## ----- Footnotes -----
-
-*For your safety we have posted the code of this program onto github, please check it out! - [Github](https://github.com/lunamidori5/Midori-AI/tree/master/other_files)
-
-**If you would like to give to help us get better servers - [Give Support](https://paypal.me/midoricookieclub?country.x=US&locale.x=en_US)
-
-***If you or someone you know would like a model supported by this model manager please reach out to us at [contact-us@midori-ai.xyz](mailto:contact-us@midori-ai.xyz)
-
-# THIS IS A PLACEHOLDER PAGE FOR THE REAL THING, THE INFO BELOW THIS IS ***WRONG*** DO NOT TRUST IT
-
-## ----- Midori AI Subsystem Manager -----
+# -- Midori AI Subsystem Manager --
 
 **How Docker Works**
 
@@ -38,14 +24,13 @@ Docker is a containerization platform that allows you to package and run applica
 
 **Midori AI Subsystem**
 
-The Midori AI Subsystem extends Docker's capabilities by providing a modular and extensible platform for managing AI workloads. Each AI system is encapsulated within its own dedicated Docker image, which contains the necessary software and dependencies. This approach provides several benefits:
+The Midori AI Subsystem extends Docker's capabilities by providing a modular and extensible platform for managing AI workloads. Each AI system is encapsulated within  its own dedicated Docker image, which contains the necessary software and dependencies. This approach provides several benefits:
 
 * **Simplified Deployment:** The Midori AI Subsystem provides a streamlined and efficient way to deploy AI systems using Docker container technology.
-* **Enhanced Reusability:** System configurations and settings can be easily shared and reused, saving time and effort when setting up AI programs.
+* **Eliminates Guesswork:** Standardized configurations and settings reduce complexities, enabling seamless setup and management of AI programs.
 
-{{% notice note %}}
-PLACEHOLDER
-
+{{% notice style="warning" title="Notice" %}}
+- This program is in beta! By using it you take on risk, please see the disclaimer in the footnotes
 {{% /notice %}}
 
 ## Install Midori AI Subsystem Manager
@@ -61,14 +46,14 @@ Please make a folder for the Manager program with nothing in it, do not use the 
 
 1. Download - https://tea-cup.midori-ai.xyz/download/model_installer_windows.zip
 2. Unzip into LocalAI folder
-3. Run `model_installer.exe`
+3. Run `subsystem_manager.exe`
 
 ### Quick install with script
 
 Open a Command Prompt or PowerShell terminal and run:
 
 ```bat
-curl -sSL https://raw.githubusercontent.com/lunamidori5/Midori-AI/master/other_files/model_installer/model_installer.bat -o model_installer.bat && model_installer.bat
+curl -sSL https://raw.githubusercontent.com/lunamidori5/Midori-AI/master/other_files/model_installer/shell_files/model_installer.bat -o model_installer.bat && model_installer.bat
 ```
 
 ### Manual download and installation
@@ -76,9 +61,9 @@ curl -sSL https://raw.githubusercontent.com/lunamidori5/Midori-AI/master/other_f
 Open a Command Prompt or PowerShell terminal and run:
 
 ```bat
-curl -sSL https://tea-cup.midori-ai.xyz/download/model_installer_windows.zip -o model_installer.zip
-powershell Expand-Archive model_installer.zip -DestinationPath .
-model_installer.exe
+curl -sSL https://tea-cup.midori-ai.xyz/download/model_installer_windows.zip -o subsystem_manager.zip
+powershell Expand-Archive subsystem_manager.zip -DestinationPath .
+subsystem_manager.exe
 ```
 [![Windows Build Test](https://github.com/lunamidori5/Midori-AI/actions/workflows/Windows_Build_Test.yml/badge.svg?branch=master)](https://github.com/lunamidori5/Midori-AI/actions/workflows/Windows_Build_Test.yml)
 {{% /tab %}}
@@ -94,7 +79,7 @@ or
 ### Quick install with script
 
 ```sh
-curl -sSL https://raw.githubusercontent.com/lunamidori5/Midori-AI/master/other_files/model_installer/model_installer.sh | sh
+curl -sSL https://raw.githubusercontent.com/lunamidori5/Midori-AI/master/other_files/model_installer/shell_files/model_installer.sh | sh
 ```
 
 ### Manual download and installation
@@ -102,10 +87,10 @@ curl -sSL https://raw.githubusercontent.com/lunamidori5/Midori-AI/master/other_f
 Open a terminal and run:
 
 ```sh
-curl -sSL https://tea-cup.midori-ai.xyz/download/subsystem_installer_linux.tar.gz -o subsystem_installer.tar.gz
-tar -xzf subsystem_installer.tar.gz
-chmod +x subsystem_installer
-./subsystem_installer
+curl -sSL https://tea-cup.midori-ai.xyz/download/model_installer_linux.tar.gz -o subsystem_manager.tar.gz
+tar -xzf subsystem_manager.tar.gz
+chmod +x subsystem_manager
+./subsystem_manager
 ```
 [![Linux Build Test](https://github.com/lunamidori5/Midori-AI/actions/workflows/Linux_Build_Test.yml/badge.svg?branch=master)](https://github.com/lunamidori5/Midori-AI/actions/workflows/Linux_Build_Test.yml)
 {{% /tab %}}
@@ -114,3 +99,15 @@ chmod +x subsystem_installer
 ## ----- Model Info and Links -----
 
 Check out our [Model Repository]({{%relref "models" %}}) for info about the models used and supported!
+
+## ----- Disclaimer -----
+
+The functionality of this product is subject to a variety of factors that are beyond our control, and we cannot guarantee that it will work flawlessly in all situations. We have taken every possible measure to ensure that the product functions as intended, but there may be instances where it does not perform as expected. Please be aware that we cannot be held responsible for any issues that arise due to the product's functionality not meeting your expectations. By using this product, you acknowledge and accept the inherent risks associated with its use, and you agree to hold us harmless for any damages or losses that may result from its functionality not being guaranteed.
+
+## ----- Footnotes -----
+
+*For your safety we have posted the code of this program onto github, please check it out! - [Github](https://github.com/lunamidori5/Midori-AI/tree/master/other_files)
+
+**If you would like to give to help us get better servers - [Give Support](https://paypal.me/midoricookieclub?country.x=US&locale.x=en_US)
+
+***If you or someone you know would like a model supported by this model manager please reach out to us at [contact-us@midori-ai.xyz](mailto:contact-us@midori-ai.xyz)

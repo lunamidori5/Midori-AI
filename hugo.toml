@@ -44,7 +44,7 @@ disableHugoGeneratorInject = false
 [params]
   description = "Documentation for Midori-AI"
   author = "Luna Midori"
-  showVisitedLinks = true
+  showVisitedLinks = false
   collapsibleMenu = true
   disableBreadcrumb = false
   disableInlineCopyToClipBoard = true
@@ -60,4 +60,4 @@ disableHugoGeneratorInject = false
   additionalContentLanguage = [ "en" ]
   mermaidInitialize = "{ \"securityLevel\": \"loose\" }"
   mermaidZoom = true
-  alwaysopen = false
+  alwaysopen = true
