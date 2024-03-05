@@ -269,12 +269,20 @@ class subsystem_backend_manager:
             "localai", 
             "anythingllm", 
             "ollama",
+            "invokeai"
+            ]
+        
+        """
+        list_of_supported_backends = [
+            "localai", 
+            "anythingllm", 
+            "ollama",
             "invokeai",
             "oobabooga",
-            "chromadb",
             "home-assistant",
             "midoricluster"
             ]
+        """
         
         list_of_supported_backends = [
             item for item in list_of_supported_backends if item not in installed_backends
@@ -304,7 +312,7 @@ class subsystem_backend_manager:
         
         s.clear_window(ver_os_info)
         
-        str_temp = f"``{list_of_supported_backends[0]} and {list_of_supported_backends[1]}`` or ``{list_of_supported_backends[1]}, {list_of_supported_backends[0]}, {list_of_supported_backends[5]}``"
+        str_temp = f"``localai and anythingllm`` or ``localai, anythingllm, and invokeai``"
         s.log(f"{str(list_of_supported_backends).lower()}")
         s.log("Please pick from this list of supported AI backends to add to the subsystem.")
         s.log(f"You can list them out like this. {str_temp}")
