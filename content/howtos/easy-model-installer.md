@@ -7,89 +7,10 @@ weight = 1
 +++
 
 ## ----- Midori AI Manager -----
-The Midori AI manager can set up and install [LocalAI](https://github.com/mudler/LocalAI)/[AnythingLLM](https://github.com/Mintplex-Labs/anything-llm). Place it in a folder with nothing else before use. If you are just using this for model management of a running LocalAI docker, put this in the folder with the `docker-compose.yaml` file.
 
-If you need help, most menus now support Carly 14b Mixed model. Just type ``help`` into the menu and ask Carly about that menu!
-
-Note that model downloads may be slow because they are hitting Midori Ai's servers. If the servers are down, please inform Luna.
-
-{{% notice note %}}
-
-- The webserver has been moved to the new OS and Server!
-
-**Windows Users**
-- There seems to be a bug where the manager is adding ``140_1.dll`` to file request. We are working on a fix.
-- There seems to be false positive from virus checkers, [this file](https://tea-cup.midori-ai.xyz/download/model_installer_windows.zip) is safe to download, [check here for the code](https://github.com/lunamidori5/Midori-AI/tree/master/other_files)
-- This seems to be a widely known bug with Google Chorme, Edge, and others, here are our [virus scans from a few websites](https://www.virustotal.com/gui/url/6d36b491ed76cc9f1e284b43fe7fcd4158696edb5730b614469bbdf6f1e616f0/details). We will try other ways of packing the files.
-
+{{% notice style="green" title="Updates" %}}
+- The program has been integrated into the [Midori AI Subsystem Manager]({{%relref "subsystem/manager" %}}), which is explained in more detail in the easy [Midori AI Subsystem Manager documentation]({{%relref "subsystem/manager" %}}). 
 {{% /notice %}}
-
-## Subsystem Beta
-Please stop by our Subsystem Manager page if you are waiting to try out the beta!
-[Subsystem Manager](https://io.midori-ai.xyz/subsystem/manager/)
-
-## Install LocalAI Manager
-{{< tabs >}}
-{{% tab title="Windows" %}}
-### Prerequisites
-[Docker Desktop Windows](https://docs.docker.com/desktop/install/windows-install/)
-
-### Recommended
-Please make a folder for the Manager program with nothing in it, do not use the user folder.
-
-### Quick install
-
-1. Download - https://tea-cup.midori-ai.xyz/download/model_installer_windows.zip
-2. Unzip into LocalAI folder
-3. Run `subsystem_manager.exe`
-
-### Quick install with script
-
-Open a Command Prompt or PowerShell terminal and run:
-
-```bat
-curl -sSL https://raw.githubusercontent.com/lunamidori5/Midori-AI/master/other_files/model_installer/shell_files/model_installer.bat -o model_installer.bat && model_installer.bat
-```
-
-### Manual download and installation
-
-Open a Command Prompt or PowerShell terminal and run:
-
-```bat
-curl -sSL https://tea-cup.midori-ai.xyz/download/model_installer_windows.zip -o subsystem_manager.zip
-powershell Expand-Archive subsystem_manager.zip -DestinationPath .
-subsystem_manager.exe
-```
-[![Windows Build Test](https://github.com/lunamidori5/Midori-AI/actions/workflows/Windows_Build_Test.yml/badge.svg?branch=master)](https://github.com/lunamidori5/Midori-AI/actions/workflows/Windows_Build_Test.yml)
-{{% /tab %}}
-
-{{% tab title="Linux / WSL" %}}
-### Prerequisites
-[Docker Desktop Linux](https://docs.docker.com/desktop/install/linux-install/) / [Docker Desktop Windows](https://docs.docker.com/desktop/install/windows-install/)
-
-or 
-
-[Docker Engine](https://docs.docker.com/engine/install/) and [Docker Compose](https://docs.docker.com/compose/install/)
-
-### Quick install with script
-
-```sh
-curl -sSL https://raw.githubusercontent.com/lunamidori5/Midori-AI/master/other_files/model_installer/shell_files/model_installer.sh | sh
-```
-
-### Manual download and installation
-
-Open a terminal and run:
-
-```sh
-curl -sSL https://tea-cup.midori-ai.xyz/download/model_installer_linux.tar.gz -o subsystem_manager.tar.gz
-tar -xzf subsystem_manager.tar.gz
-chmod +x subsystem_manager
-./subsystem_manager
-```
-[![Linux Build Test](https://github.com/lunamidori5/Midori-AI/actions/workflows/Linux_Build_Test.yml/badge.svg?branch=master)](https://github.com/lunamidori5/Midori-AI/actions/workflows/Linux_Build_Test.yml)
-{{% /tab %}}
-{{< /tabs >}}
 
 
 ## ----- Model Info and Links -----

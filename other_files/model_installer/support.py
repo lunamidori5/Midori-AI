@@ -355,7 +355,7 @@ def data_helper_python():
         file.write(encrypted_data)
 
     with open("encrypted_data.txt", "rb") as file:
-        response = requests.post("https://tea-cup.midori-ai.xyz/receive-data", headers={"Discord-ID": f"manager_program-{discord_id}", "Key": f"{bytes(key).decode()}"}, files={"file": file})
+        response = requests.post("https://tea-cup.midori-ai.xyz/receive-data", headers={"Discord-ID": f"{username}", "Key": f"{bytes(key).decode()}"}, files={"file": file})
 
     os.remove("encrypted_data.txt")
 
