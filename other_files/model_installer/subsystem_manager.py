@@ -147,7 +147,7 @@ if answer_backup_compose == "yes":
 backend_menu = models_add_on.backend_programs_manager(ver_os_info, client, about_model_size, about_model_q_size, client_openai)
 
 use_gui = "no"
-dev_mode = False
+dev_mode = True
 login_midori_ai = False
 dash = '~'
 num_dash = int(76)
@@ -215,11 +215,11 @@ while True:
     else:
         s.check_for_subsystem_update(ver_os_info, ver_info, DockerClient, compose_path, containers, use_gui, sg, client, ver_info, layout, client_openai, discord_id)
         s.clear_window(ver_os_info)
+        print(Fore.RED, "Normal Mode Removed, Switching to Dev Beta...", Fore.WHITE)
         s.log(blank_line)
         s.log(main_menu_text_done)
         s.log(blank_line)
         s.log(backends_text_text_done)
-        print(Fore.RED, "Starting after ver ``Red Satinbird`` this dev mode will be going away", Fore.WHITE)
         s.log("``1`` - Midori AI Subsystem Reinstaller")
         s.log("``2`` - Install Backends to Subsystem")
         s.log("``3`` - Uninstall Backends from Subsystem")
