@@ -27,6 +27,9 @@ The Midori AI Subsystem extends Docker's capabilities by providing a modular and
 - This program is in beta! By using it you take on risk, please see the disclaimer in the footnotes
 - The webserver has been moved to the new OS and Server!
 
+**Server outage**
+- Midori AI's servers went down due to a programming error, this has been fixed thank you
+
 **Windows Users**
 - There seems to be a bug where the manager is adding ``140_1.dll`` to file request. We are working on a fix.
 - There seems to be false positive from virus checkers, [this file](https://tea-cup.midori-ai.xyz/download/model_installer_windows.zip) is safe to download, [check here for the code](https://github.com/lunamidori5/Midori-AI/tree/master/other_files)
