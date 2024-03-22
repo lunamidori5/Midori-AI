@@ -131,7 +131,7 @@ def models_install(compose_path, ver_os_info, containers, client, use_gui, sg, a
     
     context_temp = "The user was asked if they would like to install a large language model for LocalAI, its a yes or no question"
         
-    answerbasic = s.check_str(questionbasic, sd_valid_answers, use_gui, layout, sg, context_temp, client_openai)
+    answerbasic = s.check_str(questionbasic, sd_valid_answers, "none", None, None, context_temp, client_openai)
 
     if answerbasic.lower() == "no":
         answerbasic = "False"
@@ -184,7 +184,7 @@ def models_install(compose_path, ver_os_info, containers, client, use_gui, sg, a
         context_temp = "The user was asked what size of model they would like to install... here is a list of sizes they can pick from "
         context_temp = f"{context_temp}\n{about_model_size}"
             
-        answer2 = s.check_str(question2, valid_answers2, use_gui, layout, sg, context_temp, client_openai)
+        answer2 = s.check_str(question2, valid_answers2, "none", None, None, context_temp, client_openai)
         answer2 = str(answer2.lower())
 
         valid_answers1 = ["q3", "q4", "q5", "q6", "q8"] 
@@ -210,7 +210,7 @@ def models_install(compose_path, ver_os_info, containers, client, use_gui, sg, a
                 
             context_temp = f"this is a offsite model request, this is not recommended by midori ai. Here is a list of models they can install {valid_answers2}"
 
-            answer2 = s.check_str(question2, valid_answers2, use_gui, layout, sg, context_temp, client_openai)
+            answer2 = s.check_str(question2, valid_answers2, "none", None, None, context_temp, client_openai)
             answer2 = str(answer2.lower())
 
         s.clear_window(ver_os_info)
@@ -229,7 +229,7 @@ def models_install(compose_path, ver_os_info, containers, client, use_gui, sg, a
         context_temp = "The user was asked what type of quantised model they would like to install... here is a list of quantised model they can pick from "
         context_temp = f"{context_temp}\n{about_model_q_size}"
             
-        answer1 = s.check_str(question, valid_answers1, use_gui, layout, sg, context_temp, client_openai)
+        answer1 = s.check_str(question, valid_answers1, "none", None, None, context_temp, client_openai)
 
         if answer1.lower() == "none":
             answer1 = str(answer1.lower())
@@ -319,7 +319,7 @@ def models_install(compose_path, ver_os_info, containers, client, use_gui, sg, a
         
         context_temp = "The user was asked if they would like to install a TTS or Text to Speach model. This is a yes or no question"
     
-        answertts = s.check_str(question, sd_valid_answers, use_gui, layout, sg, context_temp, client_openai)
+        answertts = s.check_str(question, sd_valid_answers, "none", None, None, context_temp, client_openai)
 
         if answertts.lower() == "no":
             answertts = "False"
@@ -337,7 +337,7 @@ def models_install(compose_path, ver_os_info, containers, client, use_gui, sg, a
         
     context_temp = "The user was asked if they would like to install the vector store embedding model. This is a yes or no question"
         
-    answerenbed = s.check_str(question, sd_valid_answers, use_gui, layout, sg, context_temp, client_openai)
+    answerenbed = s.check_str(question, sd_valid_answers, "none", None, None, context_temp, client_openai)
 
     if answerenbed.lower() == "no":
         answerenbed = "False"
@@ -359,7 +359,7 @@ def models_install(compose_path, ver_os_info, containers, client, use_gui, sg, a
         
             context_temp = "The user was asked if they would like to install a Stable diffusion (for making photos) model. This is a yes or no question"
 
-            answersd = s.check_str(question, sd_valid_answers, use_gui, layout, sg, context_temp, client_openai)
+            answersd = s.check_str(question, sd_valid_answers, "none", None, None, context_temp, client_openai)
 
             if answersd.lower() == "no":
                 answersd = "False"
@@ -383,7 +383,7 @@ def models_install(compose_path, ver_os_info, containers, client, use_gui, sg, a
         
             context_temp = "The user was asked if they would like to install the llava model, its a sight based model to help programs see photos. This is a yes or no question"
 
-            answerllava = s.check_str(question, sd_valid_answers, use_gui, layout, sg, context_temp, client_openai)
+            answerllava = s.check_str(question, sd_valid_answers, "none", None, None, context_temp, client_openai)
 
             if answerllava.lower() == "no":
                 answerllava = "False"
@@ -409,7 +409,7 @@ def models_install(compose_path, ver_os_info, containers, client, use_gui, sg, a
         
         context_temp = "The user was asked if they would like to use Midori AI slower but encrypted endpoint. This is a yes or no question"
 
-        answerencrypted = s.check_str(question, sd_valid_answers, use_gui, layout, sg, context_temp, client_openai)
+        answerencrypted = s.check_str(question, sd_valid_answers, "none", None, None, context_temp, client_openai)
 
         if answerencrypted.lower() == "no":
             answerencrypted = "False"
@@ -873,7 +873,7 @@ class backend_programs_manager:
         s.log("This menu will only show items supported.")
         ### LocalAI
         s.log("``1`` - LocalAI (Install Models)")
-        #s.log("``2`` - LocalAI (Edit Models)")
+        s.log("``2`` - LocalAI (Edit Models)")
         s.log("``3`` - LocalAI (Remove Models)")
         s.log("``4`` - LocalAI (Backup Models)")
         ### Ollma
@@ -913,6 +913,26 @@ class localai_model_manager:
         self.client_openai = client_openai
         self.about_model_size = about_model_size
         self.about_model_q_size = about_model_q_size
+    
+    def check_for_backend(self, containers, docker_name):
+
+        s.log(f"Checking for Docker Image")
+
+        for container in containers:
+            s.log(f"Checking Name: {container.name}, ID: {container.id}")
+
+            # Check if there is a container with a name containing `service_name`
+            if docker_name in str(container.name):
+                # Get the container object
+                s.log(f"Found {docker_name}, Linking the Subsystem to: {container.name} / {container.id}")
+                container = self.client.containers.get(container.name)
+                named_docker = container.name
+                s.log(f"Midori AI Subsystem linked to {named_docker}")
+                return named_docker, container
+
+        s.log(f"I could not find {docker_name}... is that installed?")
+        input("Press Enter to go back to the menu: ")
+        return None, None
 
     def install_models(self):
         containers = self.client.containers.list()
@@ -928,29 +948,7 @@ class localai_model_manager:
         sg = None
         layout = None
 
-        s.log(f"Checking for LocalAI Backend")
-
-        for container in containers:
-            s.log(f"Checking Name: {container.name}, ID: {container.id}")
-
-            # Check if there is a container with a name containing `service_name`
-            if "localai-midori-ai-backend" in str(container.name):
-                # Get the container object
-                s.log(f"Found LocalAI, Linking the Subsystem to: {container.name} / {container.id}")
-                container = self.client.containers.get(container.name)
-                named_docker = container.name
-                s.log(f"Midori AI Subsystem linked to LocalAI")
-                break
-
-        if container is None:
-            s.log(f"I could not find localai... did you install that backend?")
-            input("Press Enter to go back to the menu: ")
-            return
-
-        if named_docker is None:
-            s.log(f"I could not find localai... did you install that backend?")
-            input("Press Enter to go back to the menu: ")
-            return
+        named_docker, container = self.check_for_backend(self, containers, "localai-midori-ai-backend")
     
         s.clear_window(ver_os_info)
 
@@ -979,7 +977,7 @@ class localai_model_manager:
         
         context_temp = "The user was asked if they would like to install a large language model for LocalAI, its a yes or no question"
             
-        answerbasic = s.check_str(questionbasic, sd_valid_answers, use_gui, layout, sg, context_temp, client_openai)
+        answerbasic = s.check_str(questionbasic, sd_valid_answers, "none", None, None, context_temp, client_openai)
 
         if answerbasic.lower() == "no":
             answerbasic = "False"
@@ -1007,7 +1005,7 @@ class localai_model_manager:
             context_temp = "The user was asked what size of model they would like to install... here is a list of sizes they can pick from "
             context_temp = f"{context_temp}\n{about_model_size}"
                 
-            answer2 = s.check_str(question2, valid_answers2, use_gui, layout, sg, context_temp, client_openai)
+            answer2 = s.check_str(question2, valid_answers2, "none", None, None, context_temp, client_openai)
             answer2 = str(answer2.lower())
 
             valid_answers1 = ["q3", "q4", "q5", "q6", "q8"] 
@@ -1027,7 +1025,7 @@ class localai_model_manager:
                     
                 context_temp = f"this is a offsite model request, this is not recommended by midori ai. Here is a list of models they can install {valid_answers2}"
 
-                answer2 = s.check_str(question2, valid_answers2, use_gui, layout, sg, context_temp, client_openai)
+                answer2 = s.check_str(question2, valid_answers2, "none", None, None, context_temp, client_openai)
                 answer2 = str(answer2.lower())
 
             s.clear_window(ver_os_info)
@@ -1040,7 +1038,7 @@ class localai_model_manager:
                 context_temp = "The user was asked what type of quantised model they would like to install... here is a list of quantised model they can pick from "
                 context_temp = f"{context_temp}\n{about_model_q_size}"
                     
-                answer1 = s.check_str(question, valid_answers1, use_gui, layout, sg, context_temp, client_openai)
+                answer1 = s.check_str(question, valid_answers1, "none", None, None, context_temp, client_openai)
 
                 if answer1.lower() == "none":
                     answer1 = str(answer1.lower())
@@ -1088,7 +1086,7 @@ class localai_model_manager:
 
                     context_temp = "The user was asked if they would like to install a TTS or Text to Speach model. This is a yes or no question"
                 
-                    answertts = s.check_str(question, sd_valid_answers, use_gui, layout, sg, context_temp, client_openai)
+                    answertts = s.check_str(question, sd_valid_answers, "none", None, None, context_temp, client_openai)
 
                     if answertts.lower() == "no":
                         answertts = "False"
@@ -1106,7 +1104,7 @@ class localai_model_manager:
                     
                 context_temp = "The user was asked if they would like to install the vector store embedding model. This is a yes or no question"
                     
-                answerenbed = s.check_str(question, sd_valid_answers, use_gui, layout, sg, context_temp, client_openai)
+                answerenbed = s.check_str(question, sd_valid_answers, "none", None, None, context_temp, client_openai)
 
                 if answerenbed.lower() == "no":
                     answerenbed = "False"
@@ -1125,7 +1123,7 @@ class localai_model_manager:
                 
                     context_temp = "The user was asked if they would like to install a Stable diffusion (for making photos) model. This is a yes or no question"
 
-                    answersd = s.check_str(question, sd_valid_answers, use_gui, layout, sg, context_temp, client_openai)
+                    answersd = s.check_str(question, sd_valid_answers, "none", None, None, context_temp, client_openai)
 
                     if answersd.lower() == "no":
                         answersd = "False"
@@ -1143,7 +1141,7 @@ class localai_model_manager:
                 
                     context_temp = "The user was asked if they would like to install the llava model, its a sight based model to help programs see photos. This is a yes or no question"
 
-                    answerllava = s.check_str(question, sd_valid_answers, use_gui, layout, sg, context_temp, client_openai)
+                    answerllava = s.check_str(question, sd_valid_answers, "none", None, None, context_temp, client_openai)
 
                     if answerllava.lower() == "no":
                         answerllava = "False"
@@ -1163,7 +1161,7 @@ class localai_model_manager:
                     
                     context_temp = "The user was asked if they would like to use Midori AI slower but encrypted endpoint. This is a yes or no question"
 
-                    answerencrypted = s.check_str(question, sd_valid_answers, use_gui, layout, sg, context_temp, client_openai)
+                    answerencrypted = s.check_str(question, sd_valid_answers, "none", None, None, context_temp, client_openai)
 
                     if answerencrypted.lower() == "no":
                         answerencrypted = "False"
@@ -1418,71 +1416,122 @@ class localai_model_manager:
 
     def edit_models(self):
         containers = self.client.containers.list()
+
+        ver_os_info = self.ver_os_info
+        client_openai = self.client_openai
+
+        models_folder_container = "/models"
+        docker_commands = []
+
         s.log(f"Checking for Subsystem")
 
-        for container in containers:
-            s.log(f"Checking Name: {container.name}, ID: {container.id}")
-
-            # Check if there is a container with a name containing `service_name`
-            if "localai-midori-ai-backend" in container.name:
-                # Get the container object
-                s.log(f"Found LocalAI, Linking the Subsystem to: {container.name} / {container.id}")
-                container = self.client.containers.get(container.name)
-                named_docker = container.name
-                s.log(f"Midori AI Subsystem linked to LocalAI")
-                break
-
-            # Run a command inside the container
-            command = "ls models/"
-            s.log(f"Running {command}: ")
-            void, stream = container.exec_run(command, stream=True)
-            for data in stream:
-                s.log(data.decode())
-
-        if container is None:
-            s.log(f"I could not find LocalAI... did you install that backend?")
-            input("Press Enter to go back to the menu: ")
-            return
-
-        if named_docker is None:
-            s.log(f"I could not find localai... did you install that backend?")
-            input("Press Enter to go back to the menu: ")
-            return
+        named_docker, container = self.check_for_backend(self, containers, "localai-midori-ai-backend")
         
-        docker_commands = []
+        bearer_token = str(input("If you have a API Key, please put it here. Else type no: "))
+
+        while True:
+            try:
+                ip_address = str(input("What is the LocalAI's IP? (192.168.x.x): "))
+                if "localhost" in ip_address:
+                    raise ValueError("Localhost is not a valid IP address.")
+                break
+            except ValueError as e:
+                s.log(f"Error: {e}. Please try again.")
+
+        models_ports = str("38080")
+
+        headers = {"Authorization": f"Bearer {bearer_token}"}
+
+        response = requests.get(f"http://{ip_address}:{models_ports}/models", headers=headers)
+
+        if response.status_code == 200:
+            response_data = json.loads(response.text)
+            models = response_data["data"]
+
+            # Extract model IDs
+            model_ids = [model["id"] for model in models]
+
+            filtered_model_ids = model_ids
+
+            s.log(filtered_model_ids)
+
+            filtered_model_ids.append("exit")
+            
+            s.clear_window(ver_os_info)
+
+            while True:
+                s.log(f"Available model IDs: {filtered_model_ids}")
+                s.log("Type ``exit`` to exit")
+
+                question = "What model would you like to edit?: "
+                valid_answers = filtered_model_ids
+        
+                context_temp = f"The user was asked what model they would like to edit. Please tell them to pick from the list.\n{str(valid_answers)}"
+                    
+                answeryamleditor = s.check_str(question, valid_answers, "none", None, None, context_temp, client_openai)
+
+                if ".yaml" in answeryamleditor or ".gguf" in answeryamleditor:
+                    answeryamleditor = answeryamleditor.replace(".yaml", "").replace(".gguf", "")
+
+                if answeryamleditor == "exit":
+                    s.log("exiting...")
+                    return
+                
+                s.clear_window(ver_os_info)
+
+                valid_answers = ["gpu_layers", "f16", "threads", "low_vram", "mmap", "mmlock", "name", "cuda", "numa", "no_mulmatq"]
+                question = f"{str(valid_answers)}\nWhat setting would you like to edit?: "
+
+                context_temp = f"The user was asked what setting of the {answeryamleditor} llm model they have installed would they like to edit. Here is a full list of thing they can edit"
+                context_temp = f"{context_temp}\ngpu_layers = How much GPU the model can use, recommended starting at 5 then adding more if there is free vram"
+                context_temp = f"{context_temp}\nthreads = CPU cores for the model, recommended to keep this to under 50% their real core count"
+                context_temp = f"{context_temp}\nname = the name that the model goes by when being requested by OpenAI V1"
+                context_temp = f"{context_temp}\ncuda = For the model to use the GPU or Not, is a bool"
+                context_temp = f"{context_temp}\nlow_vram = Sets the model into low vram use mode, recommended for lower end computers, is a bool"
+                context_temp = f"{context_temp}\nmmap = mmap is a system call that maps the model into memory, allowing direct access to the models files, is a bool"
+                context_temp = f"{context_temp}\nmmlock = mmlock is a Linux kernel feature that allows users to lock pages in memory, keeping the model in memory, is a bool"
+                context_temp = f"{context_temp}\nno_mulmatq = The ``no_mulmtq`` parameter controls whether or not XLA's MatMul will be used. Setting this to True may save memory, but may reduce performance and/or numerical precision. Is a bool"
+                context_temp = f"{context_temp}\nnuma = NUMA (Non-Uniform Memory Access) optimizes memory access in systems with multiple memory controllers, improving performance by ensuring processes access data from the closest memory node, is a bool"
+                    
+                answeryamleditor_two = s.check_str(question, valid_answers, "none", None, None, context_temp, client_openai)
+                
+                s.clear_window(ver_os_info)
+
+                questionbasic = f"What would you like to set ``{answeryamleditor_two}`` to (NO TYPECHECKING use at your own risk)?: "
+                answeryamleditor_three = str(input(questionbasic))
+                
+                s.clear_window(ver_os_info)
+
+                inside_model_folder = models_folder_container
+                yaml_path_temp = inside_model_folder + f"/{answeryamleditor}.yaml"
+
+                docker_commands = [
+                    ["yaml_edit", "-i", answeryamleditor_two, "-d", f"{answeryamleditor_three.lower()}", yaml_path_temp],
+                ]
+
+                # Run a command inside the container
+                s.log("editing model from inside the docker")
+                for command in docker_commands:
+                    s.log(f"Running {command}: ")
+                    command_output = container.exec_run(command)
+                    s.log(command_output.output.decode("utf-8", errors="ignore"))
+
+                s.log("All done, I am now rebooting LocalAI")
+                container.restart()
+                s.log("Thank you! Models edited!")
 
     def remove_models(self):
         containers = self.client.containers.list()
         s.log(f"Checking for Subsystem")
 
-        for container in containers:
-            s.log(f"Checking Name: {container.name}, ID: {container.id}")
+        named_docker, container = self.check_for_backend(self, containers, "midori_ai_subsystem")
 
-            # Check if there is a container with a name containing `service_name`
-            if "midori_ai_subsystem" in container.name:
-                # Get the container object
-                s.log(f"Found LocalAI, Linking the Subsystem to: {container.name} / {container.id}")
-                container = self.client.containers.get(container.name)
-                named_docker = container.name
-                s.log(f"Midori AI Subsystem linked to LocalAI")
-                break
-
-            # Run a command inside the container
-            command = "ls models/"
-            s.log(f"Running {command}: ")
-            void, stream = container.exec_run(command, stream=True)
-            for data in stream:
-                s.log(data.decode())
-
-        if container is None:
-            s.log(f"I could not find LocalAI... did you install that backend?")
-            input("Press Enter to go back to the menu: ")
-            return
-
-        if named_docker is None:
-            s.log(f"I could not find localai... did you install that backend?")
-            input("Press Enter to go back to the menu: ")
-            return
+        # Run a command inside the container
+        command = "ls models/"
+        s.log(f"Running {command}: ")
+        void, stream = container.exec_run(command, stream=True)
+        for data in stream:
+            s.log(data.decode())
         
         docker_commands = []
         

@@ -201,21 +201,11 @@ while True:
     s.clear_window(ver_os_info)
 
     if dev_mode == False:
-        s.log(blank_line)
-        s.log(main_menu_text_done)
-        s.log(blank_line)
-        print(Fore.RED, "Starting after ver ``Red Satinbird`` this menu will be going away, as we are entering 2.0", Fore.WHITE)
-        s.log("``1`` - LocalAI / AnythingLLM Installer")
-        s.log("``2`` - Uninstall or Upgrade LocalAI / AnythingLLM")
-        s.log("``3`` - Setup or Upgrade Models")
-        s.log("``4`` - Edit Models Configs")
-        s.log("``5`` - Uninstall Models")
-        s.log("``support`` - Sends a copy of your logs and some info about your setup to Midori AI")
-        sd_valid_answers = ["1", "2", "3", "4", "5", "support", "chat", "dev", "exit"]
+        s.log("This menu has been removed luna, we need to clean up this code soon")
+        sd_valid_answers = ["there is no point in this line of code other than to stop the program from crashing"]
     else:
         s.check_for_subsystem_update(ver_os_info, ver_info, DockerClient, compose_path, containers, use_gui, sg, client, ver_info, layout, client_openai, discord_id)
         s.clear_window(ver_os_info)
-        print(Fore.RED, "Normal Mode Removed, Switching to Dev Beta...", Fore.WHITE)
         s.log(blank_line)
         s.log(main_menu_text_done)
         s.log(blank_line)
