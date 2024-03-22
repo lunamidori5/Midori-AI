@@ -948,7 +948,7 @@ class localai_model_manager:
         sg = None
         layout = None
 
-        named_docker, container = self.check_for_backend(self, containers, "localai-midori-ai-backend")
+        named_docker, container = self.check_for_backend(containers, "localai-midori-ai-backend")
     
         s.clear_window(ver_os_info)
 
@@ -1425,7 +1425,7 @@ class localai_model_manager:
 
         s.log(f"Checking for Subsystem")
 
-        named_docker, container = self.check_for_backend(self, containers, "localai-midori-ai-backend")
+        named_docker, container = self.check_for_backend(containers, "localai-midori-ai-backend")
         
         bearer_token = str(input("If you have a API Key, please put it here. Else type no: "))
 
@@ -1524,7 +1524,7 @@ class localai_model_manager:
         containers = self.client.containers.list()
         s.log(f"Checking for Subsystem")
 
-        named_docker, container = self.check_for_backend(self, containers, "midori_ai_subsystem")
+        named_docker, container = self.check_for_backend(containers, "midori_ai_subsystem")
 
         # Run a command inside the container
         command = "ls models/"
