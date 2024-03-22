@@ -884,7 +884,7 @@ class backend_programs_manager:
             ### Llama.cpp? (command line maybe?)
         s.log("``back`` - Go back to the main menu")
 
-        valid_answers = ["1", "3", "4", "back"]
+        valid_answers = ["1", "2", "3", "4", "back"]
         questionbasic = "What would you like to do?: "
         temp_cxt = "This is the menu for running backend programs in the Midori AI subsystem, please let the user know are you not trained to help with this menu..."
         answerstartup = s.check_str(questionbasic, valid_answers, "no", None, None, temp_cxt, self.client_openai)
