@@ -24,6 +24,7 @@ The Midori AI Subsystem extends Docker's capabilities by providing a modular and
 * **Eliminates Guesswork:** Standardized configurations and settings reduce complexities, enabling seamless setup and management of AI programs.
 
 {{% notice style="warning" title="Notice" %}}
+**Warnings / Heads up**
 - This program is in beta! By using it you take on risk, please see the disclaimer in the footnotes
 - The webserver has been moved to the new OS and Server!
 
@@ -37,6 +38,11 @@ The Midori AI Subsystem extends Docker's capabilities by providing a modular and
 {{% /notice %}}
 
 ## Install Midori AI Subsystem Manager
+
+{{% notice style="info" title="Notice" %}}
+- As we are in beta, we have implemented telemetry to enhance bug discovery and resolution. This data is anonymized and will be configurable when out of beta.
+{{% /notice %}}
+
 {{< tabs >}}
 {{% tab title="Windows" %}}
 ### Prerequisites
