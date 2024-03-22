@@ -946,6 +946,11 @@ class localai_model_manager:
             s.log(f"I could not find localai... did you install that backend?")
             input("Press Enter to go back to the menu: ")
             return
+
+        if named_docker is None:
+            s.log(f"I could not find localai... did you install that backend?")
+            input("Press Enter to go back to the menu: ")
+            return
     
         s.clear_window(ver_os_info)
 
@@ -1423,6 +1428,7 @@ class localai_model_manager:
                 # Get the container object
                 s.log(f"Found LocalAI, Linking the Subsystem to: {container.name} / {container.id}")
                 container = self.client.containers.get(container.name)
+                named_docker = container.name
                 s.log(f"Midori AI Subsystem linked to LocalAI")
                 break
 
@@ -1435,6 +1441,11 @@ class localai_model_manager:
 
         if container is None:
             s.log(f"I could not find LocalAI... did you install that backend?")
+            input("Press Enter to go back to the menu: ")
+            return
+
+        if named_docker is None:
+            s.log(f"I could not find localai... did you install that backend?")
             input("Press Enter to go back to the menu: ")
             return
         
@@ -1452,6 +1463,7 @@ class localai_model_manager:
                 # Get the container object
                 s.log(f"Found LocalAI, Linking the Subsystem to: {container.name} / {container.id}")
                 container = self.client.containers.get(container.name)
+                named_docker = container.name
                 s.log(f"Midori AI Subsystem linked to LocalAI")
                 break
 
@@ -1464,6 +1476,11 @@ class localai_model_manager:
 
         if container is None:
             s.log(f"I could not find LocalAI... did you install that backend?")
+            input("Press Enter to go back to the menu: ")
+            return
+
+        if named_docker is None:
+            s.log(f"I could not find localai... did you install that backend?")
             input("Press Enter to go back to the menu: ")
             return
         
