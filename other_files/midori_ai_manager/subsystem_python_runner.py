@@ -1,4 +1,5 @@
 import os
+import time
     
 # Create  a new virtual environment
 print("Creating a new virtual environment...")
@@ -15,8 +16,10 @@ os.system("curl -s https://tea-cup.midori-ai.xyz/download/midori_program_requirm
 os.system("curl -s https://tea-cup.midori-ai.xyz/download/carly_help.py > carly_help.py")
 os.system("curl -s https://tea-cup.midori-ai.xyz/download/setup_docker.py > setup_docker.py")
 os.system("curl -s https://tea-cup.midori-ai.xyz/download/setup_models.py > setup_models.py")
-os.system("curl -s https://tea-cup.midori-ai.xyz/download/edit_models.py >  edit_models.py")
+os.system("curl -s https://tea-cup.midori-ai.xyz/download/edit_models.py > edit_models.py")
 os.system("curl -s https://tea-cup.midori-ai.xyz/download/support.py > support.py")
+
+time.sleep(5)
 
 # Install pip requirements one item at a time
 print("Installing pip requirements...")
