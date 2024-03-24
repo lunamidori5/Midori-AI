@@ -103,6 +103,33 @@ chmod +x subsystem_manager
 ```
 [![Linux Build Test](https://github.com/lunamidori5/Midori-AI/actions/workflows/Linux_Build_Test.yml/badge.svg?branch=master)](https://github.com/lunamidori5/Midori-AI/actions/workflows/Linux_Build_Test.yml)
 {{% /tab %}}
+{{% tab title="Other OS" %}}
+### Prerequisites
+- [Docker Engine](https://docs.docker.com/engine/install/) and [Docker Compose](https://docs.docker.com/compose/install/)
+- [Python 3.10](https://www.python.org/downloads/release/python-3100/)
+- [Python Venv](https://virtualenv.pypa.io/en/latest/installation.html)
+
+### Recommended
+***Do not use on windows***
+
+Please make a folder for the Manager program with nothing in it, do not use the user folder.
+
+### Manual download
+
+Download this file
+
+```bash
+https://raw.githubusercontent.com/lunamidori5/Midori-AI/master/other_files/midori_ai_manager/subsystem_python_runner.py
+```
+
+### Running the program
+
+Open a terminal and run:
+
+```bash
+python3 subsystem_python_runner.py
+```
+{{% /tab %}}
 {{< /tabs >}}
 
 ## ----- Model Info and Links -----

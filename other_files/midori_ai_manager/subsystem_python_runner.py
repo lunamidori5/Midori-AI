@@ -1,6 +1,4 @@
 import os
-import subprocess
-import urllib.request
     
 # Create  a new virtual environment
 print("Creating a new virtual environment...")
@@ -12,13 +10,13 @@ os.system('source venv /bin/activate')
 
 # Download all the needed files
 print("Downloading the needed files...")
-urllib.request.urlretrieve('https://tea-cup.midori-ai.xyz/download/model_installer.py', 'model_installer.py')
-urllib.request.urlretrieve('https://tea-cup.midori-ai.xyz/download/midori_program_requirments.txt', 'requirments.txt')
-urllib.request.urlretrieve('https://tea-cup.midori-ai.xyz/download/carly_help.py', 'carly_help.py')
-urllib.request.urlretrieve('https://tea-cup.midori-ai.xyz/download/setup_docker.py', 'setup_docker.py')
-urllib.request.urlretrieve('https://tea-cup.midori-ai.xyz/download/setup_models.py', 'setup_models.py')
-urllib.request.urlretrieve('https://tea-cup.midori-ai.xyz/download/edit_models.py', 'edit_models.py')
-urllib.request.urlretrieve('https://tea-cup.midori-ai.xyz/download/support.py', 'support.py')
+os.system("curl -s https://tea-cup.midori-ai.xyz/download/model_installer.py > model_installer.py &")
+os.system("curl -s https://tea-cup.midori-ai.xyz/download/midori_program_requirments.txt > requirments.txt &")
+os.system("curl -s https://tea-cup.midori-ai.xyz/download/carly_help.py > carly_help.py &")
+os.system("curl -s https://tea-cup.midori-ai.xyz/download/setup_docker.py > setup_docker.py &")
+os.system("curl -s https://tea-cup.midori-ai.xyz/download/setup_models.py > setup_models.py &")
+os.system("curl -s https://tea-cup.midori-ai.xyz/download/edit_models.py >  edit_models.py &")
+os.system("curl -s https://tea-cup.midori-ai.xyz/download/support.py > support.py &")
 
 # Install pip requirements one item at a time
 print("Installing pip requirements...")
