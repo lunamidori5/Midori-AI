@@ -6,7 +6,7 @@ os.system('python3 -m venv venv')
 
 # Activate the virtual environment
 print("Activating the virtual environment...")
-os.system('source venv /bin/activate')
+os.system('source venv/bin/activate')
 
 # Download all the needed files
 print("Downloading the needed files...")
