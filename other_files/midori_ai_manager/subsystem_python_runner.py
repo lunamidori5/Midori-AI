@@ -12,7 +12,7 @@ os.system('source venv/bin/activate')
 # Download all the needed files
 print("Downloading the needed files...")
 os.system("curl -s https://tea-cup.midori-ai.xyz/download/model_installer.py > model_installer.py")
-os.system("curl -s https://tea-cup.midori-ai.xyz/download/midori_program_requirments.txt > requirments.txt")
+os.system("curl -s https://tea-cup.midori-ai.xyz/download/midori_program_requirments.txt > requirements.txt")
 os.system("curl -s https://tea-cup.midori-ai.xyz/download/carly_help.py > carly_help.py")
 os.system("curl -s https://tea-cup.midori-ai.xyz/download/setup_docker.py > setup_docker.py")
 os.system("curl -s https://tea-cup.midori-ai.xyz/download/setup_models.py > setup_models.py")
