@@ -145,27 +145,6 @@ main_menu_text_done = f"{main_menu_dash * dash}{main_menu_text}{main_menu_dash *
 
 while True:
     containers = client.containers.list()
-
-    if dev_mode:
-        s.log(f"Please Login to Midori AI's AI Manager (Ver: {ver_info})")
-        s.log("This ID can be your Discord ID or a random number, just make sure to share if it you need help with the dev beta")
-        s.log("Your User ID will be securely transmitted to Midori AI to facilitate download, upload, and web request processes.")
-
-        while login_midori_ai == False:
-            try:
-                discord_id_list = [354089955972087808, 1085014642067243038, 1087343493954945156]
-
-                discord_id = int(277660602560675841)
-
-                for item in discord_id_list:
-                    if discord_id == item:
-                        Exception("User ID matches Midori AI known bots list")
-                login_midori_ai = True
-                break
-
-            except Exception as e:
-                login_midori_ai = False
-                s.log(f"{str(e)} : Please enter a User id")
     
     installed_backends = backend_checker.check_json()
 
@@ -194,10 +173,10 @@ while True:
     s.log("``2`` - Install Backends to Subsystem")
     s.log("``3`` - Uninstall Backends from Subsystem")
     s.log("``4`` - Backend Programs (install models / edit backends)")
-    s.log("``5`` - Seting up Backends Help")
+    #s.log("``5`` - Seting up Backends Help")
     s.log("``10`` - Enter Subsystem Commandline")
     s.log("Logs will be send to Midori AI's servers when you exit.")
-    sd_valid_answers = ["1", "2", "3", "4", "5", "10", "chat", "exit"]
+    sd_valid_answers = ["1", "2", "3", "4", "10", "chat", "exit"]
 
     s.log("If you need assistance with most menus, type help.")
     
