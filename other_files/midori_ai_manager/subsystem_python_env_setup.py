@@ -17,7 +17,7 @@ files_to_download = {
     "requirements.txt": "https://tea-cup.midori-ai.xyz/download/midori_program_requirments.txt",
     "carly_help.py": "https://tea-cup.midori-ai.xyz/download/carly_help.py",
     "setup_docker.py": "https://tea-cup.midori-ai.xyz/download/setup_docker.py",
-    "setup _models.py": "https://tea-cup.midori-ai.xyz/download/setup_models.py",
+    "setup_models.py": "https://tea-cup.midori-ai.xyz/download/setup_models.py",
     "edit_models.py": "https://tea-cup.midori-ai.xyz/download/edit_models.py",
     "support.py": "https://tea-cup.midori-ai.xyz/download/support.py",
 }
