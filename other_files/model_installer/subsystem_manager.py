@@ -163,7 +163,7 @@ while True:
     temp_main_menu_dash = dash * main_menu_dash
 
     s.clear_window(ver_os_info)
-    s.check_for_subsystem_update(ver_os_info, ver_info, DockerClient, compose_path, containers, use_gui, sg, client, ver_info, layout, client_openai, discord_id)
+    s.check_for_subsystem_update(ver_os_info, ver_info, DockerClient, compose_path, containers, use_gui, sg, client, ver_info, layout, client_openai, 1234)
     s.clear_window(ver_os_info)
     s.log(blank_line)
     s.log(main_menu_text_done)
@@ -199,12 +199,12 @@ while True:
     
     if answerstartup == 1:
         s.data_helper_python()
-        docker_add_on.dev_setup_docker(DockerClient, compose_path, ver_os_info, containers, use_gui, sg, client, ver_info, layout, client_openai, discord_id)
+        docker_add_on.dev_setup_docker(DockerClient, compose_path, ver_os_info, containers, use_gui, sg, client, ver_info, layout, client_openai, 1234)
         s.data_helper_python()
 
     if answerstartup == 2:
         s.data_helper_python()
-        models_edit_add_on.subsystem_backend_manager.backend_installer(None, "midori-docker-compose.yaml", client, client_openai, ver_os_info, discord_id)
+        models_edit_add_on.subsystem_backend_manager.backend_installer(None, "midori-docker-compose.yaml", client, client_openai, ver_os_info, 1234)
         s.data_helper_python()
 
     if answerstartup == 3:
