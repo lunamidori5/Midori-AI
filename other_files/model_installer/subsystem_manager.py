@@ -105,7 +105,7 @@ if ver_os_info == "linux":
 
 try:
     if os.name == 'nt':
-         # Connect to the Docker daemon on Windows using Docker-py for Windows 
+        # Connect to the Docker daemon on Windows using Docker-py for Windows 
         s.log("logging into docker vm subsystem (Windows)")
         client = docker.from_env(version='auto')
     else:
@@ -119,7 +119,6 @@ except Exception as e:
     s.log("Do you have docker installed? / Please try running me as root user, Linux users.")
     input("Please press enter to exit: ")
     exit(1)
-
 
 # List all containers
 s.clear_window(ver_os_info)
