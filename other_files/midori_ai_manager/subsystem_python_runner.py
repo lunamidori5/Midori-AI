@@ -1,13 +1,5 @@
 import os
 import time
-    
-# Create  a new virtual environment
-print("Creating a new virtual environment...")
-os.system('python3 -m venv venv')
-
-# Activate the virtual environment
-print("Activating the virtual environment...")
-os.system('source venv/bin/activate')
 
 # Download all the needed files
 print("Downloading the needed files...")
@@ -25,11 +17,11 @@ time.sleep(5)
 print("Installing pip requirements...")
 with open('requirements.txt', 'r') as f:
     for line in f:
-        os.system('pip --venv ./venv install ' + line.strip())
+        os.system('pip install ' + line.strip())
 
 # Run the Python program
 print("Running the Python program...")
-os.system('python3 --venv ./venv model_installer.py')
+os.system('python3 model_installer.py')
 
 # Purge the downloaded files
 print("Purging the downloaded files ...")

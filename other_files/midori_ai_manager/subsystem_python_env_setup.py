@@ -1,16 +1,5 @@
 import os
 import time
-    
-# Create  a new virtual environment
-print("Creating a new virtual environment...")
-os.system('python3 -m venv venv')
-
-# Activate the virtual environment
-print("Activating the virtual environment...")
-if os.name == "nt":
-    os.system('call venv\\Scripts\\activate.bat')
-elif os.name == "posix": 
-    os.system('source venv/bin/activate')
 
 files_to_download = {
     "model_installer.py": "https://tea-cup.midori-ai.xyz/download/model_installer.py",
@@ -33,11 +22,11 @@ time.sleep(5)
 print("Installing pip requirements...")
 with open('requirements.txt', 'r') as f:
     for line in f:
-        os.system('pip --venv ./venv install ' + line.strip())
+        os.system('pip install ' + line.strip())
 
 # Run the Python program
-print("Running the Python program...")
-os.system('python3 --venv ./venv model_installer.py')
+print("Making the python exe file...")
+os.system('pyinstaller --onefile --clean model_installer.py')
 
 # Purge the downloaded files
 print("Purging the downloaded files ...")

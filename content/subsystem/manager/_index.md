@@ -127,6 +127,8 @@ https://raw.githubusercontent.com/lunamidori5/Midori-AI/master/other_files/midor
 Open a terminal and run:
 
 ```bash
+python3 -m venv venv
+source venv/bin/activate
 python3 subsystem_python_runner.py
 ```
 {{% /tab %}}
