@@ -7,7 +7,10 @@ os.system('python3 -m venv venv')
 
 # Activate the virtual environment
 print("Activating the virtual environment...")
-os.system('source venv/bin/activate')
+if os.name == "nt":
+    os.system('call venv\\Scripts\\activate.bat')
+elif os.name == "posix": 
+    os.system('source venv/bin/activate')
 
 files_to_download = {
     "model_installer.py": "https://tea-cup.midori-ai.xyz/download/model_installer.py",
