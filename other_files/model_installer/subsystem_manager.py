@@ -127,21 +127,7 @@ s.check_for_update(ver_os_info, ver_info)
 
 s.clear_window(ver_os_info)
 
-if os.path.exists("docker-compose.yaml"):
-    backup_compose_question = "I see that you have a ``docker-compose.yaml`` file in this folder. Is this LocalAI's docker compose file?: "
-    backup_compose_valid_answers = ["yes", "no"]
-        
-    answer_backup_compose = s.check_str(
-        backup_compose_question, backup_compose_valid_answers, "no", layout, sg, 
-        "The users docker-compose.yaml is in a unsafe format for the manager program, please tell them to type yes or no based on if they want the manager to get control of the file.", 
-        client_openai)
-
-if answer_backup_compose == "yes":
-    s.log("Renaming the compose file to our new safe format! Thank you!")
-    s.log(f"Current file name: {compose_backup_path}")
-    s.log(f"New file name: {compose_path}")
-    os.rename(compose_backup_path, compose_path)
-    input("Please press enter to go to main menu: ")
+s.data_helper_python()
 
 backend_menu = models_add_on.backend_programs_manager(ver_os_info, client, about_model_size, about_model_q_size, client_openai)
 
@@ -198,25 +184,20 @@ while True:
     temp_main_menu_dash = dash * main_menu_dash
 
     s.clear_window(ver_os_info)
-
-    if dev_mode == False:
-        s.log("This menu has been removed luna, we need to clean up this code soon")
-        sd_valid_answers = ["there is no point in this line of code other than to stop the program from crashing"]
-    else:
-        s.check_for_subsystem_update(ver_os_info, ver_info, DockerClient, compose_path, containers, use_gui, sg, client, ver_info, layout, client_openai, discord_id)
-        s.clear_window(ver_os_info)
-        s.log(blank_line)
-        s.log(main_menu_text_done)
-        s.log(blank_line)
-        s.log(backends_text_text_done)
-        s.log("``1`` - Midori AI Subsystem Reinstaller")
-        s.log("``2`` - Install Backends to Subsystem")
-        s.log("``3`` - Uninstall Backends from Subsystem")
-        s.log("``4`` - Backend Programs (install models / edit backends)")
-        s.log("``5`` - Seting up Backends Help")
-        s.log("``10`` - Enter Subsystem Commandline")
-        s.log("Logs will be send to Midori AI's servers when you exit.")
-        sd_valid_answers = ["1", "2", "3", "4", "5", "10", "chat", "exit"]
+    s.check_for_subsystem_update(ver_os_info, ver_info, DockerClient, compose_path, containers, use_gui, sg, client, ver_info, layout, client_openai, discord_id)
+    s.clear_window(ver_os_info)
+    s.log(blank_line)
+    s.log(main_menu_text_done)
+    s.log(blank_line)
+    s.log(backends_text_text_done)
+    s.log("``1`` - Midori AI Subsystem Reinstaller")
+    s.log("``2`` - Install Backends to Subsystem")
+    s.log("``3`` - Uninstall Backends from Subsystem")
+    s.log("``4`` - Backend Programs (install models / edit backends)")
+    s.log("``5`` - Seting up Backends Help")
+    s.log("``10`` - Enter Subsystem Commandline")
+    s.log("Logs will be send to Midori AI's servers when you exit.")
+    sd_valid_answers = ["1", "2", "3", "4", "5", "10", "chat", "exit"]
 
     s.log("If you need assistance with most menus, type help.")
     
@@ -226,9 +207,6 @@ while True:
 
     if answerstartup.lower() == "exit":
         break
-
-    if answerstartup.lower() == "dev":
-        answerstartup = "18"
 
     if answerstartup.lower() == "support":
         answerstartup = "20"
@@ -241,55 +219,33 @@ while True:
     s.clear_window(ver_os_info)
     
     if answerstartup == 1:
-        if dev_mode == False:
-            docker_add_on.setup_docker(DockerClient, compose_path, ver_os_info, containers, use_gui, sg, base_image_name, localai_ver_number, layout, client_openai)
-        else:
-            s.data_helper_python()
-            docker_add_on.dev_setup_docker(DockerClient, compose_path, ver_os_info, containers, use_gui, sg, client, ver_info, layout, client_openai, discord_id)
-            s.data_helper_python()
+        s.data_helper_python()
+        docker_add_on.dev_setup_docker(DockerClient, compose_path, ver_os_info, containers, use_gui, sg, client, ver_info, layout, client_openai, discord_id)
+        s.data_helper_python()
 
     if answerstartup == 2:
-        if dev_mode == False:
-            docker_add_on.change_docker(DockerClient, compose_path, ver_os_info, containers, use_gui, sg, layout, client_openai)
-        else:
-            s.data_helper_python()
-            models_edit_add_on.subsystem_backend_manager.backend_installer(None, "midori-docker-compose.yaml", client, client_openai, ver_os_info, discord_id)
-            s.data_helper_python()
+        s.data_helper_python()
+        models_edit_add_on.subsystem_backend_manager.backend_installer(None, "midori-docker-compose.yaml", client, client_openai, ver_os_info, discord_id)
+        s.data_helper_python()
 
     if answerstartup == 3:
-        if dev_mode == False:
-            models_add_on.models_install(compose_path, ver_os_info, containers, client, use_gui, sg, about_model_size, about_model_q_size, layout, client_openai)
-        else:
-            s.data_helper_python()
-            models_edit_add_on.subsystem_backend_manager.backend_uninstaller(None, "midori-docker-compose.yaml", client, ver_os_info)
-            s.data_helper_python()
+        s.data_helper_python()
+        models_edit_add_on.subsystem_backend_manager.backend_uninstaller(None, "midori-docker-compose.yaml", client, ver_os_info)
+        s.data_helper_python()
 
     if answerstartup == 4:
-        if dev_mode == False:
-            models_edit_add_on.edit(compose_path, ver_os_info, containers, client, use_gui, sg, layout, client_openai)
-        else:
-            s.data_helper_python()
-            backend_menu.main_menu()
+        s.data_helper_python()
+        backend_menu.main_menu()
 
     if answerstartup == 5:
-        if dev_mode == False:
-            models_add_on.models_uninstall(compose_path, ver_os_info, containers, client, use_gui, sg, layout, client_openai)
-        else:
-            s.data_helper_python()
-            s.log("this menu is not ready dropping to shell...")
-            s.os_support_command_line(client, Fore)
+        s.data_helper_python()
+        s.log("this menu is not ready dropping to shell...")
+        s.os_support_command_line(client, Fore)
     
     if answerstartup == 10:
-        if dev_mode == True:
-            s.data_helper_python()
-            s.os_support_command_line(client, Fore)
-            s.data_helper_python()
-
-
-    if answerstartup == 18:
-        s.log("Dev Model: True, unlocking Midori AI docker subsystem")
         s.data_helper_python()
-        dev_mode = True
+        s.os_support_command_line(client, Fore)
+        s.data_helper_python()
 
     if answerstartup == 20:
         s.log("Support Logs Uploading...")
@@ -301,5 +257,6 @@ while True:
         while True:
             help_add_on.chat_room(help_add_on.request_info("system_prompt.txt"), client_openai, ver_os_info, "This is the main menu, let the user know they need to type help into other menus for you to get context")
             keep_chatting = s.check_str("Would you like to keep chatting?", ["yes", "no"], use_gui, layout, sg, "This is the main menu they are asking for help on...", client_openai)
+            s.data_helper_python()
             if keep_chatting == "no":
                 break

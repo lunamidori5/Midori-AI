@@ -77,6 +77,8 @@ def request_llm(client_openai, request_in, system_message, added_context):
         session_inside = []
         temp_str_memory = "Carly has just meet these user... This is a new chat!"
     
+    s.log(temp_str_memory)
+    
     message_gpt = [
             {"role": "system", "content": system_message},
             {"role": "system", "content": temp_str_memory},
@@ -99,7 +101,7 @@ def request_llm(client_openai, request_in, system_message, added_context):
 
     end_message = str(list(client_openai.extract_text_or_completion_object(completion))[0]).strip()
 
-    print(client_openai.extract_text_or_completion_object(completion))
+    s.log(client_openai.extract_text_or_completion_object(completion))
 
     print(f"Trying to save memory...")
     session_inside.append({"role": "memory", "content": f"The User said ``{request_in}``"})
@@ -135,6 +137,7 @@ def chat_room(system_message, client_openai, ver_os_info, added_context):
     s.log("``Carly's servers are running in low power mode... Sorry for the slow replys`` - Luna")
     s.log("Input Question: ")
     message = input()
+    s.log(f"You said: '{message}'")
     s.log("Carly is thinking...")
     requested_context = added_context
     reply = request_llm(client_openai, message, system_message, requested_context)
