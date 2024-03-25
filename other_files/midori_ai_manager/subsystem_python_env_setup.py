@@ -32,7 +32,3 @@ os.system('pyinstaller --onefile --clean model_installer.py')
 print("Purging the downloaded files ...")
 for file_name in files_to_download:
     os.remove(file_name)
-
-# Deactivate the virtual environment
-print("Deactivating the virtual environment...")
-os.system('deactivate')

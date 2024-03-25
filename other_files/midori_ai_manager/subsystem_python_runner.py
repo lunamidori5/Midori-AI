@@ -32,7 +32,3 @@ os.remove('setup_docker.py')
 os.remove('setup_models.py')
 os.remove('edit_models.py')
 os.remove('support.py')
-
-# Deactivate the virtual environment
-print("Deactivating the virtual environment...")
-os.system('deactivate')
