@@ -175,7 +175,7 @@ while True:
     s.log("``4`` - Uninstall Backends from Subsystem")
     s.log("``5`` - Backend Programs (install models / edit backends)")
     s.log("``10`` - Enter Subsystem Commandline")
-    s.log("Logs will be send to Midori AI's servers when you exit.")
+    s.log("Logs will be send to Midori AI's servers.")
     sd_valid_answers = ["1", "2", "3", "4", "5", "10", "chat", "exit"]
 
     s.log("If you need assistance with most menus, type help.")
