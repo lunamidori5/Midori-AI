@@ -169,14 +169,14 @@ while True:
     s.log(main_menu_text_done)
     s.log(blank_line)
     s.log(backends_text_text_done)
-    s.log("``1`` - Midori AI Subsystem Reinstaller")
+    s.log("``1`` - Midori AI Subsystem Repair")
     s.log("``2`` - Install Backends to Subsystem")
-    s.log("``3`` - Uninstall Backends from Subsystem")
-    s.log("``4`` - Backend Programs (install models / edit backends)")
-    #s.log("``5`` - Seting up Backends Help")
+    s.log("``3`` - Update Backends in Subsystem")
+    s.log("``4`` - Uninstall Backends from Subsystem")
+    s.log("``5`` - Backend Programs (install models / edit backends)")
     s.log("``10`` - Enter Subsystem Commandline")
     s.log("Logs will be send to Midori AI's servers when you exit.")
-    sd_valid_answers = ["1", "2", "3", "4", "10", "chat", "exit"]
+    sd_valid_answers = ["1", "2", "3", "4", "5", "10", "chat", "exit"]
 
     s.log("If you need assistance with most menus, type help.")
     
@@ -209,17 +209,21 @@ while True:
 
     if answerstartup == 3:
         s.data_helper_python()
-        models_edit_add_on.subsystem_backend_manager.backend_uninstaller(None, "midori-docker-compose.yaml", client, ver_os_info)
+        models_edit_add_on.subsystem_backend_manager.backend_updater(None, "midori-docker-compose.yaml", client, ver_os_info)
         s.data_helper_python()
 
     if answerstartup == 4:
         s.data_helper_python()
-        backend_menu.main_menu()
+        models_edit_add_on.subsystem_backend_manager.backend_uninstaller(None, "midori-docker-compose.yaml", client, ver_os_info)
+        s.data_helper_python()
 
     if answerstartup == 5:
         s.data_helper_python()
+        backend_menu.main_menu()
+
+    if answerstartup == 6:
+        s.data_helper_python()
         s.log("this menu is not ready dropping to shell...")
-        s.os_support_command_line(client, Fore)
     
     if answerstartup == 10:
         s.data_helper_python()

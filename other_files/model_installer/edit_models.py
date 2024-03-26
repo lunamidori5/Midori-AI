@@ -420,3 +420,38 @@ class subsystem_backend_manager:
                 s.log(data.decode())
 
         input("Please press enter to go back to the main menu: ")
+
+    def backend_updater(self, docker_compose_yaml, client, ver_os_info):
+        backend_checker = s.backends_checking()
+
+        list_of_supported_backends = backend_checker.check_json()
+        
+        s.clear_window(ver_os_info)
+        
+        s.log(f"{str(list_of_supported_backends).lower()}")
+        s.log("Updating all Backends that are installed in the subsystem")
+
+        picked_backends = str("all").lower()
+        requested_backends = []
+
+        if picked_backends == "all":
+            picked_backends = str(list_of_supported_backends)
+        
+        for item in list_of_supported_backends:
+            if item in picked_backends:
+                requested_backends.append(item)
+    
+        docker_commands = [
+            f"echo updating backends",
+                ]
+        
+        for item in requested_backends:
+            s.log(f"Updating {item}")
+            docker_commands.append(f"docker compose -f ./files/{item}/docker-compose.yaml up --pull always -d")
+
+        s.log("Running commands on the Host OS!")
+        for item_docker in docker_commands:
+            s.log(f"Running {item_docker}")
+            os.system(item_docker)
+
+        input("Please press enter to go back to the main menu: ")
