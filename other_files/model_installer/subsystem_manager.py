@@ -210,7 +210,6 @@ while True:
     if answerstartup == 2:
         s.data_helper_python()
         models_edit_add_on.subsystem_backend_manager.backend_installer(None, "midori-docker-compose.yaml", client, client_openai, ver_os_info, 1234)
-        input("Hit enter to go back to the main menu: ")
         s.data_helper_python()
 
     if answerstartup == 3:
@@ -222,7 +221,6 @@ while True:
     if answerstartup == 4:
         s.data_helper_python()
         models_edit_add_on.subsystem_backend_manager.backend_uninstaller(None, "midori-docker-compose.yaml", client, ver_os_info)
-        input("Hit enter to go back to the main menu: ")
         s.data_helper_python()
 
     if answerstartup == 5:
