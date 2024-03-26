@@ -171,7 +171,7 @@ while True:
     s.log(backends_text_text_done)
     print("")
     print(Fore.RED + 'DEV NOTE' + Fore.WHITE + ': Please report bugs to the github or email so we can fix them!')
-    print(Fore.RED + 'DEV NOTE' + Fore.WHITE + ': Thank you all so much for helpping with the beta!')
+    print(Fore.RED + 'DEV NOTE' + Fore.WHITE + ': Thank you all so much for helpping with the beta! <3')
     print("")
     s.log("``1`` - Midori AI Subsystem Repair")
     s.log("``2`` - Install Backends to Subsystem")
