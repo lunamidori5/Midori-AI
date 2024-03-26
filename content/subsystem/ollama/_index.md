@@ -1,6 +1,7 @@
 +++
 disableToc = false
 title = "Ollama"
+hidden = true
 weight = 3
 +++
 

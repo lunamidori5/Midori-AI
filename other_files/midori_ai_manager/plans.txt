@@ -7,11 +7,11 @@ Programs to support:
     - LocalAI (Docker)
 
 - Photo AI Hosts:
-    - InvokeAI (Docker)
-    - Automatic1111 (Docker?) | (Apply fix for extension install crashing due to file system permissions)
+    - InvokeAI (Commandline)
+    - Automatic1111 (Docker? / Commandline?) | (Apply fix for extension install crashing due to file system permissions)
 
 - LLM FineTuning Hosts:
-    - Axolotl (Docker) | User will have to use command line to self install
+    - Axolotl (Commandline) | User will have to use command line to self install
 
 - Other Tools:
     - AnythingLLM (Docker)

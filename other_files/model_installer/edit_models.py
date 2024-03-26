@@ -267,8 +267,9 @@ class subsystem_backend_manager:
 
         list_of_supported_backends = [
             "localai", 
-            "anythingllm", 
+            "anythingllm",
             "ollama",
+            "axolotl",
             "invokeai"
             ]
         

@@ -1,6 +1,7 @@
 +++
 disableToc = false
 title = "Home Assistant"
+hidden = true
 weight = 6
 +++
 
