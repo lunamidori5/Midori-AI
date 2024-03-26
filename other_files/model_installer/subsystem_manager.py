@@ -169,6 +169,7 @@ while True:
     s.log(main_menu_text_done)
     s.log(blank_line)
     s.log(backends_text_text_done)
+    print(Fore.RED + 'DEV NOTE' + Fore.WHITE + ': Please report bugs to the github or email so we can fix them! \nThank you all so much for helpping with the beta!')
     s.log("``1`` - Midori AI Subsystem Repair")
     s.log("``2`` - Install Backends to Subsystem")
     s.log("``3`` - Update Backends in Subsystem")
@@ -200,26 +201,31 @@ while True:
     if answerstartup == 1:
         s.data_helper_python()
         docker_add_on.dev_setup_docker(DockerClient, compose_path, ver_os_info, containers, use_gui, sg, client, ver_info, layout, client_openai, 1234)
+        input("Hit enter to go back to the main menu: ")
         s.data_helper_python()
 
     if answerstartup == 2:
         s.data_helper_python()
         models_edit_add_on.subsystem_backend_manager.backend_installer(None, "midori-docker-compose.yaml", client, client_openai, ver_os_info, 1234)
+        input("Hit enter to go back to the main menu: ")
         s.data_helper_python()
 
     if answerstartup == 3:
         s.data_helper_python()
         models_edit_add_on.subsystem_backend_manager.backend_updater(None, "midori-docker-compose.yaml", client, ver_os_info)
+        input("Hit enter to go back to the main menu: ")
         s.data_helper_python()
 
     if answerstartup == 4:
         s.data_helper_python()
         models_edit_add_on.subsystem_backend_manager.backend_uninstaller(None, "midori-docker-compose.yaml", client, ver_os_info)
+        input("Hit enter to go back to the main menu: ")
         s.data_helper_python()
 
     if answerstartup == 5:
         s.data_helper_python()
         backend_menu.main_menu()
+        input("Hit enter to go back to the main menu: ")
 
     if answerstartup == 6:
         s.data_helper_python()
@@ -228,6 +234,7 @@ while True:
     if answerstartup == 10:
         s.data_helper_python()
         s.os_support_command_line(client, Fore)
+        input("Hit enter to go back to the main menu: ")
         s.data_helper_python()
 
     if answerstartup == 20:
