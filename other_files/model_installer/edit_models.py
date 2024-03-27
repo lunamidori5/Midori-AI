@@ -5,6 +5,8 @@ import requests
 
 import support as s
 
+from colorama import Fore
+
 def edit(compose_path, ver_os_info, containers, client, use_gui, sg, layout, client_openai):
     # Try to load the Docker Compose file
     s.log("Docker Server error, trying to check your docker-compose.yaml file...")
@@ -327,6 +329,14 @@ class subsystem_backend_manager:
         
         if "oobabooga" in picked_backends:
             picked_backends = picked_backends + " oobaboogaapi"
+
+        if "localai" in picked_backends:
+            print(Fore.RED + 'Warning:' + Fore.WHITE + ' Please note that this will download about 50gbs or more to your host drive')
+            print(Fore.RED + 'Warning:' + Fore.WHITE + ' If this is not okay please type ``no``')
+            exitout = input("Press enter to install LocalAI: ")
+            
+            if exitout == "no":
+                return
         
         for item in list_of_supported_backends:
             if item in picked_backends:
