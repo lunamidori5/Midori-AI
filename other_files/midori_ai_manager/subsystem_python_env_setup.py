@@ -16,7 +16,7 @@ print("Downloading the needed files...")
 for file_name, download_url in files_to_download.items():
     os.system(f"curl -s {download_url} > {file_name}")
 
-time.sleep(5)
+time.sleep(1)
 
 # Install pip requirements one item at a time
 print("Installing pip requirements...")

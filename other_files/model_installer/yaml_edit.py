@@ -5,7 +5,7 @@ import yaml
 def main():
     print("Starting the YAML editor script...")
     parser =  argparse.ArgumentParser(description="Edit a YAML file.")
-    parser.add_argument("-i", "--item", help="The item in the YAML to  change.")
+    parser.add_argument("-i", "--item", help="The item in the YAML to change.")
     parser.add_argument("-d", "--data", help="The new setting for the item.")
     parser.add_argument("file", help="The YAML file to edit.")
     args = parser.parse_args()
@@ -36,7 +36,7 @@ def main():
     try:
         print("Trying to set int")
         new_value = int(args.data)
-    except  ValueError:
+    except ValueError:
         print(f"Error: Could not convert {args.data} to an integer.")
 
     if args.data == "false" or args.data == "False":
