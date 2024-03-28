@@ -331,7 +331,7 @@ class subsystem_backend_manager:
             picked_backends = picked_backends + " oobaboogaapi"
 
         if "localai" in picked_backends:
-            print(Fore.RED + 'Warning:' + Fore.WHITE + ' Please note that this will download about 50gbs or more to your host drive')
+            print(Fore.RED + 'Warning:' + Fore.WHITE + ' Please note that this will download about 20gbs or more to your host drive')
             print(Fore.RED + 'Warning:' + Fore.WHITE + ' If this is not okay please type ``no``')
             exitout = input("Press enter to install LocalAI: ")
             

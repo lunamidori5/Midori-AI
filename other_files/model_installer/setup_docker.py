@@ -563,7 +563,7 @@ def dev_setup_docker(DockerClient, compose_path, ver_os_info, containers, use_gu
 
         if answerbasic == "false":
             s.log("Alright then ill go ahead and exit! Thank you!")
-            return
+            exit()
 
         s.clear_window(ver_os_info)
 
