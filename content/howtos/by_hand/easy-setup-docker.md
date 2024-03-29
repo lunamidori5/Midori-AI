@@ -78,6 +78,10 @@ It will use a container from [quay.io](https://quay.io/repository/go-skynet/loca
 
 {{< tabs >}}
 {{% tab title="Vanilla / CPU Images" %}}
+Recommened Midori AI - LocalAI Images
+- `lunamidori5/midori_ai_subsystem_localai_cpu:latest`
+
+Base LocalAI Images
 - `master`
 - `latest`
 - `{{< version >}}`
@@ -93,8 +97,14 @@ Images with Nvidia accelleration support
 
 > If you do not know which version of CUDA do you have available, you can check with `nvidia-smi` or `nvcc --version`
 
+Recommened Midori AI - LocalAI Images
+- `lunamidori5/midori_ai_subsystem_localai_gpu:latest`
+
+Base LocalAI Images
 - `master-cublas-cuda11`
 - `master-cublas-cuda11-core`
+- `master-cublas-cuda11-ffmpeg`
+- `master-cublas-cuda11-ffmpeg-core`
 - `{{< version >}}-cublas-cuda11`
 - `{{< version >}}-cublas-cuda11-core`
 - `{{< version >}}-cublas-cuda11-ffmpeg`
@@ -109,8 +119,14 @@ Images with Nvidia accelleration support
 
 > If you do not know which version of CUDA do you have available, you can check with `nvidia-smi` or `nvcc --version`
 
+Recommened Midori AI - LocalAI Images
+- `lunamidori5/midori_ai_subsystem_localai_gpu:latest`
+
+Base LocalAI Images
 - `master-cublas-cuda12`
 - `master-cublas-cuda12-core`
+- `master-cublas-cuda12-ffmpeg`
+- `master-cublas-cuda12-ffmpeg-core`
 - `{{< version >}}-cublas-cuda12`
 - `{{< version >}}-cublas-cuda12-core`
 - `{{< version >}}-cublas-cuda12-ffmpeg`
@@ -130,8 +146,10 @@ Also note this `docker-compose` file is for `CPU` only.
 version: '3.6'
 
 services:
-  api:
-    image: quay.io/go-skynet/local-ai:{{< version >}}
+  localai-midori-ai-backend:
+    image: lunamidori5/midori_ai_subsystem_localai_cpu:latest
+    ## use this for localai's base 
+    ## image: quay.io/go-skynet/local-ai:master
     tty: true # enable colorized logs
     restart: always # should this be on-failure ?
     ports:
@@ -154,7 +172,7 @@ Please change the image to what you need.
 version: '3.6'
 
 services:
-  api:
+  localai-midori-ai-backend:
     deploy:
       resources:
         reservations:
@@ -162,7 +180,9 @@ services:
             - driver: nvidia
               count: 1
               capabilities: [gpu]
-    image: quay.io/go-skynet/local-ai:CHANGEMETOIMAGENEEDED
+    ## use this for localai's base 
+    ## image: quay.io/go-skynet/local-ai:CHANGEMETOIMAGENEEDED
+    image: lunamidori5/midori_ai_subsystem_localai_gpu:latest
     tty: true # enable colorized logs
     restart: always # should this be on-failure ?
     ports:
