@@ -647,7 +647,7 @@ def dev_setup_docker(DockerClient, compose_path, ver_os_info, containers, use_gu
                         "USERNAME": user_name,
                         "DISCORD_ID": discord_id,
                     },  # env_file is commented out
-                    "volumes": ["./files:/app/files", "midori-ai:/app/int-files", "midori-ai-models:/app/models", "midori-ai-images:/app/images", "midori-ai-audio:/app/audio", "/var/run/docker.sock:/var/run/docker.sock"],
+                    "volumes": ["./files:/app/files", "midori-ai:/app/int-files", "/var/lib/docker/volumes/midoriai_midori-ai-models/_data:/app/models", "/var/lib/docker/volumes/midoriai_midori-ai-images/_data:/app/images", "/var/lib/docker/volumes/midoriai_midori-ai-audio/_data:/app/audio", "/var/run/docker.sock:/var/run/docker.sock"],
                 }
             },
 			"volumes": {
@@ -684,7 +684,7 @@ def dev_setup_docker(DockerClient, compose_path, ver_os_info, containers, use_gu
                         "USERNAME": user_name,
                         "DISCORD_ID": discord_id,
                     },  # env_file is commented out
-                    "volumes": ["./files:/app/files", "midori-ai:/app/int-files", "midori-ai-models:/app/models", "midori-ai-images:/app/images", "midori-ai-audio:/app/audio", "/var/run/docker.sock:/var/run/docker.sock"],
+                    "volumes": ["./files:/app/files", "midori-ai:/app/int-files", "/var/lib/docker/volumes/midoriai_midori-ai-models/_data:/app/models", "/var/lib/docker/volumes/midoriai_midori-ai-images/_data:/app/images", "/var/lib/docker/volumes/midoriai_midori-ai-audio/_data:/app/audio", "/var/run/docker.sock:/var/run/docker.sock"],
                 }
             },
 			"volumes": {
