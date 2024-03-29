@@ -1391,7 +1391,7 @@ class localai_model_manager:
             llava_commands = [
                 ["echo", f"This next step will take 5+ mins, please do not exit or close this program"],
                 ["apt-get", "-y", "install", "wget"],
-                ["wget", "--show-progress=no", "-O", inside_model_folder + f"/ggml-model-q4_k.gguf", f"https://huggingface.co/mys/ggml_bakllava-1/resolve/main/ggml-model-q4_k.gguf"],
+                ["wget", "--show-progress=no", "-O", inside_model_folder + f"/ggml-model-q4_k.gguf", f"https://huggingface.co/PsiPi/liuhaotian_llava-v1.5-13b-GGUF/resolve/main/llava-v1.5-13b-Q6_K.gguf"],
                 ["wget", "--show-progress=no", "-O", inside_model_folder + f"/mmproj-model-f16.gguf", f"https://huggingface.co/mys/ggml_bakllava-1/resolve/main/mmproj-model-f16.gguf"],
                 ["wget", "--show-progress=no", "-O", inside_model_folder + f"/chat-simple.tmpl", f"https://github.com/mudler/LocalAI/blob/b8240b4c1839089b9d06a3e2b1c629a294cff87e/examples/configurations/llava/chat-simple.tmpl"],
                 ["wget", "--show-progress=no", "-O", inside_model_folder + f"/llava.yaml", f"https://github.com/mudler/LocalAI/blob/b8240b4c1839089b9d06a3e2b1c629a294cff87e/examples/configurations/llava/llava.yaml"],
