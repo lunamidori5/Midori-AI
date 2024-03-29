@@ -510,6 +510,7 @@ def dev_setup_docker(DockerClient, compose_path, ver_os_info, containers, use_gu
     GPUUSE = False
     BOTHUSE = False
     setgpu = False
+    subsystem_ver_str = "subsystem_2-0.ram"
     user_name = "placeholder"
     base_image_name = "lunamidori5/midori_ai_subsystem"
 
@@ -532,11 +533,18 @@ def dev_setup_docker(DockerClient, compose_path, ver_os_info, containers, use_gu
 
     s.clear_window(ver_os_info)
 
-    if os.path.exists(os.path.join("files", "subsystem.ram")):
+    if os.path.exists(os.path.join("files", subsystem_ver_str)):
         s.log("You have already setup the Midori AI subsystem, Updating it!")
-        with open(os.path.join("files", 'booleans.txt'), 'r') as f:
-            GPUUSE = bool(f.readline())
-            BOTHUSE = bool(f.readline())
+        with open(os.path.join("files", '1stbooleans.txt'), 'r') as f:
+            GPUUSE = str(f.read())
+        with open(os.path.join("files", '2ntbooleans.txt'), 'r') as f:
+            BOTHUSE = str(f.read())
+        if GPUUSE == "False":
+            GPUUSE = False
+            BOTHUSE = False
+        else:
+            GPUUSE = True
+            BOTHUSE = True
     else:
         s.log("Your username will not get passed or shared with Midori AI, it is just a way to make sure your image is safe")
 
@@ -600,9 +608,11 @@ def dev_setup_docker(DockerClient, compose_path, ver_os_info, containers, use_gu
             GPUUSE = False
             BOTHUSE = False
         
-        with open(os.path.join("files", 'booleans.txt'), 'w') as f:
-            f.write(str(GPUUSE)  + '\n')
-            f.write(str(BOTHUSE) + '\n')
+        with open(os.path.join("files", '1stbooleans.txt'), 'w') as f:
+            f.write(str(GPUUSE))
+
+        with open(os.path.join("files", '2ntbooleans.txt'), 'w') as f:
+            f.write(str(BOTHUSE))
 
         s.clear_window(ver_os_info)
         s.log("Setting up the Midori AI Docker Subsystem...")
@@ -736,7 +746,7 @@ def dev_setup_docker(DockerClient, compose_path, ver_os_info, containers, use_gu
         pull="always",
     )
 
-    with open(os.path.join("files", "subsystem.ram"), "w") as f:
+    with open(os.path.join("files", subsystem_ver_str), "w") as f:
         f.write(ver_info)
 
     # s.log("All done, I am now rebooting the subsystem")
