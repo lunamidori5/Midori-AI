@@ -124,9 +124,11 @@ def check_for_subsystem_update(ver_os_info, ver_info, DockerClient, compose_path
     Sends a request to the server to check for a installer update.
     """
 
-    if os.path.exists(os.path.join("files", "subsystem.ram")):
-        with open(os.path.join("files", "subsystem.ram"), "r") as f:
-            response = f.read()
+    for file in os.listdir("files"):
+        if "subsystem" in file:
+            with open(os.path.join("files", file), "r") as f:
+                response = f.read()
+            break
     else:
         response = "nul"
 

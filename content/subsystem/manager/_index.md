@@ -1,16 +1,10 @@
 +++
 disableToc = false
-title = "Subsystem Manager"
+title = "-- Midori AI Subsystem Manager --"
 weight = 1
 +++
 
 ![Midori AI photo](https://tea-cup.midori-ai.xyz/download/logosubsystem.png)
-
-## ----- How to Enter Beta -----
-
-You are already useing the new Beta! As of 24.4.1!
-
-# -- Midori AI Subsystem Manager --
 
 **How Docker Works**
 
