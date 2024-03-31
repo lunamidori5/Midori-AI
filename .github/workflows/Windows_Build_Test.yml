@@ -4,7 +4,7 @@ on: [push, pull_request]
 
 jobs:
         
-  Windows-LocalAI-Manager:
+  Windows-Subsystem-Manager-Raw:
     runs-on: [windows-latest]
     strategy:
       max-parallel: 5
@@ -35,3 +35,19 @@ jobs:
     - name: Make EXE file
       run: |
         pyinstaller --onefile --clean model_installer.py
+  Windows-Subsystem-Manager-Baked:
+    runs-on: [ubuntu-latest]
+    strategy:
+      max-parallel: 5
+
+    steps:
+    - name: Set up Python 3.10
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.10'
+    - name: Download Files
+      run: |
+        curl -k --disable --disable-eprt -s https://raw.githubusercontent.com/lunamidori5/Midori-AI/master/other_files/midori_ai_manager/subsystem_python_env_setup.py > subsystem_setup.py
+    - name: Make EXE file
+      run: |
+        python subsystem_setup.py
