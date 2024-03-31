@@ -30,5 +30,6 @@ os.system('python3 model_installer.py')
 
 # Purge the downloaded files
 print("Purging the downloaded files ...")
+os.system('pip cache purge')
 for file_name in files_to_download:
     os.remove(file_name)

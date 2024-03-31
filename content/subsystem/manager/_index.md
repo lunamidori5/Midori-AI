@@ -1,6 +1,6 @@
 +++
 disableToc = false
-title = "-- Midori AI Subsystem Manager --"
+title = "Midori AI Subsystem Manager"
 weight = 1
 +++
 
