@@ -4,7 +4,7 @@ title = "About Carly Kay"
 weight = 8
 +++
 
-![Midori AI photo](https://tea-cup.midori-ai.xyz/download/carlydemo.png)
+![Midori AI photo](https://tea-cup.midori-ai.xyz/weather/weather_carly_now.png)
 
 # Meet Carly
 
