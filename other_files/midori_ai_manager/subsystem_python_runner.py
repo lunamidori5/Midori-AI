@@ -26,9 +26,13 @@ with open('requirements.txt', 'r') as f:
     for line in f:
         os.system('pip install ' + line.strip())
 
-print("Downloading the needed files...")
-for file_name, download_url in files_to_download_enx.items():
-    os.system(f"python3 helper_app.py {file_name}")
+if os.name == 'posix':
+    print("Downloading the needed files...")
+    for file_name, download_url in files_to_download_enx.items():
+        os.system(f"python3 helper_app.py {file_name}")
+else:
+    for file_name, download_url in files_to_download_enx.items():
+        os.system(f"curl -s {download_url} > {file_name}")
 
 # Run the Python program
 print("Running the Python program...")
