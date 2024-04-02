@@ -4,6 +4,9 @@ title = "Subsystem Update Log"
 weight = 5
 +++
 
+## 4/1/2024
+- Update 1: Added a new safety check to make sure the subsystem manager is not in the Windows folder or in system32
+
 ## 3/30/2024
 - Update 1: Fixed a bug with the subsystem ver not matching the manager ver and endlessly updating the subsystem
 
