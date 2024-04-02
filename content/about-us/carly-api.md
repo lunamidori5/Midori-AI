@@ -5,6 +5,7 @@ weight = 8
 +++
 
 ![Midori AI photo](https://tea-cup.midori-ai.xyz/weather/weather_carly_now.png)
+*This is a live image from Carly's interword*
 
 # Meet Carly
 
