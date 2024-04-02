@@ -587,6 +587,7 @@ def dev_setup_docker(DockerClient, compose_path, ver_os_info, containers, use_gu
         
         context_temp = f"The user was asked if they would like to use GPU for the Midori AI Docker Subsystem and other AI Images. This is a yes or no question."
         context_temp = f"{context_temp}\nThis is the output of the nvidia-smi command\n{str(os.popen('nvidia-smi').read())}\nIf the user does not have cuda installed please tell them to type no"
+        context_temp = f"{context_temp}\nIf the user has CUDA installed let them know what type (12 or 11) and to type ``yes``, do not give other info in this menu"
             
         answer_backend_type = s.check_str(question, valid_answers, use_gui, layout, sg, context_temp, client_openai)
 

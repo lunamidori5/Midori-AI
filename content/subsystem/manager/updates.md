@@ -6,6 +6,7 @@ weight = 5
 
 ## 4/1/2024
 - Update 1: Added a new safety check to make sure the subsystem manager is not in the Windows folder or in system32
+- Update 2: Added more prompting for the baked in Carly model for if you are asking about GPU or not with cuda
 
 ## 3/30/2024
 - Update 1: Fixed a bug with the subsystem ver not matching the manager ver and endlessly updating the subsystem
