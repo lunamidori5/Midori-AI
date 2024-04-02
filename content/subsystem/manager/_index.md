@@ -128,6 +128,10 @@ python3 subsystem_python_runner.py
 {{% /tab %}}
 {{< /tabs >}}
 
+{{% notice style="info" title="Notice" %}}
+Reminder to always use your computers IP address not ``localhost`` when using the Midori AI Subsystem!
+{{% /notice %}}
+
 ## ----- Model Info and Links -----
 
 Check out our [Model Repository]({{%relref "models" %}}) for info about the models used and supported!

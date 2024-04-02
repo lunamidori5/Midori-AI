@@ -27,6 +27,10 @@ Wait 10 to 30 mins for LocalAI to fully set it self up
 ### Step 5
 Enjoy your new copy of localai its running on port ``38080``
 
+{{% notice style="info" title="Notice" %}}
+Reminder to always use your computers IP address not ``localhost``
+{{% /notice %}}
+
 If you need help, please reach out on our [Discord](https://discord.gg/xdgCx3VyHU) / [Email](mailto:contact-us@midori-ai.xyz); or reach out on their [Discord](https://discord.gg/AHEt8BEwzG).
 
 ## Setting up LocalAI Models
