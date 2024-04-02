@@ -105,6 +105,13 @@ if ver_os_info == "linux":
 
 try:
     if os.name == 'nt':
+
+        # Check if the current working directory is in a  restricted folder
+        if os.path.abspath(os.getcwd()) in ['C:\\Windows', 'C:\\Windows\\System32', 'C:\\Program Files', 'C:\\Program Files (x86)']:
+            print ("Error: We are running in a restricted folder. Crashing...")
+            input("Press enter to exit: ")
+            exit(1)
+
         # Connect to the Docker daemon on Windows using Docker-py for Windows 
         s.log("logging into docker vm subsystem (Windows)")
         client = docker.from_env(version='auto')
