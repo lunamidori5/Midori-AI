@@ -1,6 +1,7 @@
 altgraph
 annotated-types
 anyio
+aiohttp
 cryptography
 certifi
 charset-normalizer
