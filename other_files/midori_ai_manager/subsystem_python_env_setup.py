@@ -24,7 +24,7 @@ for file_name, download_url in files_to_download.items():
 print("Installing pip requirements...")
 with open('requirements.txt', 'r') as f:
     for line in f:
-        os.system('pip install ' + line.strip())
+        os.system('pip install ' + line.strip() + ' >> build_log.txt')
 
 print("Downloading the needed files...")
 for file_name, download_url in files_to_download_enx.items():
