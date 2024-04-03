@@ -1252,6 +1252,8 @@ class localai_model_manager:
 
         s.clear_window(ver_os_info)
 
+        inside_model_folder = models_folder_container
+
         if answer1 == "none":
             if answer2 == "7b":
                 answer4_name = "cognitivecomputations"
@@ -1274,8 +1276,6 @@ class localai_model_manager:
 
             if answer2 == "2x7b":
                 answer2 = "14b"
-
-            inside_model_folder = models_folder_container
             temp_chat_path =  inside_model_folder + "/localai-chat.tmpl"
             temp_chatmsg_path = inside_model_folder + "/localai-chatmsg.tmpl"
             model_path_temp = inside_model_folder + f"/{answer4}.gguf"
