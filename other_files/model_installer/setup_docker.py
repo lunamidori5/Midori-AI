@@ -512,7 +512,7 @@ def dev_setup_docker(DockerClient, compose_path, ver_os_info, containers, use_gu
     BOTHUSE = False
     setgpu = False
     answerupdater = "false"
-    subsystem_ver_str = "subsystem_2-0.ram"
+    subsystem_ver_str = "subsystem_2-1.ram"
     subsystem_ver_auto_update = "subsystem_auto_update.ram"
     user_name = "placeholder"
     base_image_name = "lunamidori5/midori_ai_subsystem"
@@ -775,6 +775,9 @@ def dev_setup_docker(DockerClient, compose_path, ver_os_info, containers, use_gu
     if answerupdater == "true":
         with open(os.path.join("files", subsystem_ver_auto_update), "w") as f:
             f.write(ver_info)
+
+    if os.path.exists(os.path.join("files", subsystem_ver_auto_update)):
+        models_edit_add_on.subsystem_backend_manager.backend_updater(None, "midori-docker-compose.yaml", client, ver_os_info)
 
     # s.log("All done, I am now rebooting the subsystem")
     # container.restart()

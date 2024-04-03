@@ -929,8 +929,11 @@ class localai_model_manager:
                 named_docker = container.name
                 s.log(f"Midori AI Subsystem linked to {named_docker}")
                 return named_docker, container
-            
-        os.system("docker ps")
+
+        for container in containers:
+            print("--------------------------------------")
+            s.log(f"Showing Name: {container.name}")
+            print("--------------------------------------")
 
         s.log(f"Switching to manually typed mode, please enter the name of the docker image you are wishing to fork into ({docker_name}).")
         docker_name_manual = input("Enter Docker Image Name: ")
@@ -1016,11 +1019,6 @@ class localai_model_manager:
         s.clear_window(ver_os_info)
 
         if answerbasic:
-            question4 = "What would you like to name the models file?: \n"
-
-            answer4 = input(question4)
-            
-            answer4 = str(answer4.lower())
 
             s.clear_window(ver_os_info)
 
@@ -1056,7 +1054,49 @@ class localai_model_manager:
 
             s.clear_window(ver_os_info)
 
-            if answer2.lower() != "base":
+            if answer2.lower() == "huggingface":
+                s.log("For huggingface models from the site, please copy and paste the link from the model page you with to download. Like")
+                s.log("https://huggingface.co/macadeliccc/laser-dolphin-mixtral-2x7b-dpo-GGUF/resolve/main/laser-dolphin-mixtral-2x7b-dpo.q4_k_m.gguf?download=true")
+                
+                answer1 = "huggingface"
+                answerbasic = "false".lower()
+
+                huggingface_model_install = input("Paste Requested huggingface URL: ")
+                huggingface_model_install = huggingface_model_install.replace("https://huggingface.co/", "")
+                huggingface_model_install = huggingface_model_install.replace("/resolve/main/", "")
+                huggingface_model_install = huggingface_model_install.replace("?download=true", "")
+
+                # Split the link into parts
+                huggingface_parts = huggingface_model_install.split("/")
+
+                # Extract the user, repo name, and model filename
+                user = huggingface_parts[0]
+                repo_name = huggingface_parts[1]
+                model_filename = huggingface_parts[2]
+
+                # Print the extracted information
+                print("User:", user)
+                print("Repo name:", repo_name)
+                print("Model filename:", model_filename)
+                                
+                url = f"https://tea-cup.midori-ai.xyz/huggingface/model/{model_filename}"
+
+                # Construct the cURL command
+                curl_command = f"curl -L -H 'username: {user}' -H 'reponame: {repo_name}' -H 'modeltype: {model_filename}' {url} --output {model_filename}"
+
+            elif answer2.lower() == "base":
+                s.log("For base models from the site, you can type all of the ones you want, like ``all-minilm-l6-v2 bert-cpp``")
+                s.log("https://localai.io/basics/getting_started/")
+                answer1 = "base"
+                base_model_install = input("Type Requested Base Models: ")
+
+            elif answer2.lower() != "base":
+                question4 = "What would you like to name the models file?: \n"
+
+                answer4 = input(question4)
+                
+                answer4 = str(answer4.lower())
+
                 s.log(about_model_q_size)
 
                 question = f"What type of quantised model would you like to setup? ({', '.join(valid_answers1)}): "
@@ -1198,42 +1238,6 @@ class localai_model_manager:
                     answerencrypted = answerencrypted.lower()
 
                     s.clear_window(ver_os_info)
-
-            elif answer2.lower() == "base":
-                s.log("For base models from the site, you can type all of the ones you want, like ``all-minilm-l6-v2 bert-cpp``")
-                s.log("https://localai.io/basics/getting_started/")
-                answer1 = "base"
-                base_model_install = input("Type Requested Base Models: ")
-
-            elif answer2.lower() == "huggingface":
-                s.log("For huggingface models from the site, please copy and paste the link from the model page you with to download. Like")
-                s.log("https://huggingface.co/macadeliccc/laser-dolphin-mixtral-2x7b-dpo-GGUF/resolve/main/laser-dolphin-mixtral-2x7b-dpo.q4_k_m.gguf?download=true")
-                
-                answer1 = "huggingface"
-                answerbasic = "false".lower()
-
-                huggingface_model_install = input("Paste Requested huggingface URL: ")
-                huggingface_model_install = huggingface_model_install.replace("https://huggingface.co/", "")
-                huggingface_model_install = huggingface_model_install.replace("/resolve/main/", "")
-                huggingface_model_install = huggingface_model_install.replace("?download=true", "")
-
-                # Split the link into parts
-                huggingface_parts = huggingface_model_install.split("/")
-
-                # Extract the user, repo name, and model filename
-                user = huggingface_parts[0]
-                repo_name = huggingface_parts[1]
-                model_filename = huggingface_parts[2]
-
-                # Print the extracted information
-                print("User:", user)
-                print("Repo name:", repo_name)
-                print("Model filename:", model_filename)
-                                
-                url = f"https://tea-cup.midori-ai.xyz/huggingface/model/{model_filename}"
-
-                # Construct the cURL command
-                curl_command = f"curl -L -H 'username: {user}' -H 'reponame: {repo_name}' -H 'modeltype: {model_filename}' {url} --output {model_filename}"
 
 
         s.log(f"I am now going to install everything you requested, please wait for me to get done. As ill be running commands inside of your docker image.")
