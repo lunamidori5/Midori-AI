@@ -23,7 +23,8 @@ Type in ``anythinllm`` into menu, then hit enter
 Enjoy your new copy of AnythingLLM its running on port ``33001``
 
 {{% notice style="info" title="Notice" %}}
-Reminder to always use your computers IP address not ``localhost``
+- Reminder to always use your computers IP address not ``localhost`` 
+- IE: ``192.168.10.10:33001`` or ``192.168.1.3:33001``
 {{% /notice %}}
 
 If you need help, please reach out on our [Discord](https://discord.gg/xdgCx3VyHU) / [Email](mailto:contact-us@midori-ai.xyz); or reach out on their [Discord](https://discord.gg/BXwCmkexFp).

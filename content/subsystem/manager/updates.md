@@ -9,6 +9,7 @@ weight = 5
 - Update: Added a way to install Huggingface based models into LocalAI using Midori AI's model repo
 - Bug Fix: Fixed some type o and bad text in a few places that was confusing users
 - Bug Fix: Fixed a bug when some links were used with Huggingface 
+- Update: Server upgrades to our model repo api
 
 ## 4/1/2024
 - Update 1: Added a new safety check to make sure the subsystem manager is not in the Windows folder or in system32

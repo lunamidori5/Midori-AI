@@ -25,10 +25,11 @@ Wait 10 to 30 mins for LocalAI to fully set it self up
 ![photo](https://tea-cup.midori-ai.xyz/download/0a4e25ed-0efa-47af-944b-31320482ae89-WindowsTerminal_oQeiSVBJXq.png)
 
 ### Step 5
-Enjoy your new copy of localai its running on port ``38080``
+Enjoy your new copy of LocalAI! LocalAI is running on port ``38080``
 
 {{% notice style="info" title="Notice" %}}
-Reminder to always use your computers IP address not ``localhost``
+- Reminder to always use your computers IP address not ``localhost`` 
+- IE: ``192.168.10.10:38080/v1`` or ``192.168.1.3:38080/v1``
 {{% /notice %}}
 
 If you need help, please reach out on our [Discord](https://discord.gg/xdgCx3VyHU) / [Email](mailto:contact-us@midori-ai.xyz); or reach out on their [Discord](https://discord.gg/AHEt8BEwzG).
