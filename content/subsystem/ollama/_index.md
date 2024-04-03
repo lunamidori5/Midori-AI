@@ -1,6 +1,6 @@
 +++
 disableToc = false
-title = "Ollama"
+title = "Installing Ollama"
 hidden = true
 weight = 3
 +++

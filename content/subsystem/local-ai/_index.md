@@ -1,6 +1,6 @@
 +++
 disableToc = false
-title = "LocalAI"
+title = "Installing LocalAI"
 weight = 2
 +++
 

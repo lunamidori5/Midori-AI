@@ -60,6 +60,9 @@ Need help on how to do that? Stop by - [How to send OpenAI request to LocalAI]({
 #### Step 6:
 - Copy and Paste the Hugging Face Download URL That You Wish to Use
 - For example: `https://huggingface.co/mlabonne/gemma-7b-it-GGUF/resolve/main/gemma-7b-it.Q2_K.gguf?download=true`
+![midori ai photo](https://tea-cup.midori-ai.xyz/download/0a975dc7-ff7f-42a9-a77c-8efdd5bd95e4-chrome_tC2H9nfRdA.png)
+- Or you can use the huggingface naming from their api
+- For example: `mlabonne/gemma-7b-it-GGUF/gemma-7b-it.Q2_K.gguf`
 
 #### Step 7:
 - Sit Back and Let the Model Download from Midori AI's Model Repo
