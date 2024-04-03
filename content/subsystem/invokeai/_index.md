@@ -25,7 +25,7 @@ Go back to the main menu and type ``10``
 
 ### Step 5
 Type in ``cd files/invokeai/InvokeAI-Installer/`` press enter. Then type in ``./install.sh``. 
-**We recommend installing InvokeAI to the ``invokeai/data`` folder for easyer updating and uninstalling**
+**We recommend installing InvokeAI to the ``/app/files/invokeai/data`` folder for easyer updating and uninstalling**
 ![photo](https://tea-cup.midori-ai.xyz/download/c32e72b1-4b30-4d4e-8727-720e139d99e2-WindowsTerminal_r9pRd5nK7j.png)
 ![photo](https://tea-cup.midori-ai.xyz/download/a882c5d1-f4db-46f0-8b61-0d739d6bb7ec-WindowsTerminal_L1KFCCRi2z.png)
 

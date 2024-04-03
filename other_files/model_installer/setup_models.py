@@ -935,6 +935,8 @@ class localai_model_manager:
         s.log(f"Switching to manually typed mode, please enter the name of the docker image you are wishing to fork into ({docker_name}).")
         docker_name_manual = input("Enter Docker Image Name: ")
 
+        is_gpu = input("Is this a GPU supported image? (yes or no): ")
+
         for container in containers:
             s.log(f"Checking Name: {container.name}, ID: {container.id}")
 
@@ -945,6 +947,10 @@ class localai_model_manager:
                 container = self.client.containers.get(container.name)
                 named_docker = container.name
                 s.log(f"Midori AI Subsystem linked to {named_docker}")
+                
+                if is_gpu.lower() == "yes":
+                    docker_name_manual = docker_name_manual + "-gpu"
+
                 return named_docker, container
 
         s.log(f"I could not find {docker_name}... is that installed?")
@@ -1019,7 +1025,7 @@ class localai_model_manager:
             s.clear_window(ver_os_info)
 
             s.log(about_model_size)
-            valid_answers2 = ["7b", "8x7b", "70b", "id", "base"]
+            valid_answers2 = ["7b", "8x7b", "70b", "id", "huggingface", "base"]
             question2 = f"What size of known and supported model would you like to setup ({', '.join(valid_answers2)}): "
             
             context_temp = "The user was asked what size of model they would like to install... here is a list of sizes they can pick from "
@@ -1193,11 +1199,42 @@ class localai_model_manager:
 
                     s.clear_window(ver_os_info)
 
-            else:
+            elif answer2.lower() == "base":
                 s.log("For base models from the site, you can type all of the ones you want, like ``all-minilm-l6-v2 bert-cpp``")
                 s.log("https://localai.io/basics/getting_started/")
                 answer1 = "base"
                 base_model_install = input("Type Requested Base Models: ")
+
+            elif answer2.lower() == "huggingface":
+                s.log("For huggingface models from the site, please copy and paste the link from the model page you with to download. Like")
+                s.log("https://huggingface.co/macadeliccc/laser-dolphin-mixtral-2x7b-dpo-GGUF/resolve/main/laser-dolphin-mixtral-2x7b-dpo.q4_k_m.gguf?download=true")
+                
+                answer1 = "huggingface"
+                answerbasic = "false".lower()
+
+                huggingface_model_install = input("Paste Requested huggingface URL: ")
+                huggingface_model_install = huggingface_model_install.replace("https://huggingface.co/", "")
+                huggingface_model_install = huggingface_model_install.replace("/resolve/main/", "")
+                huggingface_model_install = huggingface_model_install.replace("?download=true", "")
+
+                # Split the link into parts
+                huggingface_parts = huggingface_model_install.split("/")
+
+                # Extract the user, repo name, and model filename
+                user = huggingface_parts[0]
+                repo_name = huggingface_parts[1]
+                model_filename = huggingface_parts[2]
+
+                # Print the extracted information
+                print("User:", user)
+                print("Repo name:", repo_name)
+                print("Model filename:", model_filename)
+                                
+                url = f"https://tea-cup.midori-ai.xyz/huggingface/model/{model_filename}"
+
+                # Construct the cURL command
+                curl_command = f"curl -H 'username: {user}' -H 'reponame: {repo_name}' -H 'modeltype: {model_filename}' {url}"
+
 
         s.log(f"I am now going to install everything you requested, please wait for me to get done. As ill be running commands inside of your docker image.")
         s.log("Hit enter to start")
@@ -1378,6 +1415,15 @@ class localai_model_manager:
 
         if answer1 == "none":
             docker_commands = docker_commands_vllm
+
+        if answer1 == "huggingface":
+            huggingface_commands = [
+                ["apt-get", "-y", "install", "curl"],
+                [f"{curl_command}"],
+                ["cp", f"{model_filename}", f"{inside_model_folder}/{model_filename}"],
+                ["rm", "-f", f"{model_filename}"],
+            ]
+            docker_commands.extend(huggingface_commands)
 
         if use_tts == "true":
             tts_commands = [
