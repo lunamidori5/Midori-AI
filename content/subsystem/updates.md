@@ -1,8 +1,10 @@
 +++
 disableToc = false
 title = "Subsystem Update Log"
-weight = 5
+weight = 1
 +++
+
+![Midori AI photo](https://tea-cup.midori-ai.xyz/download/logosubsystem.png)
 
 ## 4/2/2024
 - Update: Added a menu to fork into nonsubsystem images for installing models
