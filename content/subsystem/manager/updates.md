@@ -4,6 +4,12 @@ title = "Subsystem Update Log"
 weight = 5
 +++
 
+## 4/2/2024
+- Update: Added a menu to fork into nonsubsystem images for installing models
+- Update: Added a way to install Huggingface based models into LocalAI using Midori AI's model repo
+- Bug Fix: Fixed some type o and bad text in a few places that was confusing users
+- Bug Fix: Fixed a bug when some links were used with Huggingface 
+
 ## 4/1/2024
 - Update 1: Added a new safety check to make sure the subsystem manager is not in the Windows folder or in system32
 - Update 2: Added more prompting for the baked in Carly model for if you are asking about GPU or not with cuda
