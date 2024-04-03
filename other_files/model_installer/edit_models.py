@@ -272,7 +272,8 @@ class subsystem_backend_manager:
             "anythingllm",
             "ollama",
             "axolotl",
-            "invokeai"
+            "invokeai",
+            "bigagi"
             ]
         
         """

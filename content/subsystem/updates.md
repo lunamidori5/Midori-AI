@@ -6,6 +6,13 @@ weight = 1
 
 ![Midori AI photo](https://tea-cup.midori-ai.xyz/download/logosubsystem.png)
 
+## 4/3/2024
+- New Backend: Added Big-AGI to the subsystem! 
+- Update: Added better huggingface downloader commands server side
+- Update: Redid how the server sends models to the subsystem
+- Bug Fix: Fixed a bug with ollama not starting with the subsystem
+- Bug Fix: Fixed a bug with endlessly installing backends 
+
 ## 4/2/2024
 - Update: Added a menu to fork into nonsubsystem images for installing models
 - Update: Added a way to install Huggingface based models into LocalAI using Midori AI's model repo
