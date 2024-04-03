@@ -129,6 +129,12 @@ python3 subsystem_python_runner.py
 Reminder to always use your computers IP address not ``localhost`` when using the Midori AI Subsystem!
 {{% /notice %}}
 
+## ----- Install Backends -----
+- [LocalAI]({{%relref "subsystem/local-ai" %}}) - For LLM inference, Embedding, and more
+- [AnythingLLM]({{%relref "subsystem/anythingllm" %}}) - For chating with your docs using LocalAI or other LLM hosts
+- [InvokeAI]({{%relref "subsystem/invokeai" %}}) - For making photos using AI models
+- Axolotl - For training your own fine tuned LLMs
+
 ## ----- Model Info and Links -----
 
 Check out our [Model Repository]({{%relref "models" %}}) for info about the models used and supported!
@@ -143,4 +149,4 @@ The functionality of this product is subject to a variety of factors that are be
 
 **If you would like to give to help us get better servers - [Give Support](https://paypal.me/midoricookieclub?country.x=US&locale.x=en_US)
 
-***If you or someone you know would like a model supported by this model manager please reach out to us at [contact-us@midori-ai.xyz](mailto:contact-us@midori-ai.xyz)
+***If you or someone you know would like a new backend supported by Midori AI Subsystem please reach out to us at [contact-us@midori-ai.xyz](mailto:contact-us@midori-ai.xyz)
