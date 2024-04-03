@@ -511,6 +511,7 @@ def dev_setup_docker(DockerClient, compose_path, ver_os_info, containers, use_gu
     GPUUSE = False
     BOTHUSE = False
     setgpu = False
+    update_all = False
     answerupdater = "false"
     subsystem_ver_str = "subsystem_2-1.ram"
     subsystem_ver_auto_update = "subsystem_auto_update.ram"
@@ -547,8 +548,7 @@ def dev_setup_docker(DockerClient, compose_path, ver_os_info, containers, use_gu
             GPUUSE = True
             BOTHUSE = True
 
-        if os.path.exists(os.path.join("files", subsystem_ver_auto_update)):
-            models_edit_add_on.subsystem_backend_manager.backend_updater(None, "midori-docker-compose.yaml", client, ver_os_info)
+        update_all = True
 
     else:
         s.log("Your username will not get passed or shared with Midori AI, it is just a way to make sure your image is safe")
@@ -773,12 +773,17 @@ def dev_setup_docker(DockerClient, compose_path, ver_os_info, containers, use_gu
         f.write(ver_info)
 
     if answerupdater == "true":
+        with open(os.path.join("files", subsystem_ver_auto_update), "w") as f:
+            f.write(ver_info)
         
         if os.path.exists(os.path.join("files", subsystem_ver_auto_update)):
             models_edit_add_on.subsystem_backend_manager.backend_updater(None, "midori-docker-compose.yaml", client, ver_os_info)
-            
-        with open(os.path.join("files", subsystem_ver_auto_update), "w") as f:
-            f.write(ver_info)
+
+
+    if update_all:
+        if os.path.exists(os.path.join("files", subsystem_ver_auto_update)):
+            models_edit_add_on.subsystem_backend_manager.backend_updater(None, "midori-docker-compose.yaml", client, ver_os_info)
+
 
 
     # s.log("All done, I am now rebooting the subsystem")
