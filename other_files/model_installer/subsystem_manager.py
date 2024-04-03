@@ -172,7 +172,7 @@ while True:
     temp_main_menu_dash = dash * main_menu_dash
 
     s.clear_window(ver_os_info)
-    s.check_for_subsystem_update(ver_os_info, ver_info, DockerClient, compose_path, containers, use_gui, sg, client, ver_info, layout, client_openai, 1234)
+    s.check_for_subsystem_update(ver_os_info, ver_info, DockerClient, compose_path, containers, use_gui, sg, client, ver_info, layout, client_openai, 1234, subsystem_file_name)
     s.clear_window(ver_os_info)
     s.log(blank_line)
     s.log(main_menu_text_done)

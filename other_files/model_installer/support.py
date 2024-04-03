@@ -144,7 +144,7 @@ def check_for_subsystem_update(ver_os_info, ver_info, DockerClient, compose_path
         log(f"-----------------------------------------------------------------------------------------------")
         log(f"A subsystem update is available. Auto updating...")
         log(f"-----------------------------------------------------------------------------------------------")
-        docker_add_on.dev_setup_docker(DockerClient, compose_path, ver_os_info, containers, use_gui, sg, client, localai_ver_number, layout, client_openai, discord_id)
+        docker_add_on.dev_setup_docker(DockerClient, compose_path, ver_os_info, containers, use_gui, sg, client, localai_ver_number, layout, client_openai, discord_id, subsystem_file_name)
 
             
 
