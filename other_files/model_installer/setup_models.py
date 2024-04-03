@@ -1063,8 +1063,9 @@ class localai_model_manager:
 
                 huggingface_model_install = input("Paste Requested huggingface URL: ")
                 huggingface_model_install = huggingface_model_install.replace("https://huggingface.co/", "")
-                huggingface_model_install = huggingface_model_install.replace("/resolve/main/", "")
+                huggingface_model_install = huggingface_model_install.replace("/resolve/main", "")
                 huggingface_model_install = huggingface_model_install.replace("?download=true", "")
+                #https://huggingface.co/mlabonne/gemma-7b-it-GGUF/resolve/main/gemma-7b-it.Q2_K.gguf?download=true
 
                 print(str(huggingface_model_install))
 
