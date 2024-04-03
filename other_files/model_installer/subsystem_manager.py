@@ -44,7 +44,7 @@ answer_backup_compose ="no"
 
 ver_info = "changemelunaplease"
 
-subsystem_file_name = ""
+subsystem_file_name = "subsystem_ver_8.subsystemram"
 
 ver_file_name = "midori_program_ver.txt"
 
