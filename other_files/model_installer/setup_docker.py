@@ -773,11 +773,13 @@ def dev_setup_docker(DockerClient, compose_path, ver_os_info, containers, use_gu
         f.write(ver_info)
 
     if answerupdater == "true":
+        
+        if os.path.exists(os.path.join("files", subsystem_ver_auto_update)):
+            models_edit_add_on.subsystem_backend_manager.backend_updater(None, "midori-docker-compose.yaml", client, ver_os_info)
+            
         with open(os.path.join("files", subsystem_ver_auto_update), "w") as f:
             f.write(ver_info)
 
-    if os.path.exists(os.path.join("files", subsystem_ver_auto_update)):
-        models_edit_add_on.subsystem_backend_manager.backend_updater(None, "midori-docker-compose.yaml", client, ver_os_info)
 
     # s.log("All done, I am now rebooting the subsystem")
     # container.restart()
