@@ -929,6 +929,23 @@ class localai_model_manager:
                 named_docker = container.name
                 s.log(f"Midori AI Subsystem linked to {named_docker}")
                 return named_docker, container
+            
+        os.system("docker ps")
+
+        s.log(f"Switching to manually typed mode, please enter the name of the docker image you are wishing to fork into ({docker_name}).")
+        docker_name_manual = input("Enter Docker Image Name: ")
+
+        for container in containers:
+            s.log(f"Checking Name: {container.name}, ID: {container.id}")
+
+            # Check if there is a container with a name containing `service_name`
+            if docker_name_manual in str(container.name):
+                # Get the container object
+                s.log(f"Found {docker_name}, Linking the Subsystem to: {container.name} / {container.id}")
+                container = self.client.containers.get(container.name)
+                named_docker = container.name
+                s.log(f"Midori AI Subsystem linked to {named_docker}")
+                return named_docker, container
 
         s.log(f"I could not find {docker_name}... is that installed?")
         input("Press Enter to go back to the menu: ")

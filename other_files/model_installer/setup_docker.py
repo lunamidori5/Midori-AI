@@ -505,18 +505,18 @@ def change_docker(DockerClient, compose_path, ver_os_info, containers, use_gui, 
                 s.log(f"Error occurred while running docker-compose: {e}")
 
 def dev_setup_docker(DockerClient, compose_path, ver_os_info, containers, use_gui, sg, client, ver_info, layout, client_openai, discord_id):
+    import edit_models as models_edit_add_on
     
     CPUCORES = 1
     GPUUSE = False
     BOTHUSE = False
     setgpu = False
     subsystem_ver_str = "subsystem_2-0.ram"
+    subsystem_ver_auto_update = "subsystem_auto_update.ram"
     user_name = "placeholder"
     base_image_name = "lunamidori5/midori_ai_subsystem"
 
     docker_compose_yaml = "midori-docker-compose.yaml"
-
-    s.log(f"Skipping subsystem check, will auto purge if its installed...")
 
     try:
         gpus = GPUtil.getGPUs()
@@ -545,6 +545,10 @@ def dev_setup_docker(DockerClient, compose_path, ver_os_info, containers, use_gu
         else:
             GPUUSE = True
             BOTHUSE = True
+
+        if os.path.exists(os.path.join("files", subsystem_ver_auto_update)):
+            models_edit_add_on.subsystem_backend_manager.backend_updater(None, "midori-docker-compose.yaml", client, ver_os_info)
+
     else:
         s.log("Your username will not get passed or shared with Midori AI, it is just a way to make sure your image is safe")
 
@@ -572,6 +576,23 @@ def dev_setup_docker(DockerClient, compose_path, ver_os_info, containers, use_gu
         if answerbasic == "false":
             s.log("Alright then ill go ahead and exit! Thank you!")
             exit()
+
+        s.clear_window(ver_os_info)
+
+        question = "Would you like me to auto up the backends that are installed in the Subsystem?: "
+        valid_answers = ["yes", "no", "true", "false"]
+        
+        context_temp = f"The user was asked if they would like to auto update the backends that are installed in the Midori AI Docker Subsystem. This is a yes or no question. Tell the user to type ``yes`` for most usecases"
+            
+        answerupdater = s.check_str(question, valid_answers, use_gui, layout, sg, context_temp, client_openai)
+
+        if answerupdater.lower() == "no":
+            answerupdater = "False"
+
+        if answerupdater.lower() == "yes":
+            answerupdater = "True"
+
+        answerupdater = answerupdater.lower()
 
         s.clear_window(ver_os_info)
 
@@ -749,6 +770,10 @@ def dev_setup_docker(DockerClient, compose_path, ver_os_info, containers, use_gu
 
     with open(os.path.join("files", subsystem_ver_str), "w") as f:
         f.write(ver_info)
+
+    if answerupdater == "true":
+        with open(os.path.join("files", subsystem_ver_auto_update), "w") as f:
+            f.write(ver_info)
 
     # s.log("All done, I am now rebooting the subsystem")
     # container.restart()
