@@ -1066,8 +1066,12 @@ class localai_model_manager:
                 huggingface_model_install = huggingface_model_install.replace("/resolve/main/", "")
                 huggingface_model_install = huggingface_model_install.replace("?download=true", "")
 
+                print(str(huggingface_model_install))
+
                 # Split the link into parts
                 huggingface_parts = huggingface_model_install.split("/")
+
+                print(str(huggingface_parts))
 
                 # Extract the user, repo name, and model filename
                 user = huggingface_parts[0]
