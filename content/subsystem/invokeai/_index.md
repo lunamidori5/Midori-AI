@@ -1,6 +1,6 @@
 +++
 disableToc = false
-title = "Installing InvokeAI"
+title = "InvokeAI"
 weight = 5
 +++
 

@@ -1,6 +1,6 @@
 +++
 disableToc = false
-title = "Installing AnythingLLM"
+title = "AnythingLLM"
 weight = 2
 +++
 
