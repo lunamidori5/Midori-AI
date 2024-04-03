@@ -1233,7 +1233,7 @@ class localai_model_manager:
                 url = f"https://tea-cup.midori-ai.xyz/huggingface/model/{model_filename}"
 
                 # Construct the cURL command
-                curl_command = f"curl -H 'username: {user}' -H 'reponame: {repo_name}' -H 'modeltype: {model_filename}' {url}"
+                curl_command = f"curl -H 'username: {user}' -H 'reponame: {repo_name}' -H 'modeltype: {model_filename}' {url} --output {model_filename}"
 
 
         s.log(f"I am now going to install everything you requested, please wait for me to get done. As ill be running commands inside of your docker image.")
