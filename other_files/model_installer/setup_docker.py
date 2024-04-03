@@ -511,6 +511,7 @@ def dev_setup_docker(DockerClient, compose_path, ver_os_info, containers, use_gu
     GPUUSE = False
     BOTHUSE = False
     setgpu = False
+    answerupdater = "false"
     subsystem_ver_str = "subsystem_2-0.ram"
     subsystem_ver_auto_update = "subsystem_auto_update.ram"
     user_name = "placeholder"
