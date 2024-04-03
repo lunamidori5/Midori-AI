@@ -504,7 +504,7 @@ def change_docker(DockerClient, compose_path, ver_os_info, containers, use_gui, 
             except Exception as e:
                 s.log(f"Error occurred while running docker-compose: {e}")
 
-def dev_setup_docker(DockerClient, compose_path, ver_os_info, containers, use_gui, sg, client, ver_info, layout, client_openai, discord_id):
+def dev_setup_docker(DockerClient, compose_path, ver_os_info, containers, use_gui, sg, client, ver_info, layout, client_openai, discord_id, subsystem_file_name):
     import edit_models as models_edit_add_on
     
     CPUCORES = 1
@@ -513,7 +513,6 @@ def dev_setup_docker(DockerClient, compose_path, ver_os_info, containers, use_gu
     setgpu = False
     update_all = False
     answerupdater = "false"
-    subsystem_ver_str = "subsystem_2-1.ram"
     subsystem_ver_auto_update = "subsystem_auto_update.ram"
     user_name = "placeholder"
     base_image_name = "lunamidori5/midori_ai_subsystem"
@@ -535,7 +534,7 @@ def dev_setup_docker(DockerClient, compose_path, ver_os_info, containers, use_gu
 
     s.clear_window(ver_os_info)
 
-    if os.path.exists(os.path.join("files", subsystem_ver_str)):
+    if os.path.exists(os.path.join("files", subsystem_file_name)):
         s.log("You have already setup the Midori AI subsystem, Updating it!")
         with open(os.path.join("files", '1stbooleans.txt'), 'r') as f:
             GPUUSE = str(f.read())
@@ -769,7 +768,7 @@ def dev_setup_docker(DockerClient, compose_path, ver_os_info, containers, use_gu
         pull="always",
     )
 
-    with open(os.path.join("files", subsystem_ver_str), "w") as f:
+    with open(os.path.join("files", subsystem_file_name), "w") as f:
         f.write(ver_info)
 
     if answerupdater == "true":

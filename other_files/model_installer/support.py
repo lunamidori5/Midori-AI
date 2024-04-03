@@ -119,16 +119,14 @@ def check_for_update(ver_os_info, ver_info):
         exit(0)
 
 
-def check_for_subsystem_update(ver_os_info, ver_info, DockerClient, compose_path, containers, use_gui, sg, client, localai_ver_number, layout, client_openai, discord_id):
+def check_for_subsystem_update(ver_os_info, ver_info, DockerClient, compose_path, containers, use_gui, sg, client, localai_ver_number, layout, client_openai, discord_id, subsystem_file_name):
     """
     Sends a request to the server to check for a installer update.
     """
 
-    for file in os.listdir("files"):
-        if "subsystem" in file:
-            with open(os.path.join("files", file), "r") as f:
-                response = f.read()
-            break
+    if os.path.exists(os.path.join("files", subsystem_file_name)):
+        with open(os.path.join("files", subsystem_file_name), "r") as f:
+            response = f.read()
     else:
         response = "nul"
 

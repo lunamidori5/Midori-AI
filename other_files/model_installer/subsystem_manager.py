@@ -44,6 +44,8 @@ answer_backup_compose ="no"
 
 ver_info = "changemelunaplease"
 
+subsystem_file_name = ""
+
 ver_file_name = "midori_program_ver.txt"
 
 about_model_size = str("""
@@ -210,7 +212,7 @@ while True:
     
     if answerstartup == 1:
         s.data_helper_python()
-        docker_add_on.dev_setup_docker(DockerClient, compose_path, ver_os_info, containers, use_gui, sg, client, ver_info, layout, client_openai, 1234)
+        docker_add_on.dev_setup_docker(DockerClient, compose_path, ver_os_info, containers, use_gui, sg, client, ver_info, layout, client_openai, 1234, subsystem_file_name)
         input("Hit enter to go back to the main menu: ")
         s.data_helper_python()
 
