@@ -272,7 +272,7 @@ def check_str(question, valid_answers, use_gui="no", layout=None, sg=None, suppo
                     support_chat.chat_room(support_chat.request_info("system_prompt.txt"), client_openai, ver_os_info, support_context)
                 else:
                     log(f"\nInvalid input. Please enter one of the following: {', '.join(valid_answers)}\n")
-                    log(f"\nIf you need help, please type ``help`` or restart the program and type ``support`` into the main menu.\n")
+                    log(f"\nIf you need help, please type ``help``.\n")
 
 class backends_checking():
     def load_installed_backends(self, path):
