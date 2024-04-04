@@ -161,8 +161,8 @@ menu_list_opt.append("``5`` - Backend Programs (install models / edit backends)"
 menu_list_opt.append("``10`` - Enter Subsystem Commandline")
 
 temp_context = "This is the main menu they are asking for help on..."
-temp_context += f"\nThe numbers are the menu items that they can type into the main menu, it only supports ``python ints``"
-temp_context += f"\nHere is a list of options the user can choose from:\n{'\n'.join(menu_list_opt).title()}"
+temp_context += f"The numbers are the menu items that they can type into the main menu, it only supports ``python ints``"
+temp_context += f"Here is a list of options the user can choose from:\n{'\n'.join(menu_list_opt).title()}"
 
 while True:
     containers = client.containers.list()
