@@ -895,7 +895,7 @@ class backend_programs_manager:
         questionbasic = "What would you like to do?: "
         temp_cxt = "This is the menu for running backend programs in the Midori AI subsystem"
         temp_cxt += f"The numbers are the menu items that they can type into this menu, it only supports ``python ints``"
-        temp_cxt += f"Here is a list of options the user can choose from:\n{'\n'.join(menu_list_opt).title()}"
+        temp_cxt += f"Here is a list of options the user can choose from:\n{', '.join(menu_list_opt).title()}"
         answerstartup = s.check_str(questionbasic, valid_answers, "no", None, None, temp_cxt, self.client_openai)
 
         if answerstartup.lower() == "back":
