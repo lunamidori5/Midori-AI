@@ -870,23 +870,32 @@ class backend_programs_manager:
     def main_menu(self):
         localai = localai_model_manager(self.ver_os_info, self.client, self.about_model_size, self.about_model_q_size, self.client_openai)
 
-        s.log("This menu will only show items supported.")
         ### LocalAI
-        s.log("``1`` - LocalAI (Install Models)")
-        s.log("``2`` - LocalAI (Edit Models)")
-        s.log("``3`` - LocalAI (Remove Models)")
-        s.log("``4`` - LocalAI (Backup Models)")
         ### Ollma
         ### Invoke AI
         ### On Subsystem Programs
             ### Axlot
             ### Auto111
             ### Llama.cpp? (command line maybe?)
+
+        menu_list_opt = []
+        menu_list_opt.append("``1`` - LocalAI (Install Models)")
+        menu_list_opt.append("``2`` - LocalAI (Edit Models)")
+        menu_list_opt.append("``3`` - LocalAI (Remove Models)")
+        menu_list_opt.append("``4`` - LocalAI (Backup Models)")
+
+        s.log("This menu will only show items supported.")
+    
+        for line in menu_list_opt:
+            s.log(line)
+
         s.log("``back`` - Go back to the main menu")
 
         valid_answers = ["1", "2", "3", "4", "back"]
         questionbasic = "What would you like to do?: "
-        temp_cxt = "This is the menu for running backend programs in the Midori AI subsystem, please let the user know are you not trained to help with this menu..."
+        temp_cxt = "This is the menu for running backend programs in the Midori AI subsystem"
+        temp_cxt += f"\nThe numbers are the menu items that they can type into this menu, it only supports ``python ints``"
+        temp_cxt += f"\nHere is a list of options the user can choose from:\n{'\n'.join(menu_list_opt).title()}"
         answerstartup = s.check_str(questionbasic, valid_answers, "no", None, None, temp_cxt, self.client_openai)
 
         if answerstartup.lower() == "back":

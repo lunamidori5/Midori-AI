@@ -152,6 +152,18 @@ main_menu_text_len = len(main_menu_text)
 main_menu_dash = int((num_dash - main_menu_text_len) / 2)
 main_menu_text_done = f"{main_menu_dash * dash}{main_menu_text}{main_menu_dash * dash}"
 
+menu_list_opt = []
+menu_list_opt.append("``1`` - Midori AI Subsystem Repair")
+menu_list_opt.append("``2`` - Install Backends to Subsystem")
+menu_list_opt.append("``3`` - Update Backends in Subsystem")
+menu_list_opt.append("``4`` - Uninstall Backends from Subsystem")
+menu_list_opt.append("``5`` - Backend Programs (install models / edit backends)")
+menu_list_opt.append("``10`` - Enter Subsystem Commandline")
+
+temp_context = "This is the main menu they are asking for help on..."
+temp_context += f"\nThe numbers are the menu items that they can type into the main menu, it only supports ``python ints``"
+temp_context += f"\nHere is a list of options the user can choose from:\n{'\n'.join(menu_list_opt).title()}"
+
 while True:
     containers = client.containers.list()
     
@@ -182,12 +194,10 @@ while True:
     print(Fore.RED + 'DEV NOTE' + Fore.WHITE + ': Please report bugs to the github or email so we can fix them!')
     print(Fore.RED + 'DEV NOTE' + Fore.WHITE + ': Thank you all so much for helpping with the beta! <3')
     print("")
-    s.log("``1`` - Midori AI Subsystem Repair")
-    s.log("``2`` - Install Backends to Subsystem")
-    s.log("``3`` - Update Backends in Subsystem")
-    s.log("``4`` - Uninstall Backends from Subsystem")
-    s.log("``5`` - Backend Programs (install models / edit backends)")
-    s.log("``10`` - Enter Subsystem Commandline")
+    
+    for line in menu_list_opt:
+        s.log(line)
+
     s.log("Logs will be send to Midori AI's servers.")
     sd_valid_answers = ["1", "2", "3", "4", "5", "10", "chat", "exit"]
 
@@ -195,7 +205,7 @@ while True:
     
     questionbasic = "What would you like to do?: "
         
-    answerstartup = s.check_str(questionbasic, sd_valid_answers, use_gui, layout, sg, "This is the main menu they are asking for help on...", client_openai)
+    answerstartup = s.check_str(questionbasic, sd_valid_answers, use_gui, layout, sg, temp_context, client_openai)
 
     if answerstartup.lower() == "exit":
         break
