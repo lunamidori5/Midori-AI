@@ -35,15 +35,23 @@ AI Frameworks
 
 AI QNA
 
-Q: What are the advantages and disadvantages of using Docker for LocalAI, InvokeAI, AnythingLLM, Ollama, and Oobabooga?
-A: Being able to control them with out inpacting the users computer
+**Questions about the subsystem**
 
-Q: How does LM Studio differ from the other programs in terms of its deployment method?
-A: It does not offer docker support
+1. What is the purpose of the Midori AI Subsystem?
+2. How does the Midori AI Subsystem simplify AI deployment?
+3. What are the benefits of using the Midori AI Subsystem?
+4. What are the limitations of the Midori AI Subsystem?
+5. What are the recommended prerequisites for using the Midori AI Subsystem?
+6. How do I install the Midori AI Subsystem Manager?
+7. Where can I find more information about the Midori AI Subsystem?
+8. What is the difference between the Midori AI Subsystem and other AI frameworks?
+9. How does the Midori AI Subsystem handle security?
+10. What are the plans for future development of the Midori AI Subsystem?
 
-Q: What are the pros and cons of using React as a UI framework for these programs?
-A: I am not sure, some help on this would be lovely, I know python really well tho... but I would like to make it look really nice
+**Questions about the supported backends**
 
-Q: How does Google Gem EX differ from Carly V3 in terms of its capabilities and interoperability?
-A: Carly is the better AI, but she is slower and runs on my local servers. Id like to get some more servers to run her.
-Google Gem would be great use of this as other than the super hard to hit rate limit, I dont really have much risk
+1. What LLM Hosts are supported by the Midori AI Subsystem?
+2. What Photo AI Hosts are supported by the Midori AI Subsystem?
+3. What LLM FineTuning Hosts are supported by the Midori AI Subsystem?
+4. What Other Tools are supported by the Midori AI Subsystem?
+5. How do I install a specific backend on the Midori AI Subsystem?
