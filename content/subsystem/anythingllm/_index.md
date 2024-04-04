@@ -6,6 +6,8 @@ weight = 2
 
 ![Midori AI photo](https://tea-cup.midori-ai.xyz/download/Midori_subsystem_x_anythingllm.png)
 
+Here is a link to [AnythingLLM Github](https://github.com/Mintplex-Labs/anything-llm)
+
 ## Installing AnythingLLM
 
 ### Step 1

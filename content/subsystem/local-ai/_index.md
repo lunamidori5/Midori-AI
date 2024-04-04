@@ -6,6 +6,8 @@ weight = 2
 
 ![Midori AI photo](https://tea-cup.midori-ai.xyz/download/Midori_subsystem_x_localai.png)
 
+Here is a link to [LocalAI Github](https://github.com/mudler/LocalAI)
+
 ## Installing LocalAI
 
 ### Step 1

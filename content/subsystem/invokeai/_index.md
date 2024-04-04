@@ -6,6 +6,8 @@ weight = 5
 
 ![Midori AI photo](https://tea-cup.midori-ai.xyz/download/Midori_subsystem_x_invokeai.png)
 
+Here is a link to [InvokeAI Github](https://github.com/invoke-ai/InvokeAI/tree/main)
+
 ## Installing InvokeAI
 
 ### Step 1
