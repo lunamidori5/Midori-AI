@@ -15,7 +15,7 @@ Programs to support:
 
 - Other Tools:
     - AnythingLLM (Docker)
-    - Home Assistant (Docker or VM)
+    - BigAGI (Docker)
     - ChromaDB for LLM memory applications
 
 Features

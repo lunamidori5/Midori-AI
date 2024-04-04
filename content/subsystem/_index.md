@@ -20,10 +20,11 @@ Integrate your AI systems seamlessly with AnythingLLM, via:
 - [Ollama x AnythingLLM]({{%relref "subsystem" %}})
 - [Oobabooga x AnythingLLM]({{%relref "subsystem" %}})
 
-### Home Assistant
-Chat with your AI systems in Home Assistant, using:
-- [LocalAI x Home Assistant]({{%relref "subsystem" %}})
-- [Oobabooga x Home Assistant]({{%relref "subsystem" %}})
+### BigAGI
+Seamlessly integrate your AI systems with BigAGI using the following methods:
+- [LocalAI x BigAGI]({{%relref "subsystem" %}})
+- [Ollama x BigAGI]({{%relref "subsystem" %}})
+- [Oobabooga x BigAGI]({{%relref "subsystem" %}})
 
 ### Cluster Based AI
 Support the Midori AI node based cluster system!

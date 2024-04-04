@@ -132,6 +132,7 @@ Reminder to always use your computers IP address not ``localhost`` when using th
 ## ----- Install Backends -----
 - [LocalAI]({{%relref "subsystem/local-ai" %}}) - For LLM inference, Embedding, and more
 - [AnythingLLM]({{%relref "subsystem/anythingllm" %}}) - For chating with your docs using LocalAI or other LLM hosts
+- Big-AGI - For chating with your docs using LocalAI or other LLM hosts
 - [InvokeAI]({{%relref "subsystem/invokeai" %}}) - For making photos using AI models
 - Axolotl - For training your own fine tuned LLMs
 
