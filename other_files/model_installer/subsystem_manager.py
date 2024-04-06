@@ -49,12 +49,13 @@ subsystem_file_name = "subsystem_ver_8.subsystemram"
 ver_file_name = "midori_program_ver.txt"
 
 about_model_size = str("""
-7b - Recommend for lowerend PC (6gb of Vram or less / 10gb of system ram) - https://huggingface.co/TheBloke/dolphin-2.6-mistral-7B-GGUF
-8x7b - Recommended for highend PC (24gb or more Vram needed / 55gb of system ram) - https://huggingface.co/TheBloke/dolphin-2.7-mixtral-8x7b-GGUF
-70b - Recommended for high end servers only (AI card or better with 48gb Vram + 100gb system ram) - https://huggingface.co/TheBloke/dolphin-2.2-70B-GGUF
-Huggingface - All GGUF Huggingface Models are supported - https://io.midori-ai.xyz/subsystem/local-ai/install_models/
-ID - (These are models from the Midori AI model repo) - https://io.midori-ai.xyz/models/offsite_models/
-Base - Models that are baked into LocalAI - https://localai.io/basics/getting_started/
+| Command | Description |
+|7b| Recommend for lowerend PC (6gb of Vram or less / 10gb of system ram)
+|8x7b| Recommended for highend PC (24gb or more Vram needed / 55gb of system ram)
+|70b| Recommended for high end servers only (AI card or better with 48gb Vram + 100gb system ram)
+|Huggingface| All GGUF Huggingface Models are supported - https://io.midori-ai.xyz/subsystem/local-ai/install_models/
+|ID| Models from the Midori AI Repo - https://io.midori-ai.xyz/models/offsite_models/
+|Base| Models that are baked into LocalAI - https://localai.io/basics/getting_started/
 """)
 
 about_model_q_size = str("""
@@ -75,24 +76,15 @@ the Q6 model will be served instead, and so on.
 """)
 
 if os.name == 'nt':
-    os.system("del model_installer.zip")
-    os.system("del subsystem_manager.zip")
-    os.system("del model_installer.bat")
-    os.system("del model_installer.exe")
+    os.system("del model_installer.zip > nul")
+    os.system("del subsystem_manager.zip > nul")
+    os.system("del model_installer.bat > nul")
+    os.system("del model_installer.exe > nul")
 else:
-    os.system("rm -f model_installer_linux.tar.gz")
-    os.system("rm -f subsystem_manager.tar.gz")
-    os.system("rm -f model_installer")
+    os.system("rm -f model_installer_linux.tar.gz > /dev/null")
+    os.system("rm -f subsystem_manager.tar.gz > /dev/null")
+    os.system("rm -f model_installer > /dev/null")
 
-response_git = requests.get("https://github.com/lunamidori5/Midori-AI/blob/b9a74490f5b5ad0ecce56dbd7718fab3e31ece1b/data/version.json")
-
-if response_git.status_code != 200:
-    s.log(f"Github seem to be down, please try again in a moment...")
-    exit(418)
-
-current_version_git = response_git.text.strip()
-
-s.log("I am setting up a temp copy of Carly...")
 temp_response = help_add_on.request_info("temp_something_for_model_installer.txt")
 temp_keys = temp_response.strip()
 client_openai = OpenAIWrapper(base_url="https://ai.midori-ai.xyz/v1", api_key=temp_keys, timeout=6000)

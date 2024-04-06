@@ -57,7 +57,6 @@ def download_commands(site_url, discord_id):
         raise RuntimeError(f"Failed to download commands: {response.status_code}")
 
 def clear_window(ver_os):
-    log("Clearing the screen")
     if ver_os == 'windows':
         os.system('cls')
     if ver_os == 'linux':
