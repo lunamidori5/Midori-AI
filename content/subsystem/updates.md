@@ -6,6 +6,13 @@ weight = 1
 
 ![Midori AI photo](https://tea-cup.midori-ai.xyz/download/logosubsystem.png)
 
+## 4/6/2024
+- Bug Fix: Removed alot of old text
+- Bug Fix: Fixed alot of outdated text
+- Bug Fix: Removed Github heartbeat check ||(why were we checking if github was up??)||
+- **Known Bug Update**: Huggingface Downloader seems be bugged on LocalAI master... will be working on a fix
+- **Known Bug Update**: AnythingLLM docker image seems to be bugged, will be remaking its download / setup from scratch
+
 ## 4/3/2024
 - New Backend: Added Big-AGI to the subsystem! 
 - Update: Added better huggingface downloader commands server side

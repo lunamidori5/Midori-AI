@@ -35,7 +35,6 @@ sg = None
 compose_path = "localai-docker-compose.yaml"
 compose_backup_path = "docker-compose.yaml"
 
-localai_ver_number = "v2.8.0"
 base_image_name = "quay.io/go-skynet/local-ai:"
 
 user_image = ""
