@@ -22,6 +22,9 @@ The Midori AI Subsystem extends Docker's capabilities by providing a modular and
 - This program is in beta! By using it you take on risk, please see the disclaimer in the footnotes
 - The webserver has been moved to the new OS and Server!
 
+**Backend not working**
+- The "AnythingLLM" backend is having a few bugs that are only found in the subsystem, we are working on a fix!
+
 **Windows Users**
 - There seems to be a bug where the manager is adding ``140_1.dll`` to file request. We are working on a fix.
 - There seems to be false positive from virus checkers, [this file](https://tea-cup.midori-ai.xyz/download/model_installer_windows.zip) is safe to download, [check here for the code](https://github.com/lunamidori5/Midori-AI/tree/master/other_files)
@@ -139,6 +142,41 @@ Reminder to always use your computers IP address not ``localhost`` when using th
 ## ----- Model Info and Links -----
 
 Check out our [Model Repository]({{%relref "models" %}}) for info about the models used and supported!
+
+
+## ----- FAQs about the subsystem -----
+
+1. **What is the purpose of the Midori AI Subsystem?**
+   - The Midori AI Subsystem is a modular and extensible platform for managing AI workloads, providing simplified deployment, standardized configurations, and isolation for AI systems.
+
+2. **How does the Midori AI Subsystem simplify AI deployment?**
+   - The Midori AI Subsystem simplifies AI deployment by providing a streamlined and efficient way to deploy AI systems using Docker container technology, reducing complexities and ensuring consistent and predictable behavior.
+
+3. **What are the benefits of using the Midori AI Subsystem?**
+   - The benefits of using the Midori AI Subsystem include simplified deployment, standardized configurations, isolation for AI systems, and a growing library of supported backends and tools.
+
+4. **What are the limitations of the Midori AI Subsystem?**
+   - The limitations of the Midori AI Subsystem include its current beta status, potential for bugs, and reliance on Docker container technology.
+
+5. **What are the recommended prerequisites for using the Midori AI Subsystem?**
+   - The recommended prerequisites for using the Midori AI Subsystem include Docker Desktop Windows or Docker installed on other operating systems, and a dedicated folder for the Manager program.
+
+6. **How do I install the Midori AI Subsystem Manager?**
+   - You can install the Midori AI Subsystem Manager by downloading the appropriate package for your operating system from the Midori AI Subsystem website and following the installation instructions. [Click here to go to the Midori AI Subsystem website](https://io.midori-ai.xyz/subsystem/manager/)
+
+7. **Where can I find more information about the Midori AI Subsystem?**
+   - You can find more information about the Midori AI Subsystem on the Midori AI Subsystem website, which includes documentation, tutorials, and a community Discord.
+
+8. **What is the difference between the Midori AI Subsystem and other AI frameworks?**
+   - The Midori AI Subsystem differs from other AI frameworks by providing a modular and extensible platform specifically designed for managing AI workloads, offering features such as simplified deployment, standardized configurations, and isolation for AI systems.
+
+9. **How does the Midori AI Subsystem handle security?**
+   - The Midori AI Subsystem does not handle security directly, but it relies on the security features provided by the underlying Docker container technology and the specific AI backends and tools being used.
+
+10. **What are the plans for future development of the Midori AI Subsystem?**
+   - The plans for future development of the Midori AI Subsystem include adding new features, improving stability and performance, and expanding the library of supported backends and tools.
+
+> Questions from [Carly Kay](https://io.midori-ai.xyz/about-us/carly-api/)
 
 ## ----- Disclaimer -----
 

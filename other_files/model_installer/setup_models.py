@@ -1437,6 +1437,7 @@ class localai_model_manager:
         if answer1 == "huggingface":
             huggingface_commands = [
                 ["apt-get", "-y", "install", "curl"],
+                ["touch", f"{model_filename}"],
                 [f"{curl_command}"],
                 ["cp", f"{model_filename}", f"{inside_model_folder}/{model_filename}"],
                 ["rm", "-f", f"{model_filename}"],

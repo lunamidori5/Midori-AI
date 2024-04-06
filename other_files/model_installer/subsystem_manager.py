@@ -50,9 +50,9 @@ ver_file_name = "midori_program_ver.txt"
 
 about_model_size = str("""
 7b - Recommend for lowerend PC (6gb of Vram or less / 10gb of system ram) - https://huggingface.co/TheBloke/dolphin-2.6-mistral-7B-GGUF
-2x7b - Recommended for home PC (8gb or more of Vram needed / 25gb of system ram) - (**Is removed for the time being**)
 8x7b - Recommended for highend PC (24gb or more Vram needed / 55gb of system ram) - https://huggingface.co/TheBloke/dolphin-2.7-mixtral-8x7b-GGUF
 70b - Recommended for high end servers only (AI card or better with 48gb Vram + 100gb system ram) - https://huggingface.co/TheBloke/dolphin-2.2-70B-GGUF
+Huggingface - All GGUF Huggingface Models are supported - https://io.midori-ai.xyz/subsystem/local-ai/install_models/
 ID - (These are models from the Midori AI model repo) - https://io.midori-ai.xyz/models/offsite_models/
 Base - Models that are baked into LocalAI - https://localai.io/basics/getting_started/
 """)
