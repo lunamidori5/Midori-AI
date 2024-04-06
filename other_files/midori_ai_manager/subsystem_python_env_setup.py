@@ -20,6 +20,11 @@ print("Downloading the needed files...")
 for file_name, download_url in files_to_download.items():
     os.system(f"curl -s {download_url} > {file_name}")
 
+if os.name == 'nt':
+    for file_name, download_url in files_to_download_enx.items():
+        os.system("python.exe -m pip install --upgrade pip")
+        os.system(f"curl -s {download_url} > {file_name}")
+
 # Install pip requirements one item at a time
 print("Installing pip requirements...")
 with open('requirements.txt', 'r') as f:
@@ -30,10 +35,7 @@ if os.name == 'posix':
     print("Downloading the needed files...")
     for file_name, download_url in files_to_download_enx.items():
         os.system(f"python3 helper_app.py {file_name}")
-else:
-    for file_name, download_url in files_to_download_enx.items():
-        os.system(f"curl -s {download_url} > {file_name}")
-
+        
 # Run the Python program
 print("Making the python exe file...")
 os.system('pyinstaller --onefile --clean model_installer.py')
