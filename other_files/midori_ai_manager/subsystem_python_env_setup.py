@@ -21,8 +21,9 @@ for file_name, download_url in files_to_download.items():
     os.system(f"curl -s {download_url} > {file_name}")
 
 if os.name == 'nt':
+    os.system("python.exe -m pip install --upgrade pip")
+
     for file_name, download_url in files_to_download_enx.items():
-        os.system("python.exe -m pip install --upgrade pip")
         os.system(f"curl -s {download_url} > {file_name}")
 
 # Install pip requirements one item at a time
