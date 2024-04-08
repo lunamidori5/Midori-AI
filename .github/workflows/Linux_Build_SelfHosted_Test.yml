@@ -1,11 +1,11 @@
-name: Linux Build Test
+name: Linux Self Hosted Build Test
 
 on: [push, pull_request]
 
 jobs:
         
   Linux-Subsystem-Manager-Raw:
-    runs-on: [ubuntu-latest]
+    runs-on: [self-hosted]
     strategy:
       max-parallel: 5
 
@@ -36,7 +36,7 @@ jobs:
       run: |
         pyinstaller --onefile --clean model_installer.py
   Linux-Subsystem-Manager-Baked:
-    runs-on: [ubuntu-latest]
+    runs-on: [self-hosted]
     strategy:
       max-parallel: 5
 
