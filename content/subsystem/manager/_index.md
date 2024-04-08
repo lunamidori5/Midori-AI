@@ -23,7 +23,6 @@ The Midori AI Subsystem extends Docker's capabilities by providing a modular and
 - The webserver has been moved to the new OS and Server!
 
 **Known Issues**
-- The "AnythingLLM" backend is having a few bugs that are only found in the subsystem, we are working on a fix!
 - The "Huggingface Downloader" backend program is needing to be remade to work with LocalAI Master changes, we are working on a update!
 
 **Windows Users**

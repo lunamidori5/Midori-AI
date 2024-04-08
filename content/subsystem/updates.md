@@ -6,6 +6,9 @@ weight = 1
 
 ![Midori AI photo](https://tea-cup.midori-ai.xyz/download/logosubsystem.png)
 
+## 4/7/2024
+- Bug Fix: AnythingLLM docker image is now fixed server side. Thank you for your help testers!
+
 ## 4/6/2024
 - Bug Fix: Removed alot of old text
 - Bug Fix: Fixed alot of outdated text

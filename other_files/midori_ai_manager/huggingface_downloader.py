@@ -1,7 +1,8 @@
+import time
 import argparse
 import requests
 
-def download_file_from_url(url, filename, username, reponame, modeltype):
+def download_file_from_midori_ai(url, filename, username, reponame, modeltype):
     """
     Download the file from the given URL to the given file 
 
@@ -12,15 +13,21 @@ def download_file_from_url(url, filename, username, reponame, modeltype):
     reponame: The name of the Hugging Face repository to download the model from.
     modeltype: The name of the model to download.
     """
-
     headers = {
         'username': username,
         'reponame': reponame,
         'modeltype': modeltype
     }
 
-    r = requests.get(url, headers=headers, allow_redirects=True)
-    open(filename, 'wb').write(r.content)
+    for i in range(15):
+        try:
+            r = requests.get(url, headers=headers, allow_redirects=True)
+            open(filename, 'wb').write(r.content)
+            return
+        except:
+            print(f"Retrying download in 2 seconds... Attempt {i + 1}/15")
+            time.sleep(2)
+    raise Exception("Failed to download file after 15 retries.")
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
@@ -32,10 +39,10 @@ if __name__ == "__main__":
 
 
     url = args.url
-    filename = args.filename
+    filename = args.modeltype
     username = args.username
     reponame = args.reponame
     modeltype = args.modeltype
 
     # Download the file
-    download_file_from_url(url, filename, username, reponame, modeltype)
+    download_file_from_midori_ai(url, filename, username, reponame, modeltype)
