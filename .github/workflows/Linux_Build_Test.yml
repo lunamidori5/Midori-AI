@@ -58,7 +58,7 @@ jobs:
         pip install -r requirements.txt
     - name: Edit Subsystem Manager VER
       run: |
-        python python_ver.py
+        python3 python_ver.py
         rm -f python_ver.py
     - name: Make EXE file
       run: |
@@ -80,7 +80,7 @@ jobs:
     - name: Make EXE file
       run: |
         python subsystem_setup.py
-        
+
   Linux-Subsystem-Manager-SH-Baked:
     runs-on: [self-hosted]
     strategy:
@@ -92,4 +92,4 @@ jobs:
         curl -k --disable --disable-eprt -s https://raw.githubusercontent.com/lunamidori5/Midori-AI/master/other_files/midori_ai_manager/subsystem_python_env_setup.py > subsystem_setup.py
     - name: Make EXE file
       run: |
-        python subsystem_setup.py
+        python3 subsystem_setup.py
