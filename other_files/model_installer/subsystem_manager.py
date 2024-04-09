@@ -165,13 +165,13 @@ while True:
         backends_text_text_len = len(backends_text)
         backends_text_dash = int((num_dash - backends_text_text_len) / 2)
         backends_text_text_done = f"{backends_text_dash * dash}{backends_text}{backends_text_dash * dash}"
-        temp_context += f"The user has no backends installed."
+        backend_context = f"The user has no backends installed."
     else :
         backends_text = (f"~~~ You have the following backends installed: {', '.join(installed_backends).title()} ~~~")
         backends_text_text_len = len(backends_text)
         backends_text_dash = int((num_dash - backends_text_text_len) / 2)
         backends_text_text_done = f"{backends_text_dash * dash}{backends_text}{backends_text_dash * dash}"
-        temp_context += f"The user has these backends installed:\n{', '.join(installed_backends).title()}"
+        backend_context = f"The user has these backends installed:\n{', '.join(installed_backends).title()}"
 
 
     temp_main_menu_dash = dash * main_menu_dash
@@ -198,7 +198,7 @@ while True:
     
     questionbasic = "What would you like to do?: "
         
-    answerstartup = s.check_str(questionbasic, sd_valid_answers, use_gui, layout, sg, temp_context, client_openai)
+    answerstartup = s.check_str(questionbasic, sd_valid_answers, use_gui, layout, sg, temp_context + backend_context, client_openai)
 
     if answerstartup.lower() == "exit":
         break
