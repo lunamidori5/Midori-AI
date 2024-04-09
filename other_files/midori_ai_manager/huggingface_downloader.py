@@ -31,10 +31,10 @@ def download_file_from_midori_ai(url, filename, username, reponame, modeltype):
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
-    parser.add_argument("--url", type=str, required=True, help="The URL of the file to download.")
-    parser.add_argument("--username", type=str, required=True, help="The username for the Hugging Face account.")
-    parser.add_argument("--reponame", type=str, required=True, help="The name of the Hugging Face repository to download the model from.")
-    parser.add_argument("--modeltype", type=str, required=True, help="The name of the model to download.")
+    parser.add_argument("-u", "--url", type=str, required=True, help="The URL of the file to download.")
+    parser.add_argument("-un", "--username", type=str, required=True, help="The username for the Hugging Face account.")
+    parser.add_argument("-r", "--reponame", type=str, required=True, help="The name of the Hugging Face repository to download the model from.")
+    parser.add_argument("-m", "--modeltype", type=str, required=True, help="The name of the model to download.")
     args = parser.parse_args()
 
 
