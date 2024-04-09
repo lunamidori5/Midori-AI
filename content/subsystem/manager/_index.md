@@ -20,10 +20,10 @@ The Midori AI Subsystem extends Docker's capabilities by providing a modular and
 {{% notice style="warning" title="Notice" %}}
 **Warnings / Heads up**
 - This program is in beta! By using it you take on risk, please see the disclaimer in the footnotes
-- The webserver has been moved to the new OS and Server!
+- The webserver is having some random outages, we are looking into this.
 
 **Known Issues**
-- The "Huggingface Downloader" backend program is needing to be remade to work with LocalAI Master changes, we are working on a update!
+- User has to hit enter 3 times when getting out of some menus
 
 **Windows Users**
 - There seems to be a bug where the manager is adding ``140_1.dll`` to file request. We are working on a fix.
