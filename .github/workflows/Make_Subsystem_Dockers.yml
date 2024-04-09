@@ -59,12 +59,3 @@ jobs:
           push: true
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
-  
-  clean_up_docker:
-    name: Clean up docker mess
-    runs-on: self-hosted
-    needs: [push_gpu_to_hub, push_cpu_to_hub]
-    steps:
-      - name: Purging Docker Cache and Images
-        run: |
-          docker system prune -a -f
