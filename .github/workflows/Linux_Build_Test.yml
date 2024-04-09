@@ -62,7 +62,7 @@ jobs:
         rm -f python_ver.py
     - name: Make EXE file
       run: |
-        pyinstaller --onefile --clean model_installer.py
+        python3 pyinstaller --onefile --clean model_installer.py
 
   Linux-Subsystem-Manager-Baked:
     runs-on: [ubuntu-latest]
