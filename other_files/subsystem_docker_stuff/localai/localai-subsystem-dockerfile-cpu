@@ -5,9 +5,14 @@ RUN rm -rf /build/entrypoint.sh
 RUN apt-get update && apt-get install -y curl wget nano tree
 
 RUN wget --no-check-certificate --no-cache --no-cookies https://tea-cup.midori-ai.xyz/download/yaml_edit
+RUN wget --no-check-certificate --no-cache --no-cookies https://tea-cup.midori-ai.xyz/download/hf-downloader
 RUN wget --no-check-certificate --no-cache --no-cookies https://tea-cup.midori-ai.xyz/download/midori_program_requirments.txt
 RUN wget --no-check-certificate --no-cache --no-cookies https://tea-cup.midori-ai.xyz/download/midori_ai_downloader
 RUN wget --no-check-certificate --no-cache --no-cookies https://tea-cup.midori-ai.xyz/download/localai_entrypoint.sh
+
+RUN chmod 777 hf-downloader
+RUN chmod +x hf-downloader
+RUN mv hf-downloader /usr/local/bin
 
 RUN chmod 777 yaml_edit
 RUN chmod +x yaml_edit
