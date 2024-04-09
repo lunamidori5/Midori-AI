@@ -28,7 +28,7 @@ jobs:
         uses: docker/build-push-action@3b5e8027fcad23fda98b2e3ac259d8d67585f671
         with:
           context: ./other_files/subsystem_docker_stuff/localai/
-          file: /other_files/subsystem_docker_stuff/localai/localai-subsystem-dockerfile-cpu
+          file: ./other_files/subsystem_docker_stuff/localai/localai-subsystem-dockerfile-cpu
           push: true
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
@@ -37,7 +37,7 @@ jobs:
         uses: docker/build-push-action@3b5e8027fcad23fda98b2e3ac259d8d67585f671
         with:
           context: ./other_files/subsystem_docker_stuff/localai/
-          file: /other_files/subsystem_docker_stuff/localai/localai-subsystem-dockerfile-gpu
+          file: ./other_files/subsystem_docker_stuff/localai/localai-subsystem-dockerfile-gpu
           push: true
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
