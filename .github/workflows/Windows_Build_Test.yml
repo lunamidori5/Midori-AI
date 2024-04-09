@@ -4,8 +4,50 @@ on: [push, pull_request]
 
 jobs:
         
+  Python-Lint-Full:
+    runs-on: [ubuntu-latest]
+    strategy:
+      max-parallel: 5
+
+    steps:
+    - uses: actions/checkout@v4
+    - name: Set up Python 3.10
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.10'
+    - name: Add conda to system path
+      run: |
+        # $CONDA is an environment variable pointing to the root of the miniconda directory
+        echo $CONDA/bin >> $GITHUB_PATH
+    - name: Install dependencies
+      run: |
+        conda install flake8
+        pip install docker python-on-whales pyyaml PyInstaller requests py-cpuinfo pysimplegui openai colorama 
+    - name: Lint with flake8
+      run: |
+        # stop the build if there are Python syntax errors or undefined names
+        flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
+    - name: Lint with flake8 (Warnings)
+      run: |
+        flake8 . --count --exit-zero --max-complexity=10 --max-line-length=120  --statistics
+    - name: Lint with flake8 (Recommendations)
+      run: |
+        flake8 . --count --exit-zero --max-complexity=15 --max-line-length=100 --statistics
+    - name: Lint with flake8 (Best Practices)
+      run: |
+        flake8 . --count --exit-zero --max-complexity=20 --max-line-length=80 --statistics
+    - name: Lint with flake8 (Very Strict)
+      run: |
+        flake8 . --count --exit-zero --max-complexity=25 --max-line-length=60 --statistics
+    - name: Lint with flake8 (Extremely Strict)
+      run: |
+        flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
+        # exit-zero treats all errors as warnings.
+        flake8 . --count --exit-zero --max-complexity=30 --max-line-length=40 --statistics
+        
   Windows-Subsystem-Manager-Raw:
     runs-on: [windows-latest]
+    needs: Python-Lint-Full
     strategy:
       max-parallel: 5
 
@@ -35,8 +77,10 @@ jobs:
     - name: Make EXE file
       run: |
         pyinstaller --onefile --clean model_installer.py
+
   Windows-Subsystem-Manager-Baked:
     runs-on: [ubuntu-latest]
+    needs: Windows-Subsystem-Manager-Raw
     strategy:
       max-parallel: 5
 

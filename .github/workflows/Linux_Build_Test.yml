@@ -4,8 +4,50 @@ on: [push, pull_request]
 
 jobs:
         
+  Python-Lint-Full:
+    runs-on: [ubuntu-latest]
+    strategy:
+      max-parallel: 5
+
+    steps:
+    - uses: actions/checkout@v4
+    - name: Set up Python 3.10
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.10'
+    - name: Add conda to system path
+      run: |
+        # $CONDA is an environment variable pointing to the root of the miniconda directory
+        echo $CONDA/bin >> $GITHUB_PATH
+    - name: Install dependencies
+      run: |
+        conda install flake8
+        pip install docker python-on-whales pyyaml PyInstaller requests py-cpuinfo pysimplegui openai colorama 
+    - name: Lint with flake8
+      run: |
+        # stop the build if there are Python syntax errors or undefined names
+        flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
+    - name: Lint with flake8 (Warnings)
+      run: |
+        flake8 . --count --exit-zero --max-complexity=10 --max-line-length=120  --statistics
+    - name: Lint with flake8 (Recommendations)
+      run: |
+        flake8 . --count --exit-zero --max-complexity=15 --max-line-length=100 --statistics
+    - name: Lint with flake8 (Best Practices)
+      run: |
+        flake8 . --count --exit-zero --max-complexity=20 --max-line-length=80 --statistics
+    - name: Lint with flake8 (Very Strict)
+      run: |
+        flake8 . --count --exit-zero --max-complexity=25 --max-line-length=60 --statistics
+    - name: Lint with flake8 (Extremely Strict)
+      run: |
+        flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
+        # exit-zero treats all errors as warnings.
+        flake8 . --count --exit-zero --max-complexity=30 --max-line-length=40 --statistics
+        
   Linux-Subsystem-Manager-Raw:
     runs-on: [ubuntu-latest]
+    needs: Python-Lint-Full
     strategy:
       max-parallel: 5
 
@@ -35,37 +77,10 @@ jobs:
     - name: Make EXE file
       run: |
         pyinstaller --onefile --clean model_installer.py
-        
-  Linux-Subsystem-Manager-SH-Raw:
-    runs-on: [self-hosted]
-    strategy:
-      max-parallel: 5
-
-    steps:
-    - name: Download Files
-      run: |
-        curl -O https://raw.githubusercontent.com/lunamidori5/Midori-AI/master/other_files/model_installer/subsystem_manager.py
-        curl -O https://raw.githubusercontent.com/lunamidori5/Midori-AI/master/other_files/model_installer/carly_help.py
-        curl -O https://raw.githubusercontent.com/lunamidori5/Midori-AI/master/other_files/model_installer/setup_docker.py
-        curl -O https://raw.githubusercontent.com/lunamidori5/Midori-AI/master/other_files/model_installer/setup_models.py
-        curl -O https://raw.githubusercontent.com/lunamidori5/Midori-AI/master/other_files/model_installer/edit_models.py
-        curl -O https://raw.githubusercontent.com/lunamidori5/Midori-AI/master/other_files/model_installer/requirements.txt
-        curl -O https://raw.githubusercontent.com/lunamidori5/Midori-AI/master/other_files/midori_program_ver.txt
-        curl -O https://raw.githubusercontent.com/lunamidori5/Midori-AI/master/other_files/python_ver.py
-        mv subsystem_manager.py model_installer.py
-    - name: Install dependencies
-      run: |
-        pip install -r requirements.txt
-    - name: Edit Subsystem Manager VER
-      run: |
-        python3 python_ver.py
-        rm -f python_ver.py
-    - name: Make EXE file
-      run: |
-        python3 pyinstaller --onefile --clean model_installer.py
 
   Linux-Subsystem-Manager-Baked:
     runs-on: [ubuntu-latest]
+    needs: Linux-Subsystem-Manager-Raw
     strategy:
       max-parallel: 5
 
@@ -83,6 +98,7 @@ jobs:
 
   Linux-Subsystem-Manager-SH-Baked:
     runs-on: [self-hosted]
+    needs: Linux-Subsystem-Manager-Raw
     strategy:
       max-parallel: 5
 
