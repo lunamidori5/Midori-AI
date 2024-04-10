@@ -465,5 +465,3 @@ class subsystem_backend_manager:
         for item_docker in docker_commands:
             s.log(f"Running {item_docker}")
             os.system(item_docker)
-
-        input("Please press enter to go back to the main menu: ")
