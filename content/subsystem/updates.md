@@ -6,6 +6,14 @@ weight = 1
 
 ![Midori AI photo](https://tea-cup.midori-ai.xyz/download/logosubsystem.png)
 
+## 4/9/2024
+- Bug Fix: Fixed a loop in the help context
+- Bug Fix: Fixed the Huggingface downloader (Now runs as root and is its own program)
+- Bug Fix: Fixed LocalAI image being out of date
+- Bug Fix: Fixed LocalAI AIO image looping endlessly
+- Update: [Added LocalAI x Midori AI AIO images to github actions](https://github.com/lunamidori5/Midori-AI/actions/workflows/Make_Subsystem_Dockers.yml)
+- Update: Added more context to the 14B model used for the help menu
+
 ## 4/7/2024
 - Bug Fix: AnythingLLM docker image is now fixed server side. Thank you for your help testers!
 

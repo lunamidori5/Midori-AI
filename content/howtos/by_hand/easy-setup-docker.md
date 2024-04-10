@@ -79,7 +79,7 @@ It will use a container from [quay.io](https://quay.io/repository/go-skynet/loca
 {{< tabs >}}
 {{% tab title="Vanilla / CPU Images" %}}
 Recommened Midori AI - LocalAI Images
-- `lunamidori5/midori_ai_subsystem_localai_cpu:latest`
+- `lunamidori5/midori_ai_subsystem_localai_cpu:master`
 
 Base LocalAI Images
 - `master`
@@ -98,7 +98,7 @@ Images with Nvidia accelleration support
 > If you do not know which version of CUDA do you have available, you can check with `nvidia-smi` or `nvcc --version`
 
 Recommened Midori AI - LocalAI Images
-- `lunamidori5/midori_ai_subsystem_localai_gpu:latest`
+- `lunamidori5/midori_ai_subsystem_localai_gpu:master`
 
 Base LocalAI Images
 - `master-cublas-cuda11`
@@ -120,7 +120,7 @@ Images with Nvidia accelleration support
 > If you do not know which version of CUDA do you have available, you can check with `nvidia-smi` or `nvcc --version`
 
 Recommened Midori AI - LocalAI Images
-- `lunamidori5/midori_ai_subsystem_localai_gpu:latest`
+- `lunamidori5/midori_ai_subsystem_localai_gpu:master`
 
 Base LocalAI Images
 - `master-cublas-cuda12`
