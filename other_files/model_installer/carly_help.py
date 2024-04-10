@@ -75,7 +75,7 @@ def request_llm(client_openai, request_in, system_message, added_context):
 
     else:
         session_inside = []
-        temp_str_memory = "Carly has just meet these user... This is a new chat!"
+        temp_str_memory = "Carly has just met these user... This is a new chat!"
     
     s.log(temp_str_memory)
     

@@ -6,6 +6,12 @@ weight = 1
 
 ![Midori AI photo](https://tea-cup.midori-ai.xyz/download/logosubsystem.png)
 
+## 4/10/2024
+- Bug Fix: Fixed a bug that was making the user hit enter 3 times after a update
+- Bug Fix: Fixed the system message on the 14b ai that helps in the program (she can now help uninstall the subsystem if needed)
+- Update: Added new functions to the server for new function based commands for the helper ai
+- Update: Updated Invoke AI installer (if its bugged let [Luna](https://io.midori-ai.xyz/about-us/about-luna/) or [Carly](https://io.midori-ai.xyz/about-us/carly-api/) know)
+
 ## 4/9/2024
 - Bug Fix: Fixed a loop in the help context
 - Bug Fix: Fixed the Huggingface downloader (Now runs as root and is its own program)
