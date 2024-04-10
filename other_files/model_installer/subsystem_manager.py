@@ -144,7 +144,7 @@ main_menu_dash = int((num_dash - main_menu_text_len) / 2)
 main_menu_text_done = f"{main_menu_dash * dash}{main_menu_text}{main_menu_dash * dash}"
 
 menu_list_opt = []
-menu_list_opt.append("``1`` - Midori AI Subsystem Repair")
+menu_list_opt.append("``1`` - Midori AI Subsystem Repair") ##reminder to delete files when doing repair
 menu_list_opt.append("``2`` - Install Backends to Subsystem")
 menu_list_opt.append("``3`` - Update Backends in Subsystem")
 menu_list_opt.append("``4`` - Uninstall Backends from Subsystem")
