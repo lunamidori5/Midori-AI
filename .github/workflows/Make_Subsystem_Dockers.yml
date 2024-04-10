@@ -8,7 +8,7 @@ on:
 jobs:
   push_cpu_to_hub:
     name: Push LocalAI CPU to Docker Hub
-    runs-on: self-hosted
+    runs-on: Midori-AI-Server-1U
     steps:
       - uses: actions/checkout@v4
 
@@ -35,7 +35,7 @@ jobs:
 
   push_gpu_to_hub:
     name: Push LocalAI GPU to Docker Hub
-    runs-on: self-hosted
+    runs-on: Midori-AI-Server-1U
     steps:
       - uses: actions/checkout@v4
 
