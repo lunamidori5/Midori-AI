@@ -103,9 +103,15 @@ jobs:
       max-parallel: 5
 
     steps:
+    - name: Setup Miniconda
+      uses: conda-incubator/setup-miniconda@v3.0.3
+      with:
+        python-version: 3.10
+          
     - name: Download Files
       run: |
         curl -k --disable --disable-eprt -s https://raw.githubusercontent.com/lunamidori5/Midori-AI/master/other_files/midori_ai_manager/subsystem_python_env_setup.py > subsystem_setup.py
+        
     - name: Make EXE file
       run: |
         python3 subsystem_setup.py
