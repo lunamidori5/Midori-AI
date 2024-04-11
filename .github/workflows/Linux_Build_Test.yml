@@ -95,29 +95,3 @@ jobs:
     - name: Make EXE file
       run: |
         python subsystem_setup.py
-
-  Linux-Subsystem-Manager-SH-Baked:
-    runs-on: [self-hosted]
-    needs: Linux-Subsystem-Manager-Raw
-    strategy:
-      max-parallel: 5
-
-    steps:
-          
-    - name: Download Files
-      run: |
-        curl -k --disable --disable-eprt -s https://raw.githubusercontent.com/lunamidori5/Midori-AI/master/other_files/midori_ai_manager/subsystem_python_env_setup.py > subsystem_setup.py
-        
-    - name: Python Venv Start
-      run: |
-        python3 -m venv temp
-        source temp/bin/activate
-        
-    - name: Make EXE file
-      run: |
-        echo python3 subsystem_setup.py
-
-    - name: Purge Python Venv
-      run: |
-        deactivate
-        rm -rf temp
