@@ -4,7 +4,7 @@ on: [push, pull_request]
 
 jobs:
         
-  Python-Lint-Full:
+  Python-Lint-Full-Windows:
     runs-on: [ubuntu-latest]
     strategy:
       max-parallel: 5
@@ -47,7 +47,7 @@ jobs:
         
   Windows-Subsystem-Manager-Raw:
     runs-on: [windows-latest]
-    needs: Python-Lint-Full
+    needs: Python-Lint-Full-Windows
     strategy:
       max-parallel: 5
 
