@@ -110,7 +110,7 @@ jobs:
         
     - name: Python Venv Start
       run: |
-        python -m venv temp
+        python3 -m venv temp
         source temp/bin/activate
         
     - name: Make EXE file
