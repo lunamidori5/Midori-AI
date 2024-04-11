@@ -115,6 +115,7 @@ jobs:
         
     - name: Conda Activate
       run: |
+        conda init
         conda activate test
         
     - name: Make EXE file
