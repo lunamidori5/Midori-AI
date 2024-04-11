@@ -35,12 +35,12 @@ In addition to Carly, we have developed the Midori AI Subsystem, a modular and e
 
 ## Star History
 
-<a href="https://star-history.com/#lunamidori5/Midori-AI&Date">
-  <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="https://api.star-history.com/svg?repos=lunamidori5/Midori-AI&type=Date&theme=dark" />
-    <source media="(prefers-color-scheme: light)" srcset="https://api.star-history.com/svg?repos=lunamidori5/Midori-AI&type=Date" />
-    <img alt="Star History Chart" src="https://api.star-history.com/svg?repos=lunamidori5/Midori-AI&type=Date" />
-  </picture>
+<a href="https://star-history.com/#lunamidori5/Midori-AI&Timeline">
+ <picture>
+   <source media="(prefers-color-scheme: dark)" srcset="https://api.star-history.com/svg?repos=lunamidori5/Midori-AI&type=Timeline&theme=dark" />
+   <source media="(prefers-color-scheme: light)" srcset="https://api.star-history.com/svg?repos=lunamidori5/Midori-AI&type=Timeline" />
+   <img alt="Star History Chart" src="https://api.star-history.com/svg?repos=lunamidori5/Midori-AI&type=Timeline" />
+ </picture>
 </a>
 
 **Unleashing the Future of AI, Together.**
