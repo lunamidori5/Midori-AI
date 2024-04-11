@@ -33,6 +33,10 @@ jobs:
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
 
+      - name: Clean up Docker Cache
+        run: |
+          docker image prune -f
+
   push_gpu_to_hub:
     name: Push LocalAI GPU to Docker Hub
     runs-on: self-hosted
@@ -59,3 +63,7 @@ jobs:
           push: true
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
+
+      - name: Clean up Docker Cache
+        run: |
+          docker image prune -f
