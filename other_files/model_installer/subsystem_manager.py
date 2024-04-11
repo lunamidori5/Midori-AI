@@ -144,7 +144,7 @@ main_menu_dash = int((num_dash - main_menu_text_len) / 2)
 main_menu_text_done = f"{main_menu_dash * dash}{main_menu_text}{main_menu_dash * dash}"
 
 menu_list_opt = []
-menu_list_opt.append("``1`` - Midori AI Subsystem Repair") ##reminder to delete files when doing repair
+menu_list_opt.append("``1`` - Midori AI Subsystem Repair")
 menu_list_opt.append("``2`` - Install Backends to Subsystem")
 menu_list_opt.append("``3`` - Update Backends in Subsystem")
 menu_list_opt.append("``4`` - Uninstall Backends from Subsystem")
@@ -215,8 +215,8 @@ while True:
     
     if answerstartup == 1:
         s.data_helper_python()
+        s.repair_clean_up()
         docker_add_on.dev_setup_docker(DockerClient, compose_path, ver_os_info, containers, use_gui, sg, client, ver_info, layout, client_openai, 1234, subsystem_file_name)
-        input("Hit enter to go back to the main menu: ")
         s.data_helper_python()
 
     if answerstartup == 2:

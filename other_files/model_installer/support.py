@@ -61,6 +61,15 @@ def clear_window(ver_os):
         os.system('cls')
     if ver_os == 'linux':
         os.system('clear')
+        
+def repair_clean_up():
+    files = os.listdir("files")
+
+    for file in files:
+        if "ram" in file:
+            os.remove(os.path.join("files", file))
+        if "txt" in file:
+            os.remove(os.path.join("files", file))
 
 def check_for_update(ver_os_info, ver_info):
     """
