@@ -26,11 +26,14 @@ if os.name == 'nt':
         os.system(f"curl -s {download_url} > {file_name}")
 
 # Install pip requirements one item at a time
-print("Installing pip requirements...")
+lines = []
 with open('requirements.txt', 'r') as f:
     for line in f:
-        print(f"Installing " + line.strip() + " using pip")
-        os.system('pip install ' + line.strip() + ' >> build_log.txt')
+        lines.append(line.strip())
+
+for line in lines:
+    print(f"Installing " + line.strip() + " using pip")
+    os.system('pip install ' + line.strip() + ' >> build_log.txt')
 
 if os.name == 'posix':
     print("Downloading the needed files...")

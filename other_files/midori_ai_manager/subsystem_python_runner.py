@@ -20,10 +20,13 @@ for file_name, download_url in files_to_download.items():
     os.system(f"curl -s {download_url} > {file_name}")
 
 # Install pip requirements one item at a time
-print("Installing pip requirements...")
+lines = []
 with open('requirements.txt', 'r') as f:
     for line in f:
-        os.system('pip install ' + line.strip())
+        lines.append(line.strip())
+
+for line in lines:
+    os.system('pip install ' + line)
 
 if os.name == 'posix':
     print("Downloading the needed files...")
