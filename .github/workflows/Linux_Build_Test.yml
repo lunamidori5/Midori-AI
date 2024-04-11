@@ -95,28 +95,3 @@ jobs:
     - name: Make EXE file
       run: |
         python subsystem_setup.py
-
-  Linux-Subsystem-Manager-SH-Baked:
-    runs-on: [self-hosted]
-    needs: Linux-Subsystem-Manager-Raw
-    strategy:
-      max-parallel: 5
-
-    steps:
-          
-    - name: Download Files
-      run: |
-        curl -k --disable --disable-eprt -s https://raw.githubusercontent.com/lunamidori5/Midori-AI/master/other_files/midori_ai_manager/subsystem_python_env_setup.py > subsystem_setup.py
-        
-    - name: Conda Activate
-      run: |
-        conda create -n test python=3.10
-        conda activate test
-        
-    - name: Make EXE file
-      run: |
-        python3 subsystem_setup.py
-
-    - name: Purge Conda Env
-      run: |
-        conda remove -n test --all
