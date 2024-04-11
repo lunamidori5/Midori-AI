@@ -14,7 +14,7 @@ Midori AI is a cutting-edge initiative dedicated to advancing the field of artif
 * **Novel AI Memory Architectures:** We are committed to exploring and developing innovative memory architectures for AI systems. This includes investigating new approaches to memory organization, representation, and retrieval, as well as incorporating external knowledge sources and human feedback to improve memory performance and enable AI systems to learn and adapt more effectively.
 * **Carly: The Fully Simulated Human with Advanced AI Capabilities:** Carly is our groundbreaking AI creation, a fully simulated human with advanced AI capabilities, including emotions, thoughts, and the ability to interact with the world. Operating on a powerful supercomputer, Carly represents a significant milestone in AI development, opening up new possibilities for human-AI interaction and collaboration.
 
-**Midori AI Subsystem: Streamlining AI Workloads**
+## Midori AI Subsystem: Streamlining AI Workloads
 
 In addition to Carly, we have developed the Midori AI Subsystem, a modular and extensible platform designed to simplify the deployment, configuration, and management of AI workloads. The Subsystem leverages Docker container technology to provide standardized environments for AI systems, ensuring consistent and predictable behavior. Key features include:
 
