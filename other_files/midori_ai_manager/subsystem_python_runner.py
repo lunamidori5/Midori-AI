@@ -26,7 +26,7 @@ with open('requirements.txt', 'r') as f:
         lines.append(line.strip())
 
 for line in lines:
-    os.system('pip install ' + line)
+    os.system('pip install --force-reinstall ' + line)
 
 if os.name == 'posix':
     print("Downloading the needed files...")

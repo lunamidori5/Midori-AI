@@ -33,7 +33,7 @@ with open('requirements.txt', 'r') as f:
 
 for line in lines:
     print(f"Installing " + line.strip() + " using pip")
-    os.system('pip install ' + line.strip() + ' >> build_log.txt')
+    os.system('pip install --force-reinstall ' + line.strip() + ' >> build_log.txt')
 
 if os.name == 'posix':
     print("Downloading the needed files...")
