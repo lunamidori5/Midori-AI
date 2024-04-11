@@ -29,7 +29,7 @@ if os.name == 'nt':
 print("Installing pip requirements...")
 with open('requirements.txt', 'r') as f:
     for line in f:
-        print(f"Installing {line.strip()} using pip")
+        print(f"Installing " + line.strip() + " using pip")
         os.system('pip install ' + line.strip() + ' >> build_log.txt')
 
 if os.name == 'posix':

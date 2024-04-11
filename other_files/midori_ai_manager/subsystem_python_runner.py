@@ -23,7 +23,6 @@ for file_name, download_url in files_to_download.items():
 print("Installing pip requirements...")
 with open('requirements.txt', 'r') as f:
     for line in f:
-        print(f"Installing {line.strip()} using pip")
         os.system('pip install ' + line.strip())
 
 if os.name == 'posix':
