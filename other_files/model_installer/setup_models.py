@@ -1027,7 +1027,7 @@ class localai_model_manager:
 
         s.clear_window(ver_os_info)
 
-        if answerbasic == "yes":
+        if answerbasic == "true":
 
             s.clear_window(ver_os_info)
 
