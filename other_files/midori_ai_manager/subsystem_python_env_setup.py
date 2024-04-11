@@ -1,5 +1,4 @@
 import os
-import time
 
 files_to_download = {
     "requirements.txt": "https://tea-cup.midori-ai.xyz/download/midori_program_requirments.txt",
@@ -21,7 +20,7 @@ for file_name, download_url in files_to_download.items():
     os.system(f"curl -s {download_url} > {file_name}")
 
 if os.name == 'nt':
-    os.system("python.exe -m pip install --upgrade pip")
+    os.system("python.exe -m pip install --upgrade pip >> build_log.txt")
 
     for file_name, download_url in files_to_download_enx.items():
         os.system(f"curl -s {download_url} > {file_name}")
@@ -30,6 +29,7 @@ if os.name == 'nt':
 print("Installing pip requirements...")
 with open('requirements.txt', 'r') as f:
     for line in f:
+        print(f"Installing {line.strip()} using pip")
         os.system('pip install ' + line.strip() + ' >> build_log.txt')
 
 if os.name == 'posix':
