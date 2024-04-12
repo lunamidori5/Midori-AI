@@ -6,6 +6,10 @@ weight = 1
 
 ![Midori AI photo](https://tea-cup.midori-ai.xyz/download/logosubsystem.png)
 
+## 4/12/2024
+- Bug Fix: Fixed the GPU question to only show up if you have a gpu installed
+- Update: Getting ready for InvokeAI backend program to install on host
+
 ## 4/10/2024
 - Bug Fix: Fixed a bug that was making the user hit enter 3 times after a update
 - Bug Fix: Fixed the system message on the 14b ai that helps in the program (she can now help uninstall the subsystem if needed)
