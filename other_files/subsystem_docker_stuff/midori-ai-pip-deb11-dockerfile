@@ -14,9 +14,8 @@ RUN apt-get clean && apt-get autoclean
 
 RUN echo update-alternatives --install /usr/bin/python python /usr/bin/python3.10 1
 
-RUN wget --no-check-certificate --no-cache --no-cookies https://raw.githubusercontent.com/lunamidori5/Midori-AI/master/other_files/model_installer/requirements.txt
+RUN wget --no-check-certificate --no-cache --no-cookies https://raw.githubusercontent.com/lunamidori5/Midori-AI/master/other_files/midori_ai_manager/python_pip_installer.py
 
-RUN pip install -r requirements.txt
-RUN pip cache purge
+RUN python3 python_pip_installer.py
 
 CMD echo hello!

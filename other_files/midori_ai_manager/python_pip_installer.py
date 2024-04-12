@@ -1,7 +1,7 @@
 import os
 
 files_to_download = {
-    "requirements.txt": "https://tea-cup.midori-ai.xyz/download/midori_program_requirments.txt",
+    "requirements.txt": "https://raw.githubusercontent.com/lunamidori5/Midori-AI/master/other_files/model_installer/requirements.txt",
     "helper_app.py": "https://tea-cup.midori-ai.xyz/download/helper_app.py",
 }
 
