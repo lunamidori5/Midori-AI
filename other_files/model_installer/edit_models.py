@@ -1,6 +1,7 @@
 import os
 import json
 import yaml
+import GPUtil
 import requests
 
 import support as s
@@ -293,28 +294,44 @@ class subsystem_backend_manager:
         ]
         
         s.clear_window(ver_os_info)
+
+        try:
+            gpus = GPUtil.getGPUs()
+
+            # Check if any of the GPUs are NVIDIA GPUs
+            for gpu in gpus:
+                if gpu.name.startswith("NVIDIA"):
+                    setgpu = True
+                    print("Found an NVIDIA GPU: {}".format(gpu.name))
+        except:
+            setgpu = False
         
-        question = "Would you like to use GPU and CPU for these new backends?: "
-        valid_answers = ["yes", "no", "true", "false"]
-        
-        context_temp = f"The user was asked if they would like to use GPU for the Midori AI Docker Subsystem and other AI Images. This is a yes or no question."
-        context_temp = f"{context_temp}\nThis is the output of the nvidia-smi command\n{str(os.popen('nvidia-smi').read())}\nIf the user does not have cuda installed please tell them to type no"
+        if setgpu == True:
+            question = "Would you like to use GPU and CPU for these new backends?: "
+            valid_answers = ["yes", "no", "true", "false"]
             
-        answer_backend_type = s.check_str(question, valid_answers, "no", None, None, context_temp, client_openai)
+            context_temp = f"The user was asked if they would like to use GPU for the Midori AI Docker Subsystem and other AI Images. This is a yes or no question."
+            context_temp = f"{context_temp}\nThis is the output of the nvidia-smi command\n{str(os.popen('nvidia-smi').read())}\nIf the user does not have cuda installed please tell them to type no"
+                
+            answer_backend_type = s.check_str(question, valid_answers, "no", None, None, context_temp, client_openai)
 
-        if answer_backend_type.lower() == "no":
+            if answer_backend_type.lower() == "no":
+                GPUUSE = False
+
+            if answer_backend_type.lower() == "yes":
+                GPUUSE = True
+
+            if answer_backend_type.lower() == "false":
+                GPUUSE = False
+
+            if answer_backend_type.lower() == "true":
+                GPUUSE = True
+
+            s.clear_window(ver_os_info)
+        else:
             GPUUSE = False
 
-        if answer_backend_type.lower() == "yes":
-            GPUUSE = True
-
-        if answer_backend_type.lower() == "false":
-            GPUUSE = False
-
-        if answer_backend_type.lower() == "true":
-            GPUUSE = True
-        
-        s.clear_window(ver_os_info)
+            s.log(f"You are running on CPU only.")
         
         str_temp = f"``localai and anythingllm`` or ``localai, anythingllm, and invokeai``"
         s.log(f"{str(list_of_supported_backends).lower()}")
