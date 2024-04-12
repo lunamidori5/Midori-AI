@@ -1,0 +1,38 @@
+name: Make Debian 11 Docker Image
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '0 */18 * * *'
+
+jobs:
+  push_deb11_to_hub:
+    name: Push Debian 11 to Docker Hub
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Log in to Docker Hub
+        uses: docker/login-action
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+
+      - name: Extract metadata (tags, labels) for Docker
+        id: meta
+        uses: docker/metadata-action
+        with:
+          images: lunamidori5/linux_model_deb_11
+
+      - name: Build and push Debian 11 Docker Image
+        uses: docker/build-push-action
+        with:
+          context: ./other_files/subsystem_docker_stuff/
+          file: ./other_files/subsystem_docker_stuff/midori-ai-pip-deb11-dockerfile
+          push: true
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
+
+      - name: Clean up Docker Cache
+        run: |
+          docker image prune -f
