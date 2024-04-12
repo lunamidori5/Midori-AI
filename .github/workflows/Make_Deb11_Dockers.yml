@@ -13,19 +13,19 @@ jobs:
       - uses: actions/checkout@v4
 
       - name: Log in to Docker Hub
-        uses: docker/login-action
+        uses: docker/login-action@master
         with:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
 
       - name: Extract metadata (tags, labels) for Docker
         id: meta
-        uses: docker/metadata-action
+        uses: docker/metadata-action@master
         with:
           images: lunamidori5/linux_model_deb_11
 
       - name: Build and push Debian 11 Docker Image
-        uses: docker/build-push-action
+        uses: docker/build-push-action@master
         with:
           context: ./other_files/subsystem_docker_stuff/
           file: ./other_files/subsystem_docker_stuff/midori-ai-pip-deb11-dockerfile
