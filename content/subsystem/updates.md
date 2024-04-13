@@ -7,7 +7,16 @@ weight = 1
 ![Midori AI photo](https://tea-cup.midori-ai.xyz/download/logosubsystem.png)
 
 ## 4/13/2024
-- Update:
+- Update: Added InvokeAI Backend Program (Host installer)
+- Update: Added InvokeAI Backend Program (Subsystem installer)
+- Update: Site wide updates, added Big-AGI
+- Update: Updated LocalAI Page
+- Update: Updated InvokeAI Page
+- Update: Fixed Port on Big-AGI (server side, was `3000` now `33000`)
+- Update: Removed Home Assistant links
+- Update: Removed Oobabooga links
+- Update: Removed Ollama link
+- Update: Full remake of the Subsystem index page to have better working links
 
 ## 4/12/2024
 - Bug Fix: Fixed the GPU question to only show up if you have a gpu installed
