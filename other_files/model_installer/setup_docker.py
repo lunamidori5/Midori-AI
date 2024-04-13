@@ -550,10 +550,6 @@ def dev_setup_docker(DockerClient, compose_path, ver_os_info, containers, use_gu
         update_all = True
 
     else:
-        s.log("Your username will not get passed or shared with Midori AI, it is just a way to make sure your image is safe")
-
-        user_name = str(input("Please enter a Username: "))
-
         s.clear_window(ver_os_info)
 
         s.log("This is the menu to setup the Midori AI Docker Subsystem! ")
@@ -603,32 +599,33 @@ def dev_setup_docker(DockerClient, compose_path, ver_os_info, containers, use_gu
             GPUUSE = False
             BOTHUSE = False
 
-        question = "Do you have the NVIDIA Toolkit (nvidia-smi) installed? (type ``help`` if unsure): "
-        valid_answers = ["yes", "no", "true", "false"]
-        
-        context_temp = f"The user was asked if they would like to use GPU for the Midori AI Docker Subsystem and other AI Images. This is a yes or no question."
-        context_temp = f"{context_temp}\nThis is the output of the nvidia-smi command\n{str(os.popen('nvidia-smi').read())}\nIf the user does not have cuda installed please tell them to type no"
-        context_temp = f"{context_temp}\nIf the user has CUDA installed let them know what type (12 or 11) and to type ``yes``, do not give other info in this menu"
+        if setgpu == True:
+            question = "Do you have the NVIDIA Toolkit (nvidia-smi) installed? (type ``help`` if unsure): "
+            valid_answers = ["yes", "no", "true", "false"]
             
-        answer_backend_type = s.check_str(question, valid_answers, use_gui, layout, sg, context_temp, client_openai)
+            context_temp = f"The user was asked if they would like to use GPU for the Midori AI Docker Subsystem and other AI Images. This is a yes or no question."
+            context_temp = f"{context_temp}\nThis is the output of the nvidia-smi command\n{str(os.popen('nvidia-smi').read())}\nIf the user does not have cuda installed please tell them to type no"
+            context_temp = f"{context_temp}\nIf the user has CUDA installed let them know what type (12 or 11) and to type ``yes``, do not give other info in this menu"
+                
+            answer_backend_type = s.check_str(question, valid_answers, use_gui, layout, sg, context_temp, client_openai)
 
-        if answer_backend_type.lower() == "yes":
-            s.log("Okay, let me assist with checking your install...")
-            s.log("I'll try to call ``nvidia-smi`` now, if you get an error or a message about it not being found then it's not installed.")
-            rc = subprocess.check_call("nvidia-smi -q", shell=True)
-            if rc == 0:
-                s.log("Alright! You do have ``nvidia-smi`` installed and it looks good to use CUDA!")
+            if answer_backend_type.lower() == "yes":
+                s.log("Okay, let me assist with checking your install...")
+                s.log("I'll try to call ``nvidia-smi`` now, if you get an error or a message about it not being found then it's not installed.")
+                rc = subprocess.check_call("nvidia-smi -q", shell=True)
+                if rc == 0:
+                    s.log("Alright! You do have ``nvidia-smi`` installed and it looks good to use CUDA!")
+                else:
+                    s.log("It seems ``nvidia-smi`` did not run correctly, please make sure it's installed and then if it is working properly, run this setup again.")
+                    s.log("``https://developer.nvidia.com/cuda-downloads``")
+                    GPUUSE = False
+                    BOTHUSE = False
+                    input("Press enter to keep going on CPU only / Exit and install Docker CUDA to use GPU:")
             else:
-                s.log("It seems ``nvidia-smi`` did not run correctly, please make sure it's installed and then if it is working properly, run this setup again.")
-                s.log("``https://developer.nvidia.com/cuda-downloads``")
+                s.log("Okay, that's totally fine! You do not need a GPU or CUDA to run this script.")
+                s.log("Just know that having one can speed things up a little.")
                 GPUUSE = False
                 BOTHUSE = False
-                input("Press enter to keep going on CPU only / Exit and install Docker CUDA to use GPU:")
-        else:
-            s.log("Okay, that's totally fine! You do not need a GPU or CUDA to run this script.")
-            s.log("Just know that having one can speed things up a little.")
-            GPUUSE = False
-            BOTHUSE = False
         
         with open(os.path.join("files", '1stbooleans.txt'), 'w') as f:
             f.write(str(GPUUSE))
@@ -651,7 +648,6 @@ def dev_setup_docker(DockerClient, compose_path, ver_os_info, containers, use_gu
 
     if GPUUSE:
         config = {
-            "version": "3.6",
             "services": {
                 "midori_ai_subsystem": {
                     "deploy": {
@@ -676,7 +672,7 @@ def dev_setup_docker(DockerClient, compose_path, ver_os_info, containers, use_gu
                         "CPUCORES": CPUCORES,
                         "GPUUSE": GPUUSE,
                         "BOTHUSE": BOTHUSE,
-                        "USERNAME": user_name,
+                        "USERNAME": "removed_from_manager",
                         "DISCORD_ID": discord_id,
                     },  # env_file is commented out
                     "volumes": ["./files:/app/files", "midori-ai:/app/int-files", "/var/lib/docker/volumes/midoriai_midori-ai-models/_data:/app/models", "/var/lib/docker/volumes/midoriai_midori-ai-images/_data:/app/images", "/var/lib/docker/volumes/midoriai_midori-ai-audio/_data:/app/audio", "/var/run/docker.sock:/var/run/docker.sock"],
@@ -701,7 +697,6 @@ def dev_setup_docker(DockerClient, compose_path, ver_os_info, containers, use_gu
 
     else:
         config = {
-            "version": "3.6",
             "services": {
                 "midori_ai_subsystem": {
                     "image": f"{base_image_name}",
@@ -713,7 +708,7 @@ def dev_setup_docker(DockerClient, compose_path, ver_os_info, containers, use_gu
                         "CPUCORES": CPUCORES,
                         "GPUUSE": GPUUSE,
                         "BOTHUSE": BOTHUSE,
-                        "USERNAME": user_name,
+                        "USERNAME": "removed_from_manager",
                         "DISCORD_ID": discord_id,
                     },  # env_file is commented out
                     "volumes": ["./files:/app/files", "midori-ai:/app/int-files", "/var/lib/docker/volumes/midoriai_midori-ai-models/_data:/app/models", "/var/lib/docker/volumes/midoriai_midori-ai-images/_data:/app/images", "/var/lib/docker/volumes/midoriai_midori-ai-audio/_data:/app/audio", "/var/run/docker.sock:/var/run/docker.sock"],
