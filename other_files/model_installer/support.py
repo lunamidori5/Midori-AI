@@ -11,9 +11,7 @@ import platform
 
 import carly_help as support_chat
 
-from cpuinfo import get_cpu_info
 from cryptography.fernet import Fernet
-from multiprocessing import freeze_support
 
 localai_ver_number = "v2.9.0"
 base_image_name = "quay.io/go-skynet/local-ai:"
@@ -126,7 +124,6 @@ def check_for_update(ver_os_info, ver_info):
 
         exit(0)
 
-
 def check_for_subsystem_update(ver_os_info, ver_info, DockerClient, compose_path, containers, use_gui, sg, client, localai_ver_number, layout, client_openai, discord_id, subsystem_file_name):
     """
     Sends a request to the server to check for a installer update.
@@ -153,49 +150,6 @@ def check_for_subsystem_update(ver_os_info, ver_info, DockerClient, compose_path
         log(f"A subsystem update is available. Auto updating...")
         log(f"-----------------------------------------------------------------------------------------------")
         docker_add_on.dev_setup_docker(DockerClient, compose_path, ver_os_info, containers, use_gui, sg, client, localai_ver_number, layout, client_openai, discord_id, subsystem_file_name)
-
-            
-
-def check_cpu_support():
-
-    freeze_support()
-
-    info = get_cpu_info()
-
-    log(info)
-
-    info = str(info).lower()
-
-    log(info)
-
-    # Check if the CPU supports F16C
-    if "f16c" not in info:
-        log("f16c failed check")
-        return True
-
-    # Check if  the CPU supports AVX512
-    if "avx512" not in info:
-        log("avx512 failed check")
-        log("overriding failed avx512 check")
-        log("avx512 found (OVERRIDE)")
-
-    # Check if the CPU supports AVX2
-    if "avx2" not in info:
-        log("avx2 failed check")
-        return True
-
-    # Check if the CPU supports AVX
-    if "avx" not in info:
-        log("avx failed check")
-        return True
-
-    # Check if the CPU supports FMA
-    if "fma" not in info:
-        log("fma failed check")
-        return True
-
-    # If all checks pass, return False
-    return False
 
 def get_os_info():
     # Get the operating system.

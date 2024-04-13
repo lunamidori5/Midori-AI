@@ -1,9 +1,5 @@
 import os
-import json
-import yaml
 import docker
-import requests
-import datetime
 
 import support as s
 
@@ -15,9 +11,6 @@ import edit_models as models_edit_add_on
 from colorama import Fore
 
 from autogen import OpenAIWrapper
-
-from cpuinfo import get_cpu_info
-from multiprocessing import freeze_support
 
 from python_on_whales import DockerClient
 from python_on_whales import docker as docker_two
