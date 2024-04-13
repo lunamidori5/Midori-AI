@@ -22,7 +22,7 @@ use_core = "False"
 missing_cuda = True
 missing_cuda_toolkit = True
 
-layout = Nonea
+layout = None
 sg = None
 
 compose_path = "localai-docker-compose.yaml"
