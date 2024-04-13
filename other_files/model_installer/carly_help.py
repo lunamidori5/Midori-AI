@@ -8,9 +8,6 @@ import platform
 from cryptography.fernet import Fernet
 
 import support as s
-import setup_docker as docker_add_on
-import setup_models as models_add_on
-import edit_models as models_edit_add_on
 
 def download_prompt(COMMAND_SITE_COMMANDS, discord_id):
     with requests.get(COMMAND_SITE_COMMANDS, headers={"Discord-ID": discord_id}) as response:
