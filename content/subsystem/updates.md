@@ -6,6 +6,9 @@ weight = 1
 
 ![Midori AI photo](https://tea-cup.midori-ai.xyz/download/logosubsystem.png)
 
+## 4/13/2024
+- Update:
+
 ## 4/12/2024
 - Bug Fix: Fixed the GPU question to only show up if you have a gpu installed
 - Update: Getting ready for InvokeAI backend program to install on host

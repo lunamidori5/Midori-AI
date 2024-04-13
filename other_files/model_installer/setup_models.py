@@ -14,6 +14,7 @@ class backend_programs_manager:
     
     def main_menu(self):
         localai = localai_model_manager(self.ver_os_info, self.client, self.about_model_size, self.about_model_q_size, self.client_openai)
+        invokeai = invoke_ai(self.ver_os_info, self.client, self.client_openai)
 
         ### LocalAI
         ### Ollma
@@ -24,10 +25,14 @@ class backend_programs_manager:
             ### Llama.cpp? (command line maybe?)
 
         menu_list_opt = []
+        menu_list_opt.append("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
         menu_list_opt.append("``1`` - LocalAI (Install Models)")
         menu_list_opt.append("``2`` - LocalAI (Edit Models)")
         menu_list_opt.append("``3`` - LocalAI (Remove Models)")
         menu_list_opt.append("``4`` - LocalAI (Backup Models)")
+        menu_list_opt.append("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
+        menu_list_opt.append("``5`` - InvokeAI (Install in Subsystem)")
+        menu_list_opt.append("``6`` - InvokeAI (Install on Host OS)")
 
         s.log("This menu will only show items supported.")
     
@@ -36,7 +41,7 @@ class backend_programs_manager:
 
         s.log("``back`` - Go back to the main menu")
 
-        valid_answers = ["1", "2", "3", "4", "back"]
+        valid_answers = ["1", "2", "3", "4", "5", "6", "back"]
         questionbasic = "What would you like to do?: "
         temp_cxt = "This is the menu for running backend programs in the Midori AI subsystem"
         temp_cxt += f"The numbers are the menu items that they can type into this menu, it only supports ``python ints``"
@@ -59,6 +64,12 @@ class backend_programs_manager:
 
         if answerstartup == 4:
             localai.backup_models()
+
+        if answerstartup == 5:
+            invokeai.install_in_subsystem()
+
+        if answerstartup == 6:
+            invokeai.install_on_host()
 
 class localai_model_manager:
     def __init__(self, ver_os_info, client, about_model_size, about_model_q_size, client_openai):
@@ -823,3 +834,29 @@ class localai_model_manager:
                 s.log(data.decode())
 
         input("Press Enter to return")
+
+class invoke_ai:
+    def __init__(self, ver_os_info, client, client_openai):
+        self.client = client
+        self.ver_os_info = ver_os_info
+        self.client_openai = client_openai
+    
+    def install_in_subsystem(self):
+        container = s.get_subsystem(self.client)
+        container_id = container.id
+        s.clear_window(self.ver_os_info)
+        input("Press enter to start the install...")
+        os.system(f"docker exec -it {container_id} /bin/bash ./files/invokeai/InvokeAI-Installer/install.sh")
+        s.log(f"Leaving the subsystem shell, returning to host os...")
+    
+    def install_on_host(self):
+        s.clear_window(self.ver_os_info)
+        input("Press enter to start the install...")
+        
+        if self.ver_os_info == 'windows':
+            os.system('call /files/invokeai/InvokeAI-Installer/install.bat')
+        if self.ver_os_info == 'linux':
+            os.system('chmod +x ./files/invokeai/InvokeAI-Installer/install.sh')
+            os.system('./files/invokeai/InvokeAI-Installer/install.sh')
+
+        s.log(f"All done, going back to main menu")

@@ -8,60 +8,45 @@ weight = 5
 
 Here is a link to [InvokeAI Github](https://github.com/invoke-ai/InvokeAI/tree/main)
 
-## Installing InvokeAI
+## InvokeAI Installation Guide
 
-### Step 1
-Type in ``2`` to enter the ``Installer / Upgrade Menu``
-![photo](https://tea-cup.midori-ai.xyz/download/717d3ca5-e674-4b59-ad17-176e81503040-WindowsTerminal_TbMj0Vpfza.png)
+This guide provides a comprehensive walkthrough for installing InvokeAI on your system. Please follow the instructions meticulously to ensure a successful installation.
 
-### Step 2
-Type ``yes`` or ``no`` into the menu
+### Accessing the Installation Menu
 
-### Step 3
-Type in ``invokeai`` into menu, then hit enter
-![photo](https://tea-cup.midori-ai.xyz/download/671a0d7c-1733-4fee-8252-d2b8802cc56b-WindowsTerminal_4vGbw3cCvX.png)
+1. From the main menu, enter option `2` to access the "Installer/Upgrade Menu".
 
-### Step 4
-Go back to the main menu and type ``10``
-![photo](https://tea-cup.midori-ai.xyz/download/fd7d889e-b3a9-4b32-82d1-348c89c3253b-WindowsTerminal_yh2LURCGqN.png)
+### Initiating InvokeAI Installation
 
-### Step 5
-Type in ``cd files/invokeai/InvokeAI-Installer/`` press enter. Then type in ``./install.sh``. 
-**We recommend installing InvokeAI to the ``/app/files/invokeai/data`` folder for easyer updating and uninstalling**
-![photo](https://tea-cup.midori-ai.xyz/download/c32e72b1-4b30-4d4e-8727-720e139d99e2-WindowsTerminal_r9pRd5nK7j.png)
-![photo](https://tea-cup.midori-ai.xyz/download/a882c5d1-f4db-46f0-8b61-0d739d6bb7ec-WindowsTerminal_L1KFCCRi2z.png)
+1. Within the "Installer/Upgrade Menu", if requested to type something to proceed type `yes`.
+2. Initiate the download process by typing `invokeai` and pressing Enter.
 
-### Step 6
-Do the InvokeAI installer, if you need help reach out on [Discord](https://discord.gg/xdgCx3VyHU) or [Email](mailto:contact-us@midori-ai.xyz) us!
+### Navigating to Backend Programs
 
-### Step 6.2
-Your patience is greatly appreciated as the installation process may appear inactive at times. Please be assured that significant progress is being made behind the scenes. As a reference, here is a snapshot of the program's current status during installation. Please refrain from interrupting the process to ensure its successful completion.
-![photo](https://tea-cup.midori-ai.xyz/download/f38e22d8-21e9-45fb-aa0f-e44a21615214-WindowsTerminal_SzwsQPABsv.png)
+1. Return to the main menu and select option `5` to access the "Backend Programs Menu".
 
-## Starting the WebServer
+### Selecting Installation Method
 
-### Step 1
+1. Choose the appropriate installation method based on your hardware configuration:
+    * **Option 5:** Recommended for systems with Nvidia GPUs.
+    * **Option 6:** Recommended for systems without Nvidia GPUs.
 
-On the main menu, type `10`.
+### Executing the Installation Script
 
-![photo](https://tea-cup.midori-ai.xyz/download/fd7d889e-b3a9-4b32-82d1-348c89c3253b-WindowsTerminal_yh2LURCGqN.png)
+1. The installer will be executed after you press ``enter``
 
-### Step 2
+### Installation Process
 
-Navigate to the InvokeAI installation directory. In this demo, we installed it  in `files/invokeai/data/`. So, we would type `cd files/invokeai/data/` into that folder.
+1. The InvokeAI installer will guide you through the remaining steps. Should you require assistance, our support channels are available:
+    * **Discord:** https://discord.gg/xdgCx3VyHU
+    * **Email:** [Email Us](mailto:contact-us@midori-ai.xyz)
 
-![photo](https://tea-cup.midori-ai.xyz/download/e9493ced-2af2-4fb7-af65-1e0e96262b92-WindowsTerminal_xZrUyGmzj4.png)
+**Note:** The installation process may appear inactive at times; however, rest assured that progress is being made. Please refrain from interrupting the process to ensure its successful completion. 
 
-### Step 3
+### Support and Resources
 
-Type `./invoke.sh` and follow Invoke's menus.
+Enjoy using InvokeAI! For additional help or information, please refer to the following resources:
 
-![photo](https://tea-cup.midori-ai.xyz/download/0480bba9-ef12-4904-8b38-57610bf5297c-WindowsTerminal_gegnnUHEsj.png)
-
-### Step 4
-
-Enter your computer's IP address into your web browser with port 9090. For example, for our computer, that would be `http://192.168.10.10:9090`. You can try `http://localhost:9090` but that is not recommended when using the subsystem.
-
-### Step 5
-
-Enjoy using InvokeAI. If you need help, please reach out on our [Discord](https://discord.gg/xdgCx3VyHU) / [Email](mailto:contact-us@midori-ai.xyz); or reach out on their [Discord](https://discord.gg/invoke-ai).
+* **Midori AI Discord:** https://discord.gg/xdgCx3VyHU
+* **Midori AI Email:** [Email Us](mailto:contact-us@midori-ai.xyz)
+* **InvokeAI Discord:** https://discord.gg/invoke-ai

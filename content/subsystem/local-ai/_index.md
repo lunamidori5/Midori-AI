@@ -8,30 +8,43 @@ weight = 2
 
 Here is a link to [LocalAI Github](https://github.com/mudler/LocalAI)
 
-## Installing LocalAI
+## Installing LocalAI: A Step-by-Step Guide
 
-### Step 1
-Type ``2`` into the main menu
-![photo](https://tea-cup.midori-ai.xyz/download/ad8ff901-2263-4108-907a-1bf0c7a81686-WindowsTerminal_RthdIfnXy1.png)
+This guide will walk you through the process of installing LocalAI on your system. Please follow the steps carefully for a successful installation.
 
-### Step 2
-Type ``yes`` or ``no`` into the menu
+### Step 1: Initiate Installation
 
-### Step 3
-Type in ``localai`` into menu, then hit enter
-![photo](https://tea-cup.midori-ai.xyz/download/4733d5ce-dce9-409f-92e1-02829bb6465e-WindowsTerminal_27HaKqLYqz.png)
+1. From the main menu, enter the option `2` to begin the installation process.
+2. You will be prompted with a visual confirmation. 
 
-### Step 4
-Wait 10 to 30 mins for LocalAI to fully set it self up
-**Do not restart or send LocalAI requests at this time**
-![photo](https://tea-cup.midori-ai.xyz/download/0a4e25ed-0efa-47af-944b-31320482ae89-WindowsTerminal_oQeiSVBJXq.png)
 
-### Step 5
-Enjoy your new copy of LocalAI! LocalAI is running on port ``38080``
+### Step 2: Confirm GPU Backend
 
-{{% notice style="info" title="Notice" %}}
-- Reminder to always use your computers IP address not ``localhost`` 
-- IE: ``192.168.10.10:38080/v1`` or ``192.168.1.3:38080/v1``
+1. Respond to the prompt with either `yes` or `no` to proceed with GPU support or CPU support only, respectively.
+
+### Step 3: Confirm LocalAI installation
+
+1. Type `localai` into the menu and press Enter to start the LocalAI installation. 
+
+
+### Step 4: Wait for Setup Completion
+
+1. LocalAI will now automatically configure itself. This process may take approximately 10 to 30 minutes.
+2. **Important:** Please do not restart your system or attempt to send requests to LocalAI during this setup phase.
+
+
+### Step 5: Access LocalAI
+
+1. Once the setup is complete, you can access LocalAI on port `38080`.
+
+{{% notice style="info" title="Important Notes" %}}
+* Remember to use your computer's IP address instead of `localhost` when accessing LocalAI. For example, you would use `192.168.10.10:38080/v1` or `192.168.1.3:38080/v1` depending on your network configuration.
 {{% /notice %}}
 
-If you need help, please reach out on our [Discord](https://discord.gg/xdgCx3VyHU) / [Email](mailto:contact-us@midori-ai.xyz); or reach out on their [Discord](https://discord.gg/AHEt8BEwzG).
+### Support and Assistance
+
+If you encounter any issues or require further assistance, please feel free to reach out through the following channels:
+
+* **Midori AI Discord:** https://discord.gg/xdgCx3VyHU
+* **Midori AI Email:** [Email Us](mailto:contact-us@midori-ai.xyz)
+* **LocalAI Discord:** https://discord.gg/AHEt8BEwzG

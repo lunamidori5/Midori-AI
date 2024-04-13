@@ -23,7 +23,7 @@ The Midori AI Subsystem extends Docker's capabilities by providing a modular and
 - The webserver is having some random outages, we are looking into this.
 
 **Known Issues**
-- User has to hit enter 3 times when getting out of some menus
+- None, please report bugs to - https://github.com/lunamidori5/Midori-AI/issues
 
 **Windows Users**
 - There seems to be a bug where the manager is adding ``140_1.dll`` to file request. We are working on a fix.
