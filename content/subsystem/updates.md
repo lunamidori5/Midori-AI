@@ -7,6 +7,9 @@ weight = 1
 ![Midori AI photo](https://tea-cup.midori-ai.xyz/download/logosubsystem.png)
 
 ## 4/13/2024
+- Known Bug: Upstream changes to LocalAI is making API Keys not work, I am working on a temp fix, please use a outdated image for now.
+
+## 4/13/2024
 - Update: Added InvokeAI Backend Program (Host installer)
 - Update: Added InvokeAI Backend Program (Subsystem installer)
 - Update: Site wide updates, added Big-AGI
