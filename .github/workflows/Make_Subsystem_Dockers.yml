@@ -33,6 +33,23 @@ jobs:
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
 
+      - name: Make Sha Tags (tags, labels) for Docker
+        id: sha
+        uses: docker/metadata-action@master
+        with:
+          images: lunamidori5/midori_ai_subsystem_localai_cpu
+          tags: |
+            type=sha,enable=true,priority=100,prefix=sha-,suffix=,format=short
+
+      - name: Build and push CPU LocalAI Docker image
+        uses: docker/build-push-action@master
+        with:
+          context: ./other_files/subsystem_docker_stuff/localai/
+          file: ./other_files/subsystem_docker_stuff/localai/localai-subsystem-dockerfile-cpu
+          push: true
+          tags: ${{ steps.sha.outputs.tags }}
+          labels: ${{ steps.sha.outputs.labels }}
+
       - name: Clean up Docker Cache
         run: |
           docker image prune -f
@@ -63,6 +80,23 @@ jobs:
           push: true
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
+
+      - name: Make Sha Tags (tags, labels) for Docker
+        id: sha
+        uses: docker/metadata-action@master
+        with:
+          images: lunamidori5/midori_ai_subsystem_localai_gpu
+          tags: |
+            type=sha,enable=true,priority=100,prefix=sha-,suffix=,format=short
+
+      - name: Build and push GPU LocalAI Docker image
+        uses: docker/build-push-action@master
+        with:
+          context: ./other_files/subsystem_docker_stuff/localai/
+          file: ./other_files/subsystem_docker_stuff/localai/localai-subsystem-dockerfile-gpu
+          push: true
+          tags: ${{ steps.sha.outputs.tags }}
+          labels: ${{ steps.sha.outputs.labels }}
 
       - name: Clean up Docker Cache
         run: |
