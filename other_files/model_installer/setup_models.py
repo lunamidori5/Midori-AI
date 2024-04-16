@@ -33,6 +33,8 @@ class backend_programs_manager:
         menu_list_opt.append("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
         menu_list_opt.append("``5`` - InvokeAI (Install in Subsystem)")
         menu_list_opt.append("``6`` - InvokeAI (Install on Host OS)")
+        menu_list_opt.append("``7`` - InvokeAI (Placeholder WIP Setup Models)")
+        menu_list_opt.append("``8`` - InvokeAI (Placeholder WIP Start Webserver)")
 
         s.log("This menu will only show items supported.")
     
