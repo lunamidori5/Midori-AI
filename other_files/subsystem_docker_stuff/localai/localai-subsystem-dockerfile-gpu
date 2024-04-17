@@ -1,4 +1,4 @@
-FROM quay.io/go-skynet/local-ai:master-cublas-cuda11-ffmpeg
+FROM quay.io/go-skynet/local-ai:v2.12.4-cublas-cuda12-ffmpeg
 
 RUN rm -rf /build/entrypoint.sh
 
