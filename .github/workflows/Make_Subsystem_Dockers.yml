@@ -3,7 +3,7 @@ name: Update Mirror Image of LocalAI
 on:
   workflow_dispatch:
   schedule:
-    - cron: '0 */6 * * *'
+    - cron: '0 12 */2 * *'
 
 jobs:
   push_cpu_to_hub:
