@@ -24,6 +24,14 @@ jobs:
         with:
           images: lunamidori5/midori_ai_subsystem_localai_cpu
 
+      - name: Make Sha Tags (tags, labels) for Docker
+        id: sha
+        uses: docker/metadata-action@master
+        with:
+          images: lunamidori5/midori_ai_subsystem_localai_cpu
+          tags: |
+            type=sha,enable=true,priority=100,prefix=sha-,suffix=,format=long
+
       - name: Build and push CPU LocalAI Docker image
         uses: docker/build-push-action@master
         with:
@@ -32,14 +40,6 @@ jobs:
           push: true
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
-
-      - name: Make Sha Tags (tags, labels) for Docker
-        id: sha
-        uses: docker/metadata-action@master
-        with:
-          images: lunamidori5/midori_ai_subsystem_localai_cpu
-          tags: |
-            type=sha,enable=true,priority=100,prefix=sha-,suffix=,format=short
 
       - name: Build and push CPU LocalAI Docker image
         uses: docker/build-push-action@master
@@ -72,6 +72,14 @@ jobs:
         with:
           images: lunamidori5/midori_ai_subsystem_localai_gpu
 
+      - name: Make Sha Tags (tags, labels) for Docker
+        id: sha
+        uses: docker/metadata-action@master
+        with:
+          images: lunamidori5/midori_ai_subsystem_localai_gpu
+          tags: |
+            type=sha,enable=true,priority=100,prefix=sha-,suffix=,format=long
+
       - name: Build and push GPU LocalAI Docker image
         uses: docker/build-push-action@master
         with:
@@ -80,14 +88,6 @@ jobs:
           push: true
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
-
-      - name: Make Sha Tags (tags, labels) for Docker
-        id: sha
-        uses: docker/metadata-action@master
-        with:
-          images: lunamidori5/midori_ai_subsystem_localai_gpu
-          tags: |
-            type=sha,enable=true,priority=100,prefix=sha-,suffix=,format=short
 
       - name: Build and push GPU LocalAI Docker image
         uses: docker/build-push-action@master
