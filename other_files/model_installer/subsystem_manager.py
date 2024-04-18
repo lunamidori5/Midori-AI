@@ -180,6 +180,9 @@ while True:
     print(Fore.RED + 'DEV NOTE' + Fore.WHITE + ': Please report bugs to the github or email so we can fix them!')
     print(Fore.RED + 'DEV NOTE' + Fore.WHITE + ': Thank you all so much for helping with the beta! <3')
     print("")
+    print(Fore.RED + 'BREAKING UPDATE' + Fore.WHITE + ': If you are running the LocalAI backend please update it as soon as you can')
+    print(Fore.RED + 'BREAKING UPDATE' + Fore.WHITE + ': There was some big changes upstream, to make sure you have a stable image, please update')
+    print("")
     
     for line in menu_list_opt:
         s.log(line)

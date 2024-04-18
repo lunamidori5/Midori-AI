@@ -30,8 +30,7 @@ jobs:
         with:
           images: lunamidori5/midori_ai_subsystem_localai_cpu
           tags: |
-            type=sha,enable=true,priority=100,prefix=sha-,suffix=,format=long
-            type=raw,value={{date 'YYYYMMDD-HHmmss' tz='Asia/Tokyo'}},enable=true
+            type=sha,enable=true,priority=100,prefix={{date 'YYYYMMDD-HHmmss' tz='Asia/Tokyo'}}-sha-,suffix=,format=short
 
       - name: Build and push CPU LocalAI Docker image
         uses: docker/build-push-action@master
@@ -79,8 +78,7 @@ jobs:
         with:
           images: lunamidori5/midori_ai_subsystem_localai_gpu
           tags: |
-            type=sha,enable=true,priority=100,prefix=sha-,suffix=,format=long
-            type=raw,value={{date 'YYYYMMDD-HHmmss' tz='Asia/Tokyo'}},enable=true
+            type=sha,enable=true,priority=100,prefix={{date 'YYYYMMDD-HHmmss' tz='Asia/Tokyo'}}-sha-,suffix=,format=short
 
       - name: Build and push GPU LocalAI Docker image
         uses: docker/build-push-action@master
