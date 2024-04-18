@@ -69,7 +69,6 @@ curl -sSL https://tea-cup.midori-ai.xyz/download/model_installer_windows.zip -o 
 powershell Expand-Archive subsystem_manager.zip -DestinationPath .
 subsystem_manager.exe
 ```
-[![Windows Build Test](https://github.com/lunamidori5/Midori-AI/actions/workflows/Windows_Build_Test.yml/badge.svg?branch=master)](https://github.com/lunamidori5/Midori-AI/actions/workflows/Windows_Build_Test.yml)
 {{% /tab %}}
 
 {{% tab title="Linux / WSL" %}}
@@ -96,7 +95,6 @@ tar -xzf subsystem_manager.tar.gz
 chmod +x subsystem_manager
 ./subsystem_manager
 ```
-[![Linux Build Test](https://github.com/lunamidori5/Midori-AI/actions/workflows/Linux_Build_Test.yml/badge.svg?branch=master)](https://github.com/lunamidori5/Midori-AI/actions/workflows/Linux_Build_Test.yml)
 {{% /tab %}}
 {{% tab title="Other OS" %}}
 ### Prerequisites
