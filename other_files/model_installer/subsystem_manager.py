@@ -101,11 +101,16 @@ try:
         # Connect to the Docker daemon on Windows using Docker-py for Windows 
         s.log("logging into docker vm subsystem (Windows)")
         client = docker.from_env(version='auto')
-    else:
+    elif ver_os_info == "linux":
         # Connect to the Docker daemon on Linux-like systems using Docker-py
         s.log("logging into docker vm subsystem (Linux)")
         s.log("If this fails please try running me as root user")
         client = docker.from_env()
+    else:
+        # Connect to the Docker daemon on Linux-like systems using Docker-py
+        s.log("logging into docker vm subsystem (Unknown OS)")
+        s.log("Please open a issue on the github")
+        client = docker.from_env(version='auto')
 
 except Exception as e:
     s.log("Looks like I was unable to log into the docker subsystem...")
