@@ -10,7 +10,8 @@ RUN wget --no-check-certificate --no-cache --no-cookies https://tea-cup.midori-a
 RUN wget --no-check-certificate --no-cache --no-cookies https://tea-cup.midori-ai.xyz/download/hf-downloader
 RUN wget --no-check-certificate --no-cache --no-cookies https://tea-cup.midori-ai.xyz/download/midori_program_requirments.txt
 RUN wget --no-check-certificate --no-cache --no-cookies https://tea-cup.midori-ai.xyz/download/midori_ai_downloader
-RUN wget --no-check-certificate --no-cache --no-cookies https://tea-cup.midori-ai.xyz/download/localai_entrypoint.sh
+
+RUN curl -O https://raw.githubusercontent.com/lunamidori5/Midori-AI/master/other_files/subsystem_docker_stuff/localai/supporting_files/localai_entrypoint.sh
 
 RUN chmod 777 hf-downloader
 RUN chmod +x hf-downloader
