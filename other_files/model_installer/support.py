@@ -162,6 +162,7 @@ def get_os_info():
     elif os_info == "Linux":
         ver_os_info = "linux"
     else:
+        ver_os_info = "unknown"
         log(f"Unsupported operating system: {os_info}")
     
     return ver_os_info
