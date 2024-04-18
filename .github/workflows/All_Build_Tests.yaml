@@ -145,43 +145,10 @@ jobs:
       - name: Make EXE file
         run: |
           python subsystem_setup.py
-        
+
   Mac-Subsystem-Manager:
-    runs-on: [macos-latest]
-    needs: Python-Lint-Full
-    strategy:
-      max-parallel: 5
-
-    steps:
-      - name: Set up Python 3.10
-        uses: actions/setup-python@v5
-        with:
-          python-version: '3.10'
-      - name: Download Files
-        run: |
-          curl -O https://raw.githubusercontent.com/lunamidori5/Midori-AI/master/other_files/model_installer/subsystem_manager.py
-          curl -O https://raw.githubusercontent.com/lunamidori5/Midori-AI/master/other_files/model_installer/carly_help.py
-          curl -O https://raw.githubusercontent.com/lunamidori5/Midori-AI/master/other_files/model_installer/setup_docker.py
-          curl -O https://raw.githubusercontent.com/lunamidori5/Midori-AI/master/other_files/model_installer/setup_models.py
-          curl -O https://raw.githubusercontent.com/lunamidori5/Midori-AI/master/other_files/model_installer/edit_models.py
-          curl -O https://raw.githubusercontent.com/lunamidori5/Midori-AI/master/other_files/model_installer/requirements.txt
-          curl -O https://raw.githubusercontent.com/lunamidori5/Midori-AI/master/other_files/midori_program_ver.txt
-          curl -O https://raw.githubusercontent.com/lunamidori5/Midori-AI/master/other_files/python_ver.py
-          mv subsystem_manager.py model_installer.py 
-      - name: Install dependencies
-        run: |
-          pip install -r requirements.txt
-      - name: Edit Subsystem Manager VER
-        run: |
-          python python_ver.py
-          del python_ver.py 
-      - name: Make EXE file
-        run: |
-          pyinstaller --onefile --clean model_installer.py 
-
-  Mac-Subsystem-Manager-Baked:
     runs-on: [macos-latest] 
-    needs: Mac-Subsystem-Manager
+    needs: Python-Lint-Full
     strategy:
       max-parallel: 5
 
