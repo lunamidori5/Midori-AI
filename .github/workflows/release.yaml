@@ -7,7 +7,7 @@ jobs:
   Build-Subsystem-Manager:
     strategy:
       matrix:
-        os: [ubuntu-latest, windows-latest, macos-latest]
+        os: [ubuntu-20.04, windows-latest, macos-latest]
         python: ['3.10']
     runs-on: ${{ matrix.os }}
     steps:
@@ -29,18 +29,21 @@ jobs:
       
       - name: Build
         run: |
-          pyinstaller --onefile --distpath /tmp/artifacts/ --add-data ./other_files/midori_program_ver.txt:. ./other_files/model_installer/subsystem_manager.py
+          pyinstaller --onefile --clean --distpath /tmp/artifacts/ --add-data ./other_files/midori_program_ver.txt:. ./other_files/model_installer/subsystem_manager.py
 
       - name: 'Upload Artifact'
         uses: actions/upload-artifact@v4
         with:
           name: subsystem-manager-${{ matrix.os }}
           path: /tmp/artifacts/*
+          compression-level: 0
         
   Push-Build-To-Server:
     needs: [Build-Subsystem-Manager]
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v4
+      
       - name: Set up Python 3.10
         uses: actions/setup-python@v5
         with:
@@ -57,6 +60,21 @@ jobs:
         run: |
           ls
 
+      - name: Unzip Linux Artifacts
+        run: |
+          unzip subsystem-manager-ubuntu-
+
+      - name: Tar Linux Artifacts
+        run: |
+          tar -cvzf model_installer_linux.tar.gz subsystem_manager
+
+      - name: Download the Uploader
+        run: |
+          curl -O https://tea-cup.midori-ai.xyz/download/git_uploader.py
+
       - name: Upload Artifacts to Server
         run: |
-          echo python3.10 uploadfile -f 
+          echo "this step will fail for now..."
+          python3.10 git_uploader.py -type Linux -key ${{ secrets.UPLOADER_APIKEY }} -file "model_installer_linux.tar.gz" -filename "model_installer_linux.tar.gz"
+          python3.10 git_uploader.py -type Windows -key ${{ secrets.UPLOADER_APIKEY }} -file "subsystem-manager-windows-latest" -filename "model_installer_windows.zip"
+          python3.10 git_uploader.py -type Mac -key ${{ secrets.UPLOADER_APIKEY }} -file "subsystem-manager-macos-latest" -filename "model_installer_mac.zip"
