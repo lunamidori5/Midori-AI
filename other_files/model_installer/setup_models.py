@@ -13,28 +13,32 @@ class backend_programs_manager:
         self.about_model_q_size = about_model_q_size
     
     def main_menu(self):
-        localai = localai_model_manager(self.ver_os_info, self.client, self.about_model_size, self.about_model_q_size, self.client_openai)
-        invokeai = invoke_ai(self.ver_os_info, self.client, self.client_openai)
-
-        ### LocalAI
-        ### Ollma
-        ### Invoke AI
+        ### LocalAI (10s)
+        ### Ollma (40s)
+        ### Invoke AI (30s)
         ### On Subsystem Programs
             ### Axlot
             ### Auto111
             ### Llama.cpp? (command line maybe?)
 
         menu_list_opt = []
+
+        if self.ver_os_info == "windows":
+            menu_list_opt.append("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
+            menu_list_opt.append("``20`` - Windows Host (Backup Docker Data)")
+            menu_list_opt.append("``21`` - Windows Host (Move Docker Data)")
+            menu_list_opt.append("``22`` - Windows Host (Purge Docker Data)")
+
         menu_list_opt.append("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
-        menu_list_opt.append("``1`` - LocalAI (Install Models)")
-        menu_list_opt.append("``2`` - LocalAI (Edit Models)")
-        menu_list_opt.append("``3`` - LocalAI (Remove Models)")
-        menu_list_opt.append("``4`` - LocalAI (Backup Models)")
+        menu_list_opt.append("``10`` - LocalAI (Install Models)")
+        menu_list_opt.append("``11`` - LocalAI (Edit Models)")
+        menu_list_opt.append("``12`` - LocalAI (Remove Models)")
+        menu_list_opt.append("``13`` - LocalAI (Backup Models)")
         menu_list_opt.append("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
-        menu_list_opt.append("``5`` - InvokeAI (Install in Subsystem)")
-        menu_list_opt.append("``6`` - InvokeAI (Install on Host OS)")
-        menu_list_opt.append("``7`` - InvokeAI (Placeholder WIP Setup Models)")
-        menu_list_opt.append("``8`` - InvokeAI (Placeholder WIP Start Webserver)")
+        menu_list_opt.append("``30`` - InvokeAI (Install in Subsystem)")
+        menu_list_opt.append("``31`` - InvokeAI (Install on Host OS)")
+        menu_list_opt.append("``32`` - InvokeAI (Placeholder WIP Setup Models)")
+        menu_list_opt.append("``33`` - InvokeAI (Placeholder WIP Start Webserver)")
 
         s.log("This menu will only show items supported.")
     
@@ -43,7 +47,7 @@ class backend_programs_manager:
 
         s.log("``back`` - Go back to the main menu")
 
-        valid_answers = ["1", "2", "3", "4", "5", "6", "back"]
+        valid_answers = ["10", "11", "12", "13", "30", "31", "back"]
         questionbasic = "What would you like to do?: "
         temp_cxt = "This is the menu for running backend programs in the Midori AI subsystem"
         temp_cxt += f"The numbers are the menu items that they can type into this menu, it only supports ``python ints``"
@@ -55,23 +59,32 @@ class backend_programs_manager:
 
         answerstartup = int(answerstartup)
 
-        if answerstartup == 1:
-            localai.install_models()
+        if 9 <= answerstartup <= 20:
+            localai = localai_model_manager(self.ver_os_info, self.client, self.about_model_size, self.about_model_q_size, self.client_openai)
 
-        if answerstartup == 2:
-            localai.edit_models()
+            if answerstartup == 10:
+                localai.install_models()
 
-        if answerstartup == 3:
-            localai.remove_models()
+            if answerstartup == 11:
+                localai.edit_models()
 
-        if answerstartup == 4:
-            localai.backup_models()
+            if answerstartup == 12:
+                localai.remove_models()
 
-        if answerstartup == 5:
-            invokeai.install_in_subsystem()
+            if answerstartup == 13:
+                localai.backup_models()
 
-        if answerstartup == 6:
-            invokeai.install_on_host()
+        if 29 <= answerstartup <= 40:
+            invokeai = invoke_ai(self.ver_os_info, self.client, self.client_openai)
+
+            if answerstartup == 30:
+                invokeai.install_in_subsystem()
+
+            if answerstartup == 31:
+                invokeai.install_on_host()
+
+        if 19 <= answerstartup <= 30:
+            print("Not ready yet")
 
 class localai_model_manager:
     def __init__(self, ver_os_info, client, about_model_size, about_model_q_size, client_openai):
@@ -862,3 +875,4 @@ class invoke_ai:
             os.system('./files/invokeai/InvokeAI-Installer/install.sh')
 
         s.log(f"All done, going back to main menu")
+

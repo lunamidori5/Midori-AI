@@ -105,6 +105,7 @@ def check_for_update(ver_os_info, ver_info):
         clear_window(ver_os_info)
     else:
         bypass = "none"
+        log(f"Ver mis match, EXE ver: {ver_info} / Server ver: {current_version}")
         log(f"-----------------------------------------------------------------------------------------------")
         log(f"A update is available. Auto updating...")
         log(f"-----------------------------------------------------------------------------------------------")
