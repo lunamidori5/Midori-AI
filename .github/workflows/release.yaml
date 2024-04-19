@@ -2,14 +2,9 @@ name: 'Build and Release'
 
 on:
   workflow_dispatch:
-    inputs:
-      versionName:
-        description: "Name for this version"
-        required: true
-        type: string
 
 jobs:
-  build-manager:
+  Build-Subsystem-Manager:
     strategy:
       matrix:
         os: [ubuntu-latest, windows-latest, macos-latest]
@@ -43,10 +38,15 @@ jobs:
           name: subsystem-manager-${{ matrix.os }}
           path: /tmp/artifacts/*
         
-  create-release:
-    needs: [build-manager]
+  Push-Build-To-Server:
+    needs: [Build-Subsystem-Manager]
     runs-on: ubuntu-latest
     steps:
+      - name: Set up Python 3.10
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+
       - name: Fetch Artifacts
         uses: actions/download-artifact@v4
 
@@ -54,8 +54,6 @@ jobs:
         run: |
           ls
 
-      - name: Release
-        uses: softprops/action-gh-release@v2
-        with:
-          name: ${{ inputs.versionName }}
-          files: subsystem-manager*
+      - name: Upload Artifacts to Server
+        run: |
+          echo python3.10 uploadfile -f 
