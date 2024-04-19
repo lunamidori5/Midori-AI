@@ -1,0 +1,29 @@
+name: 'build manager executable'
+
+on:
+- workflow_dispatch
+
+jobs:
+  build-manager:
+    strategy:
+      matrix:
+        os: [windows-2022, windows-2010, ubuntu-22.04]
+        python: ['3.10']
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{matrix.python}}
+      
+      - name: Install Dependencies
+        run: |
+          pip install pyinstaller
+          pip install -r ./other_files/model_installer/requirements.txt
+      
+      - name: Build
+        run: |
+          pyinstaller --onefile ./other_files/model_installer/subsystem_manager.py
+          pyinstaller --onefile --distpath /opt/midori-ai/ ./other_files/model_installer/yaml_edit.py
+          pyinstaller --onefile --distpath /opt/midori-ai/ -n hf-downloader ./other_files/midori_ai_manager/huggingface_downloader.py
