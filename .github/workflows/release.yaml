@@ -1,0 +1,61 @@
+name: 'Build and Release'
+
+on:
+  workflow_dispatch:
+    inputs:
+      versionName:
+        description: "Name for this version"
+        required: true
+        type: string
+
+jobs:
+  build-manager:
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-latest, macos-latest]
+        python: ['3.10']
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Update Version Name
+        run: |
+          mkdir -p /tmp/artifacts
+          echo ${{ inputs.versionName }} > ./other_files/midori_program_ver.txt
+          cp ./other_files/midori_program_ver.txt /tmp/artifacts
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python }}
+      
+      - name: Install Dependencies
+        run: |
+          pip install pyinstaller
+          pip install -r ./other_files/model_installer/requirements.txt
+      
+      - name: Build
+        run: |
+          pyinstaller --onefile --distpath /tmp/artifacts/ --add-data ./other_files/midori_program_ver.txt:. ./other_files/model_installer/subsystem_manager.py
+
+      - name: 'Upload Artifact'
+        uses: actions/upload-artifact@v4
+        with:
+          name: subsystem-manager-${{ matrix.os }}
+          path: /tmp/artifacts/*
+        
+  create-release:
+    needs: [build-manager]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Fetch Artifacts
+        uses: actions/download-artifact@v4
+
+      - name: View Artifacts
+        run: |
+          ls
+
+      - name: Release
+        uses: softprops/action-gh-release@v2
+        with:
+          name: ${{ inputs.versionName }}
+          files: subsystem-manager*
