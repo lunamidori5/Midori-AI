@@ -193,12 +193,10 @@ while True:
         s.log(line)
 
     s.log("Logs will be send to Midori AI's servers.")
-    sd_valid_answers = ["1", "2", "3", "4", "5", "10", "chat", "exit"]
-
     s.log("If you need assistance with most menus, type help.")
     
     questionbasic = "What would you like to do?: "
-        
+    sd_valid_answers = ["1", "2", "3", "4", "5", "10", "chat", "exit"]
     answerstartup = s.check_str(questionbasic, sd_valid_answers, use_gui, layout, sg, temp_context + backend_context, client_openai)
 
     if answerstartup.lower() == "exit":
