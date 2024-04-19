@@ -43,7 +43,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      
+
       - name: Set up Python 3.10
         uses: actions/setup-python@v5
         with:
@@ -62,7 +62,7 @@ jobs:
 
       - name: Unzip Linux Artifacts
         run: |
-          unzip subsystem-manager-ubuntu-
+          unzip subsystem-manager-ubuntu-20.04
 
       - name: Tar Linux Artifacts
         run: |
