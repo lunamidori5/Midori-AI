@@ -943,14 +943,16 @@ class windows_wsl_moder:
         for folder in folders[1:]:
             current_path = os.path.join(current_path, folder)
             self.make_folder(current_path)
+        
+        tarfile = os.path.join(backup_folder, 'docker-desktop-data.tar')
 
         os.system(f"wsl --shutdown")
 
-        os.system(f"wsl --export docker-desktop-data {os.path.join(backup_folder, "docker-desktop-data.tar")}")
+        os.system(f"wsl --export docker-desktop-data {tarfile}")
 
         os.system("C:\\Program Files\\Docker\\Docker\\Docker Desktop.exe")
 
-        s.log(f"The docker data os was backed up to ``{os.path.join(backup_folder, "docker-desktop-data.tar")}``")
+        s.log(f"The docker data os was backed up to ``{tarfile}``")
         input("Hit Enter to go Back")
     
     def move_wsl_docker_drives(self):
