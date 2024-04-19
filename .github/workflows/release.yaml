@@ -1,4 +1,4 @@
-name: 'build manager executable'
+name: 'Build and Release'
 
 on:
   workflow_dispatch:
@@ -20,7 +20,9 @@ jobs:
 
       - name: Update Version Name
         run: |
+          mkdir -p /tmp/artifacts
           echo ${{ inputs.versionName }} > ./other_files/midori_program_ver.txt
+          cp ./other_files/midori_program_ver.txt /tmp/artifacts
 
       - uses: actions/setup-python@v5
         with:
@@ -55,5 +57,5 @@ jobs:
       - name: Release
         uses: softprops/action-gh-release@v2
         with:
-          tag_name: ${{ inputs.versionName }}
+          name: ${{ inputs.versionName }}
           files: subsystem-manager*
