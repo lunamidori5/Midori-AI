@@ -971,28 +971,31 @@ class windows_wsl_moder:
         for folder in folders[1:]:
             current_path = os.path.join(current_path, folder)
             self.make_folder(current_path)
+        
+        tarfile = os.path.join(working_folder, 'docker-desktop-data.tar')
+        tarfile2 = os.path.join(working_folder, 'docker-desktop.tar')
 
         os.system(f"wsl --shutdown")
 
         s.log("Exporting WSL Docker data to a tar archive...")
-        os.system(f"wsl --export docker-desktop-data {os.path.join(working_folder, 'docker-desktop-data.tar')}")
+        os.system(f"wsl --export docker-desktop-data {tarfile}")
 
         s.log("Unregistering the WSL Docker data distribution...")
         os.system(f"wsl --unregister docker-desktop-data")
 
         s.log("Importing WSL Docker data from the tar archive to the new location...")
-        os.system(f"wsl --import docker-desktop-data {os.path.join(working_folder)} docker-desktop-data.tar --version 2")
-        os.remove(os.path.join(working_folder, 'docker-desktop-data.tar'))
+        os.system(f"wsl --import docker-desktop-data {working_folder} docker-desktop-data.tar --version 2")
+        os.remove(tarfile)
 
         s.log("Exporting WSL Docker to a tar archive...")
-        os.system(f"wsl --export docker-desktop {os.path.join(working_folder, 'docker-desktop.tar')}")
+        os.system(f"wsl --export docker-desktop {tarfile2}")
 
         s.log("Unregistering the WSL Docker distribution...")
         os.system(f"wsl --unregister docker-desktop")
 
         s.log("Importing WSL Docker from the tar archive to the new location...")
-        os.system(f"wsl --import docker-desktop {os.path.join(working_folder)} docker-desktop.tar --version 2")
-        os.remove(os.path.join(working_folder, 'docker-desktop.tar'))
+        os.system(f"wsl --import docker-desktop {working_folder} docker-desktop.tar --version 2")
+        os.remove(tarfile2)
 
         os.system("C:\\Program Files\\Docker\\Docker\\Docker Desktop.exe")
 
