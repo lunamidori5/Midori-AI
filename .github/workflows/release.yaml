@@ -60,13 +60,23 @@ jobs:
         run: |
           ls
 
-      - name: Unzip Linux Artifacts
+      - name: Linux Artifacts
         run: |
-          unzip subsystem-manager-ubuntu-20.04
-
-      - name: Tar Linux Artifacts
-        run: |
+          mv subsystem-manager-ubuntu-20.04 subsystem_manager
           tar -cvzf model_installer_linux.tar.gz subsystem_manager
+          rm -f subsystem_manager
+
+      - name: Windows Artifacts
+        run: |
+          mv subsystem-manager-windows-latest subsystem_manager
+          zip -r model_installer_windows.zip subsystem_manager
+          rm -f subsystem_manager
+
+      - name: Mac Artifacts
+        run: |
+          mv subsystem-manager-macos-latest subsystem_manager
+          zip -r model_installer_mac.zip subsystem_manager
+          rm -f subsystem_manager
 
       - name: Download the Uploader
         run: |
@@ -76,5 +86,5 @@ jobs:
         run: |
           echo "this step will fail for now..."
           python3.10 git_uploader.py -type Linux -key ${{ secrets.UPLOADER_APIKEY }} -file "model_installer_linux.tar.gz" -filename "model_installer_linux.tar.gz"
-          python3.10 git_uploader.py -type Windows -key ${{ secrets.UPLOADER_APIKEY }} -file "subsystem-manager-windows-latest" -filename "model_installer_windows.zip"
-          python3.10 git_uploader.py -type Mac -key ${{ secrets.UPLOADER_APIKEY }} -file "subsystem-manager-macos-latest" -filename "model_installer_mac.zip"
+          python3.10 git_uploader.py -type Windows -key ${{ secrets.UPLOADER_APIKEY }} -file "model_installer_windows.zip" -filename "model_installer_windows.zip"
+          python3.10 git_uploader.py -type Mac -key ${{ secrets.UPLOADER_APIKEY }} -file "model_installer_mac.zip" -filename "model_installer_mac.zip"
