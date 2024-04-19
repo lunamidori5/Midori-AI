@@ -32,9 +32,9 @@ class backend_programs_manager:
 
         if self.ver_os_info == "windows":
             menu_list_opt.append("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
-            menu_list_opt.append("``20`` - Windows Host (Backup Docker Data)")
-            menu_list_opt.append("``21`` - Windows Host (Move Docker Data)")
-            menu_list_opt.append("``22`` - Windows Host (Purge Docker Data)")
+            menu_list_opt.append("``20`` - WSL (Backup Docker Data)")
+            menu_list_opt.append("``21`` - WSL (Move Docker Data)")
+            menu_list_opt.append("``22`` - WSL (Purge Docker Data)")
             #for item in windows_list:
             #    valid_answers.append(item)
         
