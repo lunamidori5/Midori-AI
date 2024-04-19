@@ -24,7 +24,7 @@ jobs:
       
       - name: Build
         run: |
-          pyinstaller --onefile --distpath /tmp/artifacts/ ./other_files/model_installer/subsystem_manager.py
+          pyinstaller --onefile --distpath /tmp/artifacts/ --add-data ./other_files/midori_program_ver.txt:. ./other_files/model_installer/subsystem_manager.py
 
       - name: View Artifacts
         run: |
