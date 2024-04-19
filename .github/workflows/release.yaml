@@ -1,4 +1,4 @@
-name: 'Build and Release'
+name: 'Build and Upload to Server'
 
 on:
   workflow_dispatch:
@@ -48,6 +48,10 @@ jobs:
 
       - name: Fetch Artifacts
         uses: actions/download-artifact@v4
+
+      - name: Install Dependencies
+        run: |
+          pip install requests
 
       - name: View Artifacts
         run: |
