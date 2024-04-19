@@ -1,7 +1,12 @@
 name: 'build manager executable'
 
 on:
-- workflow_dispatch
+  workflow_dispatch:
+    inputs:
+      versionName:
+        description: "Name for this version"
+        required: true
+        type: string
 
 jobs:
   build-manager:
@@ -13,9 +18,13 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      - name: Update Version Name
+        run: |
+          echo ${{ inputs.versionName }} > ./other_files/midori_program_ver.txt
+
       - uses: actions/setup-python@v5
         with:
-          python-version: ${{matrix.python}}
+          python-version: ${{ matrix.python }}
       
       - name: Install Dependencies
         run: |
@@ -29,7 +38,7 @@ jobs:
       - name: 'Upload Artifact'
         uses: actions/upload-artifact@v4
         with:
-          name: subsystem-manager-${{matrix.os}}
+          name: subsystem-manager-${{ matrix.os }}
           path: /tmp/artifacts/*
         
   create-release:
@@ -43,7 +52,8 @@ jobs:
         run: |
           ls
 
-      # - name: Release
-      #   uses: softprops/action-gh-release@v2
-      #   if: startsWith(github.ref, 'refs/tags/')
-      #   with:
+      - name: Release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ inputs.versionName }}
+          files: subsystem-manager*
