@@ -5,8 +5,8 @@ import support as s
 
 import carly_help as help_add_on
 import setup_docker as docker_add_on
-import setup_models as models_add_on
 import edit_models as models_edit_add_on
+import setup_models as models_add_on
 
 from version import VERSION
 

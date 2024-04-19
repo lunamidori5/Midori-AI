@@ -921,15 +921,6 @@ class windows_wsl_moder:
         self.ver_os_info = ver_os_info
         self.client_openai = client_openai
 
-    """
-    wsl --shutdown
-
-    wsl --export docker-desktop-data docker-desktop-data.tar
-
-    wsl --unregister docker-desktop-data
-
-    wsl --import docker-desktop-data e:\docker\wsl\data docker-desktop-data.tar --version 2
-    """
     def make_folder(folder_path):
         if not os.path.exists(folder_path):
             os.makedirs(folder_path)
