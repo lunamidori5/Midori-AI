@@ -26,7 +26,7 @@ if os.name == 'nt':
     for file_name, download_url in files_to_download_enx.items():
         os.system(f"curl -s {download_url} > {file_name}")
         print(f"downloaded {file_name}")
-        time.sleep(2)
+        time.sleep(15)
 
 # Install pip requirements one item at a time
 lines = []
