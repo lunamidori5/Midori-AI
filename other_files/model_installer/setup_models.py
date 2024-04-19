@@ -4,6 +4,8 @@ import requests
 
 import support as s
 
+from colorama import Fore
+
 class backend_programs_manager:
     def __init__(self, ver_os_info, client, about_model_size, about_model_q_size, client_openai):
         self.client = client
@@ -17,7 +19,7 @@ class backend_programs_manager:
         ### Ollma (40s)
         ### Invoke AI (30s)
         ### On Subsystem Programs
-            ### Axlot
+            ### Axlot (50s)
             ### Auto111
             ### Llama.cpp? (command line maybe?)
         backend_checker = s.backends_checking()
@@ -26,9 +28,13 @@ class backend_programs_manager:
         menu_list_opt = []
         valid_answers = []
 
-        windows_list = []
+        windows_list = ["20", "21", "22"]
         localai_list = ["10", "11", "12", "13"]
         invokeai_list = ["30", "31"]
+
+        if os.path.exists("debug.txt"):
+            for item in windows_list:
+                valid_answers.append(item)
 
         if self.ver_os_info == "windows":
             menu_list_opt.append("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
@@ -64,7 +70,7 @@ class backend_programs_manager:
         menu_list_opt.append("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
         valid_answers.append("back")
 
-        s.log("This menu will only show items supported and installed.")
+        s.log("This menu will only show items supported and that are installed.")
     
         for line in menu_list_opt:
             s.log(line)
@@ -73,8 +79,10 @@ class backend_programs_manager:
 
         questionbasic = "What would you like to do?: "
         temp_cxt = "This is the menu for running backend programs in the Midori AI subsystem"
-        temp_cxt += f"The numbers are the menu items that they can type into this menu, it only supports ``python ints``"
-        temp_cxt += f"Here is a list of options the user can choose from:\n{', '.join(menu_list_opt).title()}"
+        temp_cxt += f"\nThe numbers are the menu items that they can type into this menu, it only supports ``python ints``"
+        temp_cxt += f"\nHere is a list of options the user can choose from:\n{', '.join(menu_list_opt).title()}"
+        temp_cxt += f"\nIf there is nothing in that list, they dont have backends installed into the subsystem."
+        temp_cxt += f"\ntell them to type ``back`` and then hit ``2`` to install a new backend to the subsystem"
         answerstartup = s.check_str(questionbasic, valid_answers, "no", None, None, temp_cxt, self.client_openai)
 
         if answerstartup.lower() == "back":
@@ -107,7 +115,13 @@ class backend_programs_manager:
                 invokeai.install_on_host()
 
         if 19 <= answerstartup <= 30:
-            print("Not ready yet")
+            windows_wsl = windows_wsl_moder(self.ver_os_info, self.client, self.client_openai)
+
+            if answerstartup == 20:
+                windows_wsl.backup_wsl_docker_drives()
+
+            if answerstartup == 31:
+                windows_wsl.move_wsl_docker_drives()
 
 class localai_model_manager:
     def __init__(self, ver_os_info, client, about_model_size, about_model_q_size, client_openai):
@@ -890,12 +904,109 @@ class invoke_ai:
     def install_on_host(self):
         s.clear_window(self.ver_os_info)
         input("Press enter to start the install...")
+
+        installer_base = os.path.join("files", "invokeai", "InvokeAI-Installer")
         
         if self.ver_os_info == 'windows':
-            os.system('call /files/invokeai/InvokeAI-Installer/install.bat')
+            os.system(f'call {os.path.join(installer_base, "install.bat")}')
         if self.ver_os_info == 'linux':
             os.system('chmod +x ./files/invokeai/InvokeAI-Installer/install.sh')
             os.system('./files/invokeai/InvokeAI-Installer/install.sh')
 
         s.log(f"All done, going back to main menu")
+
+class windows_wsl_moder:
+    def __init__(self, ver_os_info, client, client_openai):
+        self.client = client
+        self.ver_os_info = ver_os_info
+        self.client_openai = client_openai
+
+    """
+    wsl --shutdown
+
+    wsl --export docker-desktop-data docker-desktop-data.tar
+
+    wsl --unregister docker-desktop-data
+
+    wsl --import docker-desktop-data e:\docker\wsl\data docker-desktop-data.tar --version 2
+    """
+    def make_folder(folder_path):
+        if not os.path.exists(folder_path):
+            os.makedirs(folder_path)
+    
+    def backup_wsl_docker_drives(self):
+        print("Not ready yet, the following is not ready code, if you some how run this, close the manager asap, and let Luna know")
+        input("Hit enter to nuke your wsl install: ")
+
+        print(Fore.RED + 'If you have alot of installed dockers, \nthis may take up to 2 to 6 hours, do not stop the manager once the backup has started' + Fore.WHITE)
+        print(Fore.RED + 'Do not restart docker desktop, the manager will restart it when ready' + Fore.WHITE)
+
+        s.log("Please paste the windows folder you would like to back up the docker data OS to")
+        backup_folder = os.path.normpath(str(input("Backup Folder: ")))
+
+        input("Hit enter to backup your wsl install: ")
+
+        folders = backup_folder.split(os.path.sep)
+        current_path = folders[0]
+
+        for folder in folders[1:]:
+            current_path = os.path.join(current_path, folder)
+            self.make_folder(current_path)
+
+        os.system(f"wsl --shutdown")
+
+        os.system(f"wsl --export docker-desktop-data {os.path.join(backup_folder, "docker-desktop-data.tar")}")
+
+        os.system("C:\\Program Files\\Docker\\Docker\\Docker Desktop.exe")
+
+        s.log(f"The docker data os was backed up to ``{os.path.join(backup_folder, "docker-desktop-data.tar")}``")
+        input("Hit Enter to go Back")
+    
+    def move_wsl_docker_drives(self):
+        print("Not ready yet, the following is not ready code, if you some how run this, close the manager asap, and let Luna know")
+        input("Hit enter to nuke your wsl install: ")
+
+        print(Fore.RED + 'If you have a lot of installed dockers, \nthis may take up to 2 hours, do not stop the manager once the move has started' + Fore.WHITE)
+        print(Fore.RED + 'Do not restart docker desktop, the manager will restart it when ready' + Fore.WHITE)
+
+        s.log("Requesting target folder for Docker data relocation...")
+        working_folder = os.path.normpath(str(input("Working Folder: ")))
+
+        input("Hit enter to move your wsl install: ")
+
+        folders = working_folder.split(os.path.sep)
+        current_path = folders[0]
+
+        for folder in folders[1:]:
+            current_path = os.path.join(current_path, folder)
+            self.make_folder(current_path)
+
+        os.system(f"wsl --shutdown")
+
+        s.log("Exporting WSL Docker data to a tar archive...")
+        os.system(f"wsl --export docker-desktop-data {os.path.join(working_folder, 'docker-desktop-data.tar')}")
+
+        s.log("Unregistering the WSL Docker data distribution...")
+        os.system(f"wsl --unregister docker-desktop-data")
+
+        s.log("Importing WSL Docker data from the tar archive to the new location...")
+        os.system(f"wsl --import docker-desktop-data {os.path.join(working_folder)} docker-desktop-data.tar --version 2")
+        os.remove(os.path.join(working_folder, 'docker-desktop-data.tar'))
+
+        s.log("Exporting WSL Docker to a tar archive...")
+        os.system(f"wsl --export docker-desktop {os.path.join(working_folder, 'docker-desktop.tar')}")
+
+        s.log("Unregistering the WSL Docker distribution...")
+        os.system(f"wsl --unregister docker-desktop")
+
+        s.log("Importing WSL Docker from the tar archive to the new location...")
+        os.system(f"wsl --import docker-desktop {os.path.join(working_folder)} docker-desktop.tar --version 2")
+        os.remove(os.path.join(working_folder, 'docker-desktop.tar'))
+
+        os.system("C:\\Program Files\\Docker\\Docker\\Docker Desktop.exe")
+
+        input("Hit Enter to go Back")
+    
+    def purge_wsl_docker_drives(self):
+        print("Not ready yet")
 
