@@ -63,20 +63,20 @@ jobs:
       - name: Linux Artifacts
         run: |
           mv subsystem-manager-ubuntu-20.04 subsystem_manager
-          tar -cvzf model_installer_linux.tar.gz subsystem_manager
-          rm -f subsystem_manager
+          tar -cvzf model_installer_linux.tar.gz subsystem_manager/*
+          rm -rf subsystem_manager
 
       - name: Windows Artifacts
         run: |
           mv subsystem-manager-windows-latest subsystem_manager
-          zip -r model_installer_windows.zip subsystem_manager
-          rm -f subsystem_manager
+          zip -r model_installer_windows.zip subsystem_manager/*
+          rm -rf subsystem_manager
 
       - name: Mac Artifacts
         run: |
           mv subsystem-manager-macos-latest subsystem_manager
-          zip -r model_installer_mac.zip subsystem_manager
-          rm -f subsystem_manager
+          zip -r model_installer_mac.zip subsystem_manager/*
+          rm -rf subsystem_manager
 
       - name: Download the Uploader
         run: |
