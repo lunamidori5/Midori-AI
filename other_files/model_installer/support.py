@@ -139,6 +139,9 @@ def check_for_subsystem_update(ver_os_info, ver_info, DockerClient, compose_path
     # Get the current model version.
     current_version = response.strip()
 
+    if ver_info == "development":
+        current_version = ver_info
+
     # Check if the current version is the latest version.
     clear_window(ver_os_info)
 
