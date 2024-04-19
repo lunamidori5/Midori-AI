@@ -20,34 +20,57 @@ class backend_programs_manager:
             ### Axlot
             ### Auto111
             ### Llama.cpp? (command line maybe?)
+        backend_checker = s.backends_checking()
+        installed_backends = backend_checker.check_json()
 
         menu_list_opt = []
+        valid_answers = []
+
+        windows_list = []
+        localai_list = ["10", "11", "12", "13"]
+        invokeai_list = ["30", "31"]
 
         if self.ver_os_info == "windows":
             menu_list_opt.append("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
             menu_list_opt.append("``20`` - Windows Host (Backup Docker Data)")
             menu_list_opt.append("``21`` - Windows Host (Move Docker Data)")
             menu_list_opt.append("``22`` - Windows Host (Purge Docker Data)")
+            #for item in windows_list:
+            #    valid_answers.append(item)
+        
+        if "localai" in installed_backends:
+            menu_list_opt.append("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
+            menu_list_opt.append("``10`` - LocalAI (Install Models)")
+            menu_list_opt.append("``11`` - LocalAI (Edit Models)")
+            menu_list_opt.append("``12`` - LocalAI (Remove Models)")
+            menu_list_opt.append("``13`` - LocalAI (Backup Models)")
+            for item in localai_list:
+                valid_answers.append(item)
+        
+        if "invokeai" in installed_backends:
+            menu_list_opt.append("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
+            menu_list_opt.append("``30`` - InvokeAI (Install in Subsystem)")
+            menu_list_opt.append("``31`` - InvokeAI (Install on Host OS)")
+            menu_list_opt.append("``32`` - InvokeAI (Placeholder WIP Setup Models)")
+            menu_list_opt.append("``33`` - InvokeAI (Placeholder WIP Start Webserver)")
+            for item in invokeai_list:
+                valid_answers.append(item)
+        
+        if "ollama" in installed_backends:
+            menu_list_opt.append("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
+            menu_list_opt.append("``40`` - Ollama (Placeholder WIP Install Models)")
+            menu_list_opt.append("``41`` - Ollama (Placeholder WIP)")
 
         menu_list_opt.append("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
-        menu_list_opt.append("``10`` - LocalAI (Install Models)")
-        menu_list_opt.append("``11`` - LocalAI (Edit Models)")
-        menu_list_opt.append("``12`` - LocalAI (Remove Models)")
-        menu_list_opt.append("``13`` - LocalAI (Backup Models)")
-        menu_list_opt.append("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
-        menu_list_opt.append("``30`` - InvokeAI (Install in Subsystem)")
-        menu_list_opt.append("``31`` - InvokeAI (Install on Host OS)")
-        menu_list_opt.append("``32`` - InvokeAI (Placeholder WIP Setup Models)")
-        menu_list_opt.append("``33`` - InvokeAI (Placeholder WIP Start Webserver)")
+        valid_answers.append("back")
 
-        s.log("This menu will only show items supported.")
+        s.log("This menu will only show items supported and installed.")
     
         for line in menu_list_opt:
             s.log(line)
 
         s.log("``back`` - Go back to the main menu")
 
-        valid_answers = ["10", "11", "12", "13", "30", "31", "back"]
         questionbasic = "What would you like to do?: "
         temp_cxt = "This is the menu for running backend programs in the Midori AI subsystem"
         temp_cxt += f"The numbers are the menu items that they can type into this menu, it only supports ``python ints``"
