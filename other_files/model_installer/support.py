@@ -116,10 +116,11 @@ def check_for_update(ver_os_info, ver_info):
                 os.system("del subsystem_manager.zip")
                 os.system("del subsystem_manager.exe")
                 os.system("del model_installer.bat")
+                os.system("del midori_program_ver.txt")
                 os.system(f"curl -sSL https://raw.githubusercontent.com/lunamidori5/Midori-AI/master/other_files/model_installer/shell_files/model_installer.bat -o model_installer.bat && start model_installer.bat")
                 log(f"If the subsystem manager failed to start, just run ``call model_installer.bat``")
             elif ver_os_info == 'linux':
-                os.system("rm -f subsystem_manager.tar.gz subsystem_manager model_installer.sh")
+                os.system("rm -f subsystem_manager.tar.gz subsystem_manager model_installer.sh midori_program_ver.txt")
                 os.system(f"curl -sSL https://raw.githubusercontent.com/lunamidori5/Midori-AI/master/other_files/model_installer/shell_files/model_installer.sh | sh")
                 log(f"If the subsystem manager failed to start, just run ``./model_installer.sh``")
 
@@ -138,9 +139,6 @@ def check_for_subsystem_update(ver_os_info, ver_info, DockerClient, compose_path
 
     # Get the current model version.
     current_version = response.strip()
-
-    if ver_info == "development":
-        current_version = ver_info
 
     # Check if the current version is the latest version.
     clear_window(ver_os_info)

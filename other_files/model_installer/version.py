@@ -1,5 +1,4 @@
 import os
-import sys
 
 try:
     # this handles the case when we are running the code remotely
@@ -15,6 +14,6 @@ try:
     
     else:
         VERSION = "development"
-        
+
 except FileNotFoundError:
     VERSION = "development"
