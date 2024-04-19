@@ -24,6 +24,14 @@ jobs:
       
       - name: Build
         run: |
-          pyinstaller --onefile ./other_files/model_installer/subsystem_manager.py
-          pyinstaller --onefile --distpath /opt/midori-ai/ ./other_files/model_installer/yaml_edit.py
-          pyinstaller --onefile --distpath /opt/midori-ai/ -n hf-downloader ./other_files/midori_ai_manager/huggingface_downloader.py
+          pyinstaller --onefile --distpath /tmp/artifacts/ ./other_files/model_installer/subsystem_manager.py
+
+      - name: View Artifacts
+        run: |
+          ls /tmp/artifacts
+
+      - name: 'Upload Artifact'
+        uses: actions/upload-artifact@v4
+        with:
+          name: subsystem-manager-${{matrix.os}}
+          path: /tmp/artifacts/*
