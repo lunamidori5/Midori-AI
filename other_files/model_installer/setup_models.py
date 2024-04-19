@@ -1001,4 +1001,5 @@ class windows_wsl_moder:
     def purge_wsl_docker_drives(self):
         print("Not ready yet")
 
-print("last line of setup_models")
+if __name__ == "__main__":
+    print("last line of setup_models")
