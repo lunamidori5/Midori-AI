@@ -26,12 +26,24 @@ jobs:
         run: |
           pyinstaller --onefile --distpath /tmp/artifacts/ --add-data ./other_files/midori_program_ver.txt:. ./other_files/model_installer/subsystem_manager.py
 
-      - name: View Artifacts
-        run: |
-          ls /tmp/artifacts
-
       - name: 'Upload Artifact'
         uses: actions/upload-artifact@v4
         with:
           name: subsystem-manager-${{matrix.os}}
           path: /tmp/artifacts/*
+        
+  create-release:
+    needs: [build-manager]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Fetch Artifacts
+        uses: actions/download-artifact@v4
+
+      - name: View Artifacts
+        run: |
+          ls
+
+      # - name: Release
+      #   uses: softprops/action-gh-release@v2
+      #   if: startsWith(github.ref, 'refs/tags/')
+      #   with:
