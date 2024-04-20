@@ -3,6 +3,7 @@ import time
 
 files_to_download = {
     "requirements.txt": "https://tea-cup.midori-ai.xyz/download/midori_program_requirments.txt",
+    "version.py": "https://raw.githubusercontent.com/lunamidori5/Midori-AI/master/other_files/model_installer/version.py",
     "helper_app.py": "https://tea-cup.midori-ai.xyz/download/helper_app.py",
 }
 
@@ -13,7 +14,6 @@ files_to_download_enx = {
     "setup_models.py": "https://tea-cup.midori-ai.xyz/download/setup_models.py",
     "edit_models.py": "https://tea-cup.midori-ai.xyz/download/edit_models.py",
     "support.py": "https://tea-cup.midori-ai.xyz/download/support.py",
-    "version.py": "https://raw.githubusercontent.com/lunamidori5/Midori-AI/master/other_files/model_installer/version.py",
 }
 
 # Download all the needed files
