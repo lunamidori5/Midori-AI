@@ -921,7 +921,7 @@ class windows_wsl_moder:
         self.ver_os_info = ver_os_info
         self.client_openai = client_openai
 
-    def make_folder(folder_path):
+    def make_folder(self, folder_path):
         if not os.path.exists(folder_path):
             os.makedirs(folder_path)
     
