@@ -43,11 +43,14 @@ class subsystem_backend_manager:
             gpus = GPUtil.getGPUs()
 
             # Check if any of the GPUs are NVIDIA GPUs
+            s.log("Checking for GPUs")
             for gpu in gpus:
                 if gpu.name.startswith("NVIDIA"):
                     setgpu = True
                     print("Found an NVIDIA GPU: {}".format(gpu.name))
+                    s.log(str("Found an NVIDIA GPU: {}".format(gpu.name)))
         except:
+            s.log("No GPUs found, setting to false")
             setgpu = False
         
         if setgpu == True:

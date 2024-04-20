@@ -1,4 +1,4 @@
-name: All Build Test
+name: Auto Lint, Test, and Build.
 
 on: [push, pull_request]
 
@@ -164,4 +164,37 @@ jobs:
         run: |
           python subsystem_setup.py
   
-        
+  Build-Subsystem-Manager:
+    needs: [Mac-Subsystem-Manager, Windows-Subsystem-Manager-Baked, Linux-Subsystem-Manager-Baked]
+    strategy:
+      matrix:
+        os: [ubuntu-20.04, windows-latest, macos-latest]
+        python: ['3.10']
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Update Version Name
+        run: |
+          mkdir -p /tmp/artifacts
+          cp ./other_files/midori_program_ver.txt /tmp/artifacts
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python }}
+      
+      - name: Install Dependencies
+        run: |
+          pip install pyinstaller
+          pip install -r ./other_files/model_installer/requirements.txt
+      
+      - name: Build
+        run: |
+          pyinstaller --onefile --clean --distpath /tmp/artifacts/ --add-data ./other_files/midori_program_ver.txt:. ./other_files/model_installer/subsystem_manager.py
+
+      - name: 'Upload Artifact'
+        uses: actions/upload-artifact@v4
+        with:
+          name: subsystem-manager-${{ matrix.os }}
+          path: /tmp/artifacts/*
+          compression-level: 0
