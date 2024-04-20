@@ -7,6 +7,8 @@ import support as s
 
 import edit_models as models_edit_add_on
 
+known_niv_gpus = ["NVIDIA", "Quadro"]
+
 def dev_setup_docker(DockerClient, compose_path, ver_os_info, containers, use_gui, sg, client, ver_info, layout, client_openai, discord_id, subsystem_file_name):
     CPUCORES = 1
     GPUUSE = False
@@ -27,10 +29,11 @@ def dev_setup_docker(DockerClient, compose_path, ver_os_info, containers, use_gu
         s.log("Checking for GPUs")
         for gpu in gpus:
             s.log(str("Found an GPU: {}".format(gpu.name)))
-            if gpu.name.startswith("NVIDIA"):
-                setgpu = True
-                print("Found an NVIDIA GPU: {}".format(gpu.name))
-                s.log(str("Found an NVIDIA GPU: {}".format(gpu.name)))
+            for known_gpu in known_niv_gpus:
+                if gpu.name.startswith(known_gpu):
+                    setgpu = True
+                    print("Found an NVIDIA GPU: {}".format(gpu.name))
+                    s.log(str("Found an NVIDIA GPU: {}".format(gpu.name)))
     except:
         s.log("No GPUs found, setting to false")
         setgpu = False

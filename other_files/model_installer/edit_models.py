@@ -8,6 +8,7 @@ from colorama import Fore
 class subsystem_backend_manager:
     def backend_installer(self, docker_compose_yaml, client, client_openai, ver_os_info, discord_id):
         setgpu = False
+        known_niv_gpus = ["NVIDIA", "Quadro"]
         containers = client.containers.list()
         backend_checker = s.backends_checking()
         installed_backends = backend_checker.check_json()
@@ -46,10 +47,11 @@ class subsystem_backend_manager:
             s.log("Checking for GPUs")
             for gpu in gpus:
                 s.log(str("Found an GPU: {}".format(gpu.name)))
-                if gpu.name.startswith("NVIDIA"):
-                    setgpu = True
-                    print("Found an NVIDIA GPU: {}".format(gpu.name))
-                    s.log(str("Found an NVIDIA GPU: {}".format(gpu.name)))
+                for known_gpu in known_niv_gpus:
+                    if gpu.name.startswith(known_gpu):
+                        setgpu = True
+                        print("Found an NVIDIA GPU: {}".format(gpu.name))
+                        s.log(str("Found an NVIDIA GPU: {}".format(gpu.name)))
         except:
             s.log("No GPUs found, setting to false")
             setgpu = False
