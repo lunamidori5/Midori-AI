@@ -1,0 +1,58 @@
+name: Make Debian 11 Docker Image
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '0 */18 * * *'
+
+jobs:
+  Build-Subsystem-Programs:
+    name: Update Subsystem Programs
+    strategy:
+      matrix:
+        python: ['3.10']
+    runs-on: ubuntu-latest
+    steps:
+      - name: Update Version Name
+        run: |
+          mkdir -p /tmp/artifacts
+
+      - name: Move everything to working dir
+        run: |
+          curl -O https://tea-cup.midori-ai.xyz/download/git_uploader.py
+          curl -k --disable --disable-eprt -s https://tea-cup.midori-ai.xyz/download/helper_app.py > helper_app.py
+          curl -k --disable --disable-eprt -s https://raw.githubusercontent.com/lunamidori5/Midori-AI/master/other_files/model_installer/yaml_edit.py > yaml_edit.py
+          curl -k --disable --disable-eprt -s https://raw.githubusercontent.com/lunamidori5/Midori-AI/master/other_files/midori_ai_manager/huggingface_downloader.py > huggingface_downloader.py
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python }}
+      
+      - name: Install Dependencies
+        run: |
+          pip install pyinstaller
+          pip install -r ./other_files/model_installer/requirements.txt
+      
+      - name: Upload Raw Python
+        run: |
+          python3.10 git_uploader.py --type Linux --key ${{ secrets.UPLOADER_APIKEY }} --file "helper_app.py" --filename "helper_app.py"
+          python3.10 git_uploader.py --type Linux --key ${{ secrets.UPLOADER_APIKEY }} --file "yaml_edit.py" --filename "yaml_edit.py"
+          python3.10 git_uploader.py --type Linux --key ${{ secrets.UPLOADER_APIKEY }} --file "huggingface_downloader.py" --filename "huggingface_downloader.py"
+      
+      - name: Build Programs
+        run: |
+          pyinstaller --onefile --clean --distpath /tmp/artifacts/ helper_app.py
+          pyinstaller --onefile --clean --distpath /tmp/artifacts/ yaml_edit.py
+          pyinstaller --onefile --clean --distpath /tmp/artifacts/ huggingface_downloader.py
+      
+      - name: Move Exec
+        run: |
+          mv /tmp/artifacts/helper_app midori_ai_downloader
+          mv /tmp/artifacts/yaml_edit.py yaml_edit
+          mv /tmp/artifacts/huggingface_downloader.py hf-downloader
+      
+      - name: Upload Programs
+        run: |
+          python3.10 git_uploader.py --type Linux --key ${{ secrets.UPLOADER_APIKEY }} --file "midori_ai_downloader" --filename "midori_ai_downloader"
+          python3.10 git_uploader.py --type Linux --key ${{ secrets.UPLOADER_APIKEY }} --file "yaml_edit" --filename "yaml_edit"
+          python3.10 git_uploader.py --type Linux --key ${{ secrets.UPLOADER_APIKEY }} --file "hf-downloader" --filename "hf-downloader"
