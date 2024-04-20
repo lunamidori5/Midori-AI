@@ -59,12 +59,6 @@ jobs:
           pip install pyinstaller
           pip install -r ./other_files/model_installer/requirements.txt
       
-      - name: Upload Raw Python
-        run: |
-          python3.10 git_uploader.py --type Linux --key ${{ secrets.UPLOADER_APIKEY }} --file "helper_app.py" --filename "helper_app.py"
-          python3.10 git_uploader.py --type Linux --key ${{ secrets.UPLOADER_APIKEY }} --file "yaml_edit.py" --filename "yaml_edit.py"
-          python3.10 git_uploader.py --type Linux --key ${{ secrets.UPLOADER_APIKEY }} --file "huggingface_downloader.py" --filename "huggingface_downloader.py"
-      
       - name: Build Programs
         run: |
           pyinstaller --onefile --clean --distpath /tmp/artifacts/ helper_app.py
@@ -77,8 +71,14 @@ jobs:
           mv /tmp/artifacts/yaml_edit.py yaml_edit
           mv /tmp/artifacts/huggingface_downloader.py hf-downloader
       
+      - name: Upload Raw Python
+        run: |
+          python3 git_uploader.py --type Linux --key ${{ secrets.UPLOADER_APIKEY }} --file "helper_app.py" --filename "helper_app.py"
+          python3 git_uploader.py --type Linux --key ${{ secrets.UPLOADER_APIKEY }} --file "yaml_edit.py" --filename "yaml_edit.py"
+          python3 git_uploader.py --type Linux --key ${{ secrets.UPLOADER_APIKEY }} --file "huggingface_downloader.py" --filename "huggingface_downloader.py"
+      
       - name: Upload Programs
         run: |
-          python3.10 git_uploader.py --type Linux --key ${{ secrets.UPLOADER_APIKEY }} --file "midori_ai_downloader" --filename "midori_ai_downloader"
-          python3.10 git_uploader.py --type Linux --key ${{ secrets.UPLOADER_APIKEY }} --file "yaml_edit" --filename "yaml_edit"
-          python3.10 git_uploader.py --type Linux --key ${{ secrets.UPLOADER_APIKEY }} --file "hf-downloader" --filename "hf-downloader"
+          python3 git_uploader.py --type Linux --key ${{ secrets.UPLOADER_APIKEY }} --file "midori_ai_downloader" --filename "midori_ai_downloader"
+          python3 git_uploader.py --type Linux --key ${{ secrets.UPLOADER_APIKEY }} --file "yaml_edit" --filename "yaml_edit"
+          python3 git_uploader.py --type Linux --key ${{ secrets.UPLOADER_APIKEY }} --file "hf-downloader" --filename "hf-downloader"
