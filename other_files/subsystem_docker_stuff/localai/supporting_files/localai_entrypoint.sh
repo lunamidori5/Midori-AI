@@ -4,37 +4,37 @@ set -e
 cd /models
 
 if [ ! -f 7bmodelQ6.gguf ]; then
-	wget --no-check-certificate --no-cache --no-cookies https://tea-cup.midori-ai.xyz/download/7bmodelQ6.gguf
+	midori_ai_downloader 7bmodelQ6.gguf
 fi
 if [ ! -f starter-7b-gpu.yaml ]; then
-	wget --no-check-certificate --no-cache --no-cookies https://tea-cup.midori-ai.xyz/download/starter-7b-gpu.yaml
+	midori_ai_downloader starter-7b-gpu.yaml
 fi
 if [ ! -f starter-7b-cpu.yaml ]; then
-	wget --no-check-certificate --no-cache --no-cookies https://tea-cup.midori-ai.xyz/download/starter-7b-cpu.yaml
+	midori_ai_downloader starter-7b-cpu.yaml
 fi
 
 if [ ! -f en_US-amy-medium.onnx.json ]; then
-	wget --no-check-certificate --no-cache --no-cookies https://tea-cup.midori-ai.xyz/download/en_US-amy-medium.onnx.json
+	midori_ai_downloader en_US-amy-medium.onnx.json
 fi
 if [ ! -f en_US-amy-medium.onnx ]; then
-	wget --no-check-certificate --no-cache --no-cookies https://tea-cup.midori-ai.xyz/download/en_US-amy-medium.onnx
+	midori_ai_downloader en_US-amy-medium.onnx
 fi
 if [ ! -f en-us-kathleen-low.onnx.json ]; then
-	wget --no-check-certificate --no-cache --no-cookies https://tea-cup.midori-ai.xyz/download/en-us-kathleen-low.onnx.json
+	midori_ai_downloader en-us-kathleen-low.onnx.json
 fi
 if [ ! -f en-us-kathleen-low.onnx ]; then
-	wget --no-check-certificate --no-cache --no-cookies https://tea-cup.midori-ai.xyz/download/en-us-kathleen-low.onnx
+	midori_ai_downloader en-us-kathleen-low.onnx
 fi
 
 if [ ! -f diffusers.yaml ]; then
-	wget --no-check-certificate --no-cache --no-cookies https://tea-cup.midori-ai.xyz/download/diffusers.yaml
+	midori_ai_downloader diffusers.yaml
 fi
 
 if [ ! -f bert-embeddings.yaml ]; then
-	wget --no-check-certificate --no-cache --no-cookies https://tea-cup.midori-ai.xyz/download/bert-embeddings.yaml
+	midori_ai_downloader bert-embeddings.yaml
 fi
 if [ ! -f bert-MiniLM-L6-v2q4_0.bin ]; then
-	wget --no-check-certificate --no-cache --no-cookies https://tea-cup.midori-ai.xyz/download/bert-MiniLM-L6-v2q4_0.bin
+	midori_ai_downloader bert-MiniLM-L6-v2q4_0.bin
 fi
 
 if [ ! -f ggml-model-q4_k.gguf ]; then
