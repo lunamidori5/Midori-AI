@@ -120,7 +120,7 @@ class backend_programs_manager:
             if answerstartup == 20:
                 windows_wsl.backup_wsl_docker_drives()
 
-            if answerstartup == 31:
+            if answerstartup == 21:
                 windows_wsl.move_wsl_docker_drives()
 
 class localai_model_manager:
