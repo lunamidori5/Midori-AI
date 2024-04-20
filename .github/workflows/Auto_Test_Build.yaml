@@ -197,4 +197,4 @@ jobs:
         with:
           name: subsystem-manager-${{ matrix.os }}
           path: /tmp/artifacts/*
-          compression-level: 0
+          compression-level: 9

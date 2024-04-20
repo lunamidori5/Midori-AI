@@ -26,6 +26,7 @@ def dev_setup_docker(DockerClient, compose_path, ver_os_info, containers, use_gu
         # Check if any of the GPUs are NVIDIA GPUs
         s.log("Checking for GPUs")
         for gpu in gpus:
+            s.log(str("Found an GPU: {}".format(gpu.name)))
             if gpu.name.startswith("NVIDIA"):
                 setgpu = True
                 print("Found an NVIDIA GPU: {}".format(gpu.name))

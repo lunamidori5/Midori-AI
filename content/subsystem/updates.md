@@ -6,6 +6,15 @@ weight = 1
 
 ![Midori AI photo](https://tea-cup.midori-ai.xyz/download/logosubsystem.png)
 
+## 4/20/2024
+- Update: Added new "WSL Docker Data" backend program (in testing)
+- Update: Added more GPU checks to make sure we know for sure if you have a GPU
+- Update: Better logging for debugging
+- Bug Fix: Fixed a few bugs and made the subsystem docker 200mbs smaller
+- Update: Removed some outdated code
+- Update: Added new git actions thanks to - [Cryptk](https://github.com/cryptk)
+- Update: Subsystem Manager builds are now on github actions, check them out - [Actions](https://github.com/lunamidori5/Midori-AI/actions)
+
 ## 4/13/2024
 - Known Bug: Upstream changes to LocalAI is making API Keys not work, I am working on a temp fix, please use a outdated image for now.
 
