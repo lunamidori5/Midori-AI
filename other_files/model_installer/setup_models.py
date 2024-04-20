@@ -989,8 +989,8 @@ class windows_wsl_moder:
         os.system(f"wsl --unregister docker-desktop-data")
 
         s.log("Importing WSL Docker data from the tar archive to the new location...")
-        s.log(f"wsl --import docker-desktop-data {working_folder} docker-desktop-data.tar --version 2")
-        os.system(f"wsl --import docker-desktop-data {working_folder} docker-desktop-data.tar --version 2")
+        s.log(f"wsl --import docker-desktop-data {tarfile} --version 2")
+        os.system(f"wsl --import docker-desktop-data {tarfile} --version 2")
         os.remove(tarfile)
 
         s.log("Exporting WSL Docker to a tar archive...")
@@ -1002,8 +1002,8 @@ class windows_wsl_moder:
         os.system(f"wsl --unregister docker-desktop")
 
         s.log("Importing WSL Docker from the tar archive to the new location...")
-        s.log(f"wsl --import docker-desktop {working_folder} docker-desktop.tar --version 2")
-        os.system(f"wsl --import docker-desktop {working_folder} docker-desktop.tar --version 2")
+        s.log(f"wsl --import docker-desktop {tarfile2} --version 2")
+        os.system(f"wsl --import docker-desktop {tarfile2} --version 2")
         os.remove(tarfile2)
 
         os.system("C:\\Program Files\\Docker\\Docker\\Docker Desktop.exe")
