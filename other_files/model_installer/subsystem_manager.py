@@ -116,8 +116,8 @@ try:
         client = docker.from_env(version='auto')
 
 except Exception as e:
-    s.log("Looks like I was unable to log into the docker subsystem...")
-    s.log("Do you have docker installed? / Please try running me as root user, Linux users.")
+    s.log("Looks like I was unable to log into the docker system...")
+    s.log("Is docker running? / Please try running me as root user, Linux users.")
     input("Please press enter to exit: ")
     exit(1)
 

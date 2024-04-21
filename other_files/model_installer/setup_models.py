@@ -900,7 +900,7 @@ class invoke_ai:
         container_id = container.id
         s.clear_window(self.ver_os_info)
         input("Press enter to start the install...")
-        os.system(f"apt-get update && apt-get install python3.11venv")
+        os.system(f"docker exec -it {container_id} /bin/bash apt-get update && apt-get install python3.11venv")
         os.system(f"docker exec -it {container_id} /bin/bash ./files/invokeai/InvokeAI-Installer/install.sh")
         s.log(f"Leaving the subsystem shell, returning to host os...")
     
