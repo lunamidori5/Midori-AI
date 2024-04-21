@@ -38,6 +38,8 @@ class backend_programs_manager:
 
         if self.ver_os_info == "windows":
             menu_list_opt.append("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
+            menu_list_opt.append("The WSL Items are in testing, to test.")
+            menu_list_opt.append("Please contact Luna Midori")
             menu_list_opt.append("``20`` - WSL (Backup Docker Data)")
             menu_list_opt.append("``21`` - WSL (Move Docker Data)")
             menu_list_opt.append("``22`` - WSL (Purge Docker Data)")

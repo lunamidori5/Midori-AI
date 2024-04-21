@@ -101,6 +101,7 @@ try:
             exit(1)
 
         # Connect to the Docker daemon on Windows using Docker-py for Windows 
+        # Note if this fail we should offer to check their docker / wsl install?
         s.log("logging into docker vm subsystem (Windows)")
         client = docker.from_env(version='auto')
     elif ver_os_info == "linux":
