@@ -11,6 +11,7 @@ files_to_download_enx = {
     "setup_docker.py": "https://tea-cup.midori-ai.xyz/download/setup_docker.py",
     "setup_models.py": "https://tea-cup.midori-ai.xyz/download/setup_models.py",
     "edit_models.py": "https://tea-cup.midori-ai.xyz/download/edit_models.py",
+    "version.py": "https://tea-cup.midori-ai.xyz/download/version.py",
     "support.py": "https://tea-cup.midori-ai.xyz/download/support.py",
 }
 
@@ -27,6 +28,7 @@ with open('requirements.txt', 'r') as f:
 
 for line in lines:
     os.system('pip install --force-reinstall ' + line)
+    os.system('pip cache purge')
 
 if os.name == 'posix':
     print("Downloading the needed files...")
@@ -42,7 +44,6 @@ os.system('python3 model_installer.py')
 
 # Purge the downloaded files
 print("Purging the downloaded files ...")
-os.system('pip cache purge')
 
 for file_name in files_to_download:
     os.remove(file_name)
