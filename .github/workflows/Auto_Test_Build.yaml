@@ -110,10 +110,6 @@ jobs:
       - name: Install dependencies
         run: |
           pip install -r requirements.txt
-      - name: Edit Subsystem Manager VER
-        run: |
-          python python_ver.py
-          rm -f python_ver.py
       - name: Make EXE file
         run: |
           pyinstaller --onefile --clean model_installer.py
@@ -162,10 +158,6 @@ jobs:
       - name: Install dependencies
         run: |
           pip install -r requirements.txt
-      - name: Edit Subsystem Manager VER
-        run: |
-          python python_ver.py
-          del python_ver.py 
       - name: Make EXE file
         run: |
           pyinstaller --onefile --clean model_installer.py 
