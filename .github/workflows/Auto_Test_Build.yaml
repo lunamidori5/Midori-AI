@@ -274,4 +274,4 @@ jobs:
         with:
           name: tree_log
           path: /tmp/artifacts/tree.log
-          compression-level: 9
+          compression-level: 0
