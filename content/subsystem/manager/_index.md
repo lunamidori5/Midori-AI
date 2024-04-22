@@ -133,6 +133,14 @@ python3 subsystem_python_runner.py
 Reminder to always use your computers IP address not ``localhost`` when using the Midori AI Subsystem!
 {{% /notice %}}
 
+## Support and Assistance
+
+If you encounter any issues or require further assistance, please feel free to reach out through the following channels:
+
+* **Midori Github:** [Github Issue](https://github.com/lunamidori5/Midori-AI/issues/new/choose)
+* **Midori AI Email:** [Email Us](mailto:contact-us@midori-ai.xyz)
+* **Midori AI Discord:** [Join our Discord server](https://discord.gg/xdgCx3VyHU)
+
 ## ----- Install Backends -----
 - [LocalAI]({{%relref "subsystem/local-ai" %}}) - For LLM inference, Embedding, and more
 - [AnythingLLM]({{%relref "subsystem/anythingllm" %}}) - For chating with your docs using LocalAI or other LLM hosts
