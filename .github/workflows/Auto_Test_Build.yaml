@@ -33,7 +33,7 @@ jobs:
           echo mypy
           mypy --ignore-missing-imports ./other_files/model_installer/subsystem_manager.py
           echo bandit
-          bandit -r -s B101 -l HIGH ./other_files/model_installer/subsystem_manager.py
+          bandit -r -l HIGH -z ./other_files/model_installer/subsystem_manager.py
           echo prospector
           prospector --strictness=verylow ./other_files/model_installer/subsystem_manager.py
       - name: Lint with flake8 (Warnings)
