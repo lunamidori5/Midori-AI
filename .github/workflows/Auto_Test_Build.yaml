@@ -198,7 +198,7 @@ jobs:
         run: |
           python subsystem_setup.py
   
-  Build-Subsystem-Manager:
+  Test-Build-Subsystem-Manager:
     needs: [Mac-Subsystem-Manager, Windows-Subsystem-Manager-Baked, Linux-Subsystem-Manager-Baked]
     strategy:
       matrix:

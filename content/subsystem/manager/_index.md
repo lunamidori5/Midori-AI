@@ -5,13 +5,12 @@ weight = 1
 +++
 
 ![Midori AI photo](https://tea-cup.midori-ai.xyz/download/logosubsystem.png)
-**Midori Github:** [Github](https://github.com/lunamidori5/Midori-AI)
 
 **How Docker Works**
 
 Docker is a containerization platform that allows you to package and run applications in isolated and portable environments called containers. Containers share the host operating system kernel but have their own dedicated file system, processes, and resources. This isolation allows applications to run independently of the host environment and each other, ensuring consistent and predictable behavior.
 
-**Midori AI Subsystem**
+[**Midori AI Subsystem** - Github Link](https://github.com/lunamidori5/Midori-AI)
 
 The Midori AI Subsystem extends Docker's capabilities by providing a modular and extensible platform for managing AI workloads. Each AI system is encapsulated within  its own dedicated Docker image, which contains the necessary software and dependencies. This approach provides several benefits:
 
@@ -71,9 +70,9 @@ subsystem_manager.exe
 ```
 {{% /tab %}}
 
-{{% tab title="Linux / WSL" %}}
+{{% tab title="Linux" %}}
 ### Prerequisites
-[Docker Desktop Linux](https://docs.docker.com/desktop/install/linux-install/) / [Docker Desktop Windows](https://docs.docker.com/desktop/install/windows-install/)
+[Docker Desktop Linux](https://docs.docker.com/desktop/install/linux-install/)
 
 or 
 
@@ -137,7 +136,7 @@ Reminder to always use your computers IP address not ``localhost`` when using th
 
 If you encounter any issues or require further assistance, please feel free to reach out through the following channels:
 
-* **Midori Github:** [Github Issue](https://github.com/lunamidori5/Midori-AI/issues/new/choose)
+* **Midori AI Github:** [Github Issue](https://github.com/lunamidori5/Midori-AI/issues/new/choose)
 * **Midori AI Email:** [Email Us](mailto:contact-us@midori-ai.xyz)
 * **Midori AI Discord:** [Join our Discord server](https://discord.gg/xdgCx3VyHU)
 
