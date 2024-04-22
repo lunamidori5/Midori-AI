@@ -199,7 +199,7 @@ jobs:
           python subsystem_setup.py
   
   Test-Build-Subsystem-Manager:
-    needs: [Mac-Subsystem-Manager, Windows-Subsystem-Manager-Baked, Linux-Subsystem-Manager-Baked]
+    needs: [Upload-All-Files]
     strategy:
       matrix:
         os: [ubuntu-20.04, windows-latest, macos-latest]
@@ -251,7 +251,7 @@ jobs:
       - name: Install Dependencies
         run: |
           mkdir -p /tmp/artifacts
-          apt-get install -y tree
+          apt-get install -y tree zip
 
       - name: Linux Artifacts
         run: |
@@ -268,10 +268,19 @@ jobs:
       - name: View Artifacts
         run: |
           tree > /tmp/artifacts/tree.log
+          zip -r everything.zip .
+          cp everything.zip /tmp/artifacts/everything.zip
 
-      - name: 'Upload Artifact'
+      - name: 'Upload Logs'
         uses: actions/upload-artifact@v4
         with:
           name: tree_log
           path: /tmp/artifacts/tree.log
+          compression-level: 0
+
+      - name: 'Upload Artifact'
+        uses: actions/upload-artifact@v4
+        with:
+          name: everything
+          path: /tmp/artifacts/everything.zip
           compression-level: 0
