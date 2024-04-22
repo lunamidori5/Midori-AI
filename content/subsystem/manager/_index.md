@@ -127,6 +127,8 @@ python3 subsystem_python_runner.py
 {{% /tab %}}
 {{< /tabs >}}
 
+[![Auto Lint, Test, and Build.](https://github.com/lunamidori5/Midori-AI/actions/workflows/Auto_Test_Build.yaml/badge.svg)](https://github.com/lunamidori5/Midori-AI/actions/workflows/Auto_Test_Build.yaml)
+
 {{% notice style="info" title="Notice" %}}
 Reminder to always use your computers IP address not ``localhost`` when using the Midori AI Subsystem!
 {{% /notice %}}

@@ -96,7 +96,8 @@ try:
 
         # Check if the current working directory is in a  restricted folder
         if os.path.abspath(os.getcwd()) in ['C:\\Windows', 'C:\\Windows\\System32', 'C:\\Program Files', 'C:\\Program Files (x86)']:
-            print ("Error: We are running in a restricted folder. Crashing...")
+            print(Fore.RED + "Error: We are running in a restricted folder. Crashing..." + Fore.WHITE )
+            print(Fore.RED + "Please move this program into a non root, or non system folder." + Fore.WHITE )
             input("Press enter to exit: ")
             exit(1)
 
