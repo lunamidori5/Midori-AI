@@ -23,6 +23,9 @@ jobs:
           conda install flake8 pylint mypy
           pip install bandit prospector requests types-requests
           pip install -r ./other_files/model_installer/requirements.txt
+      - name: Install dependencies (Types)
+        run: |
+          mypy --install-types ./other_files/model_installer/subsystem_manager.py
       - name: Lint with all linters
         run: |
           # stop the build if there are Python syntax errors or undefined names
