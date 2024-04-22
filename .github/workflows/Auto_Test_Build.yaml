@@ -105,15 +105,15 @@ jobs:
           python-version: '3.10'
       - name: Download the Downloader
         run: |
-          curl -O https://tea-cup.midori-ai.xyz/download/midori_ai_downloader && chmod +x midori_ai_downloader
+          curl -k --disable --disable-eprt -s https://tea-cup.midori-ai.xyz/download/helper_app.py > helper_app.py
       - name: Midori AI Download Files
         run: |
-          ./midori_ai_downloader model_installer.py
-          ./midori_ai_downloader carly_help.py
-          ./midori_ai_downloader setup_docker.py
-          ./midori_ai_downloader setup_models.py
-          ./midori_ai_downloader edit_models.py
-          ./midori_ai_downloader support.py
+          python3 helper_app.py model_installer.py
+          python3 helper_app.py carly_help.py
+          python3 helper_app.py setup_docker.py
+          python3 helper_app.py setup_models.py
+          python3 helper_app.py edit_models.py
+          python3 helper_app.py support.py
       - name: Github Download Files
         run: |
           curl -O https://raw.githubusercontent.com/lunamidori5/Midori-AI/master/other_files/model_installer/requirements.txt
