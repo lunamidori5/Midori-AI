@@ -21,14 +21,14 @@ jobs:
       - name: Install dependencies
         run: |
           conda install flake8 pylint mypy
-          pip install bandit prospector
+          pip install bandit prospector requests
           pip install -r ./other_files/model_installer/requirements.txt
       - name: Lint with all linters
         run: |
           # stop the build if there are Python syntax errors or undefined names
           echo flake8
           flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
-          echo pylint
+          # echo pylint
           # pylint --disable=all --enable=F,E,I ./other_files/model_installer/subsystem_manager.py
           echo mypy
           mypy --ignore-missing-imports ./other_files/model_installer/subsystem_manager.py
