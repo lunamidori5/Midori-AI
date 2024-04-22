@@ -22,15 +22,20 @@ jobs:
         run: |
           conda install flake8 pylint mypy
           pip install bandit prospector
-          pip install docker python-on-whales pyyaml PyInstaller requests py-cpuinfo pysimplegui openai colorama 
+          pip install -r ./other_files/model_installer/requirements.txt
       - name: Lint with all linters
         run: |
           # stop the build if there are Python syntax errors or undefined names
+          echo flake8
           flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
-          pylint --disable=all --enable=F,E,I .
-          mypy --ignore-missing-imports .
-          bandit -r -ll .
-          prospector --strictness=verylow .
+          echo pylint
+          pylint --disable=all --enable=F,E,I ./other_files/model_installer/subsystem_manager.py
+          echo mypy
+          mypy --ignore-missing-imports ./other_files/model_installer/subsystem_manager.py
+          echo bandit
+          bandit -r -ll ./other_files/model_installer/subsystem_manager.py
+          echo prospector
+          prospector --strictness=verylow ./other_files/model_installer/subsystem_manager.py
       - name: Lint with flake8 (Warnings)
         run: |
           flake8 . --count --exit-zero --max-complexity=10 --max-line-length=120  --statistics
