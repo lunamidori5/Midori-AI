@@ -233,13 +233,11 @@ jobs:
           path: /tmp/artifacts/${{ matrix.os }}/*
           compression-level: 9
         
-  Push-Build-To-Server:
+  Zip-Tar-All-OS:
     needs: [Test-Build-Subsystem-Manager]
     container: lunamidori5/linux_model_deb_11:master
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-
       - name: Set up Python 3.10
         uses: actions/setup-python@v5
         with:
@@ -259,11 +257,15 @@ jobs:
 
       - name: Windows Artifacts
         run: |
-          zip -r model_installer_windows.zip subsystem-manager-windows-latest/subsystem_manager/subsystem_manager.exe subsystem-manager-windows-latest/subsystem_manager/_internal
-
+          cd subsystem-manager-windows-latest/subsystem_manager
+          zip -r ../../model_installer_windows.zip subsystem_manager.exe _internal
+          cd ../../
+          
       - name: Mac Artifacts
         run: |
-          zip -r model_installer_mac.zip subsystem-manager-macos-latest/subsystem_manager/subsystem_manager subsystem-manager-macos-latest/subsystem_manager/_internal
+          cd subsystem-manager-macos-latest/subsystem_manager
+          zip -r ../../model_installer_mac.zip subsystem_manager _internal
+          cd ../../
 
       - name: View Artifacts
         run: |
