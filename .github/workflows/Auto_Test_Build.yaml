@@ -31,9 +31,9 @@ jobs:
           # echo pylint
           # pylint --disable=all --enable=F,E,I ./other_files/model_installer/subsystem_manager.py
           echo mypy
-          mypy --ignore-missing-imports ./other_files/model_installer/subsystem_manager.py
+          mypy --ignore-missing-imports ./other_files/model_installer/*.py
           echo bandit
-          bandit -r -l high --exit-zero ./other_files/model_installer/subsystem_manager.py
+          bandit -r --severity-level high --exit-zero ./other_files/model_installer/*.py
           echo prospector
           prospector --strictness=verylow ./other_files/model_installer/subsystem_manager.py
       - name: Lint with flake8 (Warnings)
