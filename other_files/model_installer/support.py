@@ -105,9 +105,8 @@ def check_for_update(ver_os_info, ver_info):
         clear_window(ver_os_info)
     else:
         bypass = "none"
-        log(f"Ver mis match, EXE ver: {ver_info} / Server ver: {current_version}")
         log(f"-----------------------------------------------------------------------------------------------")
-        log(f"A update is available. Auto updating...")
+        log(f"Ver mis match, EXE ver: {ver_info} / Server ver: {current_version} :: Auto updating...")
         log(f"-----------------------------------------------------------------------------------------------")
         
         # Run commands based on the OS
@@ -117,10 +116,12 @@ def check_for_update(ver_os_info, ver_info):
                 os.system("del subsystem_manager.exe")
                 os.system("del model_installer.bat")
                 os.system("del midori_program_ver.txt")
+                os.system("rmdir /S /Q _internal")
                 os.system(f"curl -sSL https://raw.githubusercontent.com/lunamidori5/Midori-AI/master/other_files/model_installer/shell_files/model_installer.bat -o model_installer.bat && start model_installer.bat")
                 log(f"If the subsystem manager failed to start, just run ``call model_installer.bat``")
             elif ver_os_info == 'linux':
                 os.system("rm -f subsystem_manager.tar.gz subsystem_manager model_installer.sh midori_program_ver.txt")
+                os.system("rm -rf _internal")
                 os.system(f"curl -sSL https://raw.githubusercontent.com/lunamidori5/Midori-AI/master/other_files/model_installer/shell_files/model_installer.sh | sh")
                 log(f"If the subsystem manager failed to start, just run ``./model_installer.sh``")
 

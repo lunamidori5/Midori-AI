@@ -231,7 +231,7 @@ jobs:
         with:
           name: subsystem-manager-${{ matrix.os }}
           path: /tmp/artifacts/${{ matrix.os }}/*
-          compression-level: 9
+          compression-level: 0
         
   Zip-Tar-All-OS:
     needs: [Test-Build-Subsystem-Manager]
@@ -270,8 +270,7 @@ jobs:
       - name: View Artifacts
         run: |
           tree > /tmp/artifacts/tree.log
-          zip -r everything.zip .
-          cp everything.zip /tmp/artifacts/everything.zip
+          cp * /tmp/artifacts/*
 
       - name: 'Upload Logs'
         uses: actions/upload-artifact@v4
@@ -284,5 +283,5 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: everything
-          path: /tmp/artifacts/everything.zip
+          path: /tmp/artifacts/*
           compression-level: 0

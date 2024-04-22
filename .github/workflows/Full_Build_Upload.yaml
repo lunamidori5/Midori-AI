@@ -29,13 +29,13 @@ jobs:
       
       - name: Build
         run: |
-          pyinstaller --onefile --clean --distpath /tmp/artifacts/ --add-data ./other_files/midori_program_ver.txt:. ./other_files/model_installer/subsystem_manager.py
+          pyinstaller --onedir --clean --distpath /tmp/artifacts/${{ matrix.os }}/ --add-data ./other_files/midori_program_ver.txt:. ./other_files/model_installer/subsystem_manager.py
 
       - name: 'Upload Artifact'
         uses: actions/upload-artifact@v4
         with:
           name: subsystem-manager-${{ matrix.os }}
-          path: /tmp/artifacts/*
+          path: /tmp/artifacts/${{ matrix.os }}/*
           compression-level: 0
         
   Push-Build-To-Server:
@@ -57,27 +57,21 @@ jobs:
           cp ./other_files/midori_program_ver.txt .
           pip install requests
 
-      - name: View Artifacts
-        run: |
-          ls
-
       - name: Linux Artifacts
         run: |
-          mv subsystem-manager-ubuntu-20.04 subsystem_manager
-          tar -cvzf model_installer_linux.tar.gz -C subsystem_manager .
-          rm -rf subsystem_manager
+          tar -cvzf model_installer_linux.tar.gz -C subsystem-manager-ubuntu-20.04/subsystem_manager subsystem_manager _internal
 
       - name: Windows Artifacts
         run: |
-          mv subsystem-manager-windows-latest subsystem_manager
-          zip -r model_installer_windows.zip -j subsystem_manager/*
-          rm -rf subsystem_manager
-
+          cd subsystem-manager-windows-latest/subsystem_manager
+          zip -r ../../model_installer_windows.zip subsystem_manager.exe _internal
+          cd ../../
+          
       - name: Mac Artifacts
         run: |
-          mv subsystem-manager-macos-latest subsystem_manager
-          zip -r model_installer_mac.zip -j subsystem_manager/*
-          rm -rf subsystem_manager
+          cd subsystem-manager-macos-latest/subsystem_manager
+          zip -r ../../model_installer_mac.zip subsystem_manager _internal
+          cd ../../
 
       - name: Download the Uploader
         run: |
