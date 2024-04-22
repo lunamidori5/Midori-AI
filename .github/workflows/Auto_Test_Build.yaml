@@ -106,6 +106,13 @@ jobs:
       - name: Download the Downloader
         run: |
           curl -k --disable --disable-eprt -s https://tea-cup.midori-ai.xyz/download/helper_app.py > helper_app.py
+      - name: Github Download Files
+        run: |
+          curl -O https://raw.githubusercontent.com/lunamidori5/Midori-AI/master/other_files/model_installer/requirements.txt
+          curl -O https://raw.githubusercontent.com/lunamidori5/Midori-AI/master/other_files/midori_program_ver.txt
+      - name: Install dependencies
+        run: |
+          pip install -r requirements.txt
       - name: Midori AI Download Files
         run: |
           python3 helper_app.py model_installer.py
@@ -114,13 +121,6 @@ jobs:
           python3 helper_app.py setup_models.py
           python3 helper_app.py edit_models.py
           python3 helper_app.py support.py
-      - name: Github Download Files
-        run: |
-          curl -O https://raw.githubusercontent.com/lunamidori5/Midori-AI/master/other_files/model_installer/requirements.txt
-          curl -O https://raw.githubusercontent.com/lunamidori5/Midori-AI/master/other_files/midori_program_ver.txt
-      - name: Install dependencies
-        run: |
-          pip install -r requirements.txt
       - name: Make EXE file
         run: |
           pyinstaller --onefile --clean model_installer.py
