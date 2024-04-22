@@ -253,6 +253,18 @@ jobs:
           mkdir -p /tmp/artifacts
           apt-get install -y tree
 
+      - name: Linux Artifacts
+        run: |
+          tar -cvzf model_installer_linux.tar.gz -C subsystem-manager-ubuntu-20.04/subsystem_manager subsystem_manager _internal
+
+      - name: Windows Artifacts
+        run: |
+          zip -r model_installer_windows.zip subsystem-manager-windows-latest/subsystem_manager/subsystem_manager.exe subsystem-manager-windows-latest/subsystem_manager/_internal
+
+      - name: Mac Artifacts
+        run: |
+          zip -r model_installer_mac.zip subsystem-manager-macos-latest/subsystem_manager/subsystem_manager subsystem-manager-macos-latest/subsystem_manager/_internal
+
       - name: View Artifacts
         run: |
           tree > /tmp/artifacts/tree.log
