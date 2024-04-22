@@ -127,7 +127,7 @@ jobs:
 
   Subsystem-Manager-Baked:
     strategy:
-      max-parallel: 1
+      max-parallel: 5
       matrix:
         os: [ubuntu-latest, windows-latest, macos-latest]
         python: ['3.10']
