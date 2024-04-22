@@ -20,12 +20,16 @@ jobs:
           echo $CONDA/bin >> $GITHUB_PATH
       - name: Install dependencies
         run: |
-          conda install flake8
+          conda install flake8 pylint mypy bandit prospector
           pip install docker python-on-whales pyyaml PyInstaller requests py-cpuinfo pysimplegui openai colorama 
-      - name: Lint with flake8
+      - name: Lint with all linters
         run: |
           # stop the build if there are Python syntax errors or undefined names
           flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
+          pylint --disable=all --enable=F,E,I .
+          mypy --ignore-missing-imports .
+          bandit -r -ll .
+          prospector --strictness=verylow .
       - name: Lint with flake8 (Warnings)
         run: |
           flake8 . --count --exit-zero --max-complexity=10 --max-line-length=120  --statistics
@@ -270,18 +274,10 @@ jobs:
       - name: View Artifacts
         run: |
           tree > /tmp/artifacts/tree.log
-          cp * /tmp/artifacts/*
-
-      - name: 'Upload Logs'
-        uses: actions/upload-artifact@v4
-        with:
-          name: tree_log
-          path: /tmp/artifacts/tree.log
-          compression-level: 0
 
       - name: 'Upload Artifact'
         uses: actions/upload-artifact@v4
         with:
           name: everything
           path: /tmp/artifacts/*
-          compression-level: 0
+          compression-level: 9
