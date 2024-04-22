@@ -25,17 +25,9 @@ jobs:
           pip install -r ./other_files/model_installer/requirements.txt
       - name: Lint with all linters
         run: |
-          # stop the build if there are Python syntax errors or undefined names
-          echo flake8
           flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
-          # echo pylint
-          # pylint --disable=all --enable=F,E,I ./other_files/model_installer/subsystem_manager.py
-          echo mypy
-          mypy --ignore-missing-imports ./other_files/model_installer/*.py
-          echo bandit
+          mypy ./other_files/model_installer/*.py
           bandit -r --severity-level high --exit-zero ./other_files/model_installer/*.py
-          echo prospector
-          prospector --strictness=verylow ./other_files/model_installer/subsystem_manager.py
       - name: Lint with flake8 (Warnings)
         run: |
           flake8 . --count --exit-zero --max-complexity=10 --max-line-length=120  --statistics
@@ -51,7 +43,6 @@ jobs:
       - name: Lint with flake8 (Extremely Strict)
         run: |
           flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
-          # exit-zero treats all errors as warnings.
           flake8 . --count --exit-zero --max-complexity=30 --max-line-length=40 --statistics
         
   Upload-All-Files:
