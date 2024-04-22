@@ -184,7 +184,7 @@ jobs:
   Zip-Tar-All-OS:
     needs: [Test-Build-Subsystem-Manager]
     container: lunamidori5/linux_model_deb_11:master
-    runs-on: self-hosted
+    runs-on: ubuntu-20.04
     steps:
       - name: Set up Python 3.10
         uses: actions/setup-python@v5

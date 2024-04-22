@@ -282,12 +282,12 @@ class localai_model_manager:
                 huggingface_model_install = huggingface_model_install.replace("?download=true", "")
                 #https://huggingface.co/mlabonne/gemma-7b-it-GGUF/resolve/main/gemma-7b-it.Q2_K.gguf?download=true
 
-                print(str(huggingface_model_install))
+                s.log(str(huggingface_model_install))
 
                 # Split the link into parts
                 huggingface_parts = huggingface_model_install.split("/")
 
-                print(str(huggingface_parts))
+                s.log(str(huggingface_parts))
 
                 # Extract the user, repo name, and model filename
                 user = huggingface_parts[0]
@@ -295,9 +295,9 @@ class localai_model_manager:
                 model_filename = huggingface_parts[2]
 
                 # Print the extracted information
-                print("User:", user)
-                print("Repo name:", repo_name)
-                print("Model filename:", model_filename)
+                s.log(f"User: {user}")
+                s.log(f"Repo name: {repo_name}")
+                s.log(f"Model filename: {model_filename}")
                                 
                 url = f"https://tea-cup.midori-ai.xyz/huggingface/model/{model_filename}"
 
@@ -642,7 +642,7 @@ class localai_model_manager:
 
         if answer1 == "huggingface":
             huggingface_commands = [
-                ["test", "-f", "/usr/local/bin/hf-downloader && echo File exists", "|| wget", "--show-progress=no", "-O", "/usr/local/bin/hf-downloader", f"https://tea-cup.midori-ai.xyz/download/hf-downloader"],
+                ["test", "-f", "/usr/local/bin/hf-downloader", "||", "wget", "--show-progress=no", "-O", "/usr/local/bin/hf-downloader", f"https://tea-cup.midori-ai.xyz/download/hf-downloader"],
                 [f"{curl_command}"],
                 ["cp", f"{model_filename}", f"{inside_model_folder}/{model_filename}"],
                 ["rm", "-f", f"{model_filename}"],
