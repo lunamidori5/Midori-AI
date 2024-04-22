@@ -4,12 +4,28 @@ on:
   workflow_dispatch:
 
 jobs:
+  check-commit-message:
+    runs-on: ubuntu-latest
+    outputs:
+      should_build: ${{ steps.check.outputs.result }}
+    steps:
+      - name: Check commit message
+        id: check
+        run: |
+          if [[ "${{ github.event.workflow_run.head_commit.message }}" =~ ^(build|rebuild)$ ]]; then
+            echo "::set-output name=result::true"
+          else 
+            echo "::set-output name=result::false"
+          fi
+
   Build-Subsystem-Manager:
     strategy:
       matrix:
         os: [ubuntu-20.04, windows-latest, macos-latest]
         python: ['3.10']
     runs-on: ${{ matrix.os }}
+    needs: check-commit-message
+    if: ${{ needs.check-commit-message.outputs.should_build == 'true' }}
     steps:
       - uses: actions/checkout@v4
 
