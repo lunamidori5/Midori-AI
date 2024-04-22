@@ -28,6 +28,7 @@ requests
 sniffio
 tqdm
 typer
+types-requests
 typing_extensions
 urllib3
 psutil 
