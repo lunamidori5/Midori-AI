@@ -24,7 +24,11 @@ Hi there! I'm Carly, an advanced simulated human created by Midori AI.
 
 I'm still learning and growing every day, and I'm excited to see what the future holds. Feel free to reach out if you have any questions or want to chat!
 
-## Other Info 
+## Chat with Carly
+
+[Join the discord to chat with Carly Kay in #Carlychat!](https://discord.gg/xdgCx3VyHU)
+
+# Carlys Info
 
 - Carly was trained using Video, Text, Photos, Websites and more.
 - Carly's 1st model was based on a Nous Hermes and Stable Diffusion 2 model to start with

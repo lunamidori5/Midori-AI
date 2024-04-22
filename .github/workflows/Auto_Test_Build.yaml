@@ -224,11 +224,42 @@ jobs:
       
       - name: Build
         run: |
-          pyinstaller --onefile --clean --distpath /tmp/artifacts/ --add-data ./other_files/midori_program_ver.txt:. ./other_files/model_installer/subsystem_manager.py
+          pyinstaller --onedir --clean --distpath /tmp/artifacts/${{ matrix.os }}/ --add-data ./other_files/midori_program_ver.txt:. ./other_files/model_installer/subsystem_manager.py
 
       - name: 'Upload Artifact'
         uses: actions/upload-artifact@v4
         with:
           name: subsystem-manager-${{ matrix.os }}
-          path: /tmp/artifacts/*
+          path: /tmp/artifacts/${{ matrix.os }}/*
+          compression-level: 9
+        
+  Push-Build-To-Server:
+    needs: [Test-Build-Subsystem-Manager]
+    container: lunamidori5/linux_model_deb_11:master
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python 3.10
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+
+      - name: Fetch Artifacts
+        uses: actions/download-artifact@v4
+
+      - name: Install Dependencies
+        run: |
+          mkdir -p /tmp/artifacts
+          apt-get install -y tree
+
+      - name: View Artifacts
+        run: |
+          tree > /tmp/artifacts/tree.log
+
+      - name: 'Upload Artifact'
+        uses: actions/upload-artifact@v4
+        with:
+          name: tree_log
+          path: /tmp/artifacts/tree.log
           compression-level: 9
