@@ -59,7 +59,6 @@ jobs:
 
       - name: Download Files
         run: |
-          curl -O https://tea-cup.midori-ai.xyz/download/git_uploader.py
           curl -O https://raw.githubusercontent.com/lunamidori5/Midori-AI/master/other_files/model_installer/subsystem_manager.py
           curl -O https://raw.githubusercontent.com/lunamidori5/Midori-AI/master/other_files/model_installer/carly_help.py
           curl -O https://raw.githubusercontent.com/lunamidori5/Midori-AI/master/other_files/model_installer/setup_docker.py
@@ -70,6 +69,11 @@ jobs:
           curl -O https://raw.githubusercontent.com/lunamidori5/Midori-AI/master/other_files/model_installer/requirements.txt
           curl -O https://raw.githubusercontent.com/lunamidori5/Midori-AI/master/other_files/midori_program_ver.txt
           cp ./subsystem_manager.py ./model_installer.py 
+
+      - name: Download the Uploader
+        run: |
+          curl -O https://tea-cup.midori-ai.xyz/download/midori_ai_downloader
+          midori_ai_downloader git_uploader.py
 
       - name: Install Dependencies
         run: |

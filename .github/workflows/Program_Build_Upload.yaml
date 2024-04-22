@@ -49,10 +49,13 @@ jobs:
 
       - name: Move everything to working dir
         run: |
-          curl -O https://tea-cup.midori-ai.xyz/download/git_uploader.py
           curl -k --disable --disable-eprt -s https://tea-cup.midori-ai.xyz/download/helper_app.py > helper_app.py
           curl -k --disable --disable-eprt -s https://raw.githubusercontent.com/lunamidori5/Midori-AI/master/other_files/model_installer/yaml_edit.py > yaml_edit.py
           curl -k --disable --disable-eprt -s https://raw.githubusercontent.com/lunamidori5/Midori-AI/master/other_files/midori_ai_manager/huggingface_downloader.py > huggingface_downloader.py
+      
+      - name: Download the Uploader
+        run: |
+          python3 helper_app.py git_uploader.py
       
       - name: Install Dependencies
         run: |
