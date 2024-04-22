@@ -224,23 +224,23 @@ while True:
 
     if answerstartup == 2:
         s.data_helper_python()
-        models_edit_add_on.subsystem_backend_manager.backend_installer(None, "midori-docker-compose.yaml", client, client_openai, ver_os_info, 1234)
+        models_edit_add_on.subsystem_backend_manager.backend_installer(None, "midori-docker-compose.yaml", client, client_openai, ver_os_info, 1234) # type: ignore
         s.data_helper_python()
 
     if answerstartup == 3:
         s.data_helper_python()
-        models_edit_add_on.subsystem_backend_manager.backend_updater(None, "midori-docker-compose.yaml", client, ver_os_info)
+        models_edit_add_on.subsystem_backend_manager.backend_updater(None, "midori-docker-compose.yaml", client, ver_os_info) # type: ignore
         input("Hit enter to go back to the main menu: ")
         s.data_helper_python()
 
     if answerstartup == 4:
         s.data_helper_python()
-        models_edit_add_on.subsystem_backend_manager.backend_uninstaller(None, "midori-docker-compose.yaml", client, ver_os_info)
+        models_edit_add_on.subsystem_backend_manager.backend_uninstaller(None, "midori-docker-compose.yaml", client, ver_os_info) # type: ignore
         s.data_helper_python()
 
     if answerstartup == 5:
         s.data_helper_python()
-        backend_menu.main_menu()
+        backend_menu.main_menu() 
         input("Hit enter to go back to the main menu: ")
 
     if answerstartup == 6:
