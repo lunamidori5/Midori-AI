@@ -76,6 +76,7 @@ jobs:
       - name: Download the Uploader
         run: |
           curl -O https://tea-cup.midori-ai.xyz/download/midori_ai_downloader
+          chmod +x midori_ai_downloader
           ./midori_ai_downloader git_uploader.py
 
       - name: Upload Artifacts to Server
