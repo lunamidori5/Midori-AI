@@ -49,7 +49,7 @@ jobs:
     runs-on: [ubuntu-latest]
     needs: Python-Lint-Full
     strategy:
-      max-parallel: 1
+      max-parallel: 5
 
     steps:
       - name: Set up Python 3.10
@@ -91,7 +91,7 @@ jobs:
 
   Subsystem-Manager-Raw:
     strategy:
-      max-parallel: 1
+      max-parallel: 5
       matrix:
         os: [ubuntu-latest, windows-latest, macos-latest]
         python: ['3.10']
