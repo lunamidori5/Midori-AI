@@ -6,6 +6,13 @@ weight = 1
 
 ![Midori AI photo](https://tea-cup.midori-ai.xyz/download/logosubsystem.png)
 
+## 4/22/2024
+- Update: Fully reworked how we pack the exec for all os
+- Update: Fully redid our linting actions on github to run better
+- Update: Mac OS Support should be "working"
+- Bug Fix: Fixed a odd bug with VER
+- Bug Fix: Fixed a bug with WSL purging docker for no reason
+
 ## 4/20/2024
 - Update: Added new "WSL Docker Data" backend program (in testing)
 - Update: Added more GPU checks to make sure we know for sure if you have a GPU

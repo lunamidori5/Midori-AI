@@ -1,6 +1,7 @@
 import os
 import yaml
 import GPUtil
+import psutil
 import subprocess
 
 import support as s
@@ -9,18 +10,19 @@ import edit_models as models_edit_add_on
 
 known_niv_gpus = ["NVIDIA", "Quadro"]
 
-def dev_setup_docker(DockerClient, compose_path, ver_os_info, containers, use_gui, sg, client, ver_info, layout, client_openai, discord_id, subsystem_file_name):
-    CPUCORES = 1
+def dev_setup_docker(DockerClient, compose_path, ver_os_info, containers, use_gui, sg, client, ver_info, layout, client_openai, unused_int, subsystem_file_name):
+    CPUCORES = int(psutil.cpu_count())
     GPUUSE = False
     BOTHUSE = False
     setgpu = False
     update_all = False
     answerupdater = "false"
     subsystem_ver_auto_update = "subsystem_auto_update.ram"
-    user_name = "placeholder"
     base_image_name = "lunamidori5/midori_ai_subsystem"
 
     docker_compose_yaml = "midori-docker-compose.yaml"
+
+    discord_id = s.get_uuid_id()
 
     try:
         gpus = GPUtil.getGPUs()
@@ -44,6 +46,7 @@ def dev_setup_docker(DockerClient, compose_path, ver_os_info, containers, use_gu
 
     if os.path.exists(os.path.join("files", subsystem_file_name)):
         s.log("You have already setup the Midori AI subsystem, Updating it!")
+        CPUCORES = int(psutil.cpu_count())
         with open(os.path.join("files", '1stbooleans.txt'), 'r') as f:
             GPUUSE = str(f.read())
         with open(os.path.join("files", '2ntbooleans.txt'), 'r') as f:
@@ -79,7 +82,7 @@ def dev_setup_docker(DockerClient, compose_path, ver_os_info, containers, use_gu
 
         if answerbasic == "false":
             s.log("Alright then ill go ahead and exit! Thank you!")
-            exit()
+            exit(404)
 
         s.clear_window(ver_os_info)
 
@@ -145,9 +148,8 @@ def dev_setup_docker(DockerClient, compose_path, ver_os_info, containers, use_gu
         s.log("Setting up the Midori AI Docker Subsystem...")
 
         s.log("I am now going to install everything you requested, please wait for me to get done.")
-        s.log("Hit enter to start")
 
-        input()
+        input("Hit enter to start: ")
 
     os.makedirs("files", exist_ok=True)
 
@@ -180,7 +182,6 @@ def dev_setup_docker(DockerClient, compose_path, ver_os_info, containers, use_gu
                         "CPUCORES": CPUCORES,
                         "GPUUSE": GPUUSE,
                         "BOTHUSE": BOTHUSE,
-                        "USERNAME": "removed_from_manager",
                         "DISCORD_ID": discord_id,
                     },  # env_file is commented out
                     "volumes": ["./files:/app/files", "midori-ai:/app/int-files", "/var/lib/docker/volumes/midoriai_midori-ai-models/_data:/app/models", "/var/lib/docker/volumes/midoriai_midori-ai-images/_data:/app/images", "/var/lib/docker/volumes/midoriai_midori-ai-audio/_data:/app/audio", "/var/run/docker.sock:/var/run/docker.sock"],
@@ -216,7 +217,6 @@ def dev_setup_docker(DockerClient, compose_path, ver_os_info, containers, use_gu
                         "CPUCORES": CPUCORES,
                         "GPUUSE": GPUUSE,
                         "BOTHUSE": BOTHUSE,
-                        "USERNAME": "removed_from_manager",
                         "DISCORD_ID": discord_id,
                     },  # env_file is commented out
                     "volumes": ["./files:/app/files", "midori-ai:/app/int-files", "/var/lib/docker/volumes/midoriai_midori-ai-models/_data:/app/models", "/var/lib/docker/volumes/midoriai_midori-ai-images/_data:/app/images", "/var/lib/docker/volumes/midoriai_midori-ai-audio/_data:/app/audio", "/var/run/docker.sock:/var/run/docker.sock"],

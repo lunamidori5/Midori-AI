@@ -184,7 +184,7 @@ jobs:
   Zip-Tar-All-OS:
     needs: [Test-Build-Subsystem-Manager]
     container: lunamidori5/linux_model_deb_11:master
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     steps:
       - name: Set up Python 3.10
         uses: actions/setup-python@v5
@@ -227,4 +227,4 @@ jobs:
         with:
           name: everything
           path: /tmp/artifacts/*
-          compression-level: 9
+          compression-level: 0

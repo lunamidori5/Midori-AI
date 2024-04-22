@@ -5,12 +5,12 @@ import support as s
 
 import carly_help as help_add_on
 import setup_docker as docker_add_on
-import edit_models as models_edit_add_on
 import setup_models as models_add_on
-
-from version import VERSION
+import edit_models as models_edit_add_on
 
 from colorama import Fore
+
+from version import VERSION
 
 from autogen import OpenAIWrapper
 
@@ -35,6 +35,8 @@ base_image_name = "quay.io/go-skynet/local-ai:"
 user_image = ""
 
 answer_backup_compose ="no"
+
+discord_id = s.get_uuid_id()
 
 ver_info = VERSION
 
@@ -179,7 +181,7 @@ while True:
     temp_main_menu_dash = dash * main_menu_dash
 
     s.clear_window(ver_os_info)
-    s.check_for_subsystem_update(ver_os_info, ver_info, DockerClient, compose_path, containers, use_gui, sg, client, ver_info, layout, client_openai, 1234, subsystem_file_name)
+    s.check_for_subsystem_update(ver_os_info, ver_info, DockerClient, compose_path, containers, use_gui, sg, client, ver_info, layout, client_openai, discord_id, subsystem_file_name)
     s.clear_window(ver_os_info)
     s.log(blank_line)
     s.log(main_menu_text_done)
@@ -188,9 +190,6 @@ while True:
     print("")
     print(Fore.RED + 'DEV NOTE' + Fore.WHITE + ': Please report bugs to the github or email so we can fix them!')
     print(Fore.RED + 'DEV NOTE' + Fore.WHITE + ': Thank you all so much for helping with the beta! <3')
-    print("")
-    print(Fore.RED + 'BREAKING UPDATE' + Fore.WHITE + ': If you are running the LocalAI backend please update it as soon as you can')
-    print(Fore.RED + 'BREAKING UPDATE' + Fore.WHITE + ': There was some big changes upstream, to make sure you have a stable image, please update')
     print("")
     
     for line in menu_list_opt:
@@ -219,12 +218,12 @@ while True:
     if answerstartup == 1:
         s.data_helper_python()
         s.repair_clean_up()
-        docker_add_on.dev_setup_docker(DockerClient, compose_path, ver_os_info, containers, use_gui, sg, client, ver_info, layout, client_openai, 1234, subsystem_file_name)
+        docker_add_on.dev_setup_docker(DockerClient, compose_path, ver_os_info, containers, use_gui, sg, client, ver_info, layout, client_openai, discord_id, subsystem_file_name)
         s.data_helper_python()
 
     if answerstartup == 2:
         s.data_helper_python()
-        models_edit_add_on.subsystem_backend_manager.backend_installer(None, "midori-docker-compose.yaml", client, client_openai, ver_os_info, 1234) # type: ignore
+        models_edit_add_on.subsystem_backend_manager.backend_installer(None, "midori-docker-compose.yaml", client, client_openai, ver_os_info, discord_id) # type: ignore
         s.data_helper_python()
 
     if answerstartup == 3:

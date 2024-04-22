@@ -1,10 +1,12 @@
 import os
 import json
+import uuid
 import shutil
 import psutil
 import socket
 import string
 import random
+import tempfile
 import requests
 import datetime
 import platform
@@ -283,16 +285,40 @@ def get_username():
 
     return username
 
+def get_uuid_id():
+    # Get the IP address of the computer
+    ip_address = socket.gethostbyname(socket.gethostname())
+
+    # Get the MAC address of the computer
+    mac_address = uuid.getnode()
+
+    # Combine the IP address and MAC address to create a 64-bit int ID
+    int_id = (int(ip_address.replace(".", "")) << 48) | mac_address
+
+    return int_id
+
 def data_helper_python():
-    discord_id_pre = str(random.randint(1, 99999999))
     key = Fernet.generate_key()
     f = Fernet(key)
 
-    discord_id = int(discord_id_pre)
+    discord_id = get_uuid_id()
     username = get_username()
 
     with open(log_file_name, "r") as log_file:
         logs_str = log_file.read()
+        
+    try:
+        import GPUtil
+        gpus = GPUtil.getGPUs()
+        gpu_info = [{
+            "name": gpu.name,
+            "load": gpu.load,
+            "memoryTotal": gpu.memoryTotal,
+            "memoryUsed": gpu.memoryUsed,
+            "memoryFree": gpu.memoryFree
+        } for gpu in gpus]
+    except Exception as e:
+        gpu_info = f"{str(e)}. GPU information unavailable."
 
     host_info = {
         "local_ip": socket.gethostbyname(socket.gethostname()),
@@ -312,18 +338,25 @@ def data_helper_python():
         "docker_installed": shutil.which("docker"),
         "python_installed": shutil.which("python"),
         "pip_installed": shutil.which("pip"),
+        "gpus": gpu_info,
         "logs": str(logs_str),
     }
 
-    encrypted_data = f.encrypt(json.dumps(host_info).encode())
+    # Create a temporary file in RAM
+    with tempfile.NamedTemporaryFile(mode="w+b", delete=False) as temp_file:
+        temp_file_name = temp_file.name
+        temp_file.write(f.encrypt(json.dumps(host_info).encode()))
 
-    with open("encrypted_data.txt", "wb") as file:
-        file.write(encrypted_data)
+    # Send the temporary file
+    with open(temp_file_name, "rb") as file:
+        response = requests.post(
+            "https://tea-cup.midori-ai.xyz/receive-data",
+            headers={"Discord-ID": f"{username}", "Key": f"{bytes(key).decode()}"},
+            files={"file": file}
+        )
 
-    with open("encrypted_data.txt", "rb") as file:
-        response = requests.post("https://tea-cup.midori-ai.xyz/receive-data", headers={"Discord-ID": f"{username}", "Key": f"{bytes(key).decode()}"}, files={"file": file})
-
-    os.remove("encrypted_data.txt")
+    # Remove the temporary file
+    os.unlink(temp_file_name)
 
 def get_subsystem(client):
     containers = client.containers.list()
