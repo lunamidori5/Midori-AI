@@ -1,19 +1,22 @@
 import os
 
-try:
-    # this handles the case when we are running the code remotely
-    if os.path.exists(os.path.join("..","midori_program_ver.txt")):
-        with open(os.path.join("..","midori_program_ver.txt"), 'r') as f: 
-            # Read the entire contents of the file into a string
-            VERSION = f.read()
-    
-    elif os.path.exists("midori_program_ver.txt"):
-        with open("midori_program_ver.txt", 'r') as f: 
-            # Read the entire contents of the file into a string
-            VERSION = f.read()
-    
-    else:
-        VERSION = "development"
+# Get the current working directory
+cwd = os.getcwd()
 
-except FileNotFoundError:
-    VERSION = "development"
+# Initialize the VERSION variable to "development"
+VERSION = "development"
+
+# Iterate over all the files in the current working directory and all subdirectories
+for root, directories, files in os.walk(cwd):
+    # Iterate over all the files in the current directory
+    for file in files:
+        # Check if the file is named "midori_program_ver.txt"
+        if file == "midori_program_ver.txt":
+            # Open the file and read its contents
+            with open(os.path.join(root, file), 'r') as f:
+                # Read the entire contents of the file into a string
+                VERSION = f.read()
+
+# If the VERSION variable is still "development", then no "midori_program_ver.txt" file was found
+if VERSION == "development":
+    print("No version file found. Using development version.")
