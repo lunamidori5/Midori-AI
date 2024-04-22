@@ -152,7 +152,7 @@ def dev_setup_docker(DockerClient, compose_path, ver_os_info, containers, use_gu
     os.makedirs("files", exist_ok=True)
 
     if ver_os_info == "linux":
-        os.chmod("files", 0o777)
+        os.chmod("files", 0o755)
 
     if GPUUSE:
         config = {
