@@ -20,7 +20,8 @@ jobs:
           echo $CONDA/bin >> $GITHUB_PATH
       - name: Install dependencies
         run: |
-          conda install flake8 pylint mypy bandit prospector
+          conda install flake8 pylint mypy
+          pip install bandit prospector
           pip install docker python-on-whales pyyaml PyInstaller requests py-cpuinfo pysimplegui openai colorama 
       - name: Lint with all linters
         run: |
