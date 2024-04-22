@@ -89,7 +89,7 @@ backend_checker = s.backends_checking()
 os.makedirs("files", exist_ok=True)
 
 if ver_os_info == "linux":
-    os.chmod("files", 0o755)
+    os.chmod("files", 0o777)
 
 try:
     if os.name == 'nt':
