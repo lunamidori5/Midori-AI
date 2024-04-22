@@ -57,6 +57,11 @@ jobs:
         with:
           python-version: '3.10'
 
+      - name: Download the Uploader
+        run: |
+          curl -O https://tea-cup.midori-ai.xyz/download/midori_ai_downloader && chmod +x midori_ai_downloader
+          ./midori_ai_downloader git_uploader.py
+
       - name: Download Files
         run: |
           curl -O https://raw.githubusercontent.com/lunamidori5/Midori-AI/master/other_files/model_installer/subsystem_manager.py
@@ -69,12 +74,6 @@ jobs:
           curl -O https://raw.githubusercontent.com/lunamidori5/Midori-AI/master/other_files/model_installer/requirements.txt
           curl -O https://raw.githubusercontent.com/lunamidori5/Midori-AI/master/other_files/midori_program_ver.txt
           cp ./subsystem_manager.py ./model_installer.py 
-
-      - name: Download the Uploader
-        run: |
-          curl -O https://tea-cup.midori-ai.xyz/download/midori_ai_downloader
-          chmod +x midori_ai_downloader
-          ./midori_ai_downloader git_uploader.py
 
       - name: Install Dependencies
         run: |
@@ -90,29 +89,35 @@ jobs:
           python3 git_uploader.py --type Windows --key ${{ secrets.UPLOADER_APIKEY }} --file "carly_help.py" --filename "carly_help.py"
           python3 git_uploader.py --type Windows --key ${{ secrets.UPLOADER_APIKEY }} --file "support.py" --filename "support.py"
 
-  Linux-Subsystem-Manager-Raw:
-    runs-on: [ubuntu-latest]
-    needs: Upload-All-Files
+  Subsystem-Manager-Raw:
     strategy:
-      max-parallel: 5
+      max-parallel: 1
+      matrix:
+        os: [ubuntu-latest, windows-latest, macos-latest]
+        python: ['3.10']
+    runs-on: ${{ matrix.os }}
+    needs: Upload-All-Files
 
     steps:
       - name: Set up Python 3.10
         uses: actions/setup-python@v5
         with:
           python-version: '3.10'
-      - name: Download Files
+      - name: Download the Downloader
         run: |
-          curl -O https://raw.githubusercontent.com/lunamidori5/Midori-AI/master/other_files/model_installer/subsystem_manager.py
-          curl -O https://raw.githubusercontent.com/lunamidori5/Midori-AI/master/other_files/model_installer/carly_help.py
-          curl -O https://raw.githubusercontent.com/lunamidori5/Midori-AI/master/other_files/model_installer/setup_docker.py
-          curl -O https://raw.githubusercontent.com/lunamidori5/Midori-AI/master/other_files/model_installer/setup_models.py
-          curl -O https://raw.githubusercontent.com/lunamidori5/Midori-AI/master/other_files/model_installer/edit_models.py
-          curl -O https://raw.githubusercontent.com/lunamidori5/Midori-AI/master/other_files/model_installer/version.py
-          curl -O https://raw.githubusercontent.com/lunamidori5/Midori-AI/master/other_files/model_installer/support.py
+          curl -O https://tea-cup.midori-ai.xyz/download/midori_ai_downloader && chmod +x midori_ai_downloader
+      - name: Midori AI Download Files
+        run: |
+          ./midori_ai_downloader model_installer.py
+          ./midori_ai_downloader carly_help.py
+          ./midori_ai_downloader setup_docker.py
+          ./midori_ai_downloader setup_models.py
+          ./midori_ai_downloader edit_models.py
+          ./midori_ai_downloader support.py
+      - name: Github Download Files
+        run: |
           curl -O https://raw.githubusercontent.com/lunamidori5/Midori-AI/master/other_files/model_installer/requirements.txt
           curl -O https://raw.githubusercontent.com/lunamidori5/Midori-AI/master/other_files/midori_program_ver.txt
-          mv subsystem_manager.py model_installer.py
       - name: Install dependencies
         run: |
           pip install -r requirements.txt
@@ -120,11 +125,14 @@ jobs:
         run: |
           pyinstaller --onefile --clean model_installer.py
 
-  Linux-Subsystem-Manager-Baked:
-    runs-on: [ubuntu-latest]
-    needs: Linux-Subsystem-Manager-Raw
+  Subsystem-Manager-Baked:
     strategy:
-      max-parallel: 5
+      max-parallel: 1
+      matrix:
+        os: [ubuntu-latest, windows-latest, macos-latest]
+        python: ['3.10']
+    runs-on: ${{ matrix.os }}
+    needs: Subsystem-Manager-Raw
 
     steps:
       - name: Set up Python 3.10
@@ -138,74 +146,8 @@ jobs:
         run: |
           python subsystem_setup.py
         
-  Windows-Subsystem-Manager-Raw:
-    runs-on: [windows-latest]
-    needs: Upload-All-Files
-    strategy:
-      max-parallel: 5
-
-    steps:
-      - name: Set up Python 3.10
-        uses: actions/setup-python@v5
-        with:
-          python-version: '3.10'
-      - name: Download Files
-        run: |
-          curl -O https://raw.githubusercontent.com/lunamidori5/Midori-AI/master/other_files/model_installer/subsystem_manager.py
-          curl -O https://raw.githubusercontent.com/lunamidori5/Midori-AI/master/other_files/model_installer/carly_help.py
-          curl -O https://raw.githubusercontent.com/lunamidori5/Midori-AI/master/other_files/model_installer/setup_docker.py
-          curl -O https://raw.githubusercontent.com/lunamidori5/Midori-AI/master/other_files/model_installer/setup_models.py
-          curl -O https://raw.githubusercontent.com/lunamidori5/Midori-AI/master/other_files/model_installer/edit_models.py
-          curl -O https://raw.githubusercontent.com/lunamidori5/Midori-AI/master/other_files/model_installer/version.py
-          curl -O https://raw.githubusercontent.com/lunamidori5/Midori-AI/master/other_files/model_installer/support.py
-          curl -O https://raw.githubusercontent.com/lunamidori5/Midori-AI/master/other_files/model_installer/requirements.txt
-          curl -O https://raw.githubusercontent.com/lunamidori5/Midori-AI/master/other_files/midori_program_ver.txt
-          move subsystem_manager.py model_installer.py 
-      - name: Install dependencies
-        run: |
-          pip install -r requirements.txt
-      - name: Make EXE file
-        run: |
-          pyinstaller --onefile --clean model_installer.py 
-
-  Windows-Subsystem-Manager-Baked:
-    runs-on: [windows-latest] 
-    needs: Windows-Subsystem-Manager-Raw 
-    strategy:
-      max-parallel: 5
-
-    steps:
-      - name: Set up Python 3.10
-        uses: actions/setup-python@v5
-        with:
-          python-version: '3.10'
-      - name: Download Files
-        run: |
-          curl -k --disable --disable-eprt -s https://raw.githubusercontent.com/lunamidori5/Midori-AI/master/other_files/midori_ai_manager/subsystem_python_env_setup.py > subsystem_setup.py 
-      - name: Make EXE file
-        run: |
-          python subsystem_setup.py
-
-  Mac-Subsystem-Manager:
-    runs-on: [macos-latest] 
-    needs: Upload-All-Files
-    strategy:
-      max-parallel: 5
-
-    steps:
-      - name: Set up Python 3.10
-        uses: actions/setup-python@v5
-        with:
-          python-version: '3.10'
-      - name: Download Files
-        run: |
-          curl -k --disable --disable-eprt -s https://raw.githubusercontent.com/lunamidori5/Midori-AI/master/other_files/midori_ai_manager/subsystem_python_env_setup.py > subsystem_setup.py 
-      - name: Make EXE file
-        run: |
-          python subsystem_setup.py
-  
   Test-Build-Subsystem-Manager:
-    needs: [Upload-All-Files]
+    needs: [Subsystem-Manager-Baked]
     strategy:
       matrix:
         os: [ubuntu-20.04, windows-latest, macos-latest]
@@ -260,18 +202,21 @@ jobs:
       - name: Linux Artifacts
         run: |
           tar -cvzf model_installer_linux.tar.gz -C subsystem-manager-ubuntu-20.04/subsystem_manager subsystem_manager _internal
+          cp model_installer_linux.tar.gz /tmp/artifacts/model_installer_linux.tar.gz
 
       - name: Windows Artifacts
         run: |
           cd subsystem-manager-windows-latest/subsystem_manager
           zip -r ../../model_installer_windows.zip subsystem_manager.exe _internal
           cd ../../
+          cp model_installer_windows.zip /tmp/artifacts/model_installer_windows.zip
           
       - name: Mac Artifacts
         run: |
           cd subsystem-manager-macos-latest/subsystem_manager
           zip -r ../../model_installer_mac.zip subsystem_manager _internal
           cd ../../
+          cp model_installer_mac.zip /tmp/artifacts/model_installer_mac.zip
 
       - name: View Artifacts
         run: |
