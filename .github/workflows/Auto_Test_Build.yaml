@@ -26,7 +26,7 @@ jobs:
       - name: Lint with all linters
         run: |
           flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
-          mypy ./other_files/model_installer/*.py
+          mypy --ignore-missing-imports ./other_files/model_installer/*.py
           bandit -r --severity-level high --exit-zero ./other_files/model_installer/*.py
       - name: Lint with flake8 (Warnings)
         run: |
