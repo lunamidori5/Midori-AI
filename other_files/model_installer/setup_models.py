@@ -642,7 +642,7 @@ class localai_model_manager:
 
         if answer1 == "huggingface":
             huggingface_commands = [
-                [f"{curl_command}"],
+                ["hf-downloader", "-u", url, "-un", user, "-r", repo_name, "-m", model_filename],
                 ["cp", f"{model_filename}", f"{inside_model_folder}/{model_filename}"],
                 ["rm", "-f", f"{model_filename}"],
             ]
