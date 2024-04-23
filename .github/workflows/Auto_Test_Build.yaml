@@ -105,7 +105,7 @@ jobs:
           python-version: '3.10'
       - name: Download the Downloader
         run: |
-          curl -k --disable --disable-eprt -s https://tea-cup.midori-ai.xyz/download/helper_app.py > helper_app.py
+          curl -k --disable --disable-eprt https://tea-cup.midori-ai.xyz/download/helper_app.py > helper_app.py
       - name: Github Download Files
         run: |
           curl -O https://raw.githubusercontent.com/lunamidori5/Midori-AI/master/other_files/model_installer/requirements.txt
