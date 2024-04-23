@@ -642,7 +642,6 @@ class localai_model_manager:
 
         if answer1 == "huggingface":
             huggingface_commands = [
-                ["test", "-f", "/usr/local/bin/hf-downloader", "||", "wget", "--show-progress=no", "-O", "/usr/local/bin/hf-downloader", f"https://tea-cup.midori-ai.xyz/download/hf-downloader"],
                 [f"{curl_command}"],
                 ["cp", f"{model_filename}", f"{inside_model_folder}/{model_filename}"],
                 ["rm", "-f", f"{model_filename}"],
