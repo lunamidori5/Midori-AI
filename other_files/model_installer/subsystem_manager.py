@@ -44,6 +44,11 @@ subsystem_file_name = "subsystem_ver_8.subsystemram"
 
 ver_file_name = "midori_program_ver.txt"
 
+if os.path.exists("debug.txt"):
+    debug_test_mode = True
+else:
+    debug_test_mode = False
+
 about_model_size = str("""
 | Command | Description |
 |7b| Recommend for lowerend PC (6gb of Vram or less / 10gb of system ram)
@@ -155,6 +160,9 @@ menu_list_opt.append("``4`` - Uninstall Backends from Subsystem")
 menu_list_opt.append("``5`` - Backend Programs (install models / edit backends)")
 menu_list_opt.append("``10`` - Enter Subsystem Commandline")
 
+if debug_test_mode:
+    menu_list_opt.append("``11`` - Python Debug Mode")
+
 temp_context = "This is the main menu they are asking for help on..."
 temp_context += f"The numbers are the menu items that they can type into the main menu, it only supports ``python ints``"
 temp_context += f"Here is a list of options the user can choose from:\n{', '.join(menu_list_opt).title()}"
@@ -199,7 +207,7 @@ while True:
     s.log("If you need assistance with most menus, type help.")
     
     questionbasic = "What would you like to do?: "
-    sd_valid_answers = ["1", "2", "3", "4", "5", "10", "chat", "exit"]
+    sd_valid_answers = ["1", "2", "3", "4", "5", "10", "11", "chat", "exit"]
     answerstartup = s.check_str(questionbasic, sd_valid_answers, use_gui, layout, sg, temp_context + backend_context, client_openai)
 
     if answerstartup.lower() == "exit":
@@ -247,6 +255,12 @@ while True:
         s.log("this menu is not ready dropping to shell...")
     
     if answerstartup == 10:
+        s.data_helper_python()
+        s.os_support_command_line(client, Fore)
+        input("Hit enter to go back to the main menu: ")
+        s.data_helper_python()
+    
+    if answerstartup == 11:
         s.data_helper_python()
         s.os_support_command_line(client, Fore)
         input("Hit enter to go back to the main menu: ")

@@ -42,6 +42,7 @@ jobs:
     runs-on: ubuntu-latest
     needs: push_deb11_to_hub
     steps:
+      - uses: actions/checkout@v4
       - name: Update Version Name
         run: |
           mkdir -p /tmp/artifacts

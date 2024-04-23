@@ -382,6 +382,34 @@ def os_support_command_line(client, Fore):
     os.system(f"docker exec -it {container_id} /bin/tmux")
     log(f"Leaving the subsystem shell, returning to host os...")
 
+def os_debug_command_line(client, Fore):
+    container = get_subsystem(client)
+    container_id = container.id
+    print(Fore.RED + 'Entering debug mode! Type ``break`` to exit...')
+    print(Fore.WHITE + '------------------------------------------')
+    input_type = input("Please type `shell` for system shell or `docker` for docker fork api: ")
+
+    while True:
+        command_to_parse = str(input("Please enter a command: "))
+
+        if command_to_parse == "break":
+            break
+        else:
+            if input_type == "docker":
+                log(f"Running Command via docker shell")
+                void, stream = container.exec_run(command_to_parse, stream=True)
+                for data in stream:
+                    log(data.decode())
+            
+            elif input_type == "shell":
+                log(f"Running Command via system shell")
+                os.system(f"docker exec -it {container_id} /bin/bash {command_to_parse}")
+            
+            else:
+                break
+
+    log(f"Leaving the debugger, returning to host os...")
+
 def get_port_number(backend_request):
     if backend_request == "localai":
         return 38080
