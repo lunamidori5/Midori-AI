@@ -39,7 +39,6 @@ jobs:
 
   Build-Subsystem-Programs:
     name: Update Subsystem Programs
-    container: lunamidori5/linux_model_deb_11:master
     runs-on: ubuntu-latest
     needs: push_deb11_to_hub
     steps:
