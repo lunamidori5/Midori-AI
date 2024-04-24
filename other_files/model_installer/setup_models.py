@@ -302,7 +302,7 @@ class localai_model_manager:
                 url = f"https://tea-cup.midori-ai.xyz/huggingface/model/{model_filename}"
 
                 # Construct the cURL command
-                curl_command = f"hf-downloader -u {url} -un {user} -r {repo_name} -m {model_filename}"
+                curl_command = f"hf-downloader -un {user} -r {repo_name} -m {model_filename}"
 
             elif answer2.lower() == "base":
                 s.log("For base models from the site, you can type all of the ones you want, like ``all-minilm-l6-v2 bert-cpp``")
@@ -642,8 +642,8 @@ class localai_model_manager:
 
         if answer1 == "huggingface":
             huggingface_commands = [
-                ["hf-downloader", "-u", url, "-un", user, "-r", repo_name, "-m", model_filename],
-                ["cp", f"{model_filename}", f"{inside_model_folder}/{model_filename}"],
+                ["hf-downloader", "-un", user, "-r", repo_name, "-m", model_filename],
+                ["cp", f"\"{model_filename}\"", f"\"{inside_model_folder}/{model_filename}\""],
                 ["rm", "-f", f"{model_filename}"],
             ]
             docker_commands.extend(huggingface_commands)

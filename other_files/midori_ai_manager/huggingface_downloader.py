@@ -31,18 +31,16 @@ def download_file_from_midori_ai(url, filename, username, reponame, modeltype):
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
-    parser.add_argument("-u", "--url", type=str, required=True, help="The URL of the file to download.")
     parser.add_argument("-un", "--username", type=str, required=True, help="The username for the Hugging Face account.")
     parser.add_argument("-r", "--reponame", type=str, required=True, help="The name of the Hugging Face repository to download the model from.")
     parser.add_argument("-m", "--modeltype", type=str, required=True, help="The name of the model to download.")
     args = parser.parse_args()
 
-
-    url = args.url
     filename = args.modeltype
     username = args.username
     reponame = args.reponame
     modeltype = args.modeltype
+    url = f"https://tea-cup.midori-ai.xyz/huggingface/model/{modeltype}"
 
     # Download the file
     download_file_from_midori_ai(url, filename, username, reponame, modeltype)
