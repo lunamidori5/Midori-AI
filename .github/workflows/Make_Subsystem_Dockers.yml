@@ -10,7 +10,6 @@ jobs:
     name: Push LocalAI CPU to Docker Hub
     runs-on: self-hosted
     steps:
-      - uses: asilbek99/action-cleanup@main
       - uses: actions/checkout@v4
 
       - name: Log in to Docker Hub
@@ -59,7 +58,6 @@ jobs:
     name: Push LocalAI GPU to Docker Hub
     runs-on: self-hosted
     steps:
-      - uses: asilbek99/action-cleanup@main
       - uses: actions/checkout@v4
 
       - name: Log in to Docker Hub
