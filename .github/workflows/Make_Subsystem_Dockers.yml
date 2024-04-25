@@ -56,6 +56,7 @@ jobs:
 
   push_gpu_to_hub:
     name: Push LocalAI GPU to Docker Hub
+    needs: push_cpu_to_hub
     runs-on: self-hosted
     steps:
       - uses: actions/checkout@v4
