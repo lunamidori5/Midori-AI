@@ -20,8 +20,7 @@ The Midori AI Subsystem extends Docker's capabilities by providing a modular and
 {{% notice style="warning" title="Notice" %}}
 **Warnings / Heads up**
 - This program is in beta! By using it you take on risk, please see the disclaimer in the footnotes
-- The webserver is having some random outages, we are looking into this. 
-- (The Load Balancer is to blame, we are working on a fix)
+- The Webserver should be back up, sorry for the outage
 
 **Known Issues**
 - None at this time
