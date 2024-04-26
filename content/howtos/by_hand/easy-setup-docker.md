@@ -147,7 +147,7 @@ version: '3.6'
 
 services:
   localai-midori-ai-backend:
-    image: lunamidori5/midori_ai_subsystem_localai_cpu:latest
+    image: lunamidori5/midori_ai_subsystem_localai_cpu:master
     ## use this for localai's base 
     ## image: quay.io/go-skynet/local-ai:master
     tty: true # enable colorized logs
@@ -182,7 +182,7 @@ services:
               capabilities: [gpu]
     ## use this for localai's base 
     ## image: quay.io/go-skynet/local-ai:CHANGEMETOIMAGENEEDED
-    image: lunamidori5/midori_ai_subsystem_localai_gpu:latest
+    image: lunamidori5/midori_ai_subsystem_localai_gpu:master
     tty: true # enable colorized logs
     restart: always # should this be on-failure ?
     ports:
