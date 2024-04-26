@@ -23,7 +23,7 @@ The Midori AI Subsystem extends Docker's capabilities by providing a modular and
 - The Webserver should be back up, sorry for the outage
 
 **Known Issues**
-- None at this time
+- AnythingLLM Backend seems to be not upserting files, please report if you are having this bug to the github
 - **Report Issuses** -> [Github Issue](https://github.com/lunamidori5/Midori-AI/issues/new/choose)
 
 **Windows Users**
