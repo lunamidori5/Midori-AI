@@ -54,6 +54,7 @@ jobs:
       - name: Clean up Docker Cache
         run: |
           docker image prune -f -a
+          docker system prune -a -f
 
   push_gpu_to_hub:
     name: Push LocalAI GPU to Docker Hub
@@ -104,3 +105,4 @@ jobs:
       - name: Clean up Docker Cache
         run: |
           docker image prune -f -a
+          docker system prune -a -f
