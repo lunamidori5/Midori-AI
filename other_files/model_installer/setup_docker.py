@@ -8,7 +8,7 @@ import support as s
 
 import edit_models as models_edit_add_on
 
-known_niv_gpus = ["NVIDIA", "Quadro"]
+known_niv_gpus = ["NVIDIA", "Quadro", "Tesla"]
 
 def dev_setup_docker(DockerClient, compose_path, ver_os_info, containers, use_gui, sg, client, ver_info, layout, client_openai, unused_int, subsystem_file_name):
     CPUCORES = int(psutil.cpu_count())

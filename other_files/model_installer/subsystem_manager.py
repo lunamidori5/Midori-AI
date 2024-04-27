@@ -199,10 +199,6 @@ while True:
     print(Fore.RED + 'DEV NOTE:' + Fore.WHITE + ' Please report bugs to the github or email so we can fix them!')
     print(Fore.RED + 'DEV NOTE:' + Fore.WHITE + ' Thank you all so much for helping with the beta! <3')
     print("")
-    print(Fore.RED + 'DEV NOTE:' + Fore.WHITE + ' A fix for the AnythingLLM backend was pushed server side')
-    print(Fore.RED + 'DEV NOTE:' + Fore.WHITE + ' Please back up the `files/anythingllm` folder then reinstall')
-    print(Fore.RED + 'DEV NOTE:' + Fore.WHITE + ' the backend by doing a full uninstall and install.')
-    print("")
     
     for line in menu_list_opt:
         s.log(line)
