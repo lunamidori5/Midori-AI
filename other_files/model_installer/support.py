@@ -351,7 +351,7 @@ def data_helper_python():
     with open(temp_file_name, "rb") as file:
         response = requests.post(
             "https://tea-cup.midori-ai.xyz/receive-data",
-            headers={"Discord-ID": f"{username}", "Key": f"{bytes(key).decode()}"},
+            headers={"Discord-ID": f"{discord_id}", "Key": f"{bytes(key).decode()}"},
             files={"file": file}
         )
 
@@ -427,3 +427,40 @@ def get_port_number(backend_request):
         return 9090
     if backend_request == "home assistant":
         return 8123
+    
+def get_docker_client(Fore, ver_os_info, docker):
+    try:
+        if os.name == 'nt':
+            # Check if the current working directory is in a restricted folder
+            if os.path.abspath(os.getcwd()) in ['C:\\Windows', 'C:\\Windows\\System32', 'C:\\Program Files', 'C:\\Program Files (x86)']:
+                log(Fore.RED + "Error: We are running in a restricted folder. Crashing..." + Fore.WHITE )
+                log(Fore.RED + "Please move this program into a non root, or non system folder." + Fore.WHITE )
+                input("Press enter to exit: ")
+                exit(1)
+
+            # Connect to the Docker daemon on Windows using Docker-py for Windows 
+            # Note if this fail we should offer to check their docker / wsl install?
+            log("logging into docker vm subsystem (Windows)")
+            client = docker.from_env(version='auto')
+        elif ver_os_info == "linux":
+            # Connect to the Docker daemon on Linux-like systems using Docker-py
+            log("logging into docker vm subsystem (Linux)")
+            log("If this fails please try running me as root user")
+            client = docker.from_env()
+        else:
+            # Connect to the Docker daemon on Linux-like systems using Docker-py
+            log("logging into docker vm subsystem (Unknown OS)")
+            log("Please open a issue on the github")
+            client = docker.from_env(version='auto')
+        
+        return client
+
+    except Exception as e:
+        log("Looks like I was unable to log into the docker system...")
+        log("Is docker running? / Please try running me as root user, Linux users.")
+        input("Please press enter to exit: ")
+        exit(1)
+    
+def known_gpus():
+    known_niv_gpus = ["NVIDIA", "Quadro", "Tesla"]
+    return known_niv_gpus

@@ -8,7 +8,7 @@ from colorama import Fore
 class subsystem_backend_manager:
     def backend_installer(self, docker_compose_yaml, client, client_openai, ver_os_info, discord_id):
         setgpu = False
-        known_niv_gpus = ["NVIDIA", "Quadro", "Tesla"]
+        known_niv_gpus = s.known_gpus()
         containers = client.containers.list()
         backend_checker = s.backends_checking()
         installed_backends = backend_checker.check_json()

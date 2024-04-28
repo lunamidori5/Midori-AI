@@ -98,36 +98,7 @@ os.makedirs("files", exist_ok=True)
 if ver_os_info == "linux":
     os.chmod("files", 0o777) # noqa
 
-try:
-    if os.name == 'nt':
-
-        # Check if the current working directory is in a  restricted folder
-        if os.path.abspath(os.getcwd()) in ['C:\\Windows', 'C:\\Windows\\System32', 'C:\\Program Files', 'C:\\Program Files (x86)']:
-            print(Fore.RED + "Error: We are running in a restricted folder. Crashing..." + Fore.WHITE )
-            print(Fore.RED + "Please move this program into a non root, or non system folder." + Fore.WHITE )
-            input("Press enter to exit: ")
-            exit(1)
-
-        # Connect to the Docker daemon on Windows using Docker-py for Windows 
-        # Note if this fail we should offer to check their docker / wsl install?
-        s.log("logging into docker vm subsystem (Windows)")
-        client = docker.from_env(version='auto')
-    elif ver_os_info == "linux":
-        # Connect to the Docker daemon on Linux-like systems using Docker-py
-        s.log("logging into docker vm subsystem (Linux)")
-        s.log("If this fails please try running me as root user")
-        client = docker.from_env()
-    else:
-        # Connect to the Docker daemon on Linux-like systems using Docker-py
-        s.log("logging into docker vm subsystem (Unknown OS)")
-        s.log("Please open a issue on the github")
-        client = docker.from_env(version='auto')
-
-except Exception as e:
-    s.log("Looks like I was unable to log into the docker system...")
-    s.log("Is docker running? / Please try running me as root user, Linux users.")
-    input("Please press enter to exit: ")
-    exit(1)
+client = s.get_docker_client(Fore, ver_os_info, docker)
 
 # List all containers
 s.clear_window(ver_os_info)
