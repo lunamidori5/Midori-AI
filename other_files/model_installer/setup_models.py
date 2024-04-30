@@ -952,7 +952,7 @@ class windows_wsl_moder:
 
         os.system(f"wsl --export docker-desktop-data {tarfile}")
 
-        os.system("C:\\Program Files\\Docker\\Docker\\Docker Desktop.exe")
+        os.system("\"C:\\Program Files\\Docker\\Docker\\Docker Desktop.exe\"")
 
         s.log(f"The docker data os was backed up to ``{tarfile}``")
         input("Hit Enter to go Back")
@@ -1007,7 +1007,7 @@ class windows_wsl_moder:
         os.system(f"wsl --import docker-desktop \"{tarfile2}\" --version 2")
         os.remove(tarfile2)
 
-        os.system("C:\\Program Files\\Docker\\Docker\\Docker Desktop.exe")
+        os.system("\"C:\\Program Files\\Docker\\Docker\\Docker Desktop.exe\"")
 
         input("Hit Enter to go Back")
     
