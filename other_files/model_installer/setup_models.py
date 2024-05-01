@@ -31,20 +31,16 @@ class backend_programs_manager:
         windows_list = ["20", "21", "22"]
         localai_list = ["10", "11", "12", "13"]
         invokeai_list = ["30", "31"]
-
-        if os.path.exists("debug.txt"):
-            for item in windows_list:
-                valid_answers.append(item)
-
         if self.ver_os_info == "windows":
             menu_list_opt.append("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
             menu_list_opt.append("The WSL Items are in testing, to test.")
-            menu_list_opt.append("Please contact Luna Midori")
+            menu_list_opt.append("ONLY USE IF YOU HAVE YOUR WSL BACKED UP")
             menu_list_opt.append("``20`` - WSL (Backup Docker Data)")
             menu_list_opt.append("``21`` - WSL (Move Docker Data)")
             menu_list_opt.append("``22`` - WSL (Purge Docker Data)")
-            #for item in windows_list:
-            #    valid_answers.append(item)
+            menu_list_opt.append("ONLY USE IF YOU HAVE YOUR WSL BACKED UP")
+            for item in windows_list:
+                valid_answers.append(item)
         
         if "localai" in installed_backends:
             menu_list_opt.append("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
@@ -124,6 +120,9 @@ class backend_programs_manager:
 
             if answerstartup == 21:
                 windows_wsl.move_wsl_docker_drives()
+
+            if answerstartup == 22:
+                windows_wsl.purge_wsl_docker_drives()
 
 class localai_model_manager:
     def __init__(self, ver_os_info, client, about_model_size, about_model_q_size, client_openai):
@@ -928,7 +927,7 @@ class windows_wsl_moder:
             os.makedirs(folder_path)
     
     def backup_wsl_docker_drives(self):
-        print("Not ready yet, the following is not ready code, if you some how run this, close the manager asap, and let Luna know")
+        print("WARNING THIS CODE IS STILL IN TESTING. THIS CODE MOSTLIKELY MAY NUKE YOUR WSL INSTALL! USE AT YOUR OWN RISK")
         input("Hit enter to nuke your wsl install: ")
 
         print(Fore.RED + 'If you have alot of installed dockers, \nthis may take up to 2 to 6 hours, do not stop the manager once the backup has started' + Fore.WHITE)
@@ -937,7 +936,7 @@ class windows_wsl_moder:
         s.log("Please paste the windows folder you would like to back up the docker data OS to")
         backup_folder = os.path.normpath(str(input("Backup Folder: ")))
 
-        input("Hit enter to backup your wsl install: ")
+        input(f"Hit enter to move your Docker Data / Docker OS Backup to {backup_folder}: ")
 
         folders = backup_folder.split(os.path.sep)
         current_path = folders[0]
@@ -950,6 +949,8 @@ class windows_wsl_moder:
 
         os.system(f"wsl --shutdown")
 
+        input("Please click \"quit\" on the docker desktop popup, then press enter here: ")
+
         os.system(f"wsl --export docker-desktop-data {tarfile}")
 
         os.system("\"C:\\Program Files\\Docker\\Docker\\Docker Desktop.exe\"")
@@ -958,7 +959,7 @@ class windows_wsl_moder:
         input("Hit Enter to go Back")
     
     def move_wsl_docker_drives(self):
-        print("Not ready yet, the following is not ready code, if you some how run this, close the manager asap, and let Luna know")
+        print("WARNING THIS CODE IS STILL IN TESTING. THIS CODE MOSTLIKELY MAY NUKE YOUR WSL INSTALL! USE AT YOUR OWN RISK")
         input("Hit enter to nuke your wsl install: ")
 
         print(Fore.RED + 'If you have a lot of installed dockers, \nthis may take up to 2 hours, do not stop the manager once the move has started' + Fore.WHITE)
@@ -967,7 +968,7 @@ class windows_wsl_moder:
         s.log("Requesting target folder for Docker data relocation...")
         working_folder = os.path.normpath(str(input("Working Folder: ")))
 
-        input("Hit enter to move your wsl install: ")
+        input(f"Hit enter to move your Docker Data / Docker OS install to {working_folder}: ")
 
         folders = working_folder.split(os.path.sep)
         current_path = folders[0]
@@ -980,6 +981,8 @@ class windows_wsl_moder:
         tarfile2 = os.path.join(working_folder, 'docker-desktop.tar')
 
         os.system(f"wsl --shutdown")
+
+        input("Please click \"quit\" on the docker desktop popup, then press enter here: ")
 
         s.log("Exporting WSL Docker data to a tar archive...")
         s.log(f"wsl --export docker-desktop-data \"{tarfile}\"")
@@ -1012,7 +1015,29 @@ class windows_wsl_moder:
         input("Hit Enter to go Back")
     
     def purge_wsl_docker_drives(self):
-        print("Not ready yet")
+        print("WARNING THIS CODE IS STILL IN TESTING. THIS CODE MOSTLIKELY MAY NUKE YOUR WSL INSTALL! USE AT YOUR OWN RISK")
+        input("Hit enter to nuke your docker data install: ")
+
+        print(Fore.RED + 'If you have a lot of installed dockers, \nthis may take up to 2 hours, do not stop the manager once the move has started' + Fore.WHITE)
+        print(Fore.RED + 'Do not restart docker desktop, the manager will restart it when ready' + Fore.WHITE)
+
+        input("Hit enter to nuke your docker data install: ")
+
+        os.system(f"wsl --shutdown")
+
+        input("Please click \"quit\" on the docker desktop popup, then press enter here: ")
+
+        s.log("Unregistering the WSL Docker data distribution...")
+        s.log(f"wsl --unregister docker-desktop-data")
+        os.system(f"wsl --unregister docker-desktop-data")
+
+        s.log("Unregistering the WSL Docker distribution...")
+        s.log(f"wsl --unregister docker-desktop")
+        os.system(f"wsl --unregister docker-desktop")
+
+        os.system("\"C:\\Program Files\\Docker\\Docker\\Docker Desktop.exe\"")
+
+        input("Hit Enter to go Back")
 
 if __name__ == "__main__":
     print("last line of setup_models")

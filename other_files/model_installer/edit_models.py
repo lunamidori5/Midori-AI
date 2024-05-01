@@ -19,6 +19,7 @@ class subsystem_backend_manager:
             "ollama",
             "axolotl",
             "invokeai",
+            "chromadb",
             "bigagi"
             ]
         
