@@ -1,6 +1,7 @@
 import os
 import json
 import uuid
+import time
 import shutil
 import psutil
 import socket
@@ -456,10 +457,21 @@ def get_docker_client(Fore, ver_os_info, docker):
         return client
 
     except Exception as e:
-        log("Looks like I was unable to log into the docker system...")
-        log("Is docker running? / Please try running me as root user, Linux users.")
-        input("Please press enter to exit: ")
-        exit(1)
+        try:
+            log("Trying to force the docker daemon to start...")
+            if os.name == 'nt':
+                os.system("start \"C:\\Program Files\\Docker\\Docker\\Docker Desktop.exe\"")
+                time.sleep(45)
+                client = docker.from_env(version='auto')
+            elif ver_os_info == "linux":
+                os.system("sudo systemctl start docker")
+                time.sleep(45)
+                client = docker.from_env(version='auto')
+        except Exception as h:
+            log("Looks like I was unable to log into the docker system...")
+            log("Is docker running? / Please try running me as root user, Linux users.")
+            input("Please press enter to exit: ")
+            exit(1)
     
 def known_gpus():
     known_niv_gpus = ["NVIDIA", "Quadro", "Tesla"]
