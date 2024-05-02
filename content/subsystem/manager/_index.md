@@ -95,6 +95,26 @@ chmod +x subsystem_manager
 ./subsystem_manager
 ```
 {{% /tab %}}
+{{% tab title="Unraid" %}}
+### Prerequisites
+Unknown, waiting for input from the unraid ppl
+
+### Recommended
+Please make a folder for the Manager program with nothing in it, do not use the user folder.
+
+### Quick install
+
+Unknown, waiting for input from the unraid ppl
+
+### Quick install with script
+
+Unknown, waiting for input from the unraid ppl
+
+### Manual download and installation
+
+Unknown, waiting for input from the unraid ppl
+
+{{% /tab %}}
 {{% tab title="Other OS" %}}
 ### Prerequisites
 - [Docker Engine](https://docs.docker.com/engine/install/) and [Docker Compose](https://docs.docker.com/compose/install/)
