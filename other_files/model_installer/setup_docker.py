@@ -121,10 +121,14 @@ def dev_setup_docker(DockerClient, compose_path, ver_os_info, containers, use_gu
             if answer_backend_type.lower() == "yes":
                 s.log("Okay, let me assist with checking your install...")
                 s.log("I'll try to call ``nvidia-smi`` now, if you get an error or a message about it not being found then it's not installed.")
-                rc = subprocess.check_call("nvidia-smi -q", shell=True)
-                if rc == 0:
-                    s.log("Alright! You do have ``nvidia-smi`` installed and it looks good to use CUDA!")
-                else:
+                try:
+                    rc = subprocess.check_call("nvidia-smi", shell=True)
+                    if rc == 0:
+                        s.log("Alright! You do have ``nvidia-smi`` installed and it looks good to use CUDA!")
+                        input("Press enter to keep going: ")
+                    else:
+                        print(5/0)
+                except Exception as e:
                     s.log("It seems ``nvidia-smi`` did not run correctly, please make sure it's installed and then if it is working properly, run this setup again.")
                     s.log("``https://developer.nvidia.com/cuda-downloads``")
                     GPUUSE = False
