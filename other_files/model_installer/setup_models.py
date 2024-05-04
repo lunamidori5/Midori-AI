@@ -55,15 +55,15 @@ class backend_programs_manager:
             menu_list_opt.append("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
             menu_list_opt.append("``30`` - InvokeAI (Install in Subsystem)")
             menu_list_opt.append("``31`` - InvokeAI (Install on Host OS)")
-            menu_list_opt.append("``32`` - InvokeAI (Placeholder WIP Setup Models)")
-            menu_list_opt.append("``33`` - InvokeAI (Placeholder WIP Start Webserver)")
+            #menu_list_opt.append("``32`` - InvokeAI (Placeholder WIP Setup Models)")
+            #menu_list_opt.append("``33`` - InvokeAI (Placeholder WIP Start Webserver)")
             for item in invokeai_list:
                 valid_answers.append(item)
         
         if "ollama" in installed_backends:
             menu_list_opt.append("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
             menu_list_opt.append("``40`` - Ollama (Placeholder WIP Install Models)")
-            menu_list_opt.append("``41`` - Ollama (Placeholder WIP)")
+            menu_list_opt.append("``41`` - Ollama (Placeholder WIP Backup Models)")
 
         menu_list_opt.append("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
         valid_answers.append("back")

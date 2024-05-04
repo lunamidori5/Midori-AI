@@ -97,22 +97,57 @@ chmod +x subsystem_manager
 {{% /tab %}}
 {{% tab title="Unraid" %}}
 ### Prerequisites
-Unknown, waiting for input from the unraid ppl
-
-### Recommended
-Please make a folder for the Manager program with nothing in it, do not use the user folder.
-
-### Quick install
-
-Unknown, waiting for input from the unraid ppl
-
-### Quick install with script
-
-Unknown, waiting for input from the unraid ppl
+Download and set up [Docker Compose Plugin](https://forums.unraid.net/topic/114415-plugin-docker-compose-manager/)
 
 ### Manual download and installation
 
-Unknown, waiting for input from the unraid ppl
+Copy and paste this into the Docker Compose Manager plugin
+```yaml
+services:
+  midori_ai_unraid:
+    deploy:
+      resources:
+        reservations:
+          devices:
+          - capabilities: ["gpu"]
+            count: all
+            driver: nvidia
+    environment:
+      GPUUSE: false
+      BOTHUSE: false
+      CPUCORES: 2
+      DISCORD_ID: 123456
+    image: lunamidori5/midori_ai_subsystem
+    ports:
+    - 9066:9090
+    privileged: true
+    restart: always
+    tty: true
+    volumes:
+    - ./files:/app/files
+    - midori-ai:/app/int-files
+    - /var/lib/docker/volumes/midoriai_midori-ai-models/_data:/app/models
+    - /var/lib/docker/volumes/midoriai_midori-ai-images/_data:/app/images
+    - /var/lib/docker/volumes/midoriai_midori-ai-audio/_data:/app/audio
+    - /var/run/docker.sock:/var/run/docker.sock
+volumes:
+  midori-ai:
+    external: false
+  midori-ai-audio:
+    external: false
+  midori-ai-images:
+    external: false
+  midori-ai-models:
+    external: false
+```
+
+Start up that docker then run the following in it by clicking ``console``
+
+```bash
+curl -sSL https://raw.githubusercontent.com/lunamidori5/Midori-AI/master/other_files/model_installer/shell_files/model_installer.sh | sh
+```
+
+Note this will fail and thats okay. After that fails run ``./subsystem_manager`` to get started.
 
 {{% /tab %}}
 {{% tab title="Other OS" %}}

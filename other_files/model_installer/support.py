@@ -16,14 +16,13 @@ import carly_help as support_chat
 
 from cryptography.fernet import Fernet
 
-localai_ver_number = "v2.9.0"
-base_image_name = "quay.io/go-skynet/local-ai:"
-
-user_image = ""
-
 now = datetime.datetime.now()
 timestamp = now.strftime("%m%d%Y")
-log_file_name = str(socket.gethostbyname(socket.gethostname())) + "_log_" + timestamp + ".txt"
+
+try:
+    log_file_name = str(socket.gethostbyname(socket.gethostname())) + "_log_" + timestamp + ".txt"
+except Exception as e:
+    log_file_name = "Unknown_socket_name" + "_log_" + timestamp + ".txt"
 
 ver_file_name = "midori_program_ver.txt"
 
