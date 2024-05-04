@@ -21,7 +21,7 @@ for file_name, download_url in files_to_download.items():
     os.system(f"curl -s {download_url} > {file_name}")
 
 # Make the python venv
-os.system("python3 -m venv --version 3.10 temp")
+os.system("python3 -m venv temp")
 
 # use "temp/bin/python" for python
 # use "temp/bin/pip" for pip
