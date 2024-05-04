@@ -26,6 +26,13 @@ os.system("python3 -m venv --version 3.10 temp")
 # use "temp/bin/python" for python
 # use "temp/bin/pip" for pip
 
+# Check if the virtual environment 'my_venv' is installed
+if os.path.exists('temp/bin/python'):
+    print('Virtual environment is installed')
+else:
+    print('Virtual environment is not installed')
+    print('Please install the python3 venv package for your Distro')
+
 # Install pip requirements one item at a time
 lines = []
 with open('requirements.txt', 'r') as f:
