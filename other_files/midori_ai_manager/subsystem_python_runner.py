@@ -20,6 +20,12 @@ print("Downloading the needed files...")
 for file_name, download_url in files_to_download.items():
     os.system(f"curl -s {download_url} > {file_name}")
 
+# Make the python venv
+os.system("python3 -m venv temp")
+
+# use "temp/bin/python" for python
+# use "temp/bin/pip" for pip
+
 # Install pip requirements one item at a time
 lines = []
 with open('requirements.txt', 'r') as f:
@@ -27,23 +33,25 @@ with open('requirements.txt', 'r') as f:
         lines.append(line.strip())
 
 for line in lines:
-    os.system('pip install --force-reinstall ' + line)
-    os.system('pip cache purge')
+    os.system('temp/bin/pip install --force-reinstall ' + line)
+    os.system('temp/bin/pip cache purge')
 
 if os.name == 'posix':
     print("Downloading the needed files...")
     for file_name, download_url in files_to_download_enx.items():
-        os.system(f"python3 helper_app.py {file_name}")
+        os.system(f"temp/bin/python helper_app.py {file_name}")
 else:
     for file_name, download_url in files_to_download_enx.items():
         os.system(f"curl -s {download_url} > {file_name}")
 
 # Run the Python program
 print("Running the Python program...")
-os.system('python3 model_installer.py')
+os.system('temp/bin/python model_installer.py')
 
 # Purge the downloaded files
 print("Purging the downloaded files ...")
+
+os.system("rm -rf temp")
 
 for file_name in files_to_download:
     os.remove(file_name)

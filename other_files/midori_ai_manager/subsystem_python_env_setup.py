@@ -21,6 +21,12 @@ print("Downloading the needed files...")
 for file_name, download_url in files_to_download.items():
     os.system(f"curl -s {download_url} > {file_name}")
 
+# Make the python venv
+os.system("python3 -m venv temp")
+
+# use "temp/bin/python" for python
+# use "temp/bin/pip" for pip
+
 if os.name == 'nt':
     os.system("python.exe -m pip install --upgrade pip >> build_log.txt")
 
@@ -53,6 +59,8 @@ os.system('pyinstaller --onefile --clean model_installer.py')
 
 # Purge the downloaded files
 print("Purging the downloaded files ...")
+
+os.system("rm -rf temp")
 
 for file_name in files_to_download:
     os.remove(file_name)
