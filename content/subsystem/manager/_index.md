@@ -166,7 +166,7 @@ Please make a folder for the Manager program with nothing in it, do not use the 
 Download this file
 
 ```bash
-https://raw.githubusercontent.com/lunamidori5/Midori-AI/master/other_files/midori_ai_manager/subsystem_python_runner.py
+curl -sSL https://raw.githubusercontent.com/lunamidori5/Midori-AI/master/other_files/midori_ai_manager/subsystem_python_runner.py
 ```
 
 ### Running the program
@@ -174,8 +174,6 @@ https://raw.githubusercontent.com/lunamidori5/Midori-AI/master/other_files/midor
 Open a terminal and run:
 
 ```bash
-python3 -m venv venv
-source venv/bin/activate
 python3 subsystem_python_runner.py
 ```
 {{% /tab %}}
