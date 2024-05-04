@@ -96,11 +96,14 @@ def check_for_update(ver_os_info, ver_info):
         if servers_replyed:
             break
 
-    # Get the current model version.
-    current_version = response.text.strip()
-
     # Check if the current version is the latest version.
     clear_window(ver_os_info)
+
+    if "development" == ver_info:
+        log("Your manager is in development mode.")
+        current_version = ver_info
+    else:
+        current_version = response.text.strip()
 
     if current_version == ver_info:
         log("Your installer is up to date.")

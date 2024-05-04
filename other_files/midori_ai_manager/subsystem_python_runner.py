@@ -13,6 +13,7 @@ files_to_download_enx = {
     "edit_models.py": "https://tea-cup.midori-ai.xyz/download/edit_models.py",
     "version.py": "https://tea-cup.midori-ai.xyz/download/version.py",
     "support.py": "https://tea-cup.midori-ai.xyz/download/support.py",
+    "midori_program_ver.txt": "https://tea-cup.midori-ai.xyz/download/midori_program_ver.txt",
 }
 
 # Download all the needed files
