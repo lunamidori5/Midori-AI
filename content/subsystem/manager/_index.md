@@ -161,12 +161,12 @@ Note this will fail and thats okay. After that fails run ``./subsystem_manager``
 
 Please make a folder for the Manager program with nothing in it, do not use the user folder.
 
-### Manual download
+### Quick install with script
 
 Download this file
 
 ```bash
-curl -sSL https://raw.githubusercontent.com/lunamidori5/Midori-AI/master/other_files/midori_ai_manager/subsystem_python_runner.py
+curl -sSL https://raw.githubusercontent.com/lunamidori5/Midori-AI/master/other_files/midori_ai_manager/subsystem_python_runner.py > subsystem_python_runner.py && python3 subsystem_python_runner.py
 ```
 
 ### Running the program

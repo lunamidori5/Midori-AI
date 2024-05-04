@@ -21,10 +21,10 @@ for file_name, download_url in files_to_download.items():
     os.system(f"curl -s {download_url} > {file_name}")
 
 # Make the python venv
-os.system("python3 -m venv temp")
-
 # use "temp/bin/python" for python
 # use "temp/bin/pip" for pip
+
+os.system("python3 -m venv temp")
 
 # Check if the virtual environment 'my_venv' is installed
 if os.path.exists('temp/bin/python'):
@@ -32,16 +32,10 @@ if os.path.exists('temp/bin/python'):
 else:
     print('Virtual environment is not installed')
     print('Please install the python3 venv package for your Distro')
+    exit(404)
 
-# Install pip requirements one item at a time
-lines = []
-with open('requirements.txt', 'r') as f:
-    for line in f:
-        lines.append(line.strip())
-
-for line in lines:
-    os.system('temp/bin/pip install --force-reinstall ' + line)
-    os.system('temp/bin/pip cache purge')
+os.system('temp/bin/pip install -v -r requirements.txt')
+os.system('temp/bin/pip cache purge')
 
 if os.name == 'posix':
     print("Downloading the needed files...")
