@@ -6,6 +6,16 @@ weight = 1
 
 ![Midori AI photo](https://tea-cup.midori-ai.xyz/download/logosubsystem.png)
 
+## 5/5/2024
+- Update: Fixed some of Ollama's support 
+- Update: Action updates
+- Bug Fix: Fixed some server ver bugs
+- Bug Fix: Fixed a few more bugs
+- Update: Removed verlocking 
+- Update: More fixes
+- Update: Added a new way to deal with python env
+- Update: Code clean up and fixed a socket error 
+
 ## 4/22/2024
 - Update: Fully reworked how we pack the exec for all os
 - Update: Fully redid our linting actions on github to run better
