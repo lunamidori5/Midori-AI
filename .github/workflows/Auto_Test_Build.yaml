@@ -1,6 +1,6 @@
-name: Auto Lint, Test, and Build.
+name: Auto Lint, Test, and Build on Push
 
-on: [push, pull_request]
+on: [push]
 
 jobs:
   Python-Lint-Full:
@@ -132,7 +132,7 @@ jobs:
         os: [ubuntu-latest, windows-latest, macos-latest]
         python: ['3.10']
     runs-on: ${{ matrix.os }}
-    needs: Subsystem-Manager-Raw
+    needs: Upload-All-Files
 
     steps:
       - name: Set up Python 3.10

@@ -1,0 +1,129 @@
+name: Auto Lint, Test, and Build on Pull Request
+
+on: [pull_request]
+
+jobs:
+  Python-Lint-Full:
+    runs-on: [ubuntu-latest]
+    strategy:
+      max-parallel: 5
+
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up Python 3.10
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+      - name: Add conda to system path
+        run: |
+          # $CONDA is an environment variable pointing to the root of the miniconda directory
+          echo $CONDA/bin >> $GITHUB_PATH
+      - name: Install dependencies
+        run: |
+          conda install flake8 pylint mypy
+          pip install bandit prospector requests types-requests types-PyYAML types-colorama types-psutil types-tqdm
+          pip install -r ./other_files/model_installer/requirements.txt
+      - name: Lint with all linters
+        run: |
+          flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
+          mypy --ignore-missing-imports ./other_files/model_installer/*.py
+          bandit -r --severity-level high --exit-zero ./other_files/model_installer/*.py
+      - name: Lint with flake8 (Warnings)
+        run: |
+          flake8 . --count --exit-zero --max-complexity=10 --max-line-length=120  --statistics
+      - name: Lint with flake8 (Recommendations)
+        run: |
+          flake8 . --count --exit-zero --max-complexity=15 --max-line-length=100 --statistics
+      - name: Lint with flake8 (Best Practices)
+        run: |
+          flake8 . --count --exit-zero --max-complexity=20 --max-line-length=80 --statistics
+      - name: Lint with flake8 (Very Strict)
+        run: |
+          flake8 . --count --exit-zero --max-complexity=25 --max-line-length=60 --statistics
+      - name: Lint with flake8 (Extremely Strict)
+        run: |
+          flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
+          flake8 . --count --exit-zero --max-complexity=30 --max-line-length=40 --statistics
+        
+  Test-Build-Subsystem-Manager:
+    needs: [Python-Lint-Full]
+    strategy:
+      matrix:
+        os: [ubuntu-20.04, windows-latest, macos-latest]
+        python: ['3.10']
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Update Version Name
+        run: |
+          mkdir -p /tmp/artifacts
+          cp ./other_files/midori_program_ver.txt /tmp/artifacts
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python }}
+      
+      - name: Install Dependencies
+        run: |
+          pip install pyinstaller
+          pip install -r ./other_files/model_installer/requirements.txt
+      
+      - name: Build
+        run: |
+          pyinstaller --onedir --clean --distpath /tmp/artifacts/${{ matrix.os }}/ --add-data ./other_files/midori_program_ver.txt:. ./other_files/model_installer/subsystem_manager.py
+
+      - name: 'Upload Artifact'
+        uses: actions/upload-artifact@v4
+        with:
+          name: subsystem-manager-${{ matrix.os }}
+          path: /tmp/artifacts/${{ matrix.os }}/*
+          compression-level: 0
+        
+  Zip-Tar-All-OS:
+    needs: [Test-Build-Subsystem-Manager]
+    container: lunamidori5/linux_model_deb_11:master
+    runs-on: ubuntu-20.04
+    steps:
+      - name: Set up Python 3.10
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+
+      - name: Fetch Artifacts
+        uses: actions/download-artifact@v4
+
+      - name: Install Dependencies
+        run: |
+          mkdir -p /tmp/artifacts
+          apt-get install -y tree zip
+
+      - name: Linux Artifacts
+        run: |
+          tar -cvzf model_installer_linux.tar.gz -C subsystem-manager-ubuntu-20.04/subsystem_manager subsystem_manager _internal
+          cp model_installer_linux.tar.gz /tmp/artifacts/model_installer_linux.tar.gz
+
+      - name: Windows Artifacts
+        run: |
+          cd subsystem-manager-windows-latest/subsystem_manager
+          zip -r ../../model_installer_windows.zip subsystem_manager.exe _internal
+          cd ../../
+          cp model_installer_windows.zip /tmp/artifacts/model_installer_windows.zip
+          
+      - name: Mac Artifacts
+        run: |
+          cd subsystem-manager-macos-latest/subsystem_manager
+          zip -r ../../model_installer_mac.zip subsystem_manager _internal
+          cd ../../
+          cp model_installer_mac.zip /tmp/artifacts/model_installer_mac.zip
+
+      - name: View Artifacts
+        run: |
+          tree > /tmp/artifacts/tree.log
+
+      - name: 'Upload Artifact'
+        uses: actions/upload-artifact@v4
+        with:
+          name: everything
+          path: /tmp/artifacts/*
+          compression-level: 0
