@@ -62,8 +62,8 @@ class backend_programs_manager:
         
         if "ollama" in installed_backends:
             menu_list_opt.append("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
-            menu_list_opt.append("``40`` - Ollama (Placeholder WIP Install Models)")
-            menu_list_opt.append("``41`` - Ollama (Placeholder WIP Backup Models)")
+            menu_list_opt.append("``40`` - Ollama (Install Models)")
+            menu_list_opt.append("``41`` - Ollama (Uninstall Models)")
 
         menu_list_opt.append("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
         valid_answers.append("back")
@@ -111,6 +111,15 @@ class backend_programs_manager:
 
             if answerstartup == 31:
                 invokeai.install_on_host()
+
+        if 39 <= answerstartup <= 40:
+            ollama = ollama_model_manager(self.ver_os_info, self.client, self.client_openai)
+
+            if answerstartup == 40:
+                ollama.install_models()
+
+            if answerstartup == 41:
+                ollama.uninstall_models()
 
         if 19 <= answerstartup <= 30:
             windows_wsl = windows_wsl_moder(self.ver_os_info, self.client, self.client_openai)
@@ -1038,6 +1047,121 @@ class windows_wsl_moder:
         os.system("\"C:\\Program Files\\Docker\\Docker\\Docker Desktop.exe\"")
 
         input("Hit Enter to go Back")
+
+class ollama_model_manager:
+    def __init__(self, ver_os_info, client, client_openai):
+        self.client = client
+        self.ver_os_info = ver_os_info
+        self.client_openai = client_openai   
+
+    def check_for_backend(self, containers, docker_name):
+
+        s.log(f"Checking for Docker Image")
+
+        for container in containers:
+            s.log(f"Checking Name: {container.name}, ID: {container.id}")
+
+            # Check if there is a container with a name containing `service_name`
+            if docker_name in str(container.name):
+                # Get the container object
+                s.log(f"Found {docker_name}, Linking the Subsystem to: {container.name} / {container.id}")
+                container = self.client.containers.get(container.name)
+                named_docker = container.name
+                s.log(f"Midori AI Subsystem linked to {named_docker}")
+                return named_docker, container
+
+        for container in containers:
+            print("--------------------------------------")
+            s.log(f"Showing Name: {container.name}")
+            print("--------------------------------------")
+
+        s.log(f"Switching to manually typed mode, please enter the name of the docker image you are wishing to fork into ({docker_name}).")
+        docker_name_manual = input("Enter Docker Image Name: ")
+
+        for container in containers:
+            s.log(f"Checking Name: {container.name}, ID: {container.id}")
+
+            # Check if there is a container with a name containing `service_name`
+            if docker_name_manual in str(container.name):
+                # Get the container object
+                s.log(f"Found {docker_name}, Linking the Subsystem to: {container.name} / {container.id}")
+                container = self.client.containers.get(container.name)
+                named_docker = container.name
+                s.log(f"Midori AI Subsystem linked to {named_docker}")
+
+                return named_docker, container
+
+        s.log(f"I could not find {docker_name}... is that installed?")
+        input("Press Enter to go back to the menu: ")
+        return None, None
+
+    def install_models(self):
+        containers = self.client.containers.list()
+
+        ver_os_info = self.ver_os_info
+        client_openai = self.client_openai
+
+        named_docker, container = self.check_for_backend(containers, "ollama-midori-ai-backend")
+
+        if named_docker is None:
+            return
+        
+        s.log("Please check ollamas site for supported models")
+        s.log("You can install more than one model by typeing each name with a space")
+        model_to_install = input("Type the model(s) you would like to install: ")
+        docker_commands = []
+        ollama_commands = []
+        models_to_install = model_to_install.split()
+        for model in models_to_install:
+            ollama_commands.append (["ollama", "run", model])
+        docker_commands.extend(ollama_commands)
+
+        # Run a command inside the container
+        s.log("Downloading and setting up model into the docker")
+        for command in docker_commands:
+            s.log(f"Running {command}: ")
+            void, stream = container.exec_run(command, stream=True)
+            for data in stream:
+                s.log(data.decode())
+
+        s.log("All done, I am now rebooting Ollama")
+        container.restart()
+        s.log("Thank you! Please enjoy your new models!")
+        input("Press Enter to return")
+        
+    def uninstall_models(self):
+        containers = self.client.containers.list()
+
+        ver_os_info = self.ver_os_info
+        client_openai = self.client_openai
+
+        named_docker, container = self.check_for_backend(containers, "ollama-midori-ai-backend")
+
+        if named_docker is None:
+            return
+        
+        s.log("Please check ollamas site for supported models")
+        s.log("You can install more than one model by typeing each name with a space")
+        model_to_uninstall = input("Type the model(s) you would like to uninstall: ")
+        docker_commands = []
+        ollama_commands = []
+        model_to_uninstall = model_to_uninstall.split()
+        for model in model_to_uninstall:
+            ollama_commands.append (["ollama", "rm", model])
+        docker_commands.extend(ollama_commands)
+
+        # Run a command inside the container
+        s.log("Downloading and setting up model into the docker")
+        for command in docker_commands:
+            s.log(f"Running {command}: ")
+            void, stream = container.exec_run(command, stream=True)
+            for data in stream:
+                s.log(data.decode())
+
+        s.log("All done, I am now rebooting Ollama")
+        container.restart()
+        input("Press Enter to return")
+        
 
 if __name__ == "__main__":
     print("last line of setup_models")

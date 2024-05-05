@@ -170,6 +170,10 @@ while True:
     print(Fore.RED + 'DEV NOTE:' + Fore.WHITE + ' Please report bugs to the github or email so we can fix them!')
     print(Fore.RED + 'DEV NOTE:' + Fore.WHITE + ' Thank you all so much for helping with the beta! <3')
     print("")
+    print(Fore.RED + 'DEV NOTE:' + Fore.WHITE + ' Please fully uninstall and reinstall Ollama,')
+    print(Fore.RED + 'DEV NOTE:' + Fore.WHITE + ' fixes to the backend need a fresh install. (Auto model backup added)')
+    print("")
+    
     
     for line in menu_list_opt:
         s.log(line)
