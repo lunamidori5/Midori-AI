@@ -1,0 +1,5 @@
+FROM lunamidori5/linux_model_deb_11:master
+
+RUN curl -sSL https://raw.githubusercontent.com/lunamidori5/Midori-AI/master/other_files/midori_ai_manager/subsystem_python_runner.py > subsystem_python_runner.py
+
+CMD python3 subsystem_python_runner.py

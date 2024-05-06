@@ -105,13 +105,6 @@ Copy and paste this into the Docker Compose Manager plugin
 ```yaml
 services:
   midori_ai_unraid:
-    deploy:
-      resources:
-        reservations:
-          devices:
-          - capabilities: ["gpu"]
-            count: all
-            driver: nvidia
     environment:
       GPUUSE: false
       BOTHUSE: false
