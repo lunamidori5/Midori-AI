@@ -11,6 +11,7 @@ import edit_models as models_edit_add_on
 from colorama import Fore
 
 from version import VERSION
+from version import news
 
 from autogen import OpenAIWrapper
 
@@ -129,12 +130,18 @@ main_menu_text_len = len(main_menu_text)
 main_menu_dash = int((num_dash - main_menu_text_len) / 2)
 main_menu_text_done = f"{main_menu_dash * dash}{main_menu_text}{main_menu_dash * dash}"
 
+local_ip_text = f" Local IP ({local_ip_addres}) "
+local_ip_text_len = len(local_ip_text)
+local_ip_dash = int((num_dash - local_ip_text_len) / 2)
+local_ip_text_done = f"{local_ip_dash * dash}{local_ip_text}{local_ip_dash * dash}"
+
 menu_list_opt = []
 menu_list_opt.append("``1`` - Midori AI Subsystem Repair")
 menu_list_opt.append("``2`` - Install Backends to Subsystem")
 menu_list_opt.append("``3`` - Update Backends in Subsystem")
 menu_list_opt.append("``4`` - Uninstall Backends from Subsystem")
 menu_list_opt.append("``5`` - Backend Programs (install models / edit backends)")
+menu_list_opt.append("``6`` - Subsystem and Backend News")
 menu_list_opt.append("``10`` - Enter Subsystem Commandline")
 
 if debug_test_mode:
@@ -168,26 +175,14 @@ while True:
     s.clear_window(ver_os_info)
     s.check_for_subsystem_update(ver_os_info, ver_info, DockerClient, compose_path, containers, use_gui, sg, client, ver_info, layout, client_openai, discord_id, subsystem_file_name)
     s.clear_window(ver_os_info)
-    s.log(blank_line)
-    print(Fore.RED + "News" + Fore.WHITE )
-    print("Ollama - As of Ver ->| 24.5.7.0 |<-")
-    print('Please fully uninstall and reinstall Ollama,')
-    print('fixes to the backend need a fresh install. (Auto model backup added)')
-    s.log(blank_line)
-    print("LocalAI - As of Ver ->| 24.5.7.0 |<-")
-    print('LocalAIs model downloader / setup program will be reworked to work with gallerys api')
-    s.log(blank_line)
-    s.log(f"Your Local IP address is `{local_ip_addres}`")
+    news(blank_line, Fore)
+    s.clear_window(ver_os_info)
+
     s.log(blank_line)
     s.log(main_menu_text_done)
-    s.log(blank_line)
+    s.log(local_ip_text_done)
     s.log(backends_text_text_done)
     s.log(blank_line)
-    print(Fore.RED + "Dev Notes" + Fore.WHITE )
-    print('Please report bugs to the github or email so we can fix them!')
-    print('Thank you all so much for helping with the beta! <3')
-    s.log(blank_line)
-    
     
     for line in menu_list_opt:
         s.log(line)
@@ -196,7 +191,7 @@ while True:
     s.log("If you need assistance with most menus, type help.")
     
     questionbasic = "What would you like to do?: "
-    sd_valid_answers = ["1", "2", "3", "4", "5", "10", "11", "chat", "exit"]
+    sd_valid_answers = ["1", "2", "3", "4", "5", "6", "10", "11", "chat", "exit"]
     answerstartup = s.check_str(questionbasic, sd_valid_answers, use_gui, layout, sg, temp_context + backend_context, client_openai)
 
     if answerstartup.lower() == "exit":
@@ -241,7 +236,8 @@ while True:
 
     if answerstartup == 6:
         s.data_helper_python()
-        s.log("this menu is not ready dropping to shell...")
+        news(blank_line, Fore)
+        
     
     if answerstartup == 10:
         s.data_helper_python()
