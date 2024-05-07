@@ -474,7 +474,14 @@ def get_docker_client(Fore, ver_os_info, docker):
             log("Is docker running? / Please try running me as root user, Linux users.")
             input("Please press enter to exit: ")
             exit(1)
-    
+
+def get_local_ip():
+    ssocket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+    ssocket.connect(("8.8.8.8", 80))
+    local_ip = ssocket.getsockname()[0]
+    ssocket.close()
+    return local_ip
+
 def known_gpus():
     known_niv_gpus = ["NVIDIA", "Quadro", "Tesla"]
     return known_niv_gpus

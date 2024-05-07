@@ -109,6 +109,12 @@ s.clear_window(ver_os_info)
 
 s.data_helper_python()
 
+try:
+    local_ip_addres = str(s.get_local_ip())
+except Exception as e:
+    local_ip_addres = "error"
+    print(str(e))
+
 backend_menu = models_add_on.backend_programs_manager(ver_os_info, client, about_model_size, about_model_q_size, client_openai)
 
 use_gui = "no"
@@ -163,17 +169,24 @@ while True:
     s.check_for_subsystem_update(ver_os_info, ver_info, DockerClient, compose_path, containers, use_gui, sg, client, ver_info, layout, client_openai, discord_id, subsystem_file_name)
     s.clear_window(ver_os_info)
     s.log(blank_line)
+    print(Fore.RED + "News" + Fore.WHITE )
+    print("Ollama - As of Ver ->| 24.5.7.0 |<-")
+    print('Please fully uninstall and reinstall Ollama,')
+    print('fixes to the backend need a fresh install. (Auto model backup added)')
+    s.log(blank_line)
+    print("LocalAI - As of Ver ->| 24.5.7.0 |<-")
+    print('LocalAIs model downloader / setup program will be reworked to work with gallerys api')
+    s.log(blank_line)
+    s.log(f"Your Local IP address is `{local_ip_addres}`")
+    s.log(blank_line)
     s.log(main_menu_text_done)
     s.log(blank_line)
     s.log(backends_text_text_done)
-    print(Fore.RED + "Dev Notes / News" + Fore.WHITE )
+    s.log(blank_line)
+    print(Fore.RED + "Dev Notes" + Fore.WHITE )
     print('Please report bugs to the github or email so we can fix them!')
     print('Thank you all so much for helping with the beta! <3')
-    print("")
-    print("As of Ver ->| 24.5.7.0 |<-")
-    print('Please fully uninstall and reinstall Ollama,')
-    print('fixes to the backend need a fresh install. (Auto model backup added)')
-    print("")
+    s.log(blank_line)
     
     
     for line in menu_list_opt:
