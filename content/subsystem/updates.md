@@ -6,6 +6,16 @@ weight = 1
 
 ![Midori AI photo](https://tea-cup.midori-ai.xyz/download/logosubsystem.png)
 
+## 5/7/2024
+- Update: Added a way for "other os" type to auto-update
+- Update: Added a yay or nay to purging the venv at the end of other os
+- Update: Added a new UI/UX menu
+- Bug Fix: Fixed the news menu
+- Bug Fix: Fixed naming on the GitHub actions
+- Update: Added a way to get the local IP address
+- Update: Fully redid some actions that make the docker images
+- Update: Reworked the subsystem docker files and the new news post
+
 ## 5/5/2024
 - Update: Fixed some of Ollama's support 
 - Update: Action updates

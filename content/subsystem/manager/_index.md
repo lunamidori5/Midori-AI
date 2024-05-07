@@ -105,23 +105,16 @@ Copy and paste this into the Docker Compose Manager plugin
 ```yaml
 services:
   midori_ai_unraid:
-    environment:
-      GPUUSE: false
-      BOTHUSE: false
-      CPUCORES: 2
-      DISCORD_ID: 123456
-    image: lunamidori5/midori_ai_subsystem
+    image: lunamidori5/deb11_subsystem_manager:master
     ports:
-    - 9066:9090
+    - 39090:9090
     privileged: true
     restart: always
     tty: true
     volumes:
-    - ./files:/app/files
-    - midori-ai:/app/int-files
-    - /var/lib/docker/volumes/midoriai_midori-ai-models/_data:/app/models
-    - /var/lib/docker/volumes/midoriai_midori-ai-images/_data:/app/images
-    - /var/lib/docker/volumes/midoriai_midori-ai-audio/_data:/app/audio
+    - /var/lib/docker/volumes/midoriai_midori-ai-models/_data:/var/lib/docker/volumes/midoriai_midori-ai-models/_data
+    - /var/lib/docker/volumes/midoriai_midori-ai-images/_data:/var/lib/docker/volumes/midoriai_midori-ai-images/_data
+    - /var/lib/docker/volumes/midoriai_midori-ai-audio/_data:/var/lib/docker/volumes/midoriai_midori-ai-audio/_data
     - /var/run/docker.sock:/var/run/docker.sock
 volumes:
   midori-ai:
@@ -137,10 +130,16 @@ volumes:
 Start up that docker then run the following in it by clicking ``console``
 
 ```bash
-curl -sSL https://raw.githubusercontent.com/lunamidori5/Midori-AI/master/other_files/model_installer/shell_files/model_installer.sh | sh
+curl -sSL https://raw.githubusercontent.com/lunamidori5/Midori-AI/master/other_files/midori_ai_manager/subsystem_python_runner.py > subsystem_python_runner.py && python3 subsystem_python_runner.py
 ```
 
-Note this will fail and thats okay. After that fails run ``./subsystem_manager`` to get started.
+### Running the program
+
+Start up that docker then run the following in it by clicking ``console``
+
+```bash
+python3 subsystem_python_runner.py
+```
 
 {{% /tab %}}
 {{% tab title="Other OS" %}}
