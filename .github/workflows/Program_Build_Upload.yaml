@@ -1,4 +1,4 @@
-name: Upload Programs to Server
+name: Build Docker Images / Push Programs To Server
 
 on:
   workflow_dispatch:
