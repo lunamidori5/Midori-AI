@@ -50,10 +50,21 @@ else:
 print("Running the Python program...")
 os.system('temp/bin/python model_installer.py')
 
-# Purge the downloaded files
-print("Purging the downloaded files ...")
+while True:
+    yn = input("Purge the venv? (Y/n): ")
+    if yn == "" or yn == "Y" or yn == "y":
+        print("Purging the venv...")
+        os.system("rm -rf temp")
+        break
+    elif yn == "N" or yn == "n":
+        print("Not purging the venv...")
+        print("It is super recommended to purge the venv every time you run the subsystem")
+        break
+    else:
+        print("Invalid input. Please enter 'y' or 'n'.")
 
-os.system("rm -rf temp")
+# Purge the downloaded files
+print("Purging the downloaded files...")
 
 for file_name in files_to_download:
     os.remove(file_name)
