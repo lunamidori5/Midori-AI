@@ -16,6 +16,16 @@ files_to_download_enx = {
     "midori_program_ver.txt": "https://tea-cup.midori-ai.xyz/download/midori_program_ver.txt",
 }
 
+if os.path.exists("running_subsystem_manager_other_os.py"):
+    print("Removing outdated copy of python runner...")
+    os.remove("running_subsystem_manager_other_os.py")
+
+# Get this folder we are in
+current_file_path = os.path.abspath(__file__)
+
+# Rename the file
+os.rename(current_file_path, "running_subsystem_manager_other_os.py")
+
 # Download all the needed files
 print("Downloading the needed files...")
 for file_name, download_url in files_to_download.items():
@@ -71,3 +81,12 @@ for file_name in files_to_download:
 
 for file_name in files_to_download_enx:
     os.remove(file_name)
+
+if os.path.exists(current_file_path):
+    print("Python runner updated by manager, update will happen on next run")
+else:
+    # Get this folder we are in
+    current_file_path_post = os.path.abspath(__file__)
+
+    # Rename the file
+    os.rename(current_file_path_post, "subsystem_python_runner.py")

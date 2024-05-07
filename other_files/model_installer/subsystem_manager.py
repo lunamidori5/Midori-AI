@@ -87,6 +87,10 @@ else:
     os.system("rm -f subsystem_manager.tar.gz > /dev/null")
     os.system("rm -f model_installer > /dev/null")
 
+if os.path.exists("running_subsystem_manager_other_os.py"):
+    print("Other OS Runner seen, updating it")
+    os.system("curl -sSL https://raw.githubusercontent.com/lunamidori5/Midori-AI/master/other_files/midori_ai_manager/subsystem_python_runner.py > subsystem_python_runner.py")
+
 temp_response = help_add_on.request_info("temp_something_for_model_installer.txt")
 temp_keys = temp_response.strip()
 client_openai = OpenAIWrapper(base_url="https://ai.midori-ai.xyz/v1", api_key=temp_keys, timeout=6000)
