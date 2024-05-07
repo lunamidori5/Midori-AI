@@ -166,12 +166,13 @@ while True:
     s.log(main_menu_text_done)
     s.log(blank_line)
     s.log(backends_text_text_done)
+    print(Fore.RED + "Dev Notes / News" + Fore.WHITE )
+    print('Please report bugs to the github or email so we can fix them!')
+    print('Thank you all so much for helping with the beta! <3')
     print("")
-    print(Fore.RED + 'DEV NOTE:' + Fore.WHITE + ' Please report bugs to the github or email so we can fix them!')
-    print(Fore.RED + 'DEV NOTE:' + Fore.WHITE + ' Thank you all so much for helping with the beta! <3')
-    print("")
-    print(Fore.RED + 'DEV NOTE:' + Fore.WHITE + ' Please fully uninstall and reinstall Ollama,')
-    print(Fore.RED + 'DEV NOTE:' + Fore.WHITE + ' fixes to the backend need a fresh install. (Auto model backup added)')
+    print("As of Ver ->| 24.5.7.0 |<-")
+    print('Please fully uninstall and reinstall Ollama,')
+    print('fixes to the backend need a fresh install. (Auto model backup added)')
     print("")
     
     
