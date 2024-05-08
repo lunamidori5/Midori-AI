@@ -106,7 +106,7 @@ After that copy and paste this into the Docker Compose Manager plugin
 ```yaml
 services:
   midori_ai_unraid:
-    image: lunamidori5/deb11_subsystem_manager:master
+    image: lunamidori5/subsystem_manager:master
     ports:
     - 39090:9090
     privileged: true

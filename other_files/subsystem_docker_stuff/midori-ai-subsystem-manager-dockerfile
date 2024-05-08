@@ -1,6 +1,16 @@
-FROM lunamidori5/linux_model_deb_11:master
+FROM ubuntu:rolling
+
+ENV PYTHONDONTWRITEBYTECODE=1
+ENV PYTHONUNBUFFERED=1
 
 WORKDIR /app
+
+RUN apt-get update 
+
+RUN apt-get install -y unzip zip tar curl tree wget git
+RUN apt-get install -y python3.10 python3-pip python3.10-venv
+
+RUN apt-get clean && apt-get autoclean
 
 RUN curl -sSL https://raw.githubusercontent.com/lunamidori5/Midori-AI/master/other_files/midori_ai_manager/subsystem_python_runner.py > subsystem_python_runner.py
 

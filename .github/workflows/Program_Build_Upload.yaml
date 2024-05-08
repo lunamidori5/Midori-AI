@@ -86,7 +86,7 @@ jobs:
           python3 git_uploader.py --type Linux --key ${{ secrets.UPLOADER_APIKEY }} --file "yaml_edit" --filename "yaml_edit"
           python3 git_uploader.py --type Linux --key ${{ secrets.UPLOADER_APIKEY }} --file "hf-downloader" --filename "hf-downloader"
 
-  push_deb11_subsystem_manager_to_hub:
+  push_subsystem_manager_to_hub:
     name: Push Subsystem (other os) to Docker Hub
     runs-on: ubuntu-latest
     needs: Build-Subsystem-Programs
@@ -103,7 +103,7 @@ jobs:
         id: meta
         uses: docker/metadata-action@master
         with:
-          images: lunamidori5/deb11_subsystem_manager
+          images: lunamidori5/subsystem_manager
 
       - name: Build and push Subsystem (other os) Docker Image
         uses: docker/build-push-action@master
