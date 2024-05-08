@@ -3,14 +3,14 @@ FROM debian:11-slim
 ENV PYTHONDONTWRITEBYTECODE=1
 ENV PYTHONUNBUFFERED=1
 
+WORKDIR /app
+
 RUN apt-get update 
 
 RUN apt-get install -y unzip zip tar curl tree wget git
 RUN apt-get install -y python3.10 python3-pip python3.10-venv
 
 RUN apt-get clean && apt-get autoclean
-
-RUN echo update-alternatives --install /usr/bin/python python /usr/bin/python3.10 1
 
 RUN wget --no-check-certificate --no-cache --no-cookies https://raw.githubusercontent.com/lunamidori5/Midori-AI/master/other_files/midori_ai_manager/python_pip_installer.py
 
