@@ -100,8 +100,9 @@ chmod +x subsystem_manager
 Download and set up [Docker Compose Plugin](https://forums.unraid.net/topic/114415-plugin-docker-compose-manager/)
 
 ### Manual download and installation
+Click on the ``settings`` gear icon, then click the ``compose file`` menu item
 
-Copy and paste this into the Docker Compose Manager plugin
+After that copy and paste this into the Docker Compose Manager plugin
 ```yaml
 services:
   midori_ai_unraid:
