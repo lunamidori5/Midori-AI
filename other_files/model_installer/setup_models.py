@@ -33,7 +33,6 @@ class backend_programs_manager:
         invokeai_list = ["30", "31", "32"]
         if self.ver_os_info == "windows":
             menu_list_opt.append("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
-            menu_list_opt.append("The WSL Items are in testing, to test.")
             menu_list_opt.append("ONLY USE IF YOU HAVE YOUR WSL BACKED UP")
             menu_list_opt.append("``20`` - WSL (Backup Docker Data)")
             menu_list_opt.append("``21`` - WSL (Move Docker Data)")
@@ -55,7 +54,7 @@ class backend_programs_manager:
             menu_list_opt.append("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
             menu_list_opt.append("``30`` - InvokeAI (Install in Subsystem)")
             menu_list_opt.append("``31`` - InvokeAI (Install on Host OS)")
-            menu_list_opt.append("``32`` - InvokeAI (Start Invoke AI)")
+            menu_list_opt.append("``32`` - InvokeAI (Start Invoke AI on Host OS)")
             #menu_list_opt.append("``33`` - InvokeAI (Placeholder WIP Start Webserver)")
             for item in invokeai_list:
                 valid_answers.append(item)
