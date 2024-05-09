@@ -30,7 +30,7 @@ class backend_programs_manager:
 
         windows_list = ["20", "21", "22"]
         localai_list = ["10", "11", "12", "13"]
-        invokeai_list = ["30", "31"]
+        invokeai_list = ["30", "31", "32"]
         if self.ver_os_info == "windows":
             menu_list_opt.append("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
             menu_list_opt.append("The WSL Items are in testing, to test.")
@@ -55,7 +55,7 @@ class backend_programs_manager:
             menu_list_opt.append("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
             menu_list_opt.append("``30`` - InvokeAI (Install in Subsystem)")
             menu_list_opt.append("``31`` - InvokeAI (Install on Host OS)")
-            #menu_list_opt.append("``32`` - InvokeAI (Placeholder WIP Setup Models)")
+            menu_list_opt.append("``32`` - InvokeAI (Start Invoke AI)")
             #menu_list_opt.append("``33`` - InvokeAI (Placeholder WIP Start Webserver)")
             for item in invokeai_list:
                 valid_answers.append(item)
@@ -908,7 +908,12 @@ class invoke_ai:
         s.clear_window(self.ver_os_info)
         input("Press enter to start the install...")
         os.system(f"docker exec -it {container_id} /bin/bash apt-get update && apt-get install python3.11venv")
-        os.system(f"docker exec -it {container_id} /bin/bash ./files/invokeai/InvokeAI-Installer/install.sh")
+        os.system(f"docker exec -it {container_id} /bin/bash ./files/invokeai/InvokeAI-Installer/install.sh --root \"/app/files/invokeai/program\"")
+        file_install_json = os.path.join("files", "invokeai", "installed")
+        
+        with open(file_install_json, "w") as f:
+            f.write("docker")
+
         s.log(f"Leaving the subsystem shell, returning to host os...")
     
     def install_on_host(self):
@@ -916,14 +921,27 @@ class invoke_ai:
         input("Press enter to start the install...")
 
         installer_base = os.path.join("files", "invokeai", "InvokeAI-Installer")
+        working_dir = os.getcwd()
+        root_folder_install = os.path.join(working_dir, "files", "invokeai", "program")
         
         if self.ver_os_info == 'windows':
-            os.system(f'call {os.path.join(installer_base, "install.bat")}')
+            os.system(f'call {os.path.join(installer_base, "install.bat")} --root \"{root_folder_install}\"')
         if self.ver_os_info == 'linux':
             os.system('chmod +x ./files/invokeai/InvokeAI-Installer/install.sh')
-            os.system('./files/invokeai/InvokeAI-Installer/install.sh')
+            os.system(f'./files/invokeai/InvokeAI-Installer/install.sh --root \"{root_folder_install}\"')
+
+        file_install_json = os.path.join("files", "invokeai", "installed")
+        
+        with open(file_install_json, "w") as f:
+            f.write("os")
 
         s.log(f"All done, going back to main menu")
+    
+    def run(self):
+        file_install_json = os.path.join("files", "invokeai", "installed")
+
+        with open(file_install_json, "r") as f:
+            contents = f.read()
 
 class windows_wsl_moder:
     def __init__(self, ver_os_info, client, client_openai):
