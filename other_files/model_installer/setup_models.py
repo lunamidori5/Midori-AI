@@ -912,9 +912,12 @@ class invoke_ai:
         os.system(f"docker exec -it {container_id} apt-get update && apt-get install python3.11-venv")
         os.system(f"docker exec -it {container_id} ./files/invokeai/InvokeAI-Installer/install.sh")
         file_install_json = os.path.join("files", "invokeai", "installed")
+        file_install_old = os.path.join("files", "invokeai", "InvokeAI-Installer")
         
         with open(file_install_json, "w") as f:
             f.write("docker")
+        
+        os.remove(file_install_old)
 
         s.log(f"Leaving the subsystem shell, returning to host os...")
     
@@ -931,9 +934,12 @@ class invoke_ai:
             os.system(f'./files/invokeai/InvokeAI-Installer/install.sh')
 
         file_install_json = os.path.join("files", "invokeai", "installed")
+        file_install_old = os.path.join("files", "invokeai", "InvokeAI-Installer")
         
         with open(file_install_json, "w") as f:
             f.write("os")
+        
+        os.remove(file_install_old)
 
         s.log(f"All done, going back to main menu")
     
