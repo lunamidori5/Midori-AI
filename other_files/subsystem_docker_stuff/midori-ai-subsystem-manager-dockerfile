@@ -5,9 +5,10 @@ ENV PYTHONUNBUFFERED=1
 
 WORKDIR /app
 
+RUN touch other_os.txt
+
 RUN apt-get update 
 
-RUN apt-get install -y build-essential libssl-dev libffi-dev python-dev
 RUN apt-get install -y unzip zip tar curl tree wget git
 RUN apt-get install -y python3.10 python3-pip python3-venv
 
