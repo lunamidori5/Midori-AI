@@ -973,6 +973,7 @@ class invoke_ai:
 
                             break
                 else:
+                    s.log(f"You inputted {invoke_folder_loco}")
                     s.log("Error, folder or invoke runner not found please try again")
         
         if install == "os":
