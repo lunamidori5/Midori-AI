@@ -112,6 +112,9 @@ class backend_programs_manager:
             if answerstartup == 31:
                 invokeai.install_on_host()
 
+            if answerstartup == 32:
+                invokeai.run()
+
         if 39 <= answerstartup <= 40:
             ollama = ollama_model_manager(self.ver_os_info, self.client, self.client_openai)
 
@@ -907,8 +910,8 @@ class invoke_ai:
         container_id = container.id
         s.clear_window(self.ver_os_info)
         input("Press enter to start the install...")
-        os.system(f"docker exec -it {container_id} /bin/bash apt-get update && apt-get install python3.11venv")
-        os.system(f"docker exec -it {container_id} /bin/bash ./files/invokeai/InvokeAI-Installer/install.sh --root \"/app/files/invokeai/program\"")
+        os.system(f"docker exec -it {container_id} apt-get update && apt-get install python3.11-venv")
+        os.system(f"docker exec -it {container_id} ./files/invokeai/InvokeAI-Installer/install.sh")
         file_install_json = os.path.join("files", "invokeai", "installed")
         
         with open(file_install_json, "w") as f:
@@ -921,14 +924,12 @@ class invoke_ai:
         input("Press enter to start the install...")
 
         installer_base = os.path.join("files", "invokeai", "InvokeAI-Installer")
-        working_dir = os.getcwd()
-        root_folder_install = os.path.join(working_dir, "files", "invokeai", "program")
         
         if self.ver_os_info == 'windows':
-            os.system(f'call {os.path.join(installer_base, "install.bat")} --root \"{root_folder_install}\"')
+            os.system(f'call {os.path.join(installer_base, "install.bat")}')
         if self.ver_os_info == 'linux':
             os.system('chmod +x ./files/invokeai/InvokeAI-Installer/install.sh')
-            os.system(f'./files/invokeai/InvokeAI-Installer/install.sh --root \"{root_folder_install}\"')
+            os.system(f'./files/invokeai/InvokeAI-Installer/install.sh')
 
         file_install_json = os.path.join("files", "invokeai", "installed")
         
@@ -939,9 +940,52 @@ class invoke_ai:
     
     def run(self):
         file_install_json = os.path.join("files", "invokeai", "installed")
+        file_folder_json = os.path.join("files", "invokeai", "folder")
 
-        with open(file_install_json, "r") as f:
-            contents = f.read()
+        try:
+            with open(file_install_json, "r") as f:
+                install = f.read()
+
+        except Exception as e:
+            s.log("InvokeAI is not installed on this subsystem")
+            input("Please hit enter to go back to the main menu: ")
+
+        if os.path.exists(file_folder_json):
+            with open(file_folder_json, "r") as f:
+                invoke_folder_loco = f.read()
+        else:
+            while True:
+                s.log("Where did you install InvokeAI? Please paste the folder here.")
+                invoke_folder_loco = input("InvokeAI Folder: ")
+                
+                if os.path.exists(invoke_folder_loco):
+                    
+                    if os.name == 'nt':
+                        invoke_file = os.path.join(invoke_folder_loco, "invoke.bat")
+                    else:
+                        invoke_file = os.path.join(invoke_folder_loco, "invoke.sh")
+
+                    if os.path.exists(invoke_file):
+                        venv_path = os.path.join(invoke_folder_loco, ".venv")
+                        if os.path.exists(venv_path):
+                            with open(file_folder_json, "w") as f:
+                                f.write(invoke_folder_loco)
+
+                            break
+                else:
+                    s.log("Error, folder or invoke runner not found please try again")
+        
+        if install == "os":
+            s.log(f"Running the `{invoke_file}` for this install on OS")
+                    
+            if os.name == 'nt':
+                os.system(f"call {invoke_file}")
+            else:
+                os.system(f"{invoke_file}")
+        
+        if install == "docker":
+            s.log("Running from docker is not supported yet, please check the site on how to run from docker...")
+            input("Please hit enter to go back to the main menu: ")
 
 class windows_wsl_moder:
     def __init__(self, ver_os_info, client, client_openai):
