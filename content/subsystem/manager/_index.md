@@ -128,12 +128,6 @@ volumes:
     external: false
 ```
 
-Start up that docker then run the following in it by clicking ``console``
-
-```bash
-curl -sSL https://raw.githubusercontent.com/lunamidori5/Midori-AI/master/other_files/midori_ai_manager/subsystem_python_runner.py > subsystem_python_runner.py && python3 subsystem_python_runner.py
-```
-
 ### Running the program
 
 Start up that docker then run the following in it by clicking ``console``
