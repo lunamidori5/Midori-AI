@@ -1,4 +1,4 @@
-name: 'Build and Upload to Server'
+name: 'Push Release to Server'
 
 on:
   workflow_dispatch:
