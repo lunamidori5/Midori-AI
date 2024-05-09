@@ -155,6 +155,9 @@ temp_context = "This is the main menu they are asking for help on..."
 temp_context += f"The numbers are the menu items that they can type into the main menu, it only supports ``python ints``"
 temp_context += f"Here is a list of options the user can choose from:\n{', '.join(menu_list_opt).title()}"
 
+news(blank_line, Fore)
+s.clear_window(ver_os_info)
+
 while True:
     containers = client.containers.list()
     
@@ -178,8 +181,6 @@ while True:
 
     s.clear_window(ver_os_info)
     s.check_for_subsystem_update(ver_os_info, ver_info, DockerClient, compose_path, containers, use_gui, sg, client, ver_info, layout, client_openai, discord_id, subsystem_file_name)
-    s.clear_window(ver_os_info)
-    news(blank_line, Fore)
     s.clear_window(ver_os_info)
 
     s.log(blank_line)
