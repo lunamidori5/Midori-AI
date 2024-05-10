@@ -111,7 +111,7 @@ if __name__ == "__main__":
 
     print("Updating in...")
 
-    for timer in range(10, 0, -1):
+    for timer in range(3, 0, -1):
         print(f"{timer}...")
         time.sleep(1)
 
