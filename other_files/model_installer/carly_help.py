@@ -5,6 +5,7 @@ import random
 import requests
 import platform
 
+from autogen import OpenAIWrapper
 from cryptography.fernet import Fernet
 
 import support as s
@@ -43,6 +44,11 @@ def request_info(filename_pre):
     system_message = bytes(decrypted_commands).decode()
 
     return system_message
+
+def setup_carly(input_str):
+    temp_response = request_info(input_str)
+    temp_keys = temp_response.strip()
+    return OpenAIWrapper(base_url="https://ai.midori-ai.xyz/v1", api_key=temp_keys, timeout=6000)
 
 def request_llm(client_openai, request_in, system_message, added_context):
     temp_str_memory = "There was a really big error..."
