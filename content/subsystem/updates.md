@@ -6,6 +6,22 @@ weight = 1
 
 ![Midori AI photo](https://tea-cup.midori-ai.xyz/download/logosubsystem.png)
 
+## 5/10/2024
+- Update: Planned changes for LocalAi's Gallery API
+- Bug Fix: Fixed a loading bug with how we get carly loaded
+- Update: Moved Carly's loading to the carly help file
+- Update: Updated the news page
+- Update: added invokeAI model support
+- Update: added docker to invokeai install
+- Update: Few more text changes and a action rename
+- Update: Cleans up after itself and deletes the installer / old files
+- Update: more text clean up for the backends menu
+- Update: added better error code for invoke.ai system runner
+- Update: added support for running InvokeAI on the system
+- Bug Fix: Fixed the news menu
+- Update: Added a new "run InvokeAI" menu for running the InvokeAI program
+- Bug Fix: Did some bug fixes
+
 ## 5/7/2024
 - Update: Added a way for "other os" type to auto-update
 - Update: Added a yay or nay to purging the venv at the end of other os
