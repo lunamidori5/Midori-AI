@@ -1,4 +1,4 @@
-FROM quay.io/go-skynet/local-ai:master-ffmpeg
+FROM quay.io/go-skynet/local-ai:v2.15.0-ffmpeg
 
 RUN echo "Placeholder: USER root"
 
