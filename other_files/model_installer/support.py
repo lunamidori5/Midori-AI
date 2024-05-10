@@ -137,7 +137,7 @@ def check_for_update(ver_os_info, ver_info, client):
             elif ver_os_info == 'linux':
 
                 container.exec_run("pip install requests")
-                container.exec_run("nohup python3 update.py -os Windows -type na &")
+                container.exec_run("nohup python3 update.py -os Linux -type na &")
                 log("Please run ``./subsystem_manager`` to restart the Subsystem Manager")
                 exit(0)
 
