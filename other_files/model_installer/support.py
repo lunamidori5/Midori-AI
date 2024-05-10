@@ -83,6 +83,8 @@ def check_for_update(ver_os_info, ver_info, client):
             log(f"Found the subsystem, logging into: {container.name} / {container.id}")
             container = client.containers.get(container.name)
             break
+    
+    container_id = container.id
 
     servers_replyed = True
 
@@ -131,16 +133,18 @@ def check_for_update(ver_os_info, ver_info, client):
                 os.system("echo start subsystem_manager.exe >> restart.bat")
                 os.system("echo exit >> restart.bat")
 
-                container.exec_run("pip install requests")
-                container.exec_run("nohup python3 update.py -os Windows -type na &")
+                os.system(f"docker exec -it {container_id} pip install requests")
+                os.system(f"docker exec -it {container_id} nohup python3 update.py -os Windows -type na &")
+
                 input("debugging waiting hit enter to try to update")
                 os.system("start restart.bat")
                 exit(0)
 
             elif ver_os_info == 'linux':
 
-                container.exec_run("pip install requests")
-                container.exec_run("nohup python3 update.py -os Linux -type na &")
+                os.system(f"docker exec -it {container_id} pip install requests")
+                os.system(f"docker exec -it {container_id} nohup python3 update.py -os Linux -type na &")
+
                 log("Please run ``./subsystem_manager`` to restart the Subsystem Manager")
                 exit(0)
 
