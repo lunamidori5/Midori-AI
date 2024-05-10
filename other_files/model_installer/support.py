@@ -129,17 +129,15 @@ def check_for_update(ver_os_info, ver_info, client):
                 os.system("echo start subsystem_manager.exe >> restart.bat")
                 os.system("echo exit >> restart.bat")
 
-                item_docker = "nohup python3 update.py -os Windows -type na &"
-                log(f"Running {item_docker}")
-                container.exec_run(item_docker)
+                container.exec_run("pip install requests")
+                container.exec_run("nohup python3 update.py -os Windows -type na &")
                 os.system("start restart.bat")
                 exit(0)
 
             elif ver_os_info == 'linux':
 
-                item_docker = "nohup python3 update.py -os Linux -type na &"
-                log(f"Running {item_docker}")
-                container.exec_run(item_docker)
+                container.exec_run("pip install requests")
+                container.exec_run("nohup python3 update.py -os Windows -type na &")
                 log("Please run ``./subsystem_manager`` to restart the Subsystem Manager")
                 exit(0)
 
