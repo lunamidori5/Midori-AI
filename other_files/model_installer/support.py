@@ -125,9 +125,9 @@ def check_for_update(ver_os_info, ver_info, client):
         if bypass == "none":
             if ver_os_info == 'windows':
 
-                os.system("echo \"timeout /t 15\" > restart.bat")
-                os.system("echo \"start subsystem_manager.exe\" >> restart.bat")
-                os.system("echo \"exit\" >> restart.bat")
+                os.system("echo timeout /t 15 > restart.bat")
+                os.system("echo start subsystem_manager.exe >> restart.bat")
+                os.system("echo exit >> restart.bat")
 
                 item_docker = "nohup python3 update.py -os Windows -type na &"
                 log(f"Running {item_docker}")
