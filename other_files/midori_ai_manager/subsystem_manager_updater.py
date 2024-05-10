@@ -64,6 +64,7 @@ def update_subsystem_manager(subsystem_manager_os, subsystem_manager_runtype):
         print("Extracting files...")
         with tarfile.open("subsystem_manager.tar.gz", "r") as tar:
             tar.extractall()
+        print("Done Extracting files")
 
         remove_file("subsystem_manager.tar.gz")
 
@@ -88,6 +89,7 @@ def update_subsystem_manager(subsystem_manager_os, subsystem_manager_runtype):
         print("Extracting files...")
         with zipfile.ZipFile("subsystem_manager.zip", "r") as zip:
             zip.extractall()
+        print("Done Extracting files")
 
         remove_file("subsystem_manager.zip")
 
