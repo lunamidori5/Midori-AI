@@ -956,33 +956,35 @@ class invoke_ai:
         except Exception as e:
             s.log("InvokeAI is not installed on this subsystem")
             input("Please hit enter to go back to the main menu: ")
-
-        if os.path.exists(file_folder_json):
-            with open(file_folder_json, "r") as f:
-                invoke_folder_loco = f.read()
-        else:
-            while True:
-                s.log("Where did you install InvokeAI? Please paste the folder here.")
-                invoke_folder_loco = input("InvokeAI Folder: ")
-                
-                if os.path.exists(invoke_folder_loco):
-                    
-                    if os.name == 'nt':
-                        invoke_file = os.path.join(invoke_folder_loco, "invoke.bat")
-                    else:
-                        invoke_file = os.path.join(invoke_folder_loco, "invoke.sh")
-
-                    if os.path.exists(invoke_file):
-                        venv_path = os.path.join(invoke_folder_loco, ".venv")
-                        if os.path.exists(venv_path):
-                            with open(file_folder_json, "w") as f:
-                                f.write(invoke_folder_loco)
-
-                            break
-                else:
-                    s.log(f"You inputted {invoke_folder_loco}")
-                    s.log("Error, folder or invoke runner not found please try again")
         
+        
+        if install == "os":
+            if os.path.exists(file_folder_json):
+                with open(file_folder_json, "r") as f:
+                    invoke_folder_loco = f.read()
+            else:
+                while True:
+                    s.log("Where did you install InvokeAI? Please paste the folder here.")
+                    invoke_folder_loco = input("InvokeAI Folder: ")
+                    
+                    if os.path.exists(invoke_folder_loco):
+                        
+                        if os.name == 'nt':
+                            invoke_file = os.path.join(invoke_folder_loco, "invoke.bat")
+                        else:
+                            invoke_file = os.path.join(invoke_folder_loco, "invoke.sh")
+
+                        if os.path.exists(invoke_file):
+                            venv_path = os.path.join(invoke_folder_loco, ".venv")
+                            if os.path.exists(venv_path):
+                                with open(file_folder_json, "w") as f:
+                                    f.write(invoke_folder_loco)
+
+                                break
+                    else:
+                        s.log(f"You inputted {invoke_folder_loco}")
+                        s.log("Error, folder or invoke runner not found please try again")
+            
         if install == "os":
             s.log(f"Running the `{invoke_file}` for this install on OS")
                     
@@ -992,7 +994,10 @@ class invoke_ai:
                 os.system(f"{invoke_file}")
         
         if install == "docker":
-            s.log("Running from docker is not supported yet, please check the site on how to run from docker...")
+            container = s.get_subsystem(self.client)
+            container_id = container.id
+            s.log("Dropping you into the subsystem shell for you to run the invoke.sh file")
+            os.system(f"docker exec -it {container_id} /bin/bash && cd files/invokeai")
             input("Please hit enter to go back to the main menu: ")
 
 class windows_wsl_moder:
