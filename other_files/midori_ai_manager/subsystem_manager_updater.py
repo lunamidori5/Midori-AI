@@ -118,3 +118,5 @@ if __name__ == "__main__":
         time.sleep(1)
 
     update_subsystem_manager(subsystem_manager_os, subsystem_manager_runtype)
+
+    exit()

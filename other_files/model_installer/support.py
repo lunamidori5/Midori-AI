@@ -125,7 +125,9 @@ def check_for_update(ver_os_info, ver_info, client):
         if bypass == "none":
             if ver_os_info == 'windows':
 
-                os.system("echo timeout /t 15 > restart.bat")
+                os.system("echo @echo off > restart.bat")
+                os.system("echo title Updating Midori AI Subsystem >> restart.bat")
+                os.system("echo timeout /t 25 >> restart.bat")
                 os.system("echo start subsystem_manager.exe >> restart.bat")
                 os.system("echo exit >> restart.bat")
 
