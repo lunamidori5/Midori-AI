@@ -107,7 +107,7 @@ client = s.get_docker_client(Fore, ver_os_info, docker)
 # List all containers
 s.clear_window(ver_os_info)
 
-s.check_for_update(ver_os_info, ver_info)
+s.check_for_update(ver_os_info, ver_info, client)
 
 s.clear_window(ver_os_info)
 

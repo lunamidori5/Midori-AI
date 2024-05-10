@@ -1,4 +1,4 @@
-#!/use/bin/env python3
+#!/usr/bin/env python3
 
 import os
 import time
@@ -12,59 +12,89 @@ def request_file(link):
     retry = 0
 
     while retry < 15:
+        print(f"Trying to request file from {link}. Retry number: {retry}")
         response = requests.get(link)
 
         if response.status_code != 200:
+            print(f"Server replied with status code {response.status_code}. Retrying in 5 seconds")
             servers_replyed = False
             retry = retry + 1
             if retry > 10:
                 raise ValueError
-        
+        else:
+            servers_replyed = True
+
         if servers_replyed:
+            print("Server replied with status code 200. Returning the response")
             return response
 
 def download_save_file(filename, link):
     response = request_file(link)
 
     with open(filename, 'wb') as f:
+        print(f"Saving file {filename} to disk")
         f.write(response.content)
 
+def remove_file(file):
+    try:
+        os.remove(file)
+    except Exception as e:
+        print(str(e))
+
 def update_subsystem_manager(subsystem_manager_os, subsystem_manager_runtype):
+    print("Updating subsystem manager...")
+    os.chdir("/app/system_files")
 
-    if subsystem_manager_os == "linux":
+    if subsystem_manager_os.lower() == "linux":
 
+        print("Removing old files...")
         for root, directories, files in os.walk("_internal"):
             for file in files:
-                os.remove(os.path.join(root, file))
+                remove_file(os.path.join(root, file))
 
-        os.system("subsystem_manager.tar.gz")
-        os.system("subsystem_manager model_installer.sh")
-        os.system("midori_program_ver.txt")
-        os.remove("subsystem_manager")
+        remove_file("subsystem_manager.tar.gz")
+        remove_file("model_installer.sh")
+        remove_file("subsystem_manager")
+        remove_file("midori_program_ver.txt")
 
+        print("Downloading new files...")
         download_save_file("subsystem_manager.tar.gz", "https://tea-cup.midori-ai.xyz/download/model_installer_linux.tar.gz")
         download_save_file("midori_program_ver.txt", "https://tea-cup.midori-ai.xyz/download/midori_program_ver.txt")
 
-        pass
+        print("Extracting files...")
+        with tarfile.open("subsystem_manager.tar.gz", "r") as tar:
+            tar.extractall()
 
-    elif subsystem_manager_os == "windows":
+        remove_file("subsystem_manager.tar.gz")
 
+        return True
+
+    elif subsystem_manager_os.lower() == "windows":
+
+        print("Removing old files...")
         for root, directories, files in os.walk("_internal"):
             for file in files:
                 os.remove(os.path.join(root, file))
 
-        os.remove("subsystem_manager.zip")
-        os.remove("subsystem_manager.exe")
-        os.remove("model_installer.bat")
-        os.remove("midori_program_ver.txt")
+        remove_file("subsystem_manager.zip")
+        remove_file("subsystem_manager.exe")
+        remove_file("model_installer.bat")
+        remove_file("midori_program_ver.txt")
 
+        print("Downloading new files...")
         download_save_file("subsystem_manager.zip", "https://tea-cup.midori-ai.xyz/download/model_installer_windows.zip")
         download_save_file("midori_program_ver.txt", "https://tea-cup.midori-ai.xyz/download/midori_program_ver.txt")
 
-        pass
+        print("Extracting files...")
+        with zipfile.ZipFile("subsystem_manager.zip", "r") as zip:
+            zip.extractall()
+
+        remove_file("subsystem_manager.zip")
+
+        return True
 
     else:
-        pass
+        return False
 
 
 if __name__ == "__main__":
@@ -73,5 +103,16 @@ if __name__ == "__main__":
     parser.add_argument("-type", "--runtype", type=str, required=True, help="Other info needed to update?")
     args = parser.parse_args()
 
-    subsystem_manager_os = str(args.os).lower
-    subsystem_manager_runtype = str(args.runtype).lower
+    subsystem_manager_os = args.os
+    subsystem_manager_runtype = args.runtype
+
+    print(f"OS: {subsystem_manager_os}")
+    print(f"Type: {subsystem_manager_runtype}")
+
+    print("Updating in...")
+
+    for timer in range(10, 0, -1):
+        print(f"{timer}...")
+        time.sleep(1)
+
+    update_subsystem_manager(subsystem_manager_os, subsystem_manager_runtype)

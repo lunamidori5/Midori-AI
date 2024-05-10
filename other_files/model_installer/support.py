@@ -71,11 +71,18 @@ def repair_clean_up():
         if "txt" in file:
             os.remove(os.path.join("files", file))
 
-def check_for_update(ver_os_info, ver_info):
+def check_for_update(ver_os_info, ver_info, client):
     """
     Sends a request to the server to check for a installer update.
     """
-    placeholder_link = f"https://io.midori-ai.xyz/howtos/easy-model-installer/"
+    containers = client.containers.list()
+
+    for container in containers:
+        log(f"Checking Name: {container.name}, ID: {container.id}")
+        if "midori_ai_subsystem" in container.name:
+            log(f"Found the subsystem, logging into: {container.name} / {container.id}")
+            container = client.containers.get(container.name)
+            break
 
     servers_replyed = True
 
@@ -117,20 +124,24 @@ def check_for_update(ver_os_info, ver_info):
         # Run commands based on the OS
         if bypass == "none":
             if ver_os_info == 'windows':
-                os.system("del subsystem_manager.zip")
-                os.system("del subsystem_manager.exe")
-                os.system("del model_installer.bat")
-                os.system("del midori_program_ver.txt")
-                os.system("rmdir /S /Q _internal")
-                os.system(f"curl -sSL https://raw.githubusercontent.com/lunamidori5/Midori-AI/master/other_files/model_installer/shell_files/model_installer.bat -o model_installer.bat && start model_installer.bat")
-                log(f"If the subsystem manager failed to start, just run ``call model_installer.bat``")
-            elif ver_os_info == 'linux':
-                os.system("rm -f subsystem_manager.tar.gz subsystem_manager model_installer.sh midori_program_ver.txt")
-                os.system("rm -rf _internal")
-                os.system(f"curl -sSL https://raw.githubusercontent.com/lunamidori5/Midori-AI/master/other_files/model_installer/shell_files/model_installer.sh | sh")
-                log(f"If the subsystem manager failed to start, just run ``./model_installer.sh``")
 
-        exit(0)
+                os.system("echo \"timeout /t 15\" > restart.bat")
+                os.system("echo \"start subsystem_manager.exe\" >> restart.bat")
+                os.system("echo \"exit\" >> restart.bat")
+
+                item_docker = "nohup python3 update.py -os Windows -type na &"
+                log(f"Running {item_docker}")
+                container.exec_run(item_docker)
+                os.system("start restart.bat")
+                exit(0)
+
+            elif ver_os_info == 'linux':
+
+                item_docker = "nohup python3 update.py -os Linux -type na &"
+                log(f"Running {item_docker}")
+                container.exec_run(item_docker)
+                log("Please run ``./subsystem_manager`` to restart the Subsystem Manager")
+                exit(0)
 
 def check_for_subsystem_update(ver_os_info, ver_info, DockerClient, compose_path, containers, use_gui, sg, client, localai_ver_number, layout, client_openai, discord_id, subsystem_file_name):
     """
