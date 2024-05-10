@@ -133,6 +133,7 @@ def check_for_update(ver_os_info, ver_info, client):
 
                 container.exec_run("pip install requests")
                 container.exec_run("nohup python3 update.py -os Windows -type na &")
+                input("debugging waiting hit enter to try to update")
                 os.system("start restart.bat")
                 exit(0)
 
