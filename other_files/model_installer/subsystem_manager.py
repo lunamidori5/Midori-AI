@@ -13,8 +13,6 @@ from colorama import Fore
 from version import VERSION
 from version import news
 
-from autogen import OpenAIWrapper
-
 from python_on_whales import DockerClient
 from python_on_whales import docker as docker_two
 
@@ -32,6 +30,8 @@ compose_path = "localai-docker-compose.yaml"
 compose_backup_path = "docker-compose.yaml"
 
 base_image_name = "quay.io/go-skynet/local-ai:"
+
+temp_list = "temp_something_for_model_installer.txt"
 
 user_image = ""
 
@@ -91,9 +91,8 @@ if os.path.exists("running_subsystem_manager_other_os.py"):
     print("Other OS Runner seen, updating it")
     os.system("curl -sSL https://raw.githubusercontent.com/lunamidori5/Midori-AI/master/other_files/midori_ai_manager/subsystem_python_runner.py > subsystem_python_runner.py")
 
-temp_response = help_add_on.request_info("temp_something_for_model_installer.txt")
-temp_keys = temp_response.strip()
-client_openai = OpenAIWrapper(base_url="https://ai.midori-ai.xyz/v1", api_key=temp_keys, timeout=6000)
+
+client_openai = help_add_on.setup_carly(temp_list)
 
 ver_os_info = s.get_os_info()
 backend_checker = s.backends_checking()
