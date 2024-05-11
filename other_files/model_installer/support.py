@@ -130,20 +130,19 @@ def check_for_update(ver_os_info, ver_info, client):
                 os.system("echo @echo off > restart.bat")
                 os.system("echo title Updating Midori AI Subsystem >> restart.bat")
                 os.system("echo timeout /t 25 >> restart.bat")
+                os.system(f"echo docker exec {container_id} python3 update.py -os Windows -type na")
                 os.system("echo start subsystem_manager.exe >> restart.bat")
                 os.system("echo exit >> restart.bat")
 
-                os.system(f"docker exec -it {container_id} pip install requests")
-                os.system(f"docker exec -it {container_id} nohup python3 update.py -os Windows -type na &")
+                os.system(f"docker exec {container_id} pip install requests")
 
-                input("debugging waiting hit enter to try to update")
                 os.system("start restart.bat")
                 exit(0)
 
             elif ver_os_info == 'linux':
 
-                os.system(f"docker exec -it {container_id} pip install requests")
-                os.system(f"docker exec -it {container_id} nohup python3 update.py -os Linux -type na &")
+                os.system(f"docker exec {container_id} pip install requests")
+                os.system(f"docker exec {container_id} python3 update.py -os Linux -type na &")
 
                 log("Please run ``./subsystem_manager`` to restart the Subsystem Manager")
                 exit(0)
