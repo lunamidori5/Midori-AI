@@ -128,13 +128,16 @@ def check_for_update(ver_os_info, ver_info, client):
             if ver_os_info == 'windows':
 
                 os.system("echo @echo off > restart.bat")
+                os.system("echo timeout /t 5 >> restart.bat")
                 os.system("echo title Updating Midori AI Subsystem >> restart.bat")
-                os.system("echo timeout /t 25 >> restart.bat")
                 os.system(f"echo docker exec {container_id} python3 update.py -os Windows -type na")
+                os.system("echo timeout /t 25 >> restart.bat")
                 os.system("echo start subsystem_manager.exe >> restart.bat")
                 os.system("echo exit >> restart.bat")
 
                 os.system(f"docker exec {container_id} pip install requests")
+
+                input("debug testing, hit enter to start the updater")
 
                 os.system("start restart.bat")
                 exit(0)
