@@ -99,8 +99,11 @@ backend_checker = s.backends_checking()
 
 os.makedirs("files", exist_ok=True)
 
-if ver_os_info == "linux":
-    os.chmod("files", 0o777) # noqa
+try:
+    if ver_os_info == "linux":
+        os.chmod("files", 0o777) # noqa
+except Exception as e:
+    s.log(f"Something errored with folder setup - {str(e)}")
 
 client = s.get_docker_client(Fore, ver_os_info, docker)
 
