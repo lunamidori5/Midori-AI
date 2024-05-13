@@ -23,8 +23,7 @@ The Midori AI Subsystem extends Docker's capabilities by providing a modular and
 - The Webserver should be back up, sorry for the outage
 
 **Known Issues**
-- The new updater is not working as it should. If you get stuck in a update loop. Close all programs and run 
-- ``python3 update.py -os Windows -type na`` from inside of the subsystem docker image, or redownload the exe from this site
+- Server Rework is underway! Thank you for giving us lots of room to grow!
 - **Report Issuses** -> [Github Issue](https://github.com/lunamidori5/Midori-AI/issues/new/choose)
 
 **Windows Users**
