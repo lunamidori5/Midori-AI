@@ -38,9 +38,10 @@ pre_sync_folder(server1_path, winxlinux_temp_path)
 
 while True:
     sync_folder(windows_path, winxlinux_temp_path)
-    sync_folder(server1_path, winxlinux_temp_path)
-    
-    sync_folder(winxlinux_temp_path, windows_path)
     sync_folder(winxlinux_temp_path, server1_path)
+    
+    sync_folder(server1_path, winxlinux_temp_path)
+    sync_folder(winxlinux_temp_path, windows_path)
+    
 
     time.sleep(2)  # Wait for 2 seconds before syncing again
