@@ -35,6 +35,8 @@ def sync_folder(source, destination):
 
 pre_sync_folder(windows_path, winxlinux_temp_path)
 pre_sync_folder(server1_path, winxlinux_temp_path)
+pre_sync_folder(winxlinux_temp_path, windows_path)
+pre_sync_folder(winxlinux_temp_path, server1_path)
 
 while True:
     sync_folder(windows_path, winxlinux_temp_path)
