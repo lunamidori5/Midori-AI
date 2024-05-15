@@ -89,9 +89,13 @@ class subsystem_backend_manager:
         s.log("Please pick from this list of supported AI backends to add to the subsystem.")
         s.log(f"You can list them out like this. {str_temp}")
         s.log(f"Or type ``all`` to install all supported backends")
+        s.log(f"Type ``back`` to go back to the main menu")
 
         picked_backends = str(input("Request Backends: ")).lower()
         requested_backends = []
+
+        if picked_backends == "back":
+            return
 
         if picked_backends == "all":
             picked_backends = str(list_of_supported_backends)
@@ -164,9 +168,13 @@ class subsystem_backend_manager:
         s.log(f"{str(list_of_supported_backends).lower()}")
         s.log("Please pick from this list of supported AI backends to remove from the subsystem.")
         s.log(f"Type ``all`` to remove all supported backends")
+        s.log(f"Type ``back`` to go back to the main menu")
 
         picked_backends = str(input("Request Backends: ")).lower()
         requested_backends = []
+
+        if picked_backends == "back":
+            return
 
         if picked_backends == "all":
             picked_backends = str(list_of_supported_backends)

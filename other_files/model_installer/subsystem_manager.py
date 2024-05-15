@@ -82,6 +82,7 @@ if os.name == 'nt':
     os.system("del subsystem_manager.zip > nul")
     os.system("del model_installer.bat > nul")
     os.system("del model_installer.exe > nul")
+    os.system("del restart.bat > nul")
 else:
     os.system("rm -f model_installer_linux.tar.gz > /dev/null")
     os.system("rm -f subsystem_manager.tar.gz > /dev/null")
