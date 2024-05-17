@@ -1,9 +1,15 @@
 {
 	"folders": [
 		{
+			"name": "Midori-AI",
 			"path": "."
 		},
 		{
+			"name": "midori_ai_subsystem_backends",
+			"path": "../../BotFiles/uploaded_files/files/midori_ai_subsystem_backends"
+		},
+		{
+			"name": "BotFiles",
 			"path": "../../BotFiles"
 		}
 	],

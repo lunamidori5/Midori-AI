@@ -20,6 +20,7 @@ class subsystem_backend_manager:
             "axolotl",
             "invokeai",
             "chromadb",
+            "autogpt",
             "bigagi"
             ]
         
