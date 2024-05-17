@@ -55,7 +55,7 @@ jobs:
       - name: Install Dependencies
         run: |
           cp ./other_files/midori_program_ver.txt .
-          pip install requests
+          pip install requests cryptography
 
       - name: Linux Artifacts
         run: |
