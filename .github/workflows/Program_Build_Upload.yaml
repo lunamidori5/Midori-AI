@@ -76,15 +76,15 @@ jobs:
       
       - name: Upload Raw Python
         run: |
-          python3 git_uploader.py --type Linux --key ${{ secrets.UPLOADER_APIKEY }} --file "helper_app.py" --filename "helper_app.py"
-          python3 git_uploader.py --type Linux --key ${{ secrets.UPLOADER_APIKEY }} --file "yaml_edit.py" --filename "yaml_edit.py"
-          python3 git_uploader.py --type Linux --key ${{ secrets.UPLOADER_APIKEY }} --file "huggingface_downloader.py" --filename "huggingface_downloader.py"
+          python3 git_uploader.py --type Linux --username ${{ secrets.MIDORI_AI_USERNAME }} --password ${{ secrets.MIDORI_AI_PASSWORD }} --twoflogin ${{ secrets.MIDORI_AI_TFA }} --file "helper_app.py" --filename "helper_app.py"
+          python3 git_uploader.py --type Linux --username ${{ secrets.MIDORI_AI_USERNAME }} --password ${{ secrets.MIDORI_AI_PASSWORD }} --twoflogin ${{ secrets.MIDORI_AI_TFA }} --file "yaml_edit.py" --filename "yaml_edit.py"
+          python3 git_uploader.py --type Linux --username ${{ secrets.MIDORI_AI_USERNAME }} --password ${{ secrets.MIDORI_AI_PASSWORD }} --twoflogin ${{ secrets.MIDORI_AI_TFA }} --file "huggingface_downloader.py" --filename "huggingface_downloader.py"
       
       - name: Upload Programs
         run: |
-          python3 git_uploader.py --type Linux --key ${{ secrets.UPLOADER_APIKEY }} --file "midori_ai_downloader" --filename "midori_ai_downloader"
-          python3 git_uploader.py --type Linux --key ${{ secrets.UPLOADER_APIKEY }} --file "yaml_edit" --filename "yaml_edit"
-          python3 git_uploader.py --type Linux --key ${{ secrets.UPLOADER_APIKEY }} --file "hf-downloader" --filename "hf-downloader"
+          python3 git_uploader.py --type Linux --username ${{ secrets.MIDORI_AI_USERNAME }} --password ${{ secrets.MIDORI_AI_PASSWORD }} --twoflogin ${{ secrets.MIDORI_AI_TFA }} --file "midori_ai_downloader" --filename "midori_ai_downloader"
+          python3 git_uploader.py --type Linux --username ${{ secrets.MIDORI_AI_USERNAME }} --password ${{ secrets.MIDORI_AI_PASSWORD }} --twoflogin ${{ secrets.MIDORI_AI_TFA }} --file "yaml_edit" --filename "yaml_edit"
+          python3 git_uploader.py --type Linux --username ${{ secrets.MIDORI_AI_USERNAME }} --password ${{ secrets.MIDORI_AI_PASSWORD }} --twoflogin ${{ secrets.MIDORI_AI_TFA }} --file "hf-downloader" --filename "hf-downloader"
 
   push_subsystem_manager_to_hub:
     name: Push Subsystem (other os) to Docker Hub

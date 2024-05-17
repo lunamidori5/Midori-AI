@@ -41,6 +41,7 @@ Then to download and setup the model, Just send in a normal ``OpenAI`` request! 
 ```bash
 curl http://localhost:8080/v1/images/generations -H "Content-Type: application/json" -d '{
   "prompt": "Two Boxes, 1blue, 1red",
+  "model": "animagine",
   "size": "1024x1024"
 }'
 ```

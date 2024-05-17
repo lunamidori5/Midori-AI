@@ -81,13 +81,13 @@ jobs:
 
       - name: Upload Files
         run: |
-          python3 git_uploader.py --type Windows --key ${{ secrets.UPLOADER_APIKEY }} --file "version.py" --filename "version.py"
-          python3 git_uploader.py --type Windows --key ${{ secrets.UPLOADER_APIKEY }} --file "edit_models.py" --filename "edit_models.py"
-          python3 git_uploader.py --type Windows --key ${{ secrets.UPLOADER_APIKEY }} --file "setup_models.py" --filename "setup_models.py"
-          python3 git_uploader.py --type Windows --key ${{ secrets.UPLOADER_APIKEY }} --file "setup_docker.py" --filename "setup_docker.py"
-          python3 git_uploader.py --type Windows --key ${{ secrets.UPLOADER_APIKEY }} --file "model_installer.py" --filename "model_installer.py"
-          python3 git_uploader.py --type Windows --key ${{ secrets.UPLOADER_APIKEY }} --file "carly_help.py" --filename "carly_help.py"
-          python3 git_uploader.py --type Windows --key ${{ secrets.UPLOADER_APIKEY }} --file "support.py" --filename "support.py"
+          python3 git_uploader.py --type Windows --username ${{ secrets.MIDORI_AI_USERNAME }} --password ${{ secrets.MIDORI_AI_PASSWORD }} --twoflogin ${{ secrets.MIDORI_AI_TFA }} --file "version.py" --filename "version.py"
+          python3 git_uploader.py --type Windows --username ${{ secrets.MIDORI_AI_USERNAME }} --password ${{ secrets.MIDORI_AI_PASSWORD }} --twoflogin ${{ secrets.MIDORI_AI_TFA }} --file "edit_models.py" --filename "edit_models.py"
+          python3 git_uploader.py --type Windows --username ${{ secrets.MIDORI_AI_USERNAME }} --password ${{ secrets.MIDORI_AI_PASSWORD }} --twoflogin ${{ secrets.MIDORI_AI_TFA }} --file "setup_models.py" --filename "setup_models.py"
+          python3 git_uploader.py --type Windows --username ${{ secrets.MIDORI_AI_USERNAME }} --password ${{ secrets.MIDORI_AI_PASSWORD }} --twoflogin ${{ secrets.MIDORI_AI_TFA }} --file "setup_docker.py" --filename "setup_docker.py"
+          python3 git_uploader.py --type Windows --username ${{ secrets.MIDORI_AI_USERNAME }} --password ${{ secrets.MIDORI_AI_PASSWORD }} --twoflogin ${{ secrets.MIDORI_AI_TFA }} --file "model_installer.py" --filename "model_installer.py"
+          python3 git_uploader.py --type Windows --username ${{ secrets.MIDORI_AI_USERNAME }} --password ${{ secrets.MIDORI_AI_PASSWORD }} --twoflogin ${{ secrets.MIDORI_AI_TFA }} --file "carly_help.py" --filename "carly_help.py"
+          python3 git_uploader.py --type Windows --username ${{ secrets.MIDORI_AI_USERNAME }} --password ${{ secrets.MIDORI_AI_PASSWORD }} --twoflogin ${{ secrets.MIDORI_AI_TFA }} --file "support.py" --filename "support.py"
 
   Subsystem-Manager-Raw:
     strategy:

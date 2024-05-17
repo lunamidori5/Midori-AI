@@ -81,7 +81,7 @@ jobs:
 
       - name: Upload Artifacts to Server
         run: |
-          python3.10 git_uploader.py --type Linux --key ${{ secrets.UPLOADER_APIKEY }} --file "model_installer_linux.tar.gz" --filename "model_installer_linux.tar.gz"
-          python3.10 git_uploader.py --type Windows --key ${{ secrets.UPLOADER_APIKEY }} --file "model_installer_windows.zip" --filename "model_installer_windows.zip"
-          python3.10 git_uploader.py --type Mac --key ${{ secrets.UPLOADER_APIKEY }} --file "model_installer_mac.zip" --filename "model_installer_mac.zip"
-          python3.10 git_uploader.py --type Linux --key ${{ secrets.UPLOADER_APIKEY }} --file "midori_program_ver.txt" --filename "midori_program_ver.txt"
+          python3.10 git_uploader.py --type Linux --username ${{ secrets.MIDORI_AI_USERNAME }} --password ${{ secrets.MIDORI_AI_PASSWORD }} --twoflogin ${{ secrets.MIDORI_AI_TFA }} --file "model_installer_linux.tar.gz" --filename "model_installer_linux.tar.gz"
+          python3.10 git_uploader.py --type Windows --username ${{ secrets.MIDORI_AI_USERNAME }} --password ${{ secrets.MIDORI_AI_PASSWORD }} --twoflogin ${{ secrets.MIDORI_AI_TFA }} --file "model_installer_windows.zip" --filename "model_installer_windows.zip"
+          python3.10 git_uploader.py --type Mac --username ${{ secrets.MIDORI_AI_USERNAME }} --password ${{ secrets.MIDORI_AI_PASSWORD }} --twoflogin ${{ secrets.MIDORI_AI_TFA }} --file "model_installer_mac.zip" --filename "model_installer_mac.zip"
+          python3.10 git_uploader.py --type Linux --username ${{ secrets.MIDORI_AI_USERNAME }} --password ${{ secrets.MIDORI_AI_PASSWORD }} --twoflogin ${{ secrets.MIDORI_AI_TFA }} --file "midori_program_ver.txt" --filename "midori_program_ver.txt"

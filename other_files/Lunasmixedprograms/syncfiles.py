@@ -10,7 +10,7 @@ def pre_sync_folder(source, destination):
     """Syncs a source folder to a destination folder using rsync."""
     rsync_command = [
         "rsync",
-        "-a",  # archive mode: preserves permissions, timestamps, etc.
+        "-r",
         "-v",  # verbose output
         "-h",
         "-z",
@@ -23,7 +23,7 @@ def sync_folder(source, destination):
     """Syncs a source folder to a destination folder using rsync."""
     rsync_command = [
         "rsync",
-        "-a",  # archive mode: preserves permissions, timestamps, etc.
+        "-r",
         "-v",  # verbose output
         "-h",
         "-z",
