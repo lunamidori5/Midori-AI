@@ -28,9 +28,13 @@ class backend_programs_manager:
         menu_list_opt = []
         valid_answers = []
 
-        windows_list = ["20", "21", "22"]
         localai_list = ["10", "11", "12", "13"]
+        windows_list = ["20", "21", "22"]
         invokeai_list = ["30", "31", "32"]
+        ollama_list = ["40", "41"]
+
+        autogpt_list = ["60", "61"]
+
         if self.ver_os_info == "windows":
             menu_list_opt.append("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
             menu_list_opt.append("ONLY USE IF YOU HAVE YOUR WSL BACKED UP")
@@ -63,6 +67,8 @@ class backend_programs_manager:
             menu_list_opt.append("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
             menu_list_opt.append("``40`` - Ollama (Install Models)")
             menu_list_opt.append("``41`` - Ollama (Uninstall Models)")
+            for item in ollama_list:
+                valid_answers.append(item)
 
         menu_list_opt.append("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
         valid_answers.append("back")
