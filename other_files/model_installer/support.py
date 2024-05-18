@@ -75,16 +75,20 @@ def check_for_update(ver_os_info, ver_info, client):
     """
     Sends a request to the server to check for a installer update.
     """
-    containers = client.containers.list()
 
-    for container in containers:
-        log(f"Checking Name: {container.name}, ID: {container.id}")
-        if "midori_ai_subsystem" in container.name:
-            log(f"Found the subsystem, logging into: {container.name} / {container.id}")
-            container = client.containers.get(container.name)
-            break
-    
-    container_id = container.id
+    try:
+        containers = client.containers.list()
+
+        for container in containers:
+            log(f"Checking Name: {container.name}, ID: {container.id}")
+            if "midori_ai_subsystem" in container.name:
+                log(f"Found the subsystem, logging into: {container.name} / {container.id}")
+                container = client.containers.get(container.name)
+                break
+        
+        container_id = container.id
+    except Exception as e:
+        log(f"Something went wrong, posting this in logs for debugging. \"{str(e)}\"")
 
     servers_replyed = True
 

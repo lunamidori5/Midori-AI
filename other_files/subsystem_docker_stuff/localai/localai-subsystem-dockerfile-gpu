@@ -1,4 +1,4 @@
-FROM quay.io/go-skynet/local-ai:v2.15.0-cublas-cuda12-ffmpeg
+FROM quay.io/go-skynet/local-ai:master-cublas-cuda12-ffmpeg
 
 RUN echo "Placeholder: USER root"
 
@@ -31,16 +31,16 @@ RUN mv localai_entrypoint.sh /build/entrypoint.sh
 
 ## Remove these once Cryptk gets UV setup
 
-RUN python3 -m pip install --no-cache-dir cryptography aiohttp tk
-RUN python3 -m pip install --no-cache-dir -r midori_program_requirments.txt
-RUN python3 -m pip cache purge
+# RUN python3 -m pip install --no-cache-dir cryptography aiohttp tk
+# RUN python3 -m pip install --no-cache-dir -r midori_program_requirments.txt
+# RUN python3 -m pip cache purge
 
 ## UNCOMMENT these once Cryptk gets UV setup
 
-# RUN uv venv /midori_subsystem_python_backend/.venv && \
-#     source /midori_subsystem_python_backend/.venv/bin/activate && \
-#     uv pip install cryptography aiohttp tk && \
-#     uv pip install -r midori_program_requirments.txt
+RUN uv venv /midori_subsystem_python_backend/.venv && \
+    source /midori_subsystem_python_backend/.venv/bin/activate && \
+    uv pip install cryptography aiohttp tk && \
+    uv pip install -r midori_program_requirments.txt
 
 RUN apt-get autoclean && apt-get clean
 
