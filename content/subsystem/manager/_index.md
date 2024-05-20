@@ -153,7 +153,7 @@ Please make a folder for the Manager program with nothing in it, do not use the 
 Download this file
 
 ```bash
-curl -sSL https://raw.githubusercontent.com/lunamidori5/Midori-AI/master/other_files/midori_ai_manager/subsystem_python_runner.py > subsystem_python_runner.py && python3 subsystem_python_runner.py
+curl -sSL https://raw.githubusercontent.com/lunamidori5/Midori-AI/master/other_files/midori_ai_manager/subsystem_python_runner.py > subsystem_python_runner.py
 ```
 
 ### Running the program
@@ -162,6 +162,14 @@ Open a terminal and run:
 
 ```bash
 python3 subsystem_python_runner.py
+```
+
+### Running the program as root (Linux Only)
+
+Open a terminal and run:
+
+```bash
+sudo python3 subsystem_python_runner.py
 ```
 {{% /tab %}}
 {{< /tabs >}}
