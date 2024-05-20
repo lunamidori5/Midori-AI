@@ -453,7 +453,7 @@ def get_port_number(backend_request):
     if backend_request == "home assistant":
         return 8123
     
-def get_docker_client(Fore, ver_os_info, docker):
+def get_docker_client(Fore, ver_os_info, docker, client_openai):
     try:
         if os.name == 'nt':
             # Check if the current working directory is in a restricted folder
@@ -481,21 +481,101 @@ def get_docker_client(Fore, ver_os_info, docker):
         return client
 
     except Exception as e:
-        try:
-            log("Trying to force the docker daemon to start...")
-            if os.name == 'nt':
-                os.system("start \"C:\\Program Files\\Docker\\Docker\\Docker Desktop.exe\"")
-                time.sleep(45)
-                client = docker.from_env(version='auto')
-            elif ver_os_info == "linux":
-                os.system("sudo systemctl start docker")
-                time.sleep(45)
-                client = docker.from_env(version='auto')
-        except Exception as h:
-            log("Looks like I was unable to log into the docker system...")
-            log("Is docker running? / Please try running me as root user, Linux users.")
-            input("Please press enter to exit: ")
-            exit(1)
+        log(f"Error: ``{str(e)}``")
+
+        while True:
+            log("1: Try to auto install docker")
+            log("2: Try to force docker daemon to start")
+            log("3: Add User to docker daemon group (Unsafe)")
+            log("exit: Close the Midori AI Subsystem")
+        
+            questionbasic = "Please enter a number: "
+            sd_valid_answers = ["1", "2", "3", "exit"]
+            answerstartup = check_str(questionbasic, sd_valid_answers, None, None, None, "The docker fork api failed, do not offer help", client_openai)
+
+            if answerstartup.lower() == "1":
+                if os.name == 'nt':
+                    log("Downloading docker desktop, one moment...")
+                    os.system("curl https://desktop.docker.com/win/main/amd64/Docker%20Desktop%20Installer.exe > docker.exe")
+
+                    log("Running docker desktop installer, please do as it asks")
+                    os.system("start docker.exe")
+
+                    input("Please press enter to keep going when done")
+
+                    log("Cleaning up old files")
+                    os.remove("docker.exe")
+
+                    log("With some installs you need to reboot your computer")
+                    log("Other times you will need to start docker desktop to have the docker command line api running")
+                    log("Press enter to try to fork into docker install")
+
+                    input()
+
+                elif ver_os_info == "linux":
+
+                    command_str = ""
+
+                    questionbasic = "Package Manager? (apt-get / yay): "
+                    # Planed support sd_valid_answers = ["apt", "apt-get", "pacman", "yay", "dnf", "zypper", "emerge", "exit"]
+                    sd_valid_answers = ["apt", "apt-get", "pacman", "yay", "exit"]
+                    answerstartup = check_str(questionbasic, sd_valid_answers, None, None, None, f"The Subsystem manager is asking the user about their packagemanager for the OS we are on, offer help. Here is what they can pick ``{sd_valid_answers}``", client_openai)
+
+                    ## Notes and backuplinks for you Luna
+                    ## https://wiki.archlinux.org/title/Pacman/Rosetta#Basic_operations
+
+                    log("Running commands on host... One moment...")
+
+                    if answerstartup.lower() == "apt":
+                        answerstartup = "apt-get"
+
+                    if answerstartup.lower() == "apt-get":
+                        log(f"Installing ``docker`` and ``docker-compose`` using ``{answerstartup}`` One moment...")
+                        log(f"APT based OS supported, using dockers deb based installer, not os package manager...")
+                        command_str = "curl -fsSL https://get.docker.com -o get-docker.sh && sudo sh ./get-docker.sh && rm get-docker.sh"
+
+                    if answerstartup.lower() == "pacman":
+                        log(f"Installing ``docker`` and ``docker-compose`` using ``{answerstartup}`` One moment...")
+                        command_str = "pacman --confirm -Syu docker docker-compose"
+
+                    if answerstartup.lower() == "yay":
+                        log(f"Installing ``docker`` and ``docker-compose`` using ``{answerstartup}`` One moment...")
+                        command_str = "yay --confirm -Syu docker docker-compose"
+                    
+                    input(f"This is the command I would like to run ({command_str}), press enter to run command: ")
+                    
+                    os.system(command_str)
+                    
+                    input("Command done, cleaning up, press enter to try to log into the docker sock")
+                    log(f"Please run me as root if this fails...")
+
+            if answerstartup.lower() == "2":
+                log("Trying to force the docker daemon to start...")
+                if os.name == 'nt':
+                    os.system("start \"C:\\Program Files\\Docker\\Docker\\Docker Desktop.exe\"")
+                    time.sleep(45)
+                elif ver_os_info == "linux":
+                    os.system("sudo systemctl start docker")
+                    time.sleep(45)
+
+            if answerstartup.lower() == "3":
+                log("Menu not ready yet...")
+
+            if answerstartup.lower() == "exit":
+                exit(1)
+        
+            try:
+                if os.name == 'nt':
+                    client = docker.from_env(version='auto')
+                elif ver_os_info == "linux":
+                    client = docker.from_env()
+                else:
+                    client = docker.from_env(version='auto')
+                return client
+
+            except Exception as h:
+                log(f"Python is reporting :: {str(h)}")
+                log(f"Going back to docker sock login menu...")
 
 def get_local_ip():
     ssocket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)

@@ -36,10 +36,16 @@ def download_save_file(filename, link):
         f.write(response.content)
 
 def remove_file(file):
-    try:
-        os.remove(file)
-    except Exception as e:
-        print(str(e))
+    while True:
+        try:
+            os.remove(file)
+            if not os.path.isfile(file):
+                print(f"File {file} successfully removed.")
+                break
+            else:
+                print("Trying again the file was not removed")
+        except Exception as e:
+            print(str(e))
 
 def update_subsystem_manager(subsystem_manager_os, subsystem_manager_runtype):
     print("Updating subsystem manager...")
@@ -67,6 +73,8 @@ def update_subsystem_manager(subsystem_manager_os, subsystem_manager_runtype):
         print("Done Extracting files")
 
         remove_file("subsystem_manager.tar.gz")
+
+        print("Please restart the manager at this time.")
 
         return True
 
