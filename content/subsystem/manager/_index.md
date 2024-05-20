@@ -81,7 +81,7 @@ or
 ### Quick install with script
 
 ```sh
-curl -sSL https://raw.githubusercontent.com/lunamidori5/Midori-AI/master/other_files/model_installer/shell_files/model_installer.sh | sh
+curl -sSL https://raw.githubusercontent.com/lunamidori5/Midori-AI/master/other_files/model_installer/shell_files/model_installer.sh && ./model_installer.sh
 ```
 
 ### Manual download and installation
@@ -92,7 +92,7 @@ Open a terminal and run:
 curl -sSL https://tea-cup.midori-ai.xyz/download/model_installer_linux.tar.gz -o subsystem_manager.tar.gz
 tar -xzf subsystem_manager.tar.gz
 chmod +x subsystem_manager
-./subsystem_manager
+sudo ./subsystem_manager
 ```
 {{% /tab %}}
 {{% tab title="Unraid" %}}
