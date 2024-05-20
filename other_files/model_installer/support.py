@@ -536,11 +536,11 @@ def get_docker_client(Fore, ver_os_info, docker, client_openai):
 
                     if answerstartup.lower() == "pacman":
                         log(f"Installing ``docker`` and ``docker-compose`` using ``{answerstartup}`` One moment...")
-                        command_str = "pacman --confirm -Syu docker docker-compose"
+                        command_str = "pacman --confirm -Syu docker docker-compose && sudo systemctl enable docker"
 
                     if answerstartup.lower() == "yay":
                         log(f"Installing ``docker`` and ``docker-compose`` using ``{answerstartup}`` One moment...")
-                        command_str = "yay --confirm -Syu docker docker-compose"
+                        command_str = "yay --confirm -Syu docker docker-compose && sudo systemctl enable docker"
                     
                     input(f"This is the command I would like to run ({command_str}), press enter to run command: ")
                     
