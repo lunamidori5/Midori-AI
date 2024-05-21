@@ -197,6 +197,8 @@ while True:
 
     s.log("Logs will be send to Midori AI's servers.")
     s.log("If you need assistance with most menus, type help.")
+
+    subsystem_backend_manager = models_edit_add_on.subsystem_backend_manager()
     
     questionbasic = "What would you like to do?: "
     sd_valid_answers = ["1", "2", "3", "4", "5", "6", "10", "11", "chat", "exit"]
@@ -223,18 +225,18 @@ while True:
 
     if answerstartup == 2:
         s.data_helper_python()
-        models_edit_add_on.subsystem_backend_manager.backend_installer(None, "midori-docker-compose.yaml", client, client_openai, ver_os_info, discord_id) # type: ignore
+        subsystem_backend_manager.backend_installer(None, "midori-docker-compose.yaml", client, client_openai, ver_os_info, discord_id) # type: ignore
         s.data_helper_python()
 
     if answerstartup == 3:
         s.data_helper_python()
-        models_edit_add_on.subsystem_backend_manager.backend_updater(None, "midori-docker-compose.yaml", client, ver_os_info) # type: ignore
+        subsystem_backend_manager.backend_updater(None, "midori-docker-compose.yaml", client, ver_os_info) # type: ignore
         input("Hit enter to go back to the main menu: ")
         s.data_helper_python()
 
     if answerstartup == 4:
         s.data_helper_python()
-        models_edit_add_on.subsystem_backend_manager.backend_uninstaller(None, "midori-docker-compose.yaml", client, ver_os_info) # type: ignore
+        subsystem_backend_manager.backend_uninstaller(None, "midori-docker-compose.yaml", client, ver_os_info) # type: ignore
         s.data_helper_python()
 
     if answerstartup == 5:
