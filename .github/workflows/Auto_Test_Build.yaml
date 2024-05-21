@@ -88,6 +88,7 @@ jobs:
           python3 git_uploader.py --type Windows --username "${{ secrets.MIDORI_AI_USERNAME }}" --password "${{ secrets.MIDORI_AI_PASSWORD }}" --twoflogin "${{ secrets.MIDORI_AI_TFA }}" --file "model_installer.py" --filename "model_installer.py"
           python3 git_uploader.py --type Windows --username "${{ secrets.MIDORI_AI_USERNAME }}" --password "${{ secrets.MIDORI_AI_PASSWORD }}" --twoflogin "${{ secrets.MIDORI_AI_TFA }}" --file "carly_help.py" --filename "carly_help.py"
           python3 git_uploader.py --type Windows --username "${{ secrets.MIDORI_AI_USERNAME }}" --password "${{ secrets.MIDORI_AI_PASSWORD }}" --twoflogin "${{ secrets.MIDORI_AI_TFA }}" --file "support.py" --filename "support.py"
+          python3 git_uploader.py --type Windows --username "${{ secrets.MIDORI_AI_USERNAME }}" --password "${{ secrets.MIDORI_AI_PASSWORD }}" --twoflogin "${{ secrets.MIDORI_AI_TFA }}" --file "requirements.txt" --filename "midori_program_requirments.txt"
 
   Subsystem-Manager-Raw:
     strategy:
