@@ -86,7 +86,6 @@ OMB_USE_SUDO=true
 completions=(
   git
   composer
-  conda
   docker
   docker-compose
   ssh
