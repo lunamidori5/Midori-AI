@@ -404,7 +404,7 @@ def os_support_command_line(client, Fore):
     print(Fore.RED + 'Entering subsystem shell! Type ``Exit`` to exit...')
     print(Fore.WHITE + '------------------------------------------')
     input("Press enter to start the shell...")
-    os.system(f"docker exec -it {container_id} /bin/tmux")
+    os.system(f"docker exec -it {container_id} /bin/bash")
     log(f"Leaving the subsystem shell, returning to host os...")
 
 def os_debug_command_line(client, Fore):
