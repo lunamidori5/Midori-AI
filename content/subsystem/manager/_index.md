@@ -81,7 +81,7 @@ or
 ### Quick install with script
 
 ```sh
-curl -sSL https://raw.githubusercontent.com/lunamidori5/Midori-AI/master/other_files/model_installer/shell_files/model_installer.sh && ./model_installer.sh
+curl -sSL https://raw.githubusercontent.com/lunamidori5/Midori-AI/master/other_files/model_installer/shell_files/model_installer.sh > model_installer.sh && bash ./model_installer.sh
 ```
 
 ### Manual download and installation
