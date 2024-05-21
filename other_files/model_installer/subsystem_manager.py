@@ -106,6 +106,8 @@ try:
 except Exception as e:
     s.log(f"Something errored with folder setup - {str(e)}")
 
+s.data_helper_python()
+
 client = s.get_docker_client(Fore, ver_os_info, docker, client_openai)
 
 # List all containers

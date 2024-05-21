@@ -485,7 +485,6 @@ def get_docker_client(Fore, ver_os_info, docker, client_openai):
             log("--------------------------------------------")
             log("If you see this menu something went wrong")
             log("I am unable to log into your docker system.")
-            log("Please try updating your docker install too.")
             log("Here are some helpful menus to try to fix it")
             log("--------------------------------------------")
             log("1: Try to auto install docker")
