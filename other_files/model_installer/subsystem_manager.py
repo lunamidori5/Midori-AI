@@ -77,6 +77,8 @@ and will be served using a rounding-down approach. For instance, if you request 
 the Q6 model will be served instead, and so on.
 """)
 
+s.log("Booting... Please wait...")
+
 if os.name == 'nt':
     os.system("del model_installer.zip > nul")
     os.system("del subsystem_manager.zip > nul")
