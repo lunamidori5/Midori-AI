@@ -141,8 +141,6 @@ def check_for_update(ver_os_info, ver_info, client):
 
                 os.system(f"docker exec {container_id} pip install requests")
 
-                input("debug testing, hit enter to start the updater")
-
                 os.system("start restart.bat")
                 exit(0)
 
