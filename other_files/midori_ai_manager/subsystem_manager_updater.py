@@ -45,8 +45,8 @@ def remove_file(file):
                 break
             else:
                 print("Trying again the file was not removed")
-                times = times + 1
         except Exception as e:
+            times = times + 1
             print(str(e))
 
 def update_subsystem_manager(subsystem_manager_os, subsystem_manager_runtype):
