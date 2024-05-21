@@ -36,7 +36,8 @@ def download_save_file(filename, link):
         f.write(response.content)
 
 def remove_file(file):
-    while True:
+    times = 0
+    while times < 150:
         try:
             os.remove(file)
             if not os.path.isfile(file):
@@ -44,6 +45,7 @@ def remove_file(file):
                 break
             else:
                 print("Trying again the file was not removed")
+                times = times + 1
         except Exception as e:
             print(str(e))
 
