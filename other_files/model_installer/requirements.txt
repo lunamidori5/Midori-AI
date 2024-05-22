@@ -8,7 +8,7 @@ charset-normalizer
 click
 colorama
 distro
-git+https://github.com/felixfontein/docker-py@requests-hotfix
+docker
 exceptiongroup
 h11
 httpcore
