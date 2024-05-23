@@ -39,7 +39,8 @@ The Midori AI Subsystem extends Docker's capabilities by providing a modular and
 
 {{< tabs >}}
 {{% tab title="Windows" %}}
-### Prerequisites
+### Recommened Prerequisites
+Should you be missing this prerequisite, the manager is capable of installing it on your behalf.
 [Docker Desktop Windows](https://docs.docker.com/desktop/install/windows-install/)
 
 ### Recommended
@@ -71,12 +72,13 @@ subsystem_manager.exe
 {{% /tab %}}
 
 {{% tab title="Linux" %}}
-### Prerequisites
-[Docker Desktop Linux](https://docs.docker.com/desktop/install/linux-install/)
+### Recommened Prerequisites
+If these prerequisites are missing, the manager can install them for you on Debian or Arch-based distros.
+[Docker Engine](https://docs.docker.com/engine/install/) and [Docker Compose](https://docs.docker.com/compose/install/)
 
 or 
 
-[Docker Engine](https://docs.docker.com/engine/install/) and [Docker Compose](https://docs.docker.com/compose/install/)
+[Docker Desktop Linux](https://docs.docker.com/desktop/install/linux-install/)
 
 ### Quick install with script
 
@@ -189,11 +191,13 @@ If you encounter any issues or require further assistance, please feel free to r
 * **Midori AI Discord:** [Join our Discord server](https://discord.gg/xdgCx3VyHU)
 
 ## ----- Install Backends -----
-- [LocalAI]({{%relref "subsystem/local-ai" %}}) - For LLM inference, Embedding, and more
-- [AnythingLLM]({{%relref "subsystem/anythingllm" %}}) - For chating with your docs using LocalAI or other LLM hosts
-- Big-AGI - For chating with your docs using LocalAI or other LLM hosts
-- [InvokeAI]({{%relref "subsystem/invokeai" %}}) - For making photos using AI models
-- Axolotl - For training your own fine tuned LLMs
+- [LocalAI](https://github.com/mudler/LocalAI) - For LLM inference, Embedding, and more
+- [Ollama](https://github.com/ollama/ollama) - For LLM inference, Embedding, and more
+- [AnythingLLM](https://github.com/Mintplex-Labs/anything-llm) - For chating with your docs using LocalAI or other LLM hosts
+- [Big-AGI](https://github.com/enricoros/big-AGI) - For chating with your docs using LocalAI or other LLM hosts
+- [InvokeAI](https://github.com/invoke-ai/InvokeAI) - For making photos using AI models
+- [Axolotl](https://github.com/OpenAccess-AI-Collective/axolotl) - For training your own fine tuned LLMs
+- [AutoGPT](https://github.com/Significant-Gravitas/AutoGPT) - For Setting up / running LLM "Experts"
 
 ## ----- Model Info and Links -----
 
