@@ -489,7 +489,7 @@ def get_docker_client(Fore, ver_os_info, docker, client_openai):
             log("--------------------------------------------")
             log("1: Try to auto install docker")
             log("2: Try to force docker daemon to start")
-            log("3: Add User to docker daemon group (Unsafe)")
+            log("3: Add User to docker daemon group (Unsafe / Linux Only)")
             log("exit: Close the Midori AI Subsystem")
             log("--------------------------------------------")
         
@@ -564,6 +564,14 @@ def get_docker_client(Fore, ver_os_info, docker, client_openai):
 
             if answerstartup.lower() == "3":
                 log("Menu not ready yet...")
+                if os.name == 'nt':
+                    log("Windows is not supported by this mode...")
+                elif ver_os_info == "linux":
+                    os.system("sudo groupadd docker")
+                    os.system("sudo usermod -aG docker $USER")
+                    os.system("newgrp docker")
+                    log("You may need to logout and log back in to update the docker user group")
+                    time.sleep(45)
 
             if answerstartup.lower() == "exit":
                 exit(1)
