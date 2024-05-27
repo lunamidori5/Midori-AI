@@ -11,6 +11,9 @@
 		{
 			"name": "BotFiles",
 			"path": "../../BotFiles"
+		},
+		{
+			"path": "../../../cookieclubrepo"
 		}
 	],
 	"settings": {}
