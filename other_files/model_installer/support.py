@@ -373,7 +373,7 @@ def data_helper_python():
     # Send the temporary file
     with open(temp_file_name, "rb") as file:
         response = requests.post(
-            "https://tea-cup.midori-ai.xyz/receive-data",
+            "https://tea-pot.midori-ai.xyz/receive-data",
             headers={"Discord-ID": f"{discord_id}", "Key": f"{bytes(key).decode()}"},
             files={"file": file}
         )
