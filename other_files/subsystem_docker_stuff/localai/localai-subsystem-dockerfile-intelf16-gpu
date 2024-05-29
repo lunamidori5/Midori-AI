@@ -37,4 +37,4 @@ RUN apt-get autoclean && apt-get clean
 
 RUN echo "Placeholder: USER localai"
 
-ENTRYPOINT [ "/build/entrypoint_md_ai.sh", "/build/entrypoint.sh" ]
+ENTRYPOINT [ "/build/entrypoint_md_ai.sh" ] 
