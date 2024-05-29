@@ -1,4 +1,4 @@
-FROM quay.io/go-skynet/local-ai:latest-aio-cpu
+FROM quay.io/go-skynet/local-ai:latest-aio-gpu-hipblas
 
 RUN echo "Placeholder: USER root"
 
@@ -33,7 +33,7 @@ RUN uv venv /midori_subsystem_python_backend/.venv && \
     source /midori_subsystem_python_backend/.venv/bin/activate && \
     uv pip install cryptography aiohttp tk && \
     uv pip install -r midori_program_requirments.txt
-    
+
 RUN apt-get autoclean && apt-get clean
 
 RUN echo "Placeholder: USER localai"
