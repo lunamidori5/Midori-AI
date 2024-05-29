@@ -267,6 +267,8 @@ class localai_model_manager:
             added_valid_answers1 = ["q4-k-m", "q5-k-m"]
             added_valid_answers2 = ["none"]
 
+            answerbasic = "false".lower()
+
             if answer2.lower() == "8x7b":
                 valid_answers1.extend(added_valid_answers1)
             
@@ -485,17 +487,6 @@ class localai_model_manager:
 
         inside_model_folder = models_folder_container
 
-        if answer1 == "none":
-            if answer2 == "7b":
-                answer4_name = "cognitivecomputations"
-                answer4_name_b = "dolphin-2.6-mistral-7b"
-            if answer2 == "8x7b":
-                answer4_name = "cognitivecomputations"
-                answer4_name_b = "dolphin-2.7-mixtral-8x7b"
-            if answer2 == "70b":
-                answer4_name = "cognitivecomputations"
-                answer4_name_b = "dolphin-2.2-70b"
-
         if answerbasic == "true":
             s.log(f"The type of model you want to setup is: {answer1}")
             s.log(f"The size of the known model you want to setup is: {answer2}")
@@ -702,7 +693,7 @@ class localai_model_manager:
         
         if answer1 == "base":
             base_commands = [
-                ["./local-ai", f"{base_model_install}"],
+                ["./local-ai", f"{base_model_install}", "&"],
             ]
             docker_commands.extend(base_commands)
 
