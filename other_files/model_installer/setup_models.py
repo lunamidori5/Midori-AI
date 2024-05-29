@@ -254,7 +254,7 @@ class localai_model_manager:
             s.clear_window(ver_os_info)
 
             s.log(about_model_size)
-            valid_answers2 = ["7b", "8x7b", "70b", "id", "huggingface", "base"]
+            valid_answers2 = ["id", "huggingface", "base"]
             question2 = f"What size of known and supported model would you like to setup ({', '.join(valid_answers2)}): "
             
             context_temp = "The user was asked what size of model they would like to install... here is a list of sizes they can pick from "
