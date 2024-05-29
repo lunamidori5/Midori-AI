@@ -27,4 +27,4 @@ RUN mkdir -p /models &&\
     apt install -y wget
 
 COPY --from=builder /opt/midori-ai/ /opt/midori-ai/
-COPY --from=builder --chmod=755 /build/other_files/subsystem_docker_stuff/localai/supporting_files/localai_entrypoint.sh /build/entrypoint.sh
+COPY --from=builder --chmod=755 /build/other_files/subsystem_docker_stuff/localai/supporting_files/localai_entrypoint.sh /build/entrypoint_md_ai.sh

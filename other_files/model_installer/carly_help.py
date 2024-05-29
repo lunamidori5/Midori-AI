@@ -133,8 +133,6 @@ def carly(client_openai):
     return
 
 def chat_room(system_message, client_openai, ver_os_info, added_context):
-    s.log("Dev Note: Carly is turned off due to a bug with LocalAI")
-    return
     s.log("Input Question: ")
     message = input()
     s.log(f"You said: '{message}'")

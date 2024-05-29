@@ -3,7 +3,7 @@ name: Build Docker Images / Push Programs To Server
 on:
   workflow_dispatch:
   schedule:
-    - cron: '0 */12 * * *'
+    - cron: '0 */16 * * *'
 
 jobs:
   push_deb11_to_hub:
@@ -170,7 +170,10 @@ jobs:
           docker system prune -a -f
 
   push_gpu_to_hub:
-    name: Push LocalAI GPU to Docker Hub
+    name: Push LocalAI GPUs to Docker Hub
+    strategy:
+      matrix:
+        gpu_type: [intelf16, intelf32, hipblas, nvidia]
     needs: push_cpu_to_hub
     runs-on: self-hosted
     steps:
@@ -187,13 +190,13 @@ jobs:
         id: meta
         uses: docker/metadata-action@master
         with:
-          images: lunamidori5/midori_ai_subsystem_localai_gpu
+          images: lunamidori5/midori_ai_subsystem_localai_${{ matrix.gpu_type }}_gpu
 
       - name: Make Ver Tags (tags, labels) for Docker
         id: sha
         uses: docker/metadata-action@master
         with:
-          images: lunamidori5/midori_ai_subsystem_localai_gpu
+          images: lunamidori5/midori_ai_subsystem_localai_${{ matrix.gpu_type }}_gpu
           tags: |
             type=sha,enable=true,priority=100,prefix={{date 'YYYYMMDD-HHmmss' tz='Asia/Tokyo'}}-sha-,suffix=,format=short
 
@@ -201,7 +204,7 @@ jobs:
         uses: docker/build-push-action@master
         with:
           context: ./other_files/subsystem_docker_stuff/localai/
-          file: ./other_files/subsystem_docker_stuff/localai/localai-subsystem-dockerfile-gpu
+          file: ./other_files/subsystem_docker_stuff/localai/localai-subsystem-dockerfile-${{ matrix.gpu_type }}-gpu
           push: true
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
@@ -210,7 +213,7 @@ jobs:
         uses: docker/build-push-action@master
         with:
           context: ./other_files/subsystem_docker_stuff/localai/
-          file: ./other_files/subsystem_docker_stuff/localai/localai-subsystem-dockerfile-gpu
+          file: ./other_files/subsystem_docker_stuff/localai/localai-subsystem-dockerfile-${{ matrix.gpu_type }}-gpu
           push: true
           tags: ${{ steps.sha.outputs.tags }}
           labels: ${{ steps.sha.outputs.labels }}
