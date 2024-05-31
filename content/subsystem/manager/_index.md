@@ -105,9 +105,44 @@ Download and set up [Docker Compose Plugin](https://forums.unraid.net/topic/1144
 Click on the ``settings`` gear icon, then click the ``compose file`` menu item
 
 After that copy and paste this into the Docker Compose Manager plugin
+
+CPU Only:
 ```yaml
 services:
   midori_ai_unraid:
+    image: lunamidori5/subsystem_manager:master
+    ports:
+    - 39090:9090
+    privileged: true
+    restart: always
+    tty: true
+    volumes:
+    - /var/lib/docker/volumes/midoriai_midori-ai-models/_data:/var/lib/docker/volumes/midoriai_midori-ai-models/_data
+    - /var/lib/docker/volumes/midoriai_midori-ai-images/_data:/var/lib/docker/volumes/midoriai_midori-ai-images/_data
+    - /var/lib/docker/volumes/midoriai_midori-ai-audio/_data:/var/lib/docker/volumes/midoriai_midori-ai-audio/_data
+    - /var/run/docker.sock:/var/run/docker.sock
+volumes:
+  midori-ai:
+    external: false
+  midori-ai-audio:
+    external: false
+  midori-ai-images:
+    external: false
+  midori-ai-models:
+    external: false
+```
+
+CPU and Nvidia GPU:
+```yaml
+services:
+  midori_ai_unraid:
+    deploy:
+      resources:
+         reservations:
+            devices:
+            - driver: nvidia
+               count: 1
+               capabilities [gpu] 
     image: lunamidori5/subsystem_manager:master
     ports:
     - 39090:9090
