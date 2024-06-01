@@ -133,6 +133,7 @@ def carly(client_openai):
     return
 
 def chat_room(system_message, client_openai, ver_os_info, added_context):
+    s.log("This copy of Carly is running in CPU only as we wait for more GPUs")
     s.log("Input Question: ")
     message = input()
     s.log(f"You said: '{message}'")
