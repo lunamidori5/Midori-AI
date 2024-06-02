@@ -1,5 +1,6 @@
 import os
 import GPUtil
+import platform
 
 import support as s
 
@@ -12,6 +13,7 @@ class subsystem_backend_manager:
         containers = client.containers.list()
         backend_checker = s.backends_checking()
         installed_backends = backend_checker.check_json()
+        os_checker = platform.release()
 
         list_of_supported_backends = [
             "localai", 
@@ -150,7 +152,11 @@ class subsystem_backend_manager:
         
         for item_os in requested_backends:
             s.log(f"Running: docker compose -f ./files/{item_os}/docker-compose.yaml up -d")
-            os.system(f"docker compose -f ./files/{item_os}/docker-compose.yaml up -d")
+
+            if "Unraid" in os_checker:
+                os.system(f"docker compose -f /app/files/{item_os}/docker-compose.yaml up -d")
+            else:
+                os.system(f"docker compose -f ./files/{item_os}/docker-compose.yaml up -d")
         
         for backend_port in requested_backends:
             normal_port = s.get_port_number(backend_port)
@@ -161,6 +167,7 @@ class subsystem_backend_manager:
     def backend_uninstaller(self, docker_compose_yaml, client, ver_os_info):
         containers = client.containers.list()
         backend_checker = s.backends_checking()
+        os_checker = platform.release()
 
         list_of_supported_backends = backend_checker.check_json()
         
@@ -198,7 +205,10 @@ class subsystem_backend_manager:
         for item in requested_backends:
             s.log(f"Uninstalling {item}")
             backend_checker.remove_backend(item)
-            docker_commands.append(f"docker compose -f ./files/{item}/docker-compose.yaml down --rmi all")
+            if "Unraid" in os_checker:
+                docker_commands.append(f"docker compose -f /app/files/{item}/docker-compose.yaml down --rmi all")
+            else:
+                docker_commands.append(f"docker compose -f ./files/{item}/docker-compose.yaml down --rmi all")
             docker_commands.append(f"rm -rf ./files/{item}")
 
         s.log("Running commands inside of the Midori AI Subsystem!")
