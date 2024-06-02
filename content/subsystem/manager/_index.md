@@ -117,19 +117,11 @@ services:
     restart: always
     tty: true
     volumes:
-    - /var/lib/docker/volumes/midoriai_midori-ai-models/_data:/var/lib/docker/volumes/midoriai_midori-ai-models/_data
-    - /var/lib/docker/volumes/midoriai_midori-ai-images/_data:/var/lib/docker/volumes/midoriai_midori-ai-images/_data
-    - /var/lib/docker/volumes/midoriai_midori-ai-audio/_data:/var/lib/docker/volumes/midoriai_midori-ai-audio/_data
+    - /mnt/user/appdata/MidoriAI/system:/var/lib/docker/volumes/midoriai_midori-ai/_data
+    - /mnt/user/appdata/MidoriAI/models:/var/lib/docker/volumes/midoriai_midori-ai-models/_data
+    - /mnt/user/appdata/MidoriAI/images:/var/lib/docker/volumes/midoriai_midori-ai-images/_data
+    - /mnt/user/appdata/MidoriAI/audio:/var/lib/docker/volumes/midoriai_midori-ai-audio/_data
     - /var/run/docker.sock:/var/run/docker.sock
-volumes:
-  midori-ai:
-    external: false
-  midori-ai-audio:
-    external: false
-  midori-ai-images:
-    external: false
-  midori-ai-models:
-    external: false
 ```
 
 CPU and Nvidia GPU:
@@ -150,19 +142,11 @@ services:
     restart: always
     tty: true
     volumes:
-    - /var/lib/docker/volumes/midoriai_midori-ai-models/_data:/var/lib/docker/volumes/midoriai_midori-ai-models/_data
-    - /var/lib/docker/volumes/midoriai_midori-ai-images/_data:/var/lib/docker/volumes/midoriai_midori-ai-images/_data
-    - /var/lib/docker/volumes/midoriai_midori-ai-audio/_data:/var/lib/docker/volumes/midoriai_midori-ai-audio/_data
+    - /mnt/user/appdata/MidoriAI/system:/var/lib/docker/volumes/midoriai_midori-ai/_data
+    - /mnt/user/appdata/MidoriAI/models:/var/lib/docker/volumes/midoriai_midori-ai-models/_data
+    - /mnt/user/appdata/MidoriAI/images:/var/lib/docker/volumes/midoriai_midori-ai-images/_data
+    - /mnt/user/appdata/MidoriAI/audio:/var/lib/docker/volumes/midoriai_midori-ai-audio/_data
     - /var/run/docker.sock:/var/run/docker.sock
-volumes:
-  midori-ai:
-    external: false
-  midori-ai-audio:
-    external: false
-  midori-ai-images:
-    external: false
-  midori-ai-models:
-    external: false
 ```
 
 ### Running the program
