@@ -222,6 +222,7 @@ class subsystem_backend_manager:
 
     def backend_updater(self, docker_compose_yaml, client, ver_os_info):
         backend_checker = s.backends_checking()
+        os_checker = platform.release()
 
         list_of_supported_backends = backend_checker.check_json()
         
@@ -246,7 +247,10 @@ class subsystem_backend_manager:
         
         for item in requested_backends:
             s.log(f"Updating {item}")
-            docker_commands.append(f"docker compose -f ./files/{item}/docker-compose.yaml up --pull always -d")
+            if "Unraid" in os_checker:
+                docker_commands.append(f"docker compose -f /app/files/{item}/docker-compose.yaml up --pull always -d")
+            else:
+                docker_commands.append(f"docker compose -f ./files/{item}/docker-compose.yaml up --pull always -d")
 
         s.log("Running commands on the Host OS!")
         for item_docker in docker_commands:
