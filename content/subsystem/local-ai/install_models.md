@@ -15,7 +15,7 @@ weight = 2
 - On the Main Menu, Type `5` to Enter the Backend Program Menu
 
 #### Step 3:
-- On the Backend Program Menu, Type `1` to Enter the LocalAI Model Installer
+- On the Backend Program Menu, Type `10` to Enter the LocalAI Model Installer
 
 #### Step 4a:
 - If you have LocalAI installed in the subsystem, skip this step.
@@ -44,7 +44,7 @@ Need help on how to do that? Stop by - [How to send OpenAI request to LocalAI]({
 - On the Main Menu, Type `5` to Enter the Backend Program Menu
 
 #### Step 3:
-- On the Backend Program Menu, Type `1` to Enter the LocalAI Model Installer
+- On the Backend Program Menu, Type `10` to Enter the LocalAI Model Installer
 
 #### Step 4a:
 - If you have LocalAI installed in the subsystem, skip this step.
