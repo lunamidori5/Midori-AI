@@ -98,6 +98,9 @@ sudo ./subsystem_manager
 ```
 {{% /tab %}}
 {{% tab title="Unraid" %}}
+### Warning
+Unraid is not fully supported by the Subsystem Manager, We are working hard to fix this, if you have issues please let us know on the github.
+
 ### Prerequisites
 Download and set up [Docker Compose Plugin](https://forums.unraid.net/topic/114415-plugin-docker-compose-manager/)
 
