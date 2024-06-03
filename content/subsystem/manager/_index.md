@@ -108,6 +108,7 @@ Download and set up [Docker Compose Plugin](https://forums.unraid.net/topic/1144
 Click on the ``settings`` gear icon, then click the ``compose file`` menu item
 
 After that copy and paste this into the Docker Compose Manager plugin
+**You may need to edit the mounts to the left of the ``:``**
 
 CPU Only:
 ```yaml
