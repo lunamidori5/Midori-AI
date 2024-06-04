@@ -159,14 +159,18 @@ class subsystem_backend_manager:
                     vol_mountpoint = str(f.read())
             else:
                 vol_mountpoint = "/var/lib/docker/volumes/midoriai_midori-ai"
+            
+            try:
+                with open(f"/app/files/{item_os}/docker-compose.yaml", "r") as f:
+                    compose_yaml = f.read()
 
-            with open(f"/app/files/{item_os}/docker-compose.yaml", "r") as f:
-                compose_yaml = f.read()
+                compose_yaml = compose_yaml.replace("changememountpointgobrr", vol_mountpoint)
 
-            compose_yaml = compose_yaml.replace("changememountpointgobrr", vol_mountpoint)
-
-            with open(f"/app/files/{item_os}/docker-compose.yaml", "w") as f:
-                f.write(compose_yaml)
+                with open(f"/app/files/{item_os}/docker-compose.yaml", "w") as f:
+                    f.write(compose_yaml)
+            except Exception as e:
+                s.log(f"Something went wrong, {str(e)}")
+                s.log("Most likely the backend does not use a docker compose file.")
 
             s.log(f"Running: docker compose -f ./files/{item_os}/docker-compose.yaml up -d")
 
