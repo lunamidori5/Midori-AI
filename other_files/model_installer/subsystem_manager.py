@@ -52,9 +52,6 @@ else:
 
 about_model_size = str("""
 | Command | Description |
-|7b| Recommend for lowerend PC (6gb of Vram or less / 10gb of system ram)
-|8x7b| Recommended for highend PC (24gb or more Vram needed / 55gb of system ram)
-|70b| Recommended for high end servers only (AI card or better with 48gb Vram + 100gb system ram)
 |Huggingface| All GGUF Huggingface Models are supported - https://io.midori-ai.xyz/subsystem/local-ai/install_models/
 |ID| Models from the Midori AI Repo - https://io.midori-ai.xyz/models/offsite_models/
 |Base| Models that are baked into LocalAI - https://localai.io/basics/getting_started/
