@@ -556,7 +556,7 @@ def get_docker_client(Fore, ver_os_info, docker, client_openai):
             if answerstartup.lower() == "2":
                 log("Trying to force the docker daemon to start...")
                 if os.name == 'nt':
-                    os.system("start \"C:\\Program Files\\Docker\\Docker\\Docker Desktop.exe\"")
+                    os.system(f"start \"{shutil.which("Docker Desktop")}\"")
                     time.sleep(45)
                 elif ver_os_info == "linux":
                     os.system("sudo systemctl start docker")
