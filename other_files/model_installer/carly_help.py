@@ -91,16 +91,7 @@ def request_llm(client_openai, request_in, system_message, added_context):
 
     messages = [{"role": msg["role"], "content": msg["content"]} for msg in message_gpt]
 
-    for i in range(5):
-        try:
-            completion = client_openai.create(
-            model="gpt-14b-carly",
-            messages=messages
-            )
-            break
-
-        except:
-            continue
+    completion = client_openai.create(model="gpt-14b-carly", messages=messages)
 
     end_message = str(list(client_openai.extract_text_or_completion_object(completion))[0]).strip()
 
