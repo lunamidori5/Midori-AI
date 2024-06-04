@@ -137,8 +137,8 @@ services:
          reservations:
             devices:
             - driver: nvidia
-               count: 1
-               capabilities [gpu] 
+              count: 1
+              capabilities: [gpu] 
     image: lunamidori5/subsystem_manager:master
     ports:
     - 39090:9090
