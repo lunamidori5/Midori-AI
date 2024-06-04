@@ -48,7 +48,7 @@ def request_info(filename_pre):
 def setup_carly(input_str):
     temp_response = request_info(input_str)
     temp_keys = temp_response.strip()
-    return OpenAIWrapper(base_url="https://ai-proxy.midori-ai.xyz/v1", api_key=temp_keys, timeout=6000)
+    return OpenAIWrapper(base_url="https://ai-proxy.midori-ai.xyz", api_key=temp_keys, timeout=6000)
 
 def request_llm(client_openai, request_in, system_message, added_context):
     temp_str_memory = "There was a really big error..."
