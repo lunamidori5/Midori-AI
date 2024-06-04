@@ -15,6 +15,8 @@ class subsystem_backend_manager:
         installed_backends = backend_checker.check_json()
         os_checker = platform.release()
 
+        subsystem_ver_unraid_mount = "subsystem_unraid_mount.ram"
+
         list_of_supported_backends = [
             "localai", 
             "anythingllm",
@@ -151,6 +153,21 @@ class subsystem_backend_manager:
                 s.log(data.decode())
         
         for item_os in requested_backends:
+
+            if os.path.exists(subsystem_ver_unraid_mount):
+                with open(subsystem_ver_unraid_mount, 'r') as f:
+                    vol_mountpoint = str(f.read())
+            else:
+                vol_mountpoint = "/var/lib/docker/volumes/midoriai_midori-ai"
+
+            with open(f"/app/files/{item_os}/docker-compose.yaml", "r") as f:
+                compose_yaml = f.read()
+
+            compose_yaml = compose_yaml.replace("changememountpointgobrr", vol_mountpoint)
+
+            with open(f"/app/files/{item_os}/docker-compose.yaml", "w") as f:
+                f.write(compose_yaml)
+
             s.log(f"Running: docker compose -f ./files/{item_os}/docker-compose.yaml up -d")
 
             if "Unraid" in os_checker:
