@@ -2,6 +2,7 @@ import os
 import yaml
 import GPUtil
 import psutil
+import platform
 import subprocess
 
 import support as s
@@ -10,12 +11,14 @@ import edit_models as models_edit_add_on
 
 def dev_setup_docker(DockerClient, compose_path, ver_os_info, containers, use_gui, sg, client, ver_info, layout, client_openai, unused_int, subsystem_file_name):
     CPUCORES = int(psutil.cpu_count())
+    os_checker = platform.release()
     known_niv_gpus = s.known_gpus()
     GPUUSE = False
     BOTHUSE = False
     setgpu = False
     update_all = False
     answerupdater = "false"
+    subsystem_ver_unraid_mount = "subsystem_unraid_mount.ram"
     subsystem_ver_auto_update = "subsystem_auto_update.ram"
     base_image_name = "lunamidori5/midori_ai_subsystem"
 
@@ -39,6 +42,33 @@ def dev_setup_docker(DockerClient, compose_path, ver_os_info, containers, use_gu
         setgpu = False
         
     s.log(containers)
+
+    s.clear_window(ver_os_info)
+
+    if os.path.exists(subsystem_ver_unraid_mount):
+        with open(subsystem_ver_unraid_mount, 'r') as f:
+            vol_mountpoint = str(f.read())
+    else:
+        if "Unraid" in os_checker:
+            s.log("Unraid seen")
+            if "MIDORI_AI_MOUNT_POINT" in os.environ:
+                vol_mountpoint = os.environ["MIDORI_AI_MOUNT_POINT"]
+            else:
+                vol_mountpoint = input("Please enter a mountpoint - (/mnt/user/appdata/MidoriAI): ")
+                while True:
+                    confirmation = input("Are you sure this is the correct mountpoint? (y/n): ")
+                    if confirmation.lower() == "y":
+                        break
+                    elif confirmation.lower() == "n":
+                        s.clear_window(ver_os_info)
+                        vol_mountpoint = input("Please enter a mountpoint - (/mnt/user/appdata/MidoriAI): ")
+                    else:
+                        print("Invalid input. Please enter 'y' or 'n'.")
+            
+            with open(subsystem_ver_unraid_mount, 'w') as f:
+                f.write(vol_mountpoint)
+        else:
+            vol_mountpoint = "/var/lib/docker/volumes/midoriai_midori-ai"
 
     s.clear_window(ver_os_info)
 
@@ -186,7 +216,7 @@ def dev_setup_docker(DockerClient, compose_path, ver_os_info, containers, use_gu
                         "BOTHUSE": BOTHUSE,
                         "DISCORD_ID": discord_id,
                     },  # env_file is commented out
-                    "volumes": ["./:/app/system_files", "./files:/app/files", "midori-ai:/app/int-files", "/var/lib/docker/volumes/midoriai_midori-ai-models/_data:/app/models", "/var/lib/docker/volumes/midoriai_midori-ai-images/_data:/app/images", "/var/lib/docker/volumes/midoriai_midori-ai-audio/_data:/app/audio", "/var/run/docker.sock:/var/run/docker.sock"],
+                    "volumes": ["./:/app/system_files", "./files:/app/files", "midori-ai:/app/int-files", f"{vol_mountpoint}-models/_data:/app/models", f"{vol_mountpoint}-images/_data:/app/images", f"{vol_mountpoint}-audio/_data:/app/audio", "/var/run/docker.sock:/var/run/docker.sock"],
                 }
             },
 			"volumes": {
@@ -221,7 +251,7 @@ def dev_setup_docker(DockerClient, compose_path, ver_os_info, containers, use_gu
                         "BOTHUSE": BOTHUSE,
                         "DISCORD_ID": discord_id,
                     },  # env_file is commented out
-                    "volumes": ["./:/app/system_files", "./files:/app/files", "midori-ai:/app/int-files", "/var/lib/docker/volumes/midoriai_midori-ai-models/_data:/app/models", "/var/lib/docker/volumes/midoriai_midori-ai-images/_data:/app/images", "/var/lib/docker/volumes/midoriai_midori-ai-audio/_data:/app/audio", "/var/run/docker.sock:/var/run/docker.sock"],
+                    "volumes": ["./:/app/system_files", "./files:/app/files", "midori-ai:/app/int-files", f"{vol_mountpoint}-models/_data:/app/models", f"{vol_mountpoint}-images/_data:/app/images", f"{vol_mountpoint}-audio/_data:/app/audio", "/var/run/docker.sock:/var/run/docker.sock"],
                 }
             },
 			"volumes": {
