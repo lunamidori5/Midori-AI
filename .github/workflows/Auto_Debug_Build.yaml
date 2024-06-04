@@ -1,9 +1,6 @@
 name: Auto Lint, Test, and Build on Push
 
-on:
-  push:
-    branches:
-      - master
+on: push
 
 jobs:
   Python-Lint-Full:
@@ -47,87 +44,6 @@ jobs:
         run: |
           flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
           flake8 . --count --exit-zero --max-complexity=30 --max-line-length=40 --statistics
-        
-  Upload-All-Files:
-    runs-on: [ubuntu-latest]
-    needs: Python-Lint-Full
-    strategy:
-      max-parallel: 5
-
-    steps:
-      - name: Set up Python 3.10
-        uses: actions/setup-python@v5
-        with:
-          python-version: '3.10'
-
-      - name: Download the Uploader
-        run: |
-          curl -O https://tea-cup.midori-ai.xyz/download/midori_ai_downloader && chmod +x midori_ai_downloader
-          ./midori_ai_downloader git_uploader.py
-
-      - name: Download Files
-        run: |
-          curl -O https://raw.githubusercontent.com/lunamidori5/Midori-AI/master/other_files/model_installer/subsystem_manager.py
-          curl -O https://raw.githubusercontent.com/lunamidori5/Midori-AI/master/other_files/model_installer/carly_help.py
-          curl -O https://raw.githubusercontent.com/lunamidori5/Midori-AI/master/other_files/model_installer/setup_docker.py
-          curl -O https://raw.githubusercontent.com/lunamidori5/Midori-AI/master/other_files/model_installer/setup_models.py
-          curl -O https://raw.githubusercontent.com/lunamidori5/Midori-AI/master/other_files/model_installer/edit_models.py
-          curl -O https://raw.githubusercontent.com/lunamidori5/Midori-AI/master/other_files/model_installer/version.py
-          curl -O https://raw.githubusercontent.com/lunamidori5/Midori-AI/master/other_files/model_installer/support.py
-          curl -O https://raw.githubusercontent.com/lunamidori5/Midori-AI/master/other_files/model_installer/requirements.txt
-          curl -O https://raw.githubusercontent.com/lunamidori5/Midori-AI/master/other_files/midori_program_ver.txt
-          cp ./subsystem_manager.py ./model_installer.py 
-
-      - name: Install Dependencies
-        run: |
-          pip install -r requirements.txt
-
-      - name: Upload Files
-        run: |
-          python3 git_uploader.py --type Windows --username "${{ secrets.MIDORI_AI_USERNAME }}" --password "${{ secrets.MIDORI_AI_PASSWORD }}" --twoflogin "${{ secrets.MIDORI_AI_TFA }}" --file "version.py" --filename "version.py"
-          python3 git_uploader.py --type Windows --username "${{ secrets.MIDORI_AI_USERNAME }}" --password "${{ secrets.MIDORI_AI_PASSWORD }}" --twoflogin "${{ secrets.MIDORI_AI_TFA }}" --file "edit_models.py" --filename "edit_models.py"
-          python3 git_uploader.py --type Windows --username "${{ secrets.MIDORI_AI_USERNAME }}" --password "${{ secrets.MIDORI_AI_PASSWORD }}" --twoflogin "${{ secrets.MIDORI_AI_TFA }}" --file "setup_models.py" --filename "setup_models.py"
-          python3 git_uploader.py --type Windows --username "${{ secrets.MIDORI_AI_USERNAME }}" --password "${{ secrets.MIDORI_AI_PASSWORD }}" --twoflogin "${{ secrets.MIDORI_AI_TFA }}" --file "setup_docker.py" --filename "setup_docker.py"
-          python3 git_uploader.py --type Windows --username "${{ secrets.MIDORI_AI_USERNAME }}" --password "${{ secrets.MIDORI_AI_PASSWORD }}" --twoflogin "${{ secrets.MIDORI_AI_TFA }}" --file "model_installer.py" --filename "model_installer.py"
-          python3 git_uploader.py --type Windows --username "${{ secrets.MIDORI_AI_USERNAME }}" --password "${{ secrets.MIDORI_AI_PASSWORD }}" --twoflogin "${{ secrets.MIDORI_AI_TFA }}" --file "carly_help.py" --filename "carly_help.py"
-          python3 git_uploader.py --type Windows --username "${{ secrets.MIDORI_AI_USERNAME }}" --password "${{ secrets.MIDORI_AI_PASSWORD }}" --twoflogin "${{ secrets.MIDORI_AI_TFA }}" --file "support.py" --filename "support.py"
-          python3 git_uploader.py --type Windows --username "${{ secrets.MIDORI_AI_USERNAME }}" --password "${{ secrets.MIDORI_AI_PASSWORD }}" --twoflogin "${{ secrets.MIDORI_AI_TFA }}" --file "requirements.txt" --filename "midori_program_requirments.txt"
-
-  Subsystem-Manager-Raw:
-    strategy:
-      max-parallel: 5
-      matrix:
-        os: [ubuntu-latest, windows-latest, macos-latest]
-        python: ['3.10']
-    runs-on: ${{ matrix.os }}
-    needs: Upload-All-Files
-
-    steps:
-      - name: Set up Python 3.10
-        uses: actions/setup-python@v5
-        with:
-          python-version: '3.10'
-      - name: Download the Downloader
-        run: |
-          curl -k --disable --disable-eprt https://tea-cup.midori-ai.xyz/download/helper_app.py > helper_app.py
-      - name: Github Download Files
-        run: |
-          curl -O https://raw.githubusercontent.com/lunamidori5/Midori-AI/master/other_files/model_installer/requirements.txt
-          curl -O https://raw.githubusercontent.com/lunamidori5/Midori-AI/master/other_files/midori_program_ver.txt
-      - name: Install dependencies
-        run: |
-          pip install -r requirements.txt
-      - name: Midori AI Download Files
-        run: |
-          python3 helper_app.py model_installer.py
-          python3 helper_app.py carly_help.py
-          python3 helper_app.py setup_docker.py
-          python3 helper_app.py setup_models.py
-          python3 helper_app.py edit_models.py
-          python3 helper_app.py support.py
-      - name: Make EXE file
-        run: |
-          pyinstaller --onefile --clean model_installer.py
 
   Subsystem-Manager-Baked:
     strategy:
@@ -136,7 +52,7 @@ jobs:
         os: [ubuntu-latest, windows-latest, macos-latest]
         python: ['3.10']
     runs-on: ${{ matrix.os }}
-    needs: Upload-All-Files
+    needs: Python-Lint-Full
 
     steps:
       - name: Set up Python 3.10
