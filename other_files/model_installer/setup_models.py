@@ -1234,6 +1234,70 @@ class ollama_model_manager:
         container.restart()
         input("Press Enter to return")
         
+class memgpt_command_line:
+    def __init__(self, ver_os_info, client, client_openai):
+        self.client = client
+        self.ver_os_info = ver_os_info
+        self.client_openai = client_openai   
+
+    def check_for_backend(self, containers, docker_name):
+
+        s.log(f"Checking for Docker Image")
+
+        for container in containers:
+            s.log(f"Checking Name: {container.name}, ID: {container.id}")
+
+            # Check if there is a container with a name containing `service_name`
+            if docker_name in str(container.name):
+                # Get the container object
+                s.log(f"Found {docker_name}, Linking the Subsystem to: {container.name} / {container.id}")
+                container = self.client.containers.get(container.name)
+                named_docker = container.name
+                s.log(f"Midori AI Subsystem linked to {named_docker}")
+                return named_docker, container
+
+        for container in containers:
+            print("--------------------------------------")
+            s.log(f"Showing Name: {container.name}")
+            print("--------------------------------------")
+
+        s.log(f"Switching to manually typed mode, please enter the name of the docker image you are wishing to fork into ({docker_name}).")
+        docker_name_manual = input("Enter Docker Image Name: ")
+
+        for container in containers:
+            s.log(f"Checking Name: {container.name}, ID: {container.id}")
+
+            # Check if there is a container with a name containing `service_name`
+            if docker_name_manual in str(container.name):
+                # Get the container object
+                s.log(f"Found {docker_name}, Linking the Subsystem to: {container.name} / {container.id}")
+                container = self.client.containers.get(container.name)
+                named_docker = container.name
+                s.log(f"Midori AI Subsystem linked to {named_docker}")
+
+                return named_docker, container
+
+        s.log(f"I could not find {docker_name}... is that installed?")
+        input("Press Enter to go back to the menu: ")
+        return None, None
+    
+    def install_via_commandline(self):
+        containers = self.client.containers.list()
+
+        named_docker, container = self.check_for_backend(containers, "memgpt_server_midori_ai_backend")
+
+        container_id = container.id
+
+        s.clear_window(self.ver_os_info)
+        s.log(f"Installing and Starting MemGPT Config")
+        input("Press enter to start the install and config...")
+        os.system(f"docker exec -it {container_id} pip install -U pymemgpt")
+        os.system(f"docker exec -it {container_id} pip install llama-index-embeddings-huggingface llama-index-llms-huggingface llama-index-core -U")
+        os.system(f"docker exec -it {container_id} memgpt configure")
+        os.system(f"docker exec -it {container_id} memgpt run --debug --agent demo")
+
+        s.log(f"Leaving the subsystem shell, returning to host os...")
+    
 
 if __name__ == "__main__":
     print("last line of setup_models")

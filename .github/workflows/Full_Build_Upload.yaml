@@ -22,9 +22,12 @@ jobs:
         with:
           python-version: ${{ matrix.python }}
       
-      - name: Install Dependencies
+      - name: Install Dependencies (Pyinstaller)
         run: |
           pip install pyinstaller
+      
+      - name: Install Dependencies (Requirements.txt)
+        run: |
           pip install -r ./other_files/model_installer/requirements.txt
       
       - name: Build
