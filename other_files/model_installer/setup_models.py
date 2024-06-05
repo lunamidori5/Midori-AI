@@ -19,7 +19,7 @@ class backend_programs_manager:
         ### Ollma (40s)
         ### Invoke AI (30s)
         ### On Subsystem Programs
-            ### Axlot (50s)
+            ### Axlot (60s)
             ### Auto111
             ### Llama.cpp? (command line maybe?)
         backend_checker = s.backends_checking()
@@ -33,7 +33,7 @@ class backend_programs_manager:
         invokeai_list = ["30", "31", "32"]
         ollama_list = ["40", "41"]
 
-        autogpt_list = ["60", "61"]
+        memgpt_list = ["50", "51"]
 
         if self.ver_os_info == "windows":
             menu_list_opt.append("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
@@ -68,6 +68,13 @@ class backend_programs_manager:
             menu_list_opt.append("``40`` - Ollama (Install Models)")
             menu_list_opt.append("``41`` - Ollama (Uninstall Models)")
             for item in ollama_list:
+                valid_answers.append(item)
+        
+        if "memgpt" in installed_backends:
+            menu_list_opt.append("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
+            menu_list_opt.append("``50`` - Setup and Config MemGPT")
+            menu_list_opt.append("``51`` - Run MemGPT")
+            for item in memgpt_list:
                 valid_answers.append(item)
 
         menu_list_opt.append("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
@@ -108,6 +115,18 @@ class backend_programs_manager:
             if answerstartup == 13:
                 localai.backup_models()
 
+        if 19 <= answerstartup <= 30:
+            windows_wsl = windows_wsl_moder(self.ver_os_info, self.client, self.client_openai)
+
+            if answerstartup == 20:
+                windows_wsl.backup_wsl_docker_drives()
+
+            if answerstartup == 21:
+                windows_wsl.move_wsl_docker_drives()
+
+            if answerstartup == 22:
+                windows_wsl.purge_wsl_docker_drives()
+
         if 29 <= answerstartup <= 40:
             invokeai = invoke_ai(self.ver_os_info, self.client, self.client_openai)
 
@@ -120,7 +139,7 @@ class backend_programs_manager:
             if answerstartup == 32:
                 invokeai.run()
 
-        if 39 <= answerstartup <= 40:
+        if 39 <= answerstartup <= 50:
             ollama = ollama_model_manager(self.ver_os_info, self.client, self.client_openai)
 
             if answerstartup == 40:
@@ -129,17 +148,14 @@ class backend_programs_manager:
             if answerstartup == 41:
                 ollama.uninstall_models()
 
-        if 19 <= answerstartup <= 30:
-            windows_wsl = windows_wsl_moder(self.ver_os_info, self.client, self.client_openai)
+        if 49 <= answerstartup <= 60:
+            memgpt = memgpt_command_line(self.ver_os_info, self.client, self.client_openai)
 
-            if answerstartup == 20:
-                windows_wsl.backup_wsl_docker_drives()
+            if answerstartup == 50:
+                memgpt.install_via_commandline()
 
-            if answerstartup == 21:
-                windows_wsl.move_wsl_docker_drives()
-
-            if answerstartup == 22:
-                windows_wsl.purge_wsl_docker_drives()
+            if answerstartup == 51:
+                memgpt.run_via_commandline()
 
 class localai_model_manager:
     def __init__(self, ver_os_info, client, about_model_size, about_model_q_size, client_openai):
@@ -1294,6 +1310,20 @@ class memgpt_command_line:
         os.system(f"docker exec -it {container_id} pip install -U pymemgpt")
         os.system(f"docker exec -it {container_id} pip install llama-index-embeddings-huggingface llama-index-llms-huggingface llama-index-core -U")
         os.system(f"docker exec -it {container_id} memgpt configure")
+        os.system(f"docker exec -it {container_id} memgpt run --debug --agent demo")
+
+        s.log(f"Leaving the subsystem shell, returning to host os...")
+    
+    def run_via_commandline(self):
+        containers = self.client.containers.list()
+
+        named_docker, container = self.check_for_backend(containers, "memgpt_server_midori_ai_backend")
+
+        container_id = container.id
+
+        s.clear_window(self.ver_os_info)
+        s.log(f"Starting MemGPT")
+        input("Press enter to start MemGPT commandline chat...")
         os.system(f"docker exec -it {container_id} memgpt run --debug --agent demo")
 
         s.log(f"Leaving the subsystem shell, returning to host os...")
