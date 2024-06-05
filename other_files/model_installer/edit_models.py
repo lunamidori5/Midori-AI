@@ -25,6 +25,7 @@ class subsystem_backend_manager:
             "invokeai",
             "chromadb",
             "autogpt",
+            "memgpt",
             "bigagi"
             ]
         
