@@ -905,7 +905,7 @@ class invoke_ai:
         container = s.get_subsystem(self.client)
         container_id = container.id
         s.clear_window(self.ver_os_info)
-        s.log(f"Reminder to install InvokeAI into the files/invokeai folder for easyer running")
+        s.log(f"Reminder to install InvokeAI into the files/invokeai folder for easier running")
         input("Press enter to start the install...")
         os.system(f"docker exec -it {container_id} apt-get update && apt-get install python3.11-venv")
         os.system(f"docker exec -it {container_id} ./files/invokeai/InvokeAI-Installer/install.sh")
@@ -921,7 +921,7 @@ class invoke_ai:
     
     def install_on_host(self):
         s.clear_window(self.ver_os_info)
-        s.log(f"Reminder to install InvokeAI into the files/invokeai folder for easyer running")
+        s.log(f"Reminder to install InvokeAI into the files/invokeai folder for easier running")
         input("Press enter to start the install...")
 
         installer_base = os.path.join("files", "invokeai", "InvokeAI-Installer")

@@ -83,9 +83,9 @@ def request_llm(client_openai, request_in, system_message, added_context):
     s.log(temp_str_memory)
     
     message_gpt = [
-            {"role": "system", "content": system_message},
-            {"role": "system", "content": temp_str_memory},
-            {"role": "system", "content": added_context},
+            {"role": "model", "content": system_message},
+            {"role": "user", "content": temp_str_memory},
+            {"role": "model", "content": added_context},
             {"role": "user", "content": request_in}
             ]
 
