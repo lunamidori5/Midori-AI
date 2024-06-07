@@ -346,7 +346,7 @@ def data_helper_python():
     host_info = {
         "local_ip": socket.gethostbyname(socket.gethostname()),
         "name": username,
-        "discord_id": discord_id,
+        "midoriai_id": discord_id,
         "computer_type": platform.machine(),
         "os_name": platform.system(),
         "os_version": platform.release(),
@@ -520,7 +520,7 @@ def get_docker_client(Fore, ver_os_info, docker, client_openai):
 
                     command_str = ""
 
-                    questionbasic = "Package Manager? (apt-get / yay): "
+                    questionbasic = "Package Manager? (apt-get / pacman / yay): "
                     # Planed support sd_valid_answers = ["apt", "apt-get", "pacman", "yay", "dnf", "zypper", "emerge", "exit"]
                     sd_valid_answers = ["apt", "apt-get", "pacman", "yay", "exit"]
                     answerstartup = check_str(questionbasic, sd_valid_answers, None, None, None, f"The Subsystem manager is asking the user about their packagemanager for the OS we are on, offer help. Here is what they can pick ``{sd_valid_answers}``", client_openai)
