@@ -114,7 +114,7 @@ def dev_setup_docker(DockerClient, compose_path, ver_os_info, containers, use_gu
 
         s.clear_window(ver_os_info)
 
-        question = "Would you like me to auto up the backends that are installed in the Subsystem?: "
+        question = "Would you like me to auto update / start the backends that are installed in the Subsystem?: "
         valid_answers = ["yes", "no", "true", "false"]
         
         context_temp = f"The user was asked if they would like to auto update the backends that are installed in the Midori AI Docker Subsystem. This is a yes or no question. Tell the user to type ``yes`` for most usecases"

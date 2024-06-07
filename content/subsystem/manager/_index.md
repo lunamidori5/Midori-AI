@@ -214,13 +214,31 @@ If you encounter any issues or require further assistance, please feel free to r
 * **Midori AI Discord:** [Join our Discord server](https://discord.gg/xdgCx3VyHU)
 
 ## ----- Install Backends -----
-- [LocalAI](https://github.com/mudler/LocalAI) - For LLM inference, Embedding, and more
-- [Ollama](https://github.com/ollama/ollama) - For LLM inference, Embedding, and more
+
+### Chat UIs
+Chat with your own locally hosted AI, via:
 - [AnythingLLM](https://github.com/Mintplex-Labs/anything-llm) - For chating with your docs using LocalAI or other LLM hosts
 - [Big-AGI](https://github.com/enricoros/big-AGI) - For chating with your docs using LocalAI or other LLM hosts
-- [InvokeAI](https://github.com/invoke-ai/InvokeAI) - For making photos using AI models
+
+### LLM Backends
+Seamlessly integrate your AI systems with these LLM Backends:
+- [LocalAI](https://github.com/mudler/LocalAI) - For LLM inference, Embedding, and more
+- [Ollama](https://github.com/ollama/ollama) - For LLM inference, Embedding, and more
 - [Axolotl](https://github.com/OpenAccess-AI-Collective/axolotl) - For training your own fine tuned LLMs
+
+### LLM Hubs
+Chat with these locally hosted LLM Hubs, using the LLM backends in the Subsystem:
 - [AutoGPT](https://github.com/Significant-Gravitas/AutoGPT) - For Setting up / running LLM "Experts"
+- [MemGPT](https://github.com/cpacker/MemGPT) - For Setting up / running LLM with OS like memory
+
+### Cluster Based AI
+Support the Midori AI node based cluster system!
+- [Midori Ai Cluster]({{%relref "subsystem" %}}) - Not Ready Yet
+
+### Image AI
+Make photos for your AI's, by using:
+- [InvokeAI](https://github.com/invoke-ai/InvokeAI) - For making photos using AI models
+
 
 ## ----- Model Info and Links -----
 
