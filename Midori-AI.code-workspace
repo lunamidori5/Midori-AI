@@ -16,5 +16,7 @@
 			"path": "../../../cookieclubrepo"
 		}
 	],
-	"settings": {}
+	"settings": {
+		"continue.enableTabAutocomplete": false
+	}
 }
