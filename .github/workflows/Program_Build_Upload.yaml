@@ -221,6 +221,14 @@ jobs:
           tags: ${{ steps.sha.outputs.tags }}
           labels: ${{ steps.sha.outputs.labels }}
 
+  Cleanupdockerimages:
+    name: Clean up the docker images
+    strategy:
+      matrix:
+        gpu_type: [1, 2, 3, 4, 5, 6]
+    needs: push_gpu_to_hub
+    runs-on: self-hosted
+    steps:
       - name: Clean up Docker Cache
         run: |
           docker image prune -f -a
