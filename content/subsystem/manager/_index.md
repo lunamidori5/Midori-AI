@@ -49,7 +49,7 @@ Please make a folder for the Manager program with nothing in it, do not use the 
 ### Quick install
 
 1. Download - https://tea-cup.midori-ai.xyz/download/model_installer_windows.zip
-2. Unzip into LocalAI folder
+2. Unzip into the folder you made
 3. Run `subsystem_manager.exe`
 
 ### Quick install with script
