@@ -99,8 +99,11 @@ Images with Nvidia accelleration support
 
 > If you do not know which version of CUDA do you have available, you can check with `nvidia-smi` or `nvcc --version`
 
-Recommened Midori AI - LocalAI Images
-- `lunamidori5/midori_ai_subsystem_localai_gpu:master`
+Recommened Midori AI - LocalAI Images (Only Nvidia works for now)
+- `lunamidori5/midori_ai_subsystem_localai_nvidia_gpu:master`
+- `lunamidori5/midori_ai_subsystem_localai_hipblas_gpu:master`
+- `lunamidori5/midori_ai_subsystem_localai_intelf16_gpu:master`
+- `lunamidori5/midori_ai_subsystem_localai_intelf32_gpu:master`
 
 For a full list of tags or images please [check our docker repo](https://hub.docker.com/r/lunamidori5/midori_ai_subsystem_localai_gpu/tags)
 
@@ -123,8 +126,11 @@ Images with Nvidia accelleration support
 
 > If you do not know which version of CUDA do you have available, you can check with `nvidia-smi` or `nvcc --version`
 
-Recommened Midori AI - LocalAI Images
-- `lunamidori5/midori_ai_subsystem_localai_gpu:master`
+Recommened Midori AI - LocalAI Images (Only Nvidia works for now)
+- `lunamidori5/midori_ai_subsystem_localai_nvidia_gpu:master`
+- `lunamidori5/midori_ai_subsystem_localai_hipblas_gpu:master`
+- `lunamidori5/midori_ai_subsystem_localai_intelf16_gpu:master`
+- `lunamidori5/midori_ai_subsystem_localai_intelf32_gpu:master`
 
 For a full list of tags or images please [check our docker repo](https://hub.docker.com/r/lunamidori5/midori_ai_subsystem_localai_gpu/tags)
 
