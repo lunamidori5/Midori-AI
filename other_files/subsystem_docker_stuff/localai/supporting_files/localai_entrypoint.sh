@@ -163,12 +163,14 @@ fi
 
 if [ ! -f ggml-model-q4_k.gguf ]; then
 	#wget --no-check-certificate --no-cache --no-cookies https://huggingface.co/PsiPi/liuhaotian_llava-v1.5-13b-GGUF/resolve/main/llava-v1.5-13b-Q6_K.gguf
-	hf-downloader -un PsiPi -r liuhaotian_llava-v1.5-13b-GGUF -m llava-v1.5-13b-Q6_K.gguf
+	#hf-downloader -un PsiPi -r liuhaotian_llava-v1.5-13b-GGUF -m llava-v1.5-13b-Q6_K.gguf
+    midori_ai_downloader llava-v1.5-13b-Q6_K.gguf
     mv llava-v1.5-13b-Q6_K.gguf ggml-model-q4_k.gguf
 fi
 if [ ! -f mmproj-model-f16.gguf ]; then
 	#wget --no-check-certificate --no-cache --no-cookies https://huggingface.co/PsiPi/liuhaotian_llava-v1.5-13b-GGUF/resolve/main/mmproj-model-f16.gguf
-    hf-downloader -un PsiPi -r liuhaotian_llava-v1.5-13b-GGUF -m mmproj-model-f16.gguf
+    #hf-downloader -un PsiPi -r liuhaotian_llava-v1.5-13b-GGUF -m mmproj-model-f16.gguf
+    midori_ai_downloader mmproj-model-f16.gguf
 fi
 if [ ! -f chat-simple.tmpl ]; then
 	wget --no-check-certificate --no-cache --no-cookies https://github.com/mudler/LocalAI/blob/b8240b4c1839089b9d06a3e2b1c629a294cff87e/examples/configurations/llava/chat-simple.tmpl

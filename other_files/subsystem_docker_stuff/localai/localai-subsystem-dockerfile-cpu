@@ -4,7 +4,7 @@ RUN echo "Placeholder: USER root"
 
 RUN rm -rf /build/entrypoint_md_ai.sh
 
-RUN apt-get update && apt-get install -y curl wget nano tree
+RUN apt-get update && apt-get install -y curl wget nano tree python3-dev python3.11 python3-pip 
 
 RUN wget --no-check-certificate --no-cache --no-cookies https://tea-cup.midori-ai.xyz/download/yaml_edit
 RUN wget --no-check-certificate --no-cache --no-cookies https://tea-cup.midori-ai.xyz/download/hf-downloader
@@ -29,7 +29,7 @@ RUN chmod 777 localai_entrypoint.sh
 RUN chmod +x localai_entrypoint.sh
 RUN mv localai_entrypoint.sh /build/entrypoint_md_ai.sh
 
-RUN pip install --no-cache-dir cryptography aiohttp tk
+RUN python3 -m pip install --no-cache-dir cryptography aiohttp tk
 RUN python3 -m pip install --no-cache-dir -r midori_program_requirments.txt
 RUN python3 -m pip cache purge
     
