@@ -1,5 +1,6 @@
 +++
 disableToc = false
+hidden = true
 title = "Home Assistant x LocalAI"
 weight = 10
 +++
@@ -49,10 +50,6 @@ Once you have this information, proceed to “add Integration” in Home Assista
 
 In order to utilize the conversation agent in HomeAssistant, you will need to configure it as a conversation agent. This can be done by following the the instructions [here](https://github.com/acon96/home-llm?tab=readme-ov-file#configuring-the-component-as-a-conversation-agent).
 
-{{% notice note %}}
-ANY DEVICES THAT YOU SELECT TO BE EXPOSED TO THE MODEL WILL BE ADDED AS CONTEXT AND POTENTIALLY HAVE THEIR STATE CHANGED BY THE MODEL. ONLY EXPOSE DEVICES THAT YOU ARE OK WITH THE MODEL MODIFYING THE STATE OF, EVEN IF IT IS NOT WHAT YOU REQUESTED. THE MODEL MAY OCCASIONALLY HALLUCINATE AND ISSUE COMMANDS TO THE WRONG DEVICE! USE AT YOUR OWN RISK.
-{{% /notice %}}
-
 ## Changing the prompt
 
 Example on how to use the prompt can be seen [here](https://github.com/acon96/home-llm?tab=readme-ov-file#model).
@@ -72,3 +69,10 @@ High level Overview of the setup:
 - install the integration.
 - fill the needed information. You must fill something in the API key (if you don't use api key just check the box "ignore authentication"), put the full url e.g. https://myLocalAIHostHere:8080/v1 (including /v1), Not sure: let the API version empty.
 - configure the Home Assistant [Assist](https://www.home-assistant.io/voice_control/) using the new conversation agent.
+
+{{% notice style="warning" title="Notice" %}}
+**Important Note:** 
+
+Any devices you choose to expose to the model will be added to the context and may have their state changed by the model. Only expose devices that you are comfortable with the model modifying, even if the modification is not what you intended. The model may occasionally hallucinate and issue commands to the wrong device. Use at your own risk. 
+
+{{% /notice %}}

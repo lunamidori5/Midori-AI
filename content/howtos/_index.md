@@ -19,10 +19,12 @@ To add your own How Tos, Please open a PR on this github - [https://github.com/l
 
 This section includes other programs and how to setup, install, and use of LocalAI.
 - [Midori AI Subsystem Manager]({{%relref "subsystem/manager" %}}) - [lunamidori5](https://github.com/lunamidori5)
-- [Home Assistant x LocalAI]({{%relref "howtos/setup-with-HA" %}}) - [anto79_ops](https://github.com/Anto79-ops)
+- [HA-OS Info]({{%relref "howtos/setup-with-HA" %}}) - [anto79_ops](https://github.com/Anto79-ops)
+- [HA-OS x LocalAI]({{%relref "howtos/homellmxlocalai" %}}) - [Maxi1134](https://github.com/maxi1134)
 
 
 ## Thank you to our collaborators and volunteers
 - [TwinFinz](https://github.com/TwinFinz): Help with the models template files and reviewing some code
 - [Crunchy](https://github.com/dionysius): PR helping with both installers and removing 7zip need
+- [Maxi1134](https://github.com/maxi1134): Making our new HA-OS page for setting up LLM with HA
 - []()
