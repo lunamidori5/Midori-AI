@@ -73,7 +73,7 @@ BUILD_TYPE=cublas
 ```
 
 
-Now that we have the `.env` set lets set up our `docker-compose` file.
+Now that we have the `.env` set lets set up our `docker-compose.yaml` file.
 It will use a container from [quay.io](https://quay.io/repository/go-skynet/local-ai?tab=tags).
 
 {{< tabs >}}
@@ -152,7 +152,7 @@ Core Images - Smaller images without predownload python dependencies
 
 {{< tabs >}}
 {{% tab title="CPU Only" %}}
-Also note this `docker-compose` file is for `CPU` only.
+Also note this `docker-compose.yaml` file is for `CPU` only.
 
 ```docker
 version: '3.6'
@@ -176,7 +176,7 @@ services:
 {{% /tab %}}
 
 {{% tab title="GPU and CPU" %}}
-Also note this `docker-compose` file is for `CUDA` only.
+Also note this `docker-compose.yaml` file is for `CUDA` only.
 
 Please change the image to what you need.
 
@@ -194,7 +194,7 @@ services:
               capabilities: [gpu]
     ## use this for localai's base 
     ## image: quay.io/go-skynet/local-ai:CHANGEMETOIMAGENEEDED
-    image: lunamidori5/midori_ai_subsystem_localai_gpu:master
+    image: lunamidori5/midori_ai_subsystem_localai_nvidia_gpu:master
     tty: true # enable colorized logs
     restart: always # should this be on-failure ?
     ports:
