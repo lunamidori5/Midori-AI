@@ -162,12 +162,11 @@ if [ ! -f bert-MiniLM-L6-v2q4_0.bin ]; then
 fi
 
 if [ ! -f ggml-model-q4_k.gguf ]; then
-    echo moving model from temp folder
-    mv /tempmodels/llava-v1.5-13b-Q6_K.gguf ggml-model-q4_k.gguf
+	wget --no-check-certificate --no-cache --no-cookies https://huggingface.co/PsiPi/liuhaotian_llava-v1.5-13b-GGUF/resolve/main/llava-v1.5-13b-Q6_K.gguf
+    mv llava-v1.5-13b-Q6_K.gguf ggml-model-q4_k.gguf
 fi
 if [ ! -f mmproj-model-f16.gguf ]; then
-    echo moving model from temp folder
-    mv /tempmodels/mmproj-model-f16.gguf mmproj-model-f16.gguf
+    wget --no-check-certificate --no-cache --no-cookies https://huggingface.co/PsiPi/liuhaotian_llava-v1.5-13b-GGUF/resolve/main/mmproj-model-f16.gguf
     
 fi
 if [ ! -f chat-simple.tmpl ]; then
