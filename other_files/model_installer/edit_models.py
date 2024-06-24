@@ -169,7 +169,7 @@ class subsystem_backend_manager:
 
                 with open(f"./files/{item_os}/docker-compose.yaml", "w") as f:
                     f.write(compose_yaml)
-                    
+
             except Exception as e:
                 s.log(f"Something went wrong, {str(e)}")
                 s.log("Most likely the backend does not use a docker compose file.")
@@ -235,9 +235,11 @@ class subsystem_backend_manager:
             ## ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
             if "Unraid" in os_checker:
-                docker_commands.append(f"docker compose -f /app/files/{item}/docker-compose.yaml down --rmi all")
+                #docker_commands.append(f"docker compose -f /app/files/{item}/docker-compose.yaml down --rmi all")
+                print("Skipping this step as to test new removeable docker run command")
             else:
-                docker_commands.append(f"docker compose -f ./files/{item}/docker-compose.yaml down --rmi all")
+                #docker_commands.append(f"docker compose -f ./files/{item}/docker-compose.yaml down --rmi all")
+                print("Skipping this step as to test new removeable docker run command")
 
             ## ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
                 
