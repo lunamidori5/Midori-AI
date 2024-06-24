@@ -598,5 +598,59 @@ def get_local_ip():
     return local_ip
 
 def known_gpus():
-    known_niv_gpus = ["NVIDIA", "Quadro", "Tesla"]
-    return known_niv_gpus
+    known_gpus = ["NVIDIA", "Quadro", "Tesla"]
+    return known_gpus
+
+class backend_info:
+    """
+    A class to manage information about the backend, specifically checking for and linking to a Docker container.
+
+    Attributes:
+        client: A Docker client object. 
+
+    Methods:
+        check_for_backend(docker_name): Checks if a Docker container with the specified name is running and links to it if found. 
+    """
+    def __init__(self, client):
+        """
+        Initializes the backend_info_puller class with necessary attributes.
+
+        Parameters:
+            client: A Docker client object. This is assumed to be pre-configured and connected to the Docker daemon. 
+        """
+        self.client = client
+    
+    def check_for_backend(self, docker_name):
+        """
+        Checks for a running Docker container with a name that includes the specified docker_name. 
+        If found, it retrieves the container object and returns its name and object.
+
+        Parameters:
+            docker_name: A string representing the name (or part of the name) of the Docker container to search for.
+
+        Returns: 
+            A tuple containing:
+                - named_docker: The name of the found Docker container as a string.
+                - container: The Docker container object. 
+            
+            Returns (None, None) if a container matching the docker_name is not found.
+        """
+
+        log(f"Checking for Docker Image")
+
+        containers = self.client.containers.list()
+
+        for container in containers:
+            log(f"Checking Name: {container.name}, ID: {container.id}")
+
+            # Check if there is a container with a name containing `service_name`
+            if docker_name in str(container.name):
+                # Get the container object
+                log(f"Found {docker_name}, Linking the Subsystem to: {container.name} / {container.id}")
+                container = self.client.containers.get(container.name)
+                named_docker = container.name
+                log(f"Midori AI Subsystem found and linked to {named_docker}")
+                return named_docker, container
+        
+        # No container found matching the docker_name
+        return None, None 

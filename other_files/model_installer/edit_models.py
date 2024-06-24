@@ -169,6 +169,7 @@ class subsystem_backend_manager:
 
                 with open(f"./files/{item_os}/docker-compose.yaml", "w") as f:
                     f.write(compose_yaml)
+                    
             except Exception as e:
                 s.log(f"Something went wrong, {str(e)}")
                 s.log("Most likely the backend does not use a docker compose file.")
@@ -190,6 +191,7 @@ class subsystem_backend_manager:
         containers = client.containers.list()
         backend_checker = s.backends_checking()
         os_checker = platform.release()
+        backend_info = s.backend_info(client)
 
         list_of_supported_backends = backend_checker.check_json()
         
@@ -227,11 +229,24 @@ class subsystem_backend_manager:
         for item in requested_backends:
             s.log(f"Uninstalling {item}")
             backend_checker.remove_backend(item)
+            docker_name, dockerimage = backend_info.check_for_backend(f"{item}-midori-ai-backend")
+
+            ## OLD CODE NEEDED FOR SOME OS, WILL BE REMOVED SOON
+            ## ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
             if "Unraid" in os_checker:
                 docker_commands.append(f"docker compose -f /app/files/{item}/docker-compose.yaml down --rmi all")
             else:
                 docker_commands.append(f"docker compose -f ./files/{item}/docker-compose.yaml down --rmi all")
-            docker_commands.append(f"rm -rf ./files/{item}")
+
+            ## ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+                
+            docker_commands.append(f"docker container kill {dockerimage.id}")
+            docker_commands.append(f"docker container remove {dockerimage.id}")
+
+            docker_commands.append(f"docker image prune -f")
+
+            docker_commands.append(f"rm -rf /app/files/{item}")
 
         s.log("Running commands inside of the Midori AI Subsystem!")
         for item_docker in docker_commands:
