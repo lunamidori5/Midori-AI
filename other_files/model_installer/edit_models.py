@@ -152,38 +152,6 @@ class subsystem_backend_manager:
             void, stream = container.exec_run(item_docker, stream=True)
             for data in stream:
                 s.log(data.decode())
-        
-        for item_os in requested_backends:
-
-            if os.path.exists(subsystem_ver_unraid_mount):
-                with open(subsystem_ver_unraid_mount, 'r') as f:
-                    vol_mountpoint = str(f.read())
-            else:
-                vol_mountpoint = "/var/lib/docker/volumes/midoriai_midori-ai"
-            
-            try:
-                with open(f"./files/{item_os}/docker-compose.yaml", "r") as f:
-                    compose_yaml = f.read()
-
-                compose_yaml = compose_yaml.replace("changememountpointgobrr", vol_mountpoint)
-
-                with open(f"./files/{item_os}/docker-compose.yaml", "w") as f:
-                    f.write(compose_yaml)
-
-            except Exception as e:
-                s.log(f"Something went wrong, {str(e)}")
-                s.log("Most likely the backend does not use a docker compose file.")
-
-            s.log(f"Running: docker compose -f ./files/{item_os}/docker-compose.yaml up -d")
-
-            if "Unraid" in os_checker:
-                os.system(f"docker compose -f /app/files/{item_os}/docker-compose.yaml up -d")
-            else:
-                os.system(f"docker compose -f ./files/{item_os}/docker-compose.yaml up -d")
-        
-        for backend_port in requested_backends:
-            normal_port = s.get_port_number(backend_port)
-            s.log(f"We are running {backend_port} on {normal_port}")
 
         input("Please press enter to go back to the main menu: ")
 
