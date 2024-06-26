@@ -92,7 +92,7 @@ jobs:
       matrix:
         numberofnodes: [1, 2, 3]
         countup: [1, 2]
-    needs: push_gpu_to_hub
+    needs: push_deb11_to_hub
     runs-on: self-hosted
     steps:
       - name: Clean up Docker Cache
