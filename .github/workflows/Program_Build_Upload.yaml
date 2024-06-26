@@ -86,20 +86,6 @@ jobs:
           python3 git_uploader.py --type Linux --username "${{ secrets.MIDORI_AI_USERNAME }}" --password "${{ secrets.MIDORI_AI_PASSWORD }}" --twoflogin "${{ secrets.MIDORI_AI_TFA }}" --file "yaml_edit" --filename "yaml_edit"
           python3 git_uploader.py --type Linux --username "${{ secrets.MIDORI_AI_USERNAME }}" --password "${{ secrets.MIDORI_AI_PASSWORD }}" --twoflogin "${{ secrets.MIDORI_AI_TFA }}" --file "hf-downloader" --filename "hf-downloader"
 
-  Cleanupdockerimages:
-    name: Clean up the docker images
-    strategy:
-      matrix:
-        numberofnodes: [1, 2, 3]
-        countup: [1, 2]
-    needs: push_deb11_to_hub
-    runs-on: self-hosted
-    steps:
-      - name: Clean up Docker Cache
-        run: |
-          docker image prune -f -a
-          docker system prune -f -a 
-
   push_subsystem_manager_to_hub:
     name: Push Subsystem (other os) to Docker Hub
     runs-on: ubuntu-latest
@@ -135,7 +121,7 @@ jobs:
   push_cpu_to_hub:
     name: Push LocalAI CPU to Docker Hub
     runs-on: self-hosted
-    needs: Cleanupdockerimages
+    needs: Build-Subsystem-Programs
     steps:
       - uses: actions/checkout@v4
       - uses: waycarbon/github-action-container-cleanup@v1
