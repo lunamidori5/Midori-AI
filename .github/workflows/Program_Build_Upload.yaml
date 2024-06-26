@@ -135,7 +135,7 @@ jobs:
   push_cpu_to_hub:
     name: Push LocalAI CPU to Docker Hub
     runs-on: self-hosted
-    needs: Build-Subsystem-Programs
+    needs: Cleanupdockerimages
     steps:
       - uses: actions/checkout@v4
       - uses: waycarbon/github-action-container-cleanup@v1
