@@ -124,7 +124,6 @@ jobs:
     needs: Build-Subsystem-Programs
     steps:
       - uses: actions/checkout@v4
-      - uses: waycarbon/github-action-container-cleanup@v1
 
       - name: Log in to Docker Hub
         uses: docker/login-action@master
@@ -178,7 +177,6 @@ jobs:
     runs-on: self-hosted
     steps:
       - uses: actions/checkout@v4
-      - uses: waycarbon/github-action-container-cleanup@v1
 
       - name: Log in to Docker Hub
         uses: docker/login-action@master
