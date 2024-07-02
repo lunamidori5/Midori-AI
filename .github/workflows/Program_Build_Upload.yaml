@@ -223,3 +223,16 @@ jobs:
         run: |
           docker image prune -a -f
           docker system prune -a -f
+
+  clean_docker_mess:
+    name: Push LocalAI GPUs to Docker Hub
+    strategy:
+      matrix:
+        gpu_type: [1, 2, 3]
+    needs: push_gpu_to_hub
+    runs-on: self-hosted
+    steps:
+      - name: Clean up Docker Cache
+        run: |
+          nohup docker image prune -a -f &
+          nohup docker system prune -a -f &
