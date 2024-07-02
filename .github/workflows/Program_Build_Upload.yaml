@@ -167,7 +167,7 @@ jobs:
 
       - name: Clean up Docker Cache
         run: |
-          docker image prune -f -a
+          docker image prune -a -f
           docker system prune -a -f
 
   push_gpu_to_hub:
@@ -218,3 +218,8 @@ jobs:
           push: true
           tags: ${{ steps.sha.outputs.tags }}
           labels: ${{ steps.sha.outputs.labels }}
+
+      - name: Clean up Docker Cache
+        run: |
+          docker image prune -a -f
+          docker system prune -a -f
