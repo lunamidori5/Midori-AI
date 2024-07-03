@@ -1,9 +1,13 @@
-
 # Midori AI: Empowering the Future of Artificial Intelligence
 
 [![Midori AI photo](https://tea-cup.midori-ai.xyz/download/logo_color1.png)](https://io.midori-ai.xyz/)
 
 Midori AI is a cutting-edge initiative dedicated to advancing the field of artificial intelligence through research, development, and community engagement. We focus on creating innovative AI solutions, exploring novel approaches, and empowering users to harness the power of AI.
+
+# About our repo!
+This is our mono repo! 
+Website - Root
+Midori AI Subsystem - Other Files
 
 ## Key Areas of Focus:
 
