@@ -6,7 +6,9 @@ Midori AI is a cutting-edge initiative dedicated to advancing the field of artif
 
 # About our repo!
 This is our mono repo! 
+
 Website - Root
+
 Midori AI Subsystem - Other Files
 
 ## Key Areas of Focus:
