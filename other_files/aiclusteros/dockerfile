@@ -3,6 +3,11 @@ FROM archlinux:latest
 ENV PYTHONDONTWRITEBYTECODE=1
 ENV PYTHONUNBUFFERED=1
 
+ENV USERNAME = ArchDemo
+ENV DISCORD_ID = 1234
+ENV GPUUSE = false
+ENV BOTHUSE = false
+
 RUN pacman -Syu --noconfirm --needed sudo git base-devel go
 
 ARG USERNAME=cluster
