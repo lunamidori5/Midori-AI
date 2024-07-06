@@ -30,8 +30,6 @@ RUN yay -Syu --noconfirm python310
 # use "temp/bin/python" for python
 # use "temp/bin/pip" for pip
 
-RUN echo Starting Bootup... REMOVING THE FUCKING CACHE DUMB ASS
-
 RUN python3 -m venv temp
 
 RUN temp/bin/pip install --no-cache-dir cryptography aiohttp psutil pytz climage
