@@ -53,8 +53,7 @@ COMPEL=0
 ## Specify a build type. Available: cublas, openblas, clblas.
 BUILD_TYPE=cublas
 
-## Uncomment and set to true to enable rebuilding from source
-# REBUILD=true
+REBUILD=true
 
 ## Enable go tags, available: stablediffusion, tts
 ## stablediffusion: image generation with stablediffusion
@@ -86,9 +85,6 @@ For a full list of tags or images please [check our docker repo](https://hub.doc
 Base LocalAI Images
 - `master`
 - `latest`
-- `{{< version >}}`
-- `{{< version >}}-ffmpeg`
-- `{{< version >}}-ffmpeg-core`
 
 Core Images - Smaller images without predownload python dependencies
 {{% /tab %}}
@@ -112,10 +108,6 @@ Base LocalAI Images
 - `master-cublas-cuda11-core`
 - `master-cublas-cuda11-ffmpeg`
 - `master-cublas-cuda11-ffmpeg-core`
-- `{{< version >}}-cublas-cuda11`
-- `{{< version >}}-cublas-cuda11-core`
-- `{{< version >}}-cublas-cuda11-ffmpeg`
-- `{{< version >}}-cublas-cuda11-ffmpeg-core`
 
 Core Images - Smaller images without predownload python dependencies
 {{% /tab %}}
@@ -139,10 +131,6 @@ Base LocalAI Images
 - `master-cublas-cuda12-core`
 - `master-cublas-cuda12-ffmpeg`
 - `master-cublas-cuda12-ffmpeg-core`
-- `{{< version >}}-cublas-cuda12`
-- `{{< version >}}-cublas-cuda12-core`
-- `{{< version >}}-cublas-cuda12-ffmpeg`
-- `{{< version >}}-cublas-cuda12-ffmpeg-core`
 
 Core Images - Smaller images without predownload python dependencies
 
