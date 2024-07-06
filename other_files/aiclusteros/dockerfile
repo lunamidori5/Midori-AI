@@ -3,10 +3,10 @@ FROM archlinux:latest
 ENV PYTHONDONTWRITEBYTECODE=1
 ENV PYTHONUNBUFFERED=1
 
-ENV USERNAME = ArchDemo
-ENV DISCORD_ID = 1234
-ENV GPUUSE = false
-ENV BOTHUSE = false
+ENV USERNAME=ArchDemo
+ENV DISCORD_ID=1234
+ENV GPUUSE=false
+ENV BOTHUSE=false
 
 RUN pacman -Syu --noconfirm --needed sudo git base-devel go
 
@@ -23,8 +23,8 @@ RUN git clone https://aur.archlinux.org/yay.git && cd yay && makepkg -si --nocon
 
 RUN yay -Syu --noconfirm unzip zip tar curl tree wget git bash-completion
 RUN yay -Syu --noconfirm python-virtualenv python
-RUN yay -Syu --noconfirm python311
-RUN yay -Syu --noconfirm python310
+#RUN yay -Syu --noconfirm python311
+#RUN yay -Syu --noconfirm python310
 
 # Make the python venv
 # use "temp/bin/python" for python
