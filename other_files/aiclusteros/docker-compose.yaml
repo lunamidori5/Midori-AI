@@ -1,0 +1,5 @@
+services:
+  archlinux:
+    build: .
+    tty: true
+    restart: always

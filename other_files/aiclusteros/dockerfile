@@ -1,0 +1,44 @@
+FROM archlinux:latest
+
+ENV PYTHONDONTWRITEBYTECODE=1
+ENV PYTHONUNBUFFERED=1
+
+RUN pacman -Syu --noconfirm --needed sudo git base-devel go
+
+ARG USERNAME=cluster
+ARG USER_UID=1000
+ARG USER_GID=$USER_UID
+
+RUN groupadd --gid $USER_GID $USERNAME && useradd --uid $USER_UID --gid $USER_GID -m $USERNAME && echo "$USERNAME ALL=(root) NOPASSWD:ALL" > /etc/sudoers.d/$USERNAME && chmod 0440 /etc/sudoers.d/$USERNAME
+
+USER $USERNAME
+WORKDIR /home/$USERNAME
+
+RUN git clone https://aur.archlinux.org/yay.git && cd yay && makepkg -si --noconfirm
+
+RUN yay -Syu --noconfirm unzip zip tar curl tree wget git bash-completion
+RUN yay -Syu --noconfirm python-virtualenv python
+RUN yay -Syu --noconfirm python311
+RUN yay -Syu --noconfirm python310
+
+# Make the python venv
+# use "temp/bin/python" for python
+# use "temp/bin/pip" for pip
+
+RUN echo Starting Bootup... REMOVING THE FUCKING CACHE DUMB ASS
+
+RUN python3 -m venv temp
+
+RUN temp/bin/pip install --no-cache-dir cryptography aiohttp psutil pytz climage
+RUN temp/bin/pip install --no-cache-dir diskcache requests subprocess32 tqdm
+RUN temp/bin/pip install --no-cache-dir git+https://github.com/pyinstaller/pyinstaller
+
+RUN wget https://tea-cup.midori-ai.xyz/download/helper_app.py
+
+RUN temp/bin/python helper_app.py aicluster_prod.py
+RUN mv aicluster_prod.py aicluster.py
+
+CMD temp/bin/python aicluster.py
+
+
+

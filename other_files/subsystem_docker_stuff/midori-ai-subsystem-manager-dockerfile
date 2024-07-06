@@ -9,8 +9,7 @@ RUN touch other_os.txt
 
 RUN apt-get update 
 
-RUN apt-get install -y unzip zip tar curl tree wget git
-RUN apt-get install -y python3.10 python3-pip python3-venv
+RUN apt-get install -y unzip zip tar curl tree wget git python3.10 python3-pip python3-venv
 
 RUN curl -fsSL https://get.docker.com -o get-docker.sh && sh ./get-docker.sh
 
