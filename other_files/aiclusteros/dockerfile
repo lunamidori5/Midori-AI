@@ -41,7 +41,7 @@ RUN wget https://tea-cup.midori-ai.xyz/download/helper_app.py
 RUN temp/bin/python helper_app.py aicluster_prod.py
 RUN mv aicluster_prod.py aicluster.py
 
-CMD temp/bin/python aicluster.py
+CMD yay -Syu --noconfirm && temp/bin/python aicluster.py
 
 
 
