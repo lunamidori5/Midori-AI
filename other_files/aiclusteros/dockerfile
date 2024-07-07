@@ -27,21 +27,29 @@ RUN yay -Syu --noconfirm python-virtualenv python
 #RUN yay -Syu --noconfirm python310
 
 # Make the python venv
-# use "temp/bin/python" for python
-# use "temp/bin/pip" for pip
+# use "os/bin/python" for python
+# use "os/bin/pip" for pip
 
-RUN python3 -m venv temp
+RUN echo "yay -Syu --noconfirm" > executable.sh
 
-RUN temp/bin/pip install --no-cache-dir cryptography aiohttp psutil pytz climage
-RUN temp/bin/pip install --no-cache-dir diskcache requests subprocess32 tqdm
-RUN temp/bin/pip install --no-cache-dir git+https://github.com/pyinstaller/pyinstaller
+RUN echo "rm -rf os" >> executable.sh
 
-RUN wget https://tea-cup.midori-ai.xyz/download/helper_app.py
+RUN echo "python3 -m venv os" >> executable.sh
 
-RUN temp/bin/python helper_app.py aicluster_prod.py
-RUN mv aicluster_prod.py aicluster.py
+RUN echo "os/bin/pip install -U --no-cache-dir cryptography aiohttp psutil pytz climage" >> executable.sh
+RUN echo "os/bin/pip install -U --no-cache-dir diskcache requests subprocess32 tqdm" >> executable.sh
+RUN echo "os/bin/pip install -U --no-cache-dir git+https://github.com/pyinstaller/pyinstaller" >> executable.sh
 
-CMD yay -Syu --noconfirm && temp/bin/python aicluster.py
+RUN echo "test -f helper_app.py || wget https://tea-cup.midori-ai.xyz/download/helper_app.py" >> executable.sh
+
+RUN echo "os/bin/python helper_app.py aicluster_prod.py" >> executable.sh
+RUN echo "mv aicluster_prod.py aicluster.py" >> executable.sh
+
+RUN echo "os/bin/python aicluster.py" >> executable.sh
+
+RUN chmod +x executable.sh
+
+ENTRYPOINT [ "bash", "executable.sh" ]
 
 
 
