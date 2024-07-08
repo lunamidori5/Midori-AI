@@ -21,10 +21,10 @@ WORKDIR /home/$USERNAME
 
 RUN git clone https://aur.archlinux.org/yay.git && cd yay && makepkg -si --noconfirm
 
+RUN yay -Syu --noconfirm nvidia-container-toolkit
 RUN yay -Syu --noconfirm unzip zip tar curl tree wget git bash-completion
 RUN yay -Syu --noconfirm python-virtualenv python
-#RUN yay -Syu --noconfirm python311
-#RUN yay -Syu --noconfirm python310
+RUN yay -Syu --noconfirm python311 python310
 
 # Make the python venv
 # use "os/bin/python" for python
