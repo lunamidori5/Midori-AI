@@ -22,7 +22,7 @@ WORKDIR /home/$USERNAME
 RUN git clone https://aur.archlinux.org/yay.git && cd yay && makepkg -si --noconfirm
 
 RUN yay -Syu --noconfirm --devel --diffmenu=false --answerclean A --save
-RUN yay -Syu --noconfirm curl-git wget-git git-git go-git tmate-git
+RUN yay -Syu --noconfirm curl-git wget-git go-git tmate-git
 RUN yay -Syu --noconfirm python-git bash-completion-git tar-git fastfetch-git
 RUN yay -Syu --noconfirm unzip zip tree python-virtualenv nvidia-container-toolkit
 RUN yay -Syu --noconfirm python311 python310
