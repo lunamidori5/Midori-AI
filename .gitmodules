@@ -4,3 +4,12 @@
 [submodule "themes/relearn"]
 	path = themes/relearn
 	url = https://github.com/McShelby/hugo-theme-relearn.git
+[submodule "Website"]
+	path = Website
+	url = https://github.com/lunamidori5/Midori-AI-Website.git
+[submodule "Subsystem-Manager"]
+	path = Subsystem-Manager
+	url = https://github.com/lunamidori5/Midori-AI-Subsystem-Manager.git
+[submodule "Cluster-OS"]
+	path = Cluster-OS
+	url = https://github.com/lunamidori5/Midori-AI-Cluster-OS.git
