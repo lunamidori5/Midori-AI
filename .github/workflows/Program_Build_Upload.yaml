@@ -11,6 +11,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          submodules: recursive
 
       - name: Log in to Docker Hub
         uses: docker/login-action@master
@@ -43,6 +45,8 @@ jobs:
     needs: push_deb11_to_hub
     steps:
       - uses: actions/checkout@v4
+        with:
+          submodules: recursive
       - name: Update Version Name
         run: |
           mkdir -p /tmp/artifacts
@@ -92,6 +96,8 @@ jobs:
     needs: Build-Subsystem-Programs
     steps:
       - uses: actions/checkout@v4
+        with:
+          submodules: recursive
 
       - name: Log in to Docker Hub
         uses: docker/login-action@master
@@ -125,6 +131,8 @@ jobs:
     needs: push_deb11_to_hub
     steps:
       - uses: actions/checkout@v4
+        with:
+          submodules: recursive
 
       - name: Log in to Docker Hub
         uses: docker/login-action@master
@@ -160,6 +168,8 @@ jobs:
     needs: Build-Subsystem-Programs
     steps:
       - uses: actions/checkout@v4
+        with:
+          submodules: recursive
 
       - name: Log in to Docker Hub
         uses: docker/login-action@master
@@ -214,6 +224,8 @@ jobs:
     runs-on: self-hosted
     steps:
       - uses: actions/checkout@v4
+        with:
+          submodules: recursive
 
       - name: Log in to Docker Hub
         uses: docker/login-action@master
