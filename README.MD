@@ -9,9 +9,9 @@ This is our mono repo!
 
 Check out each of our other Git Module Repos!
 
-Website - [Link to Module](https://github.com/lunamidori5/Midori-AI-Website)
-Cluster docker os - [Link to Module](https://github.com/lunamidori5/Midori-AI-Cluster-OS)
-Subsystem Manager - [Link to Module](https://github.com/lunamidori5/Midori-AI-Subsystem-Manager)
+* Website - [Link to Module](https://github.com/lunamidori5/Midori-AI-Website)
+* Cluster docker os - [Link to Module](https://github.com/lunamidori5/Midori-AI-Cluster-OS)
+* Subsystem Manager - [Link to Module](https://github.com/lunamidori5/Midori-AI-Subsystem-Manager)
 
 ## Key Areas of Focus:
 
