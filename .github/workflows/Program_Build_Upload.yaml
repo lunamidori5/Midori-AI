@@ -27,8 +27,8 @@ jobs:
       - name: Build and push Debian 11 Docker Image
         uses: docker/build-push-action@master
         with:
-          context: ./other_files/subsystem_docker_stuff/
-          file: ./other_files/subsystem_docker_stuff/midori-ai-pip-deb11-dockerfile
+          context: ./Subsystem-Manager/subsystem_docker_stuff/
+          file: ./Subsystem-Manager/subsystem_docker_stuff/midori-ai-pip-deb11-dockerfile
           push: true
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
@@ -50,13 +50,13 @@ jobs:
       - name: Move everything to working dir
         run: |
           curl -k --disable --disable-eprt -s https://tea-cup.midori-ai.xyz/download/helper_app.py > helper_app.py
-          curl -k --disable --disable-eprt -s https://raw.githubusercontent.com/lunamidori5/Midori-AI/master/other_files/model_installer/yaml_edit.py > yaml_edit.py
-          curl -k --disable --disable-eprt -s https://raw.githubusercontent.com/lunamidori5/Midori-AI/master/other_files/midori_ai_manager/huggingface_downloader.py > huggingface_downloader.py
+          curl -k --disable --disable-eprt -s https://raw.githubusercontent.com/lunamidori5/Midori-AI/master/Subsystem-Manager/model_installer/yaml_edit.py > yaml_edit.py
+          curl -k --disable --disable-eprt -s https://raw.githubusercontent.com/lunamidori5/Midori-AI/master/Subsystem-Manager/midori_ai_manager/huggingface_downloader.py > huggingface_downloader.py
       
       - name: Install Dependencies
         run: |
           pip install pyinstaller
-          pip install -r ./other_files/model_installer/requirements.txt
+          pip install -r ./Subsystem-Manager/model_installer/requirements.txt
           
       - name: Download the Uploader
         run: |
@@ -109,8 +109,8 @@ jobs:
       - name: Build and push Subsystem (other os) Docker Image
         uses: docker/build-push-action@master
         with:
-          context: ./other_files/subsystem_docker_stuff/
-          file: ./other_files/subsystem_docker_stuff/midori-ai-subsystem-manager-dockerfile
+          context: ./Subsystem-Manager/subsystem_docker_stuff/
+          file: ./Subsystem-Manager/subsystem_docker_stuff/midori-ai-subsystem-manager-dockerfile
           push: true
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
@@ -144,8 +144,8 @@ jobs:
       - name: Build and push Cluster OS (Arch Linux) Docker Image
         uses: docker/build-push-action@master
         with:
-          context: ./other_files/aiclusteros/
-          file: ./other_files/aiclusteros/dockerfile
+          context: ./Cluster-OS/aiclusteros/
+          file: ./Cluster-OS/aiclusteros/dockerfile
           push: true
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
@@ -185,8 +185,8 @@ jobs:
       - name: Build and push CPU LocalAI Docker image
         uses: docker/build-push-action@master
         with:
-          context: ./other_files/subsystem_docker_stuff/localai/
-          file: ./other_files/subsystem_docker_stuff/localai/localai-subsystem-dockerfile-cpu
+          context: ./Subsystem-Manager/subsystem_docker_stuff/localai/
+          file: ./Subsystem-Manager/subsystem_docker_stuff/localai/localai-subsystem-dockerfile-cpu
           push: true
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
@@ -194,8 +194,8 @@ jobs:
       - name: Build and push CPU LocalAI Docker image
         uses: docker/build-push-action@master
         with:
-          context: ./other_files/subsystem_docker_stuff/localai/
-          file: ./other_files/subsystem_docker_stuff/localai/localai-subsystem-dockerfile-cpu
+          context: ./Subsystem-Manager/subsystem_docker_stuff/localai/
+          file: ./Subsystem-Manager/subsystem_docker_stuff/localai/localai-subsystem-dockerfile-cpu
           push: true
           tags: ${{ steps.sha.outputs.tags }}
           labels: ${{ steps.sha.outputs.labels }}
@@ -239,8 +239,8 @@ jobs:
       - name: Build and push GPU LocalAI Docker image
         uses: docker/build-push-action@master
         with:
-          context: ./other_files/subsystem_docker_stuff/localai/
-          file: ./other_files/subsystem_docker_stuff/localai/localai-subsystem-dockerfile-${{ matrix.gpu_type }}-gpu
+          context: ./Subsystem-Manager/subsystem_docker_stuff/localai/
+          file: ./Subsystem-Manager/subsystem_docker_stuff/localai/localai-subsystem-dockerfile-${{ matrix.gpu_type }}-gpu
           push: true
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
@@ -248,8 +248,8 @@ jobs:
       - name: Build and push GPU LocalAI Docker image
         uses: docker/build-push-action@master
         with:
-          context: ./other_files/subsystem_docker_stuff/localai/
-          file: ./other_files/subsystem_docker_stuff/localai/localai-subsystem-dockerfile-${{ matrix.gpu_type }}-gpu
+          context: ./Subsystem-Manager/subsystem_docker_stuff/localai/
+          file: ./Subsystem-Manager/subsystem_docker_stuff/localai/localai-subsystem-dockerfile-${{ matrix.gpu_type }}-gpu
           push: true
           tags: ${{ steps.sha.outputs.tags }}
           labels: ${{ steps.sha.outputs.labels }}

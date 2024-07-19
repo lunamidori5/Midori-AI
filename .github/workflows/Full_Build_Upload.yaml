@@ -16,7 +16,7 @@ jobs:
       - name: Update Version Name
         run: |
           mkdir -p /tmp/artifacts
-          cp ./other_files/midori_program_ver.txt /tmp/artifacts
+          cp ./Subsystem-Manager/midori_program_ver.txt /tmp/artifacts
 
       - uses: actions/setup-python@v5
         with:
@@ -28,11 +28,11 @@ jobs:
       
       - name: Install Dependencies (Requirements.txt)
         run: |
-          pip install -r ./other_files/model_installer/requirements.txt
+          pip install -r ./Subsystem-Manager/model_installer/requirements.txt
       
       - name: Build
         run: |
-          pyinstaller --onedir --clean --distpath /tmp/artifacts/${{ matrix.os }}/ --add-data ./other_files/midori_program_ver.txt:. ./other_files/model_installer/subsystem_manager.py
+          pyinstaller --onedir --clean --distpath /tmp/artifacts/${{ matrix.os }}/ --add-data ./Subsystem-Manager/midori_program_ver.txt:. ./Subsystem-Manager/model_installer/subsystem_manager.py
 
       - name: 'Upload Artifact'
         uses: actions/upload-artifact@v4
@@ -57,7 +57,7 @@ jobs:
 
       - name: Install Dependencies
         run: |
-          cp ./other_files/midori_program_ver.txt .
+          cp ./Subsystem-Manager/midori_program_ver.txt .
           pip install requests cryptography
 
       - name: Linux Artifacts

@@ -1,4 +1,0 @@
-3b-homellm-v1
-3b-homellm-v2
-1b-homellm-v1
-1b-homellm-v2
