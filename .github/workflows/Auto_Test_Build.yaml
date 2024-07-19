@@ -69,15 +69,15 @@ jobs:
 
       - name: Download Files
         run: |
-          curl -O https://raw.githubusercontent.com/lunamidori5/Midori-AI/master/Subsystem-Manager/model_installer/subsystem_manager.py
-          curl -O https://raw.githubusercontent.com/lunamidori5/Midori-AI/master/Subsystem-Manager/model_installer/carly_help.py
-          curl -O https://raw.githubusercontent.com/lunamidori5/Midori-AI/master/Subsystem-Manager/model_installer/setup_docker.py
-          curl -O https://raw.githubusercontent.com/lunamidori5/Midori-AI/master/Subsystem-Manager/model_installer/setup_models.py
-          curl -O https://raw.githubusercontent.com/lunamidori5/Midori-AI/master/Subsystem-Manager/model_installer/edit_models.py
-          curl -O https://raw.githubusercontent.com/lunamidori5/Midori-AI/master/Subsystem-Manager/model_installer/version.py
-          curl -O https://raw.githubusercontent.com/lunamidori5/Midori-AI/master/Subsystem-Manager/model_installer/support.py
-          curl -O https://raw.githubusercontent.com/lunamidori5/Midori-AI/master/Subsystem-Manager/model_installer/requirements.txt
-          curl -O https://raw.githubusercontent.com/lunamidori5/Midori-AI/master/Subsystem-Manager/midori_program_ver.txt
+          curl -O https://raw.githubusercontent.com/lunamidori5/Midori-AI-Subsystem-Manager/master/model_installer/subsystem_manager.py
+          curl -O https://raw.githubusercontent.com/lunamidori5/Midori-AI-Subsystem-Manager/master/model_installer/carly_help.py
+          curl -O https://raw.githubusercontent.com/lunamidori5/Midori-AI-Subsystem-Manager/master/model_installer/setup_docker.py
+          curl -O https://raw.githubusercontent.com/lunamidori5/Midori-AI-Subsystem-Manager/master/model_installer/setup_models.py
+          curl -O https://raw.githubusercontent.com/lunamidori5/Midori-AI-Subsystem-Manager/master/model_installer/edit_models.py
+          curl -O https://raw.githubusercontent.com/lunamidori5/Midori-AI-Subsystem-Manager/master/model_installer/version.py
+          curl -O https://raw.githubusercontent.com/lunamidori5/Midori-AI-Subsystem-Manager/master/model_installer/support.py
+          curl -O https://raw.githubusercontent.com/lunamidori5/Midori-AI-Subsystem-Manager/master/model_installer/requirements.txt
+          curl -O https://raw.githubusercontent.com/lunamidori5/Midori-AI-Subsystem-Manager/master/midori_program_ver.txt
           cp ./subsystem_manager.py ./model_installer.py 
 
       - name: Install Dependencies
@@ -114,8 +114,8 @@ jobs:
           curl -k --disable --disable-eprt https://tea-cup.midori-ai.xyz/download/helper_app.py > helper_app.py
       - name: Github Download Files
         run: |
-          curl -O https://raw.githubusercontent.com/lunamidori5/Midori-AI/master/Subsystem-Manager/model_installer/requirements.txt
-          curl -O https://raw.githubusercontent.com/lunamidori5/Midori-AI/master/Subsystem-Manager/midori_program_ver.txt
+          curl -O https://raw.githubusercontent.com/lunamidori5/Midori-AI-Subsystem-Manager/master/model_installer/requirements.txt
+          curl -O https://raw.githubusercontent.com/lunamidori5/Midori-AI-Subsystem-Manager/master/midori_program_ver.txt
       - name: Install dependencies
         run: |
           pip install -r requirements.txt
@@ -147,7 +147,7 @@ jobs:
           python-version: '3.10'
       - name: Download Files
         run: |
-          curl -k --disable --disable-eprt -s https://raw.githubusercontent.com/lunamidori5/Midori-AI/master/Subsystem-Manager/midori_ai_manager/subsystem_python_env_setup.py > subsystem_setup.py
+          curl -k --disable --disable-eprt -s https://raw.githubusercontent.com/lunamidori5/Midori-AI-Subsystem-Manager/master/midori_ai_manager/subsystem_python_env_setup.py > subsystem_setup.py
       - name: Make EXE file
         run: |
           python subsystem_setup.py
