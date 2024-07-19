@@ -9,14 +9,14 @@ This is our mono repo!
 
 Check out each of our other Git Module Repos!
 
-* Website - [Link to Module](https://github.com/lunamidori5/Midori-AI-Website)
-* Cluster docker os - [Link to Module](https://github.com/lunamidori5/Midori-AI-Cluster-OS)
-* Subsystem Manager - [Link to Module](https://github.com/lunamidori5/Midori-AI-Subsystem-Manager)
+- Website - [Link to Module](https://github.com/lunamidori5/Midori-AI-Website)
+- Cluster OS - [Link to Module](https://github.com/lunamidori5/Midori-AI-Cluster-OS)
+- Subsystem Manager - [Link to Module](https://github.com/lunamidori5/Midori-AI-Subsystem-Manager)
 
 ## Key Areas of Focus:
 
 * **Cluster-Based AI:** We are actively developing and implementing cluster-based AI training and inference, leveraging the power of multiple machines to accelerate and optimize AI workloads. This allows us to tackle complex problems, train larger models, and achieve superior results.
-* **AI Setup Assistance:** We provide comprehensive support and resources for setting up popular AI tools and frameworks, such as [LocalAI](https://github.com/mudler/LocalAI) and [AnythingLLM](https://github.com/Mintplex-Labs/anything-llm). Our goal is to empower users of all levels to easily deploy and manage AI models on their local machines.
+* **AI Setup Assistance:** We provide comprehensive support and resources for setting up popular AI tools and frameworks, such as [LocalAI](https://github.com/mudler/LocalAI), [AnythingLLM](https://github.com/Mintplex-Labs/anything-llm), and [Big-AGI](https://github.com/enricoros/big-AGI). Our goal is to empower users of all levels to easily deploy and manage AI models on their local machines.
 * **AI Development:** Our team is actively involved in developing AI-powered bots, primarily for Discord, to enhance user experiences and automate tasks within the platform. These bots leverage natural language processing, machine learning, and other AI techniques to provide interactive and engaging experiences.
 * **Model Serving and Hosting:** We are building a robust platform for serving and hosting AI models, enabling developers to easily deploy and share their models with the community. This platform will offer a secure, scalable, and user-friendly environment for model management and deployment.
 * **Novel AI Memory Architectures:** We are committed to exploring and developing innovative memory architectures for AI systems. This includes investigating new approaches to memory organization, representation, and retrieval, as well as incorporating external knowledge sources and human feedback to improve memory performance and enable AI systems to learn and adapt more effectively.
