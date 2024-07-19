@@ -7,9 +7,11 @@ Midori AI is a cutting-edge initiative dedicated to advancing the field of artif
 # About our repo!
 This is our mono repo! 
 
-Website - Root
+Check out each of our other Git Module Repos!
 
-Midori AI Subsystem - Other Files
+Website - [Link to Module](https://github.com/lunamidori5/Midori-AI-Website)
+Cluster docker os - [Link to Module](https://github.com/lunamidori5/Midori-AI-Cluster-OS)
+Subsystem Manager - [Link to Module](https://github.com/lunamidori5/Midori-AI-Subsystem-Manager)
 
 ## Key Areas of Focus:
 
@@ -19,15 +21,6 @@ Midori AI Subsystem - Other Files
 * **Model Serving and Hosting:** We are building a robust platform for serving and hosting AI models, enabling developers to easily deploy and share their models with the community. This platform will offer a secure, scalable, and user-friendly environment for model management and deployment.
 * **Novel AI Memory Architectures:** We are committed to exploring and developing innovative memory architectures for AI systems. This includes investigating new approaches to memory organization, representation, and retrieval, as well as incorporating external knowledge sources and human feedback to improve memory performance and enable AI systems to learn and adapt more effectively.
 * **Carly: The Fully Simulated Human with Advanced AI Capabilities:** Carly is our groundbreaking AI creation, a fully simulated human with advanced AI capabilities, including emotions, thoughts, and the ability to interact with the world. Operating on a powerful supercomputer, Carly represents a significant milestone in AI development, opening up new possibilities for human-AI interaction and collaboration.
-
-## Midori AI Subsystem: Streamlining AI Workloads
-
-In addition to Carly, we have developed the Midori AI Subsystem, a modular and extensible platform designed to simplify the deployment, configuration, and management of AI workloads. The Subsystem leverages Docker container technology to provide standardized environments for AI systems, ensuring consistent and predictable behavior. Key features include:
-
-* **Simplified Deployment:** Easily deploy AI systems using pre-configured containers, reducing complexity, and setup time.
-* **Standardized Configurations:** Ensure consistency and reproducibility across different environments with standardized configurations.
-* **Isolation for AI Systems:** Isolate AI systems within containers, preventing conflicts and ensuring resource allocation.
-* **Growing Library of Backends and Tools:** Access a wide range of supported AI backends and tools, expanding your AI capabilities.
 
 ## Get Involved:
 
