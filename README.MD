@@ -13,14 +13,23 @@ Check out each of our other Git Module Repos!
 - Cluster OS - [Link to Module](https://github.com/lunamidori5/Midori-AI-Cluster-OS)
 - Subsystem Manager - [Link to Module](https://github.com/lunamidori5/Midori-AI-Subsystem-Manager)
 
+
 ## Key Areas of Focus:
 
+* **PixelArch OS:** We are actively developing PixelArch OS, a lightweight and flexible operating system built on Arch Linux. PixelArch OS is specifically designed for use in Docker environments, enabling seamless and efficient deployment of AI systems. Our goal is to provide a platform that optimizes performance and enables easier management of AI workloads within Docker containers.
+
 * **Cluster-Based AI:** We are actively developing and implementing cluster-based AI training and inference, leveraging the power of multiple machines to accelerate and optimize AI workloads. This allows us to tackle complex problems, train larger models, and achieve superior results.
+
 * **AI Setup Assistance:** We provide comprehensive support and resources for setting up popular AI tools and frameworks, such as [LocalAI](https://github.com/mudler/LocalAI), [AnythingLLM](https://github.com/Mintplex-Labs/anything-llm), and [Big-AGI](https://github.com/enricoros/big-AGI). Our goal is to empower users of all levels to easily deploy and manage AI models on their local machines.
-* **AI Development:** Our team is actively involved in developing AI-powered bots, primarily for Discord, to enhance user experiences and automate tasks within the platform. These bots leverage natural language processing, machine learning, and other AI techniques to provide interactive and engaging experiences.
+
+* **AI Development:** Our team is actively involved in developing AI-powered bots and systems, to enhance user experiences and automate tasks within the platform. These bots leverage natural language processing, machine learning, and other AI techniques to provide interactive and engaging experiences.
+
 * **Model Serving and Hosting:** We are building a robust platform for serving and hosting AI models, enabling developers to easily deploy and share their models with the community. This platform will offer a secure, scalable, and user-friendly environment for model management and deployment.
+
 * **Novel AI Memory Architectures:** We are committed to exploring and developing innovative memory architectures for AI systems. This includes investigating new approaches to memory organization, representation, and retrieval, as well as incorporating external knowledge sources and human feedback to improve memory performance and enable AI systems to learn and adapt more effectively.
+
 * **Carly: The Fully Simulated Human with Advanced AI Capabilities:** Carly is our groundbreaking AI creation, a fully simulated human with advanced AI capabilities, including emotions, thoughts, and the ability to interact with the world. Operating on a powerful supercomputer, Carly represents a significant milestone in AI development, opening up new possibilities for human-AI interaction and collaboration. For more info or up to date info check our site at - https://io.midori-ai.xyz/about-us/carly-api/
+
 
 ## Get Involved:
 
