@@ -13,3 +13,6 @@
 [submodule "Cluster-OS"]
 	path = Cluster-OS
 	url = https://github.com/lunamidori5/Midori-AI-Cluster-OS.git
+[submodule "DiscordLLMBot"]
+	path = DiscordLLMBot
+	url = https://github.com/lunamidori5/Midori-AI-GPT-DiscordBot.git
