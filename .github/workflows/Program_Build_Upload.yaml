@@ -128,7 +128,6 @@ jobs:
   push_arch_to_hub:
     name: Push Midori AI's PixelArch (Arch Linux) to Docker Hub
     runs-on: ubuntu-latest
-    needs: push_deb11_to_hub
     steps:
       - uses: actions/checkout@v4
         with:
