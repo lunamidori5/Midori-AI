@@ -189,7 +189,7 @@ jobs:
     steps:
       - name: Update OS
         run: |
-          yay -Syu --noconfirm python python-pip
+          yay -Syu --noconfirm python python-pip python-virtualenv
 
       - name: Update Version Name
         run: |
@@ -224,7 +224,8 @@ jobs:
       - name: Build Programs
         run: |
           cd /tmp/workfolder
-          os/bin/python pyinstaller --onefile --clean --distpath /tmp/artifacts/ helper_app.py
+          source os/bin/python
+          pyinstaller --onefile --clean --distpath /tmp/artifacts/ helper_app.py
           pyinstaller --onefile --clean --distpath /tmp/artifacts/ midori_ai_login_app.py
           pyinstaller --onefile --clean --distpath /tmp/artifacts/ huggingface_downloader.py
       
