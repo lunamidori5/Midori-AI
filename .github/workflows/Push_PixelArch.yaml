@@ -224,7 +224,7 @@ jobs:
       - name: Build Programs
         run: |
           cd /tmp/workfolder
-          source os/bin/python
+          source os/bin/activate
           pyinstaller --onefile --clean --distpath /tmp/artifacts/ helper_app.py
           pyinstaller --onefile --clean --distpath /tmp/artifacts/ midori_ai_login_app.py
           pyinstaller --onefile --clean --distpath /tmp/artifacts/ huggingface_downloader.py
