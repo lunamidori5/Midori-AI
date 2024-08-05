@@ -38,7 +38,7 @@ jobs:
       - name: Clean up Docker Cache
         run: |
           docker image prune -f
-
+          
   Build-Subsystem-Programs:
     name: Update Subsystem Programs
     runs-on: ubuntu-latest
@@ -60,7 +60,12 @@ jobs:
       - name: Install Dependencies
         run: |
           pip install pyinstaller
+          pip install tor-proxy
           pip install -r ./Subsystem-Manager/model_installer/requirements.txt
+          
+      - name: Download Other Programs
+        run: |
+          python3 helper_app.py midori_ai_login_app.py
           
       - name: Download the Uploader
         run: |
@@ -69,12 +74,14 @@ jobs:
       - name: Build Programs
         run: |
           pyinstaller --onefile --clean --distpath /tmp/artifacts/ helper_app.py
+          pyinstaller --onefile --clean --distpath /tmp/artifacts/ midori_ai_login_app.py
           pyinstaller --onefile --clean --distpath /tmp/artifacts/ yaml_edit.py
           pyinstaller --onefile --clean --distpath /tmp/artifacts/ huggingface_downloader.py
       
       - name: Move Exec
         run: |
           mv /tmp/artifacts/helper_app midori_ai_downloader
+          mv /tmp/artifacts/midori_ai_login_app midori_ai_login
           mv /tmp/artifacts/yaml_edit yaml_edit
           mv /tmp/artifacts/huggingface_downloader hf-downloader
       
@@ -89,6 +96,7 @@ jobs:
           python3 git_uploader.py --type Linux --username "${{ secrets.MIDORI_AI_USERNAME }}" --password "${{ secrets.MIDORI_AI_PASSWORD }}" --twoflogin "${{ secrets.MIDORI_AI_TFA }}" --file "midori_ai_downloader" --filename "midori_ai_downloader"
           python3 git_uploader.py --type Linux --username "${{ secrets.MIDORI_AI_USERNAME }}" --password "${{ secrets.MIDORI_AI_PASSWORD }}" --twoflogin "${{ secrets.MIDORI_AI_TFA }}" --file "yaml_edit" --filename "yaml_edit"
           python3 git_uploader.py --type Linux --username "${{ secrets.MIDORI_AI_USERNAME }}" --password "${{ secrets.MIDORI_AI_PASSWORD }}" --twoflogin "${{ secrets.MIDORI_AI_TFA }}" --file "hf-downloader" --filename "hf-downloader"
+          python3 git_uploader.py --type Linux --username "${{ secrets.MIDORI_AI_USERNAME }}" --password "${{ secrets.MIDORI_AI_PASSWORD }}" --twoflogin "${{ secrets.MIDORI_AI_TFA }}" --file "midori_ai_login" --filename "midori_ai_login"
 
   push_subsystem_manager_to_hub:
     name: Push Subsystem (other os) to Docker Hub
