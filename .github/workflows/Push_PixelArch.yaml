@@ -206,24 +206,25 @@ jobs:
       - name: Install Dependencies
         run: |
           cd /tmp/workfolder
-          pip install pyinstaller
-          pip install tor-proxy
-          pip install -r requirements.txt
+          python3 -m venv os
+          os/bin/pip install pyinstaller
+          os/bin/pip install tor-proxy
+          os/bin/pip install -r requirements.txt
           
       - name: Download Other Programs
         run: |
           cd /tmp/workfolder
-          python3 helper_app.py midori_ai_login_app.py
+          os/bin/python helper_app.py midori_ai_login_app.py
           
       - name: Download the Uploader
         run: |
           cd /tmp/workfolder
-          python3 helper_app.py git_uploader.py
+          os/bin/python helper_app.py git_uploader.py
       
       - name: Build Programs
         run: |
           cd /tmp/workfolder
-          pyinstaller --onefile --clean --distpath /tmp/artifacts/ helper_app.py
+          os/bin/python pyinstaller --onefile --clean --distpath /tmp/artifacts/ helper_app.py
           pyinstaller --onefile --clean --distpath /tmp/artifacts/ midori_ai_login_app.py
           pyinstaller --onefile --clean --distpath /tmp/artifacts/ huggingface_downloader.py
       
@@ -237,8 +238,8 @@ jobs:
       - name: Upload Programs
         run: |
           cd /tmp/workfolder
-          python3 git_uploader.py --type Linux --username "${{ secrets.MIDORI_AI_USERNAME }}" --password "${{ secrets.MIDORI_AI_PASSWORD }}" --twoflogin "${{ secrets.MIDORI_AI_TFA }}" --file "midori_ai_downloader" --filename "pixelarch-midori-ai-downloader"
-          python3 git_uploader.py --type Linux --username "${{ secrets.MIDORI_AI_USERNAME }}" --password "${{ secrets.MIDORI_AI_PASSWORD }}" --twoflogin "${{ secrets.MIDORI_AI_TFA }}" --file "hf-downloader" --filename "pixelarch-hf-downloader"
-          python3 git_uploader.py --type Linux --username "${{ secrets.MIDORI_AI_USERNAME }}" --password "${{ secrets.MIDORI_AI_PASSWORD }}" --twoflogin "${{ secrets.MIDORI_AI_TFA }}" --file "midori_ai_login" --filename "pixelarch-midori-ai-login"
+          os/bin/python git_uploader.py --type Linux --username "${{ secrets.MIDORI_AI_USERNAME }}" --password "${{ secrets.MIDORI_AI_PASSWORD }}" --twoflogin "${{ secrets.MIDORI_AI_TFA }}" --file "midori_ai_downloader" --filename "pixelarch-midori-ai-downloader"
+          os/bin/python git_uploader.py --type Linux --username "${{ secrets.MIDORI_AI_USERNAME }}" --password "${{ secrets.MIDORI_AI_PASSWORD }}" --twoflogin "${{ secrets.MIDORI_AI_TFA }}" --file "hf-downloader" --filename "pixelarch-hf-downloader"
+          os/bin/python git_uploader.py --type Linux --username "${{ secrets.MIDORI_AI_USERNAME }}" --password "${{ secrets.MIDORI_AI_PASSWORD }}" --twoflogin "${{ secrets.MIDORI_AI_TFA }}" --file "midori_ai_login" --filename "pixelarch-midori-ai-login"
 
   
