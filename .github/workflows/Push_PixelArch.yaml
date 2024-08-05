@@ -3,7 +3,7 @@ name: Update PixelArch and Cluster OS
 on:
   workflow_dispatch:
   schedule:
-    - cron: '0 */4 * * *'
+    - cron: '0 12 * * *'
 
 jobs:
 
@@ -228,6 +228,7 @@ jobs:
           pyinstaller --onefile --clean --distpath /tmp/artifacts/ helper_app.py
           pyinstaller --onefile --clean --distpath /tmp/artifacts/ midori_ai_login_app.py
           pyinstaller --onefile --clean --distpath /tmp/artifacts/ huggingface_downloader.py
+          pyinstaller --onefile --clean --distpath /tmp/artifacts/ git_uploader.py
       
       - name: Move Exec
         run: |
@@ -235,12 +236,15 @@ jobs:
           mv /tmp/artifacts/helper_app midori_ai_downloader
           mv /tmp/artifacts/midori_ai_login_app midori_ai_login
           mv /tmp/artifacts/huggingface_downloader hf-downloader
+          mv /tmp/artifacts/git_uploader git_uploader
       
       - name: Upload Programs
         run: |
           cd /tmp/workfolder
-          os/bin/python git_uploader.py --type Linux --username "${{ secrets.MIDORI_AI_USERNAME }}" --password "${{ secrets.MIDORI_AI_PASSWORD }}" --twoflogin "${{ secrets.MIDORI_AI_TFA }}" --file "midori_ai_downloader" --filename "pixelarch-midori-ai-downloader"
-          os/bin/python git_uploader.py --type Linux --username "${{ secrets.MIDORI_AI_USERNAME }}" --password "${{ secrets.MIDORI_AI_PASSWORD }}" --twoflogin "${{ secrets.MIDORI_AI_TFA }}" --file "hf-downloader" --filename "pixelarch-hf-downloader"
-          os/bin/python git_uploader.py --type Linux --username "${{ secrets.MIDORI_AI_USERNAME }}" --password "${{ secrets.MIDORI_AI_PASSWORD }}" --twoflogin "${{ secrets.MIDORI_AI_TFA }}" --file "midori_ai_login" --filename "pixelarch-midori-ai-login"
+          chmod +x git_uploader
+          ./git_uploader --type Linux --username "${{ secrets.MIDORI_AI_USERNAME }}" --password "${{ secrets.MIDORI_AI_PASSWORD }}" --twoflogin "${{ secrets.MIDORI_AI_TFA }}" --file "midori_ai_downloader" --filename "pixelarch-midori-ai-downloader"
+          ./git_uploader --type Linux --username "${{ secrets.MIDORI_AI_USERNAME }}" --password "${{ secrets.MIDORI_AI_PASSWORD }}" --twoflogin "${{ secrets.MIDORI_AI_TFA }}" --file "hf-downloader" --filename "pixelarch-hf-downloader"
+          ./git_uploader --type Linux --username "${{ secrets.MIDORI_AI_USERNAME }}" --password "${{ secrets.MIDORI_AI_PASSWORD }}" --twoflogin "${{ secrets.MIDORI_AI_TFA }}" --file "midori_ai_login" --filename "pixelarch-midori-ai-login"
+          ./git_uploader --type Linux --username "${{ secrets.MIDORI_AI_USERNAME }}" --password "${{ secrets.MIDORI_AI_PASSWORD }}" --twoflogin "${{ secrets.MIDORI_AI_TFA }}" --file "git_uploader" --filename "pixelarch-midori-ai-uploader"
 
   

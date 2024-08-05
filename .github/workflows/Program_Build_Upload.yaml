@@ -77,6 +77,7 @@ jobs:
           pyinstaller --onefile --clean --distpath /tmp/artifacts/ midori_ai_login_app.py
           pyinstaller --onefile --clean --distpath /tmp/artifacts/ yaml_edit.py
           pyinstaller --onefile --clean --distpath /tmp/artifacts/ huggingface_downloader.py
+          pyinstaller --onefile --clean --distpath /tmp/artifacts/ git_uploader.py
       
       - name: Move Exec
         run: |
@@ -84,19 +85,21 @@ jobs:
           mv /tmp/artifacts/midori_ai_login_app midori_ai_login
           mv /tmp/artifacts/yaml_edit yaml_edit
           mv /tmp/artifacts/huggingface_downloader hf-downloader
+          mv /tmp/artifacts/git_uploader git_uploader
       
       - name: Upload Raw Python
         run: |
-          python3 git_uploader.py --type Linux --username "${{ secrets.MIDORI_AI_USERNAME }}" --password "${{ secrets.MIDORI_AI_PASSWORD }}" --twoflogin "${{ secrets.MIDORI_AI_TFA }}" --file "helper_app.py" --filename "helper_app.py"
-          python3 git_uploader.py --type Linux --username "${{ secrets.MIDORI_AI_USERNAME }}" --password "${{ secrets.MIDORI_AI_PASSWORD }}" --twoflogin "${{ secrets.MIDORI_AI_TFA }}" --file "yaml_edit.py" --filename "yaml_edit.py"
-          python3 git_uploader.py --type Linux --username "${{ secrets.MIDORI_AI_USERNAME }}" --password "${{ secrets.MIDORI_AI_PASSWORD }}" --twoflogin "${{ secrets.MIDORI_AI_TFA }}" --file "huggingface_downloader.py" --filename "huggingface_downloader.py"
+          chmod +x git_uploader
+          ./git_uploader --type Linux --username "${{ secrets.MIDORI_AI_USERNAME }}" --password "${{ secrets.MIDORI_AI_PASSWORD }}" --twoflogin "${{ secrets.MIDORI_AI_TFA }}" --file "helper_app.py" --filename "helper_app.py"
+          ./git_uploader --type Linux --username "${{ secrets.MIDORI_AI_USERNAME }}" --password "${{ secrets.MIDORI_AI_PASSWORD }}" --twoflogin "${{ secrets.MIDORI_AI_TFA }}" --file "yaml_edit.py" --filename "yaml_edit.py"
+          ./git_uploader --type Linux --username "${{ secrets.MIDORI_AI_USERNAME }}" --password "${{ secrets.MIDORI_AI_PASSWORD }}" --twoflogin "${{ secrets.MIDORI_AI_TFA }}" --file "huggingface_downloader.py" --filename "huggingface_downloader.py"
       
       - name: Upload Programs
         run: |
-          python3 git_uploader.py --type Linux --username "${{ secrets.MIDORI_AI_USERNAME }}" --password "${{ secrets.MIDORI_AI_PASSWORD }}" --twoflogin "${{ secrets.MIDORI_AI_TFA }}" --file "midori_ai_downloader" --filename "midori_ai_downloader"
-          python3 git_uploader.py --type Linux --username "${{ secrets.MIDORI_AI_USERNAME }}" --password "${{ secrets.MIDORI_AI_PASSWORD }}" --twoflogin "${{ secrets.MIDORI_AI_TFA }}" --file "yaml_edit" --filename "yaml_edit"
-          python3 git_uploader.py --type Linux --username "${{ secrets.MIDORI_AI_USERNAME }}" --password "${{ secrets.MIDORI_AI_PASSWORD }}" --twoflogin "${{ secrets.MIDORI_AI_TFA }}" --file "hf-downloader" --filename "hf-downloader"
-          python3 git_uploader.py --type Linux --username "${{ secrets.MIDORI_AI_USERNAME }}" --password "${{ secrets.MIDORI_AI_PASSWORD }}" --twoflogin "${{ secrets.MIDORI_AI_TFA }}" --file "midori_ai_login" --filename "midori_ai_login"
+          ./git_uploader --type Linux --username "${{ secrets.MIDORI_AI_USERNAME }}" --password "${{ secrets.MIDORI_AI_PASSWORD }}" --twoflogin "${{ secrets.MIDORI_AI_TFA }}" --file "midori_ai_downloader" --filename "midori_ai_downloader"
+          ./git_uploader --type Linux --username "${{ secrets.MIDORI_AI_USERNAME }}" --password "${{ secrets.MIDORI_AI_PASSWORD }}" --twoflogin "${{ secrets.MIDORI_AI_TFA }}" --file "yaml_edit" --filename "yaml_edit"
+          ./git_uploader --type Linux --username "${{ secrets.MIDORI_AI_USERNAME }}" --password "${{ secrets.MIDORI_AI_PASSWORD }}" --twoflogin "${{ secrets.MIDORI_AI_TFA }}" --file "hf-downloader" --filename "hf-downloader"
+          ./git_uploader --type Linux --username "${{ secrets.MIDORI_AI_USERNAME }}" --password "${{ secrets.MIDORI_AI_PASSWORD }}" --twoflogin "${{ secrets.MIDORI_AI_TFA }}" --file "midori_ai_login" --filename "midori_ai_login"
 
   push_subsystem_manager_to_hub:
     name: Push Subsystem (other os) to Docker Hub
