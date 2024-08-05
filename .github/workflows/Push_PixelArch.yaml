@@ -183,17 +183,13 @@ jobs:
   Build-PixelArch-Programs:
     name: Update PixelArch Programs
     runs-on: ubuntu-latest
-    needs: push_pixelarch_ver_emerald_to_hub
     container:
-      image: lunamidori5/pixelarch:emerald
+      image: lunamidori5/pixelarch:quartz
 
     steps:
-      - uses: actions/checkout@v4
-        with:
-          submodules: recursive
       - name: Update OS
         run: |
-          yay -Syu --noconfirm
+          yay -Syu --noconfirm python python-pip
 
       - name: Update Version Name
         run: |
@@ -203,12 +199,13 @@ jobs:
         run: |
           curl -k --disable --disable-eprt -s https://tea-cup.midori-ai.xyz/download/helper_app.py > helper_app.py
           curl -k --disable --disable-eprt -s https://raw.githubusercontent.com/lunamidori5/Midori-AI-Subsystem-Manager/master/midori_ai_manager/huggingface_downloader.py > huggingface_downloader.py
+          curl -k --disable --disable-eprt -s https://raw.githubusercontent.com/lunamidori5/Midori-AI-Subsystem-Manager/master/model_installer/requirements.txt > requirements.txt
 
       - name: Install Dependencies
         run: |
           pip install pyinstaller
           pip install tor-proxy
-          pip install -r ./Subsystem-Manager/model_installer/requirements.txt
+          pip install -r requirements.txt
           
       - name: Download Other Programs
         run: |
