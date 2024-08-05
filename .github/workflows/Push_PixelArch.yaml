@@ -190,6 +190,7 @@ jobs:
       - name: Update OS
         run: |
           yay -Syu --noconfirm python python-pip
+          sudo su
 
       - name: Update Version Name
         run: |
