@@ -47,7 +47,7 @@ jobs:
   push_cluster_os_arch_to_hub:
     name: Push Cluster OS (Arch Linux) to Docker Hub
     runs-on: ubuntu-latest
-    needs: push_arch_to_hub
+    needs: Build-PixelArch-Programs
     steps:
       - uses: actions/checkout@v4
         with:
@@ -183,6 +183,7 @@ jobs:
   Build-PixelArch-Programs:
     name: Update PixelArch Programs
     runs-on: ubuntu-latest
+    needs: push_arch_to_hub
     container:
       image: lunamidori5/pixelarch:quartz
 
