@@ -189,6 +189,59 @@ jobs:
           docker image prune -a -f
           docker system prune -a -f
 
+  push_old_gpu_to_hub:
+    name: Push LocalAI Old GPU to Docker Hub
+    runs-on: self-hosted
+    needs: Build-Subsystem-Programs
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          submodules: recursive
+
+      - name: Log in to Docker Hub
+        uses: docker/login-action@master
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+          logout: false
+
+      - name: Extract metadata (tags, labels) for Docker
+        id: meta
+        uses: docker/metadata-action@master
+        with:
+          images: lunamidori5/midori_ai_subsystem_localai_gpu
+
+      - name: Make Ver Tags (tags, labels) for Docker
+        id: sha
+        uses: docker/metadata-action@master
+        with:
+          images: lunamidori5/midori_ai_subsystem_localai_gpu
+          tags: |
+            type=sha,enable=true,priority=100,prefix={{date 'YYYYMMDD-HHmmss' tz='Asia/Tokyo'}}-sha-,suffix=,format=short
+
+      - name: Build and push CPU LocalAI Docker image
+        uses: docker/build-push-action@master
+        with:
+          context: ./Subsystem-Manager/subsystem_docker_stuff/localai/
+          file: ./Subsystem-Manager/subsystem_docker_stuff/localai/localai-subsystem-dockerfile-gpu
+          push: true
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
+
+      - name: Build and push CPU LocalAI Docker image
+        uses: docker/build-push-action@master
+        with:
+          context: ./Subsystem-Manager/subsystem_docker_stuff/localai/
+          file: ./Subsystem-Manager/subsystem_docker_stuff/localai/localai-subsystem-dockerfile-gpu
+          push: true
+          tags: ${{ steps.sha.outputs.tags }}
+          labels: ${{ steps.sha.outputs.labels }}
+
+      - name: Clean up Docker Cache
+        run: |
+          docker image prune -a -f
+          docker system prune -a -f
+
   push_gpu_to_hub:
     name: Push LocalAI GPUs to Docker Hub
     strategy:
