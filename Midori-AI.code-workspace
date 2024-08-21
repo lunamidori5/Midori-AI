@@ -11,10 +11,7 @@
 		{
 			"name": "BotFiles",
 			"path": "../../BotFiles"
-		},
-		{
-			"path": "../../../cookieclubrepo"
-		}
+v		}
 	],
 	"settings": {
 		"continue.enableTabAutocomplete": false
