@@ -2,16 +2,16 @@
 	"folders": [
 		{
 			"name": "Midori-AI",
-			"path": "."
+			"uri": "vscode-remote://ssh-remote+192.168.10.67/home/lunamidori/nfsshares/webserverfiles/website/Midori-AI"
 		},
 		{
 			"name": "midori_ai_subsystem_backends",
-			"path": "../../BotFiles/uploaded_files/files/midori_ai_subsystem_backends"
+			"uri": "vscode-remote://ssh-remote+192.168.10.67/home/lunamidori/nfsshares/webserverfiles/BotFiles/uploaded_files/files/midori_ai_subsystem_backends"
 		},
 		{
 			"name": "BotFiles",
-			"path": "../../BotFiles"
-v		}
+			"uri": "vscode-remote://ssh-remote+192.168.10.67/home/lunamidori/nfsshares/webserverfiles/BotFiles"
+		}
 	],
 	"settings": {
 		"continue.enableTabAutocomplete": false
