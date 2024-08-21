@@ -16,3 +16,6 @@
 [submodule "DiscordLLMBot"]
 	path = DiscordLLMBot
 	url = https://github.com/lunamidori5/Midori-AI-GPT-DiscordBot.git
+[submodule "Midori-AI-Obsidian-Notes"]
+	path = Midori-AI-Obsidian-Notes
+	url = https://github.com/lunamidori5/Midori-AI-Obsidian-Notes.git
