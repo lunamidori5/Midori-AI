@@ -9,10 +9,15 @@ This is our mono repo!
 
 Check out each of our other Git Module Repos!
 
+Main SubModules:
+
 - Website - [Link to Module](https://github.com/lunamidori5/Midori-AI-Website)
 - Cluster OS - [Link to Module](https://github.com/lunamidori5/Midori-AI-Cluster-OS)
 - Subsystem Manager - [Link to Module](https://github.com/lunamidori5/Midori-AI-Subsystem-Manager)
 
+Program Based SubModules:
+- Discord GPT Bot (with Rag) - [Link to Module](https://github.com/lunamidori5/Midori-AI-GPT-DiscordBot)
+- Obsidian Notebook - [Link to Module](https://github.com/lunamidori5/Midori-AI-Obsidian-Notes)
 
 ## Key Areas of Focus:
 
