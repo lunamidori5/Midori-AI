@@ -2,15 +2,15 @@
 	"folders": [
 		{
 			"name": "Midori-AI",
-			"uri": "vscode-remote://ssh-remote+192.168.10.67/home/lunamidori/nfsshares/webserverfiles/website/Midori-AI"
+			"uri": "vscode-remote://ssh-remote+192.168.10.97/home/lunamidori/website/Midori-AI"
 		},
 		{
 			"name": "midori_ai_subsystem_backends",
-			"uri": "vscode-remote://ssh-remote+192.168.10.67/home/lunamidori/nfsshares/webserverfiles/BotFiles/uploaded_files/files/midori_ai_subsystem_backends"
+			"uri": "vscode-remote://ssh-remote+192.168.10.97/home/lunamidori/webserver_api_files/uploaded_files/files/midori_ai_subsystem_backends"
 		},
 		{
 			"name": "BotFiles",
-			"uri": "vscode-remote://ssh-remote+192.168.10.67/home/lunamidori/nfsshares/webserverfiles/BotFiles"
+			"uri": "vscode-remote://ssh-remote+192.168.10.97/home/lunamidori/webserver_api_files"
 		}
 	],
 	"settings": {
