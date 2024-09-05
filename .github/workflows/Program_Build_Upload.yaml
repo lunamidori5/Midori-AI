@@ -189,7 +189,12 @@ jobs:
           docker image prune -a -f
           docker system prune -a -f
 
-      - name: Build and push CPU LocalAI Docker image
+  push_mixed_gpu_to_hub:
+    name: Push LocalAI GPUs to Docker Hub
+    needs: push_cpu_to_hub
+    runs-on: self-hosted
+    steps:
+      - name: Build and push GPU LocalAI Docker image
         uses: docker/build-push-action@master
         with:
           context: ./Subsystem-Manager/subsystem_docker_stuff/localai/
@@ -198,7 +203,7 @@ jobs:
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
 
-      - name: Build and push CPU LocalAI Docker image
+      - name: Build and push GPU LocalAI Docker image
         uses: docker/build-push-action@master
         with:
           context: ./Subsystem-Manager/subsystem_docker_stuff/localai/
@@ -217,7 +222,7 @@ jobs:
     strategy:
       matrix:
         gpu_type: [intelf16, intelf32, hipblas, nvidia]
-    needs: push_cpu_to_hub
+    needs: push_mixed_gpu_to_hub
     runs-on: self-hosted
     steps:
       - uses: actions/checkout@v4
