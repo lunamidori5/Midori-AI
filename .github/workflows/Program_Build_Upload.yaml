@@ -190,10 +190,32 @@ jobs:
           docker system prune -a -f
 
   push_mixed_gpu_to_hub:
-    name: Push LocalAI GPUs to Docker Hub
-    needs: push_cpu_to_hub
+    name: Push LocalAI Mixed GPUs to Docker Hub
+    needs: Build-Subsystem-Programs
     runs-on: self-hosted
     steps:
+
+      - name: Log in to Docker Hub
+        uses: docker/login-action@master
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+          logout: false
+
+      - name: Extract metadata (tags, labels) for Docker
+        id: meta
+        uses: docker/metadata-action@master
+        with:
+          images: lunamidori5/midori_ai_subsystem_localai_gpu
+
+      - name: Make Ver Tags (tags, labels) for Docker
+        id: sha
+        uses: docker/metadata-action@master
+        with:
+          images: lunamidori5/midori_ai_subsystem_localai_gpu
+          tags: |
+            type=sha,enable=true,priority=100,prefix={{date 'YYYYMMDD-HHmmss' tz='Asia/Tokyo'}}-sha-,suffix=,format=short
+            
       - name: Build and push GPU LocalAI Docker image
         uses: docker/build-push-action@master
         with:
@@ -222,7 +244,7 @@ jobs:
     strategy:
       matrix:
         gpu_type: [intelf16, intelf32, hipblas, nvidia]
-    needs: push_mixed_gpu_to_hub
+    needs: Build-Subsystem-Programs
     runs-on: self-hosted
     steps:
       - uses: actions/checkout@v4
