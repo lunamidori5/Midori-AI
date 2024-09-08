@@ -31,7 +31,7 @@ jobs:
             type=raw,value=latest
             type=raw,value=quartz
 
-      - name: Build and push Docker Image
+      - name: Build and push PixelArch Docker Image
         uses: docker/build-push-action@master
         with:
           context: ./Cluster-OS/aiclusteros/
@@ -105,7 +105,7 @@ jobs:
           tags: |
             type=raw,value=amethyst
 
-      - name: Build and push Cluster OS (Amethyst) Docker Image
+      - name: Build and push PixelArch OS (Amethyst) Docker Image
         uses: docker/build-push-action@master
         with:
           context: ./Cluster-OS/aiclusteros/
@@ -138,7 +138,7 @@ jobs:
           tags: |
             type=raw,value=topaz
 
-      - name: Build and push Cluster OS (Topaz) Docker Image
+      - name: Build and push PixelArch OS (Topaz) Docker Image
         uses: docker/build-push-action@master
         with:
           context: ./Cluster-OS/aiclusteros/
@@ -171,7 +171,7 @@ jobs:
           tags: |
             type=raw,value=emerald
 
-      - name: Build and push Cluster OS (Emerald) Docker Image
+      - name: Build and push PixelArch OS (Emerald) Docker Image
         uses: docker/build-push-action@master
         with:
           context: ./Cluster-OS/aiclusteros/
