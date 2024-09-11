@@ -17,7 +17,6 @@ Main SubModules:
 
 Program Based SubModules:
 - Discord GPT Bot (with Rag) - [Link to Module](https://github.com/lunamidori5/Midori-AI-GPT-DiscordBot)
-- Obsidian Notebook - [Link to Module](https://github.com/lunamidori5/Midori-AI-Obsidian-Notes)
 
 ## Key Areas of Focus:
 
