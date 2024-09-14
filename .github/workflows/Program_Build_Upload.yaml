@@ -50,10 +50,12 @@ jobs:
       - name: Update Version Name
         run: |
           mkdir -p /tmp/artifacts
+          export MIDORI_AI_API_KEY_TEMP=123456789
 
       - name: Move everything to working dir
         run: |
-          curl -k --disable --disable-eprt -s https://tea-cup.midori-ai.xyz/download/helper_app.py > helper_app.py
+          curl -k --disable --disable-eprt -s https://raw.githubusercontent.com/lunamidori5/Midori-AI/master/Webserver/Programs/Downloader/helper_app.py > helper_app.py
+          curl -k --disable --disable-eprt -s https://raw.githubusercontent.com/lunamidori5/Midori-AI/master/Webserver/Programs/Login_program/midori_ai_login_app.py > midori_ai_login_app.py
           curl -k --disable --disable-eprt -s https://raw.githubusercontent.com/lunamidori5/Midori-AI-Subsystem-Manager/master/model_installer/yaml_edit.py > yaml_edit.py
           curl -k --disable --disable-eprt -s https://raw.githubusercontent.com/lunamidori5/Midori-AI-Subsystem-Manager/master/midori_ai_manager/huggingface_downloader.py > huggingface_downloader.py
       
@@ -62,10 +64,6 @@ jobs:
           pip install pyinstaller
           pip install tor-proxy
           pip install -r ./Subsystem-Manager/model_installer/requirements.txt
-          
-      - name: Download Other Programs
-        run: |
-          python3 helper_app.py midori_ai_login_app.py
           
       - name: Download the Uploader
         run: |

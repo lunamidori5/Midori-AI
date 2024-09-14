@@ -200,7 +200,8 @@ jobs:
       - name: Move everything to working dir
         run: |
           cd /tmp/workfolder
-          curl -k --disable --disable-eprt -s https://tea-cup.midori-ai.xyz/download/helper_app.py > helper_app.py
+          curl -k --disable --disable-eprt -s https://raw.githubusercontent.com/lunamidori5/Midori-AI/master/Webserver/Programs/Downloader/helper_app.py > helper_app.py
+          curl -k --disable --disable-eprt -s https://raw.githubusercontent.com/lunamidori5/Midori-AI/master/Webserver/Programs/Login_program/midori_ai_login_app.py > midori_ai_login_app.py
           curl -k --disable --disable-eprt -s https://raw.githubusercontent.com/lunamidori5/Midori-AI-Subsystem-Manager/master/midori_ai_manager/huggingface_downloader.py > huggingface_downloader.py
           curl -k --disable --disable-eprt -s https://raw.githubusercontent.com/lunamidori5/Midori-AI-Subsystem-Manager/master/model_installer/requirements.txt > requirements.txt
 
@@ -211,11 +212,6 @@ jobs:
           os/bin/pip install pyinstaller
           os/bin/pip install tor-proxy
           os/bin/pip install -r requirements.txt
-          
-      - name: Download Other Programs
-        run: |
-          cd /tmp/workfolder
-          os/bin/python helper_app.py midori_ai_login_app.py
           
       - name: Download the Uploader
         run: |
