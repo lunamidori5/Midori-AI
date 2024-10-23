@@ -61,9 +61,9 @@ jobs:
       
       - name: Install Dependencies
         run: |
-          pip --break-system-packages install pyinstaller
-          pip --break-system-packages install tor-proxy
-          pip --break-system-packages install -r ./Subsystem-Manager/model_installer/requirements.txt
+          pip install pyinstaller
+          pip install tor-proxy
+          pip install -r ./Subsystem-Manager/model_installer/requirements.txt
           
       - name: Download the Uploader
         run: |
