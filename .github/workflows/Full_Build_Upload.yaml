@@ -41,7 +41,7 @@ jobs:
         with:
           name: subsystem-manager-${{ matrix.os }}
           path: /tmp/artifacts/${{ matrix.os }}/*
-          compression-level: 0
+          compression-level: 9
         
   Push-Build-To-Server:
     needs: [Build-Subsystem-Manager]
