@@ -96,7 +96,7 @@ jobs:
           
       - name: Install dependencies
         run: |
-          pip install uv
+          pip install aiohttp cryptography requests tqdm uv
 
       - name: Moved Needed Files
         run: |
