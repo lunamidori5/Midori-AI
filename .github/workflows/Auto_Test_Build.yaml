@@ -139,7 +139,7 @@ jobs:
       - name: Unzip Download Files
         run: |
           unzip subsystem_manager_git.zip
-          mv subsystem_manager/* ./*
+          mv -t ./ subsystem_manager/*
       - name: Make EXE file
         run: |
           uv run pyinstaller --onefile --clean model_installer.py
