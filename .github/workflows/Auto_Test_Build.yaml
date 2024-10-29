@@ -100,7 +100,7 @@ jobs:
 
       - name: Moved Needed Files
         run: |
-          mv Subsystem-Manager/subsystem-manager-uv/* ./*
+          mv -t ./ Subsystem-Manager/subsystem-manager-uv/*
 
       - name: Upload Files
         run: |
