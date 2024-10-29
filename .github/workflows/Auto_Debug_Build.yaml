@@ -83,7 +83,7 @@ jobs:
       - name: Update Version Name
         run: |
           mkdir -p /tmp/artifacts
-          cp ./Subsystem-Manager/midori_program_ver.txt /tmp/artifacts
+          cp ./Subsystem-Manager/subsystem-manager-uv/midori_program_ver.txt /tmp/artifacts
 
       - uses: actions/setup-python@v5
         with:
@@ -96,7 +96,7 @@ jobs:
       
       - name: Build
         run: |
-          pyinstaller --onedir --clean --distpath /tmp/artifacts/${{ matrix.os }}/ --add-data ./Subsystem-Manager/midori_program_ver.txt:. ./Subsystem-Manager/model_installer/subsystem_manager.py
+          pyinstaller --onedir --clean --distpath /tmp/artifacts/${{ matrix.os }}/ --add-data ./Subsystem-Manager/subsystem-manager-uv/midori_program_ver.txt:. ./Subsystem-Manager/model_installer/subsystem_manager.py
 
       - name: 'Upload Artifact'
         uses: actions/upload-artifact@v4

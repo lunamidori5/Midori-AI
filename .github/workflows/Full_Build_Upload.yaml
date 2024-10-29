@@ -4,6 +4,26 @@ on:
   workflow_dispatch:
 
 jobs:
+  Git-Subsystem-Manager:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          submodules: recursive
+
+      - name: Update Git Version
+        run: |
+          mkdir -p /tmp/artifacts
+          mkdir -p /tmp/artifacts/subsystem_manager
+          cp -r ./Subsystem-Manager/subsystem-manager-uv/* /tmp/artifacts/subsystem_manager
+
+      - name: 'Upload Artifact'
+        uses: actions/upload-artifact@v4
+        with:
+          name: subsystem-manager-github-latest
+          path: /tmp/artifacts/*
+          compression-level: 9
+
   Build-Subsystem-Manager:
     strategy:
       matrix:
@@ -18,15 +38,15 @@ jobs:
       - name: Update Version Name
         run: |
           mkdir -p /tmp/artifacts
-          cp ./Subsystem-Manager/midori_program_ver.txt /tmp/artifacts
+          cp ./Subsystem-Manager/subsystem-manager-uv/midori_program_ver.txt /tmp/artifacts
 
       - uses: actions/setup-python@v5
         with:
           python-version: ${{ matrix.python }}
       
-      - name: Install Dependencies (Pyinstaller)
+      - name: Install Dependencies (UV)
         run: |
-          pip install pyinstaller
+          pip install UV
       
       - name: Install Dependencies (Requirements.txt)
         run: |
@@ -34,7 +54,9 @@ jobs:
       
       - name: Build
         run: |
-          pyinstaller --onedir --clean --distpath /tmp/artifacts/${{ matrix.os }}/ --add-data ./Subsystem-Manager/midori_program_ver.txt:. ./Subsystem-Manager/model_installer/subsystem_manager.py
+          cd Subsystem-Manager/subsystem-manager-uv
+          uv run pyinstaller --onedir --clean --distpath /tmp/artifacts/${{ matrix.os }}/ --add-data midori_program_ver.txt:. subsystem_manager.py
+          cd ../..
 
       - name: 'Upload Artifact'
         uses: actions/upload-artifact@v4
@@ -44,7 +66,7 @@ jobs:
           compression-level: 9
         
   Push-Build-To-Server:
-    needs: [Build-Subsystem-Manager]
+    needs: [Build-Subsystem-Manager, Git-Subsystem-Manager]
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -61,7 +83,7 @@ jobs:
 
       - name: Install Dependencies
         run: |
-          cp ./Subsystem-Manager/midori_program_ver.txt .
+          cp ./Subsystem-Manager/subsystem-manager-uv/midori_program_ver.txt .
           pip install requests cryptography
 
       - name: Linux Artifacts
@@ -79,6 +101,12 @@ jobs:
           cd subsystem-manager-macos-latest/subsystem_manager
           zip -r ../../model_installer_mac.zip subsystem_manager _internal
           cd ../../
+          
+      - name: Github Artifacts
+        run: |
+          cd subsystem-manager-github-latest/subsystem_manager
+          zip -r ../../subsystem_manager-git.zip *
+          cd ../../
 
       - name: Download the Uploader
         run: |
@@ -91,4 +119,5 @@ jobs:
           python3.10 git_uploader.py --type Linux --username "${{ secrets.MIDORI_AI_USERNAME }}" --password "${{ secrets.MIDORI_AI_PASSWORD }}" --twoflogin "${{ secrets.MIDORI_AI_TFA }}" --file "model_installer_linux.tar.gz" --filename "model_installer_linux.tar.gz"
           python3.10 git_uploader.py --type Windows --username "${{ secrets.MIDORI_AI_USERNAME }}" --password "${{ secrets.MIDORI_AI_PASSWORD }}" --twoflogin "${{ secrets.MIDORI_AI_TFA }}" --file "model_installer_windows.zip" --filename "model_installer_windows.zip"
           python3.10 git_uploader.py --type Mac --username "${{ secrets.MIDORI_AI_USERNAME }}" --password "${{ secrets.MIDORI_AI_PASSWORD }}" --twoflogin "${{ secrets.MIDORI_AI_TFA }}" --file "model_installer_mac.zip" --filename "model_installer_mac.zip"
+          python3.10 git_uploader.py --type Linux --username "${{ secrets.MIDORI_AI_USERNAME }}" --password "${{ secrets.MIDORI_AI_PASSWORD }}" --twoflogin "${{ secrets.MIDORI_AI_TFA }}" --file "subsystem_manager-git.zip" --filename "subsystem_manager-git.zip"
           python3.10 git_uploader.py --type Linux --username "${{ secrets.MIDORI_AI_USERNAME }}" --password "${{ secrets.MIDORI_AI_PASSWORD }}" --twoflogin "${{ secrets.MIDORI_AI_TFA }}" --file "midori_program_ver.txt" --filename "midori_program_ver.txt"
