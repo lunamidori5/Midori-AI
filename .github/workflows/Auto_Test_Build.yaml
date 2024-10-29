@@ -141,7 +141,6 @@ jobs:
           unzip subsystem_manager_git.zip
       - name: Make EXE file
         run: |
-          cd subsystem_manager
           uv run pyinstaller --onefile --clean model_installer.py
 
   Test-Subsystem-Manager-Baked:
