@@ -11,6 +11,9 @@
 		{
 			"name": "BotFiles",
 			"uri": "vscode-remote://ssh-remote+192.168.10.97/home/lunamidori/webserver_api_files"
+		},
+		{
+			"path": "../../other_stuff/python_rpg_game"
 		}
 	],
 	"settings": {
