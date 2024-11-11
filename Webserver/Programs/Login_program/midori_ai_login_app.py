@@ -18,10 +18,14 @@ args = parser.parse_args()
 pre_unsafe = str(args.unsafe).lower()
 pre_makeuser = str(args.makeuser).lower()
 
+username_file = "MIDORI_AI_USERNAME"
+api_key_file = "MIDORI_AI_API_KEY_TEMP"
+
 if hasattr(args, "username"):
     username = args.username
-elif "MIDORI_AI_USERNAME" in os.environ:
-    username = os.environ["MIDORI_AI_USERNAME"]
+elif os.path.exists(username_file):
+    with open(username_file, 'r') as f:
+        username = f.read()
 else:
     print("Please use ``-u`` with your username...")
     exit()
@@ -109,8 +113,13 @@ try:
     
     if response.status_code == 200:
         api_key = response.text
-        os.environ["MIDORI_AI_API_KEY_TEMP"] = api_key
-        os.environ["MIDORI_AI_USERNAME"] = username
+        
+        with open(api_key_file, "w") as f:
+            f.write(api_key)
+        
+        with open(username_file, "w") as f:
+            f.write(username)
+            
     else:
         error_message = response.text
         raise Exception(f"Server returned status code {response.status_code}: {error_message}")

@@ -19,12 +19,15 @@ except:
 if discord_id == None:
     discord_id = str(random.randint(999999, 99999999999999))
 
-api_key = os.getenv("MIDORI_AI_API_KEY_TEMP")
+api_key = None
+api_key_file = "MIDORI_AI_API_KEY_TEMP"
 attempt_count = 0
 
 while api_key == None:
-    print("API KEY not set, please log into Midori AI's Servers")
-    print("Run ``midori-ai-login -u \"username\"``")
+    if os.path.exists(api_key_file):
+        with open(api_key_file, 'r') as f:
+            api_key = f.read()
+        break
 
     if attempt_count > 1:
         print("Login failed, please try again manually")
@@ -43,7 +46,6 @@ while api_key == None:
     except Exception:
         print("Midori AI login failed, please try again")
 
-    api_key = os.getenv("MIDORI_AI_API_KEY_TEMP")
     attempt_count += 1
 
 async def download_commands(COMMAND_SITE_COMMANDS):
