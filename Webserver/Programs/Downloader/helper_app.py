@@ -4,13 +4,12 @@ import random
 import asyncio
 import argparse
 import requests
+import subprocess
 
 from tqdm import tqdm
 
 from aiohttp import ClientSession
 from cryptography.fernet import Fernet
-
-api_key = os.getenv("MIDORI_AI_API_KEY_TEMP")
 
 try:
     discord_id = os.getenv("DISCORD_ID")
@@ -20,12 +19,32 @@ except:
 if discord_id == None:
     discord_id = str(random.randint(999999, 99999999999999))
 
-if api_key == None:
+api_key = os.getenv("MIDORI_AI_API_KEY_TEMP")
+attempt_count = 0
+
+while api_key == None:
     print("API KEY not set, please log into Midori AI's Servers")
     print("Run ``midori-ai-login -u \"username\"``")
 
-    print("Fallback code running for now, setting api to random int")
-    api_key = str(random.randint(999999, 99999999999999))
+    if attempt_count > 1:
+        print("Login failed, please try again manually")
+        print("API KEY not set, please log into Midori AI's Servers")
+        print("Run ``midori-ai-login -u \"username\"``")
+
+        print("Fallback code running for now, setting api to random int")
+        api_key = str(random.randint(999999, 99999999999999))
+        break
+
+        #print("Exiting...")
+        #exit(1)
+    
+    try:
+        subprocess.call(["midori-ai-login"])
+    except Exception:
+        print("Midori AI login failed, please try again")
+
+    api_key = os.getenv("MIDORI_AI_API_KEY_TEMP")
+    attempt_count += 1
 
 async def download_commands(COMMAND_SITE_COMMANDS):
     log(f"Attempting to download commands from {COMMAND_SITE_COMMANDS}")
