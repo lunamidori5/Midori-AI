@@ -79,10 +79,10 @@ if makeuser:
             headers=
             {
                 "username": f"{str(username)}", 
-                "invite_key": f"{str(invite_key)}", 
+                "invitekey": f"{str(invite_key)}", 
                 "platform" : f"{encrypted_platform_one.decode()}", 
-                "os_version" : f"{encrypted_os_version_one.decode()}", 
-                "api_verison" : f"{key_one.decode()}"
+                "osversion" : f"{encrypted_os_version_one.decode()}", 
+                "apiverison" : f"{key_one.decode()}"
             }
             )
         
@@ -102,8 +102,8 @@ try:
         {
             "username": f"{str(username)}", 
             "platform" : f"{encrypted_platform_one.decode()}", 
-            "os_version" : f"{encrypted_os_version_one.decode()}", 
-            "api_verison" : f"{key_one.decode()}"
+            "osversion" : f"{encrypted_os_version_one.decode()}", 
+            "apiverison" : f"{key_one.decode()}"
         }
         )
     
