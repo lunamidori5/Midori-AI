@@ -8,7 +8,7 @@ import requests
 from cryptography.fernet import Fernet
 
 parser = argparse.ArgumentParser(description="N/A")
-parser.add_argument("-u", "--username", required=True, type=str, help="Username to use for the server...")
+parser.add_argument("-u", "--username", required=False, type=str, help="Username to use for the server...")
 parser.add_argument("-byp", "--bypassplatform", required=False, type=str, help="Bypass platform check")
 parser.add_argument("-byos", "--bypassoscheck", required=False, type=str, help="Bypass OS check")
 parser.add_argument("-unsafe", "--unsafe", required=False, action='store_true', help="Enable unsafe mode")
@@ -18,7 +18,15 @@ args = parser.parse_args()
 pre_unsafe = str(args.unsafe).lower()
 pre_makeuser = str(args.makeuser).lower()
 
-if len(str(args.username)) < 6:
+if hasattr(args, "username"):
+    username = args.username
+elif "MIDORI_AI_USERNAME" in os.environ:
+    username = os.environ["MIDORI_AI_USERNAME"]
+else:
+    print("Please use ``-u`` with your username...")
+    exit()
+
+if len(str(username)) < 6:
     print("Please make your username 6 or more letters...")
     exit()
 
@@ -43,15 +51,13 @@ if not unsafe:
     stats = {
         "platform": {
             "system": platform.system(),
-            "release": platform.release(),
-            "version": platform.version(),
             "machine": platform.machine(),
             "processor": platform.processor(),
         },
     }
 
     stats_json = json.dumps(stats)
-    os_version = os.uname().release
+    os_version = os.uname().machine
 
     hash_object = hashlib.sha512(stats_json.encode())
     os_hash_object = hashlib.sha512(os_version.encode())
@@ -67,12 +73,12 @@ encrypted_platform_one = fernet_one.encrypt(str(hash_hex).encode())
 encrypted_os_version_one = fernet_one.encrypt(str(os_hash_hex).encode())
 
 if makeuser:
-    invite_key = input("Please enter the invite key from Midori AI")
+    invite_key = input("Please enter the invite key from Midori AI: ")
     try:
         response = requests.post("https://tea-pot.midori-ai.xyz/make_user_user", 
             headers=
             {
-                "username": f"{str(args.username)}", 
+                "username": f"{str(username)}", 
                 "invite_key": f"{str(invite_key)}", 
                 "platform" : f"{encrypted_platform_one.decode()}", 
                 "os_version" : f"{encrypted_os_version_one.decode()}", 
@@ -94,7 +100,7 @@ try:
     response = requests.post("https://tea-pot.midori-ai.xyz/get_api_key_user", 
         headers=
         {
-            "username": f"{str(args.username)}", 
+            "username": f"{str(username)}", 
             "platform" : f"{encrypted_platform_one.decode()}", 
             "os_version" : f"{encrypted_os_version_one.decode()}", 
             "api_verison" : f"{key_one.decode()}"
@@ -104,6 +110,7 @@ try:
     if response.status_code == 200:
         api_key = response.text
         os.environ["MIDORI_AI_API_KEY_TEMP"] = api_key
+        os.environ["MIDORI_AI_USERNAME"] = username
     else:
         error_message = response.text
         raise Exception(f"Server returned status code {response.status_code}: {error_message}")

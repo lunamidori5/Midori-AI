@@ -22,7 +22,7 @@ if discord_id == None:
 
 if api_key == None:
     print("API KEY not set, please log into Midori AI's Servers")
-    print("Run ``login_midori_ai -u \"username\"``")
+    print("Run ``midori-ai-login -u \"username\"``")
 
     print("Fallback code running for now, setting api to random int")
     api_key = str(random.randint(999999, 99999999999999))
