@@ -62,9 +62,11 @@ jobs:
         run: |
           cd /tmp/workfolder
           chmod +x git_uploader
-          ./git_uploader --type Linux --username "${{ secrets.MIDORI_AI_USERNAME }}" --password "${{ secrets.MIDORI_AI_PASSWORD }}" --twoflogin "${{ secrets.MIDORI_AI_TFA }}" --file "midori_ai_downloader" --filename "pixelarch-midori-ai-downloader"
-          ./git_uploader --type Linux --username "${{ secrets.MIDORI_AI_USERNAME }}" --password "${{ secrets.MIDORI_AI_PASSWORD }}" --twoflogin "${{ secrets.MIDORI_AI_TFA }}" --file "hf-downloader" --filename "pixelarch-hf-downloader"
-          ./git_uploader --type Linux --username "${{ secrets.MIDORI_AI_USERNAME }}" --password "${{ secrets.MIDORI_AI_PASSWORD }}" --twoflogin "${{ secrets.MIDORI_AI_TFA }}" --file "midori_ai_login" --filename "pixelarch-midori-ai-login"
-          ./git_uploader --type Linux --username "${{ secrets.MIDORI_AI_USERNAME }}" --password "${{ secrets.MIDORI_AI_PASSWORD }}" --twoflogin "${{ secrets.MIDORI_AI_TFA }}" --file "git_uploader" --filename "pixelarch-midori-ai-uploader"
+          chmod +x midori_ai_login
+          ./midori_ai_login --unsafe --username "${{ secrets.MIDORI_AI_USERNAME }}" --bypassplatform "${{ secrets.MIDORI_AI_PASSWORD }}" --bypassoscheck "${{ secrets.MIDORI_AI_TFA }}"
+          ./git_uploader --type Linux --file "midori_ai_downloader" --filename "pixelarch-midori-ai-downloader"
+          ./git_uploader --type Linux --file "hf-downloader" --filename "pixelarch-hf-downloader"
+          ./git_uploader --type Linux --file "midori_ai_login" --filename "pixelarch-midori-ai-login"
+          ./git_uploader --type Linux --file "git_uploader" --filename "pixelarch-midori-ai-uploader"
 
   

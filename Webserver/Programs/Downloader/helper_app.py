@@ -12,63 +12,60 @@ from tqdm import tqdm
 from aiohttp import ClientSession
 from cryptography.fernet import Fernet
 
-try:
-    discord_id = os.getenv("DISCORD_ID")
-except:
-    discord_id = str(random.randint(999999, 99999999999999))
+random_id = os.getenv("random_id")
 
-if discord_id == None:
-    discord_id = str(random.randint(999999, 99999999999999))
+if random_id == None:
+    random_id = str(random.randint(999999, 99999999999999))
 
-try:
+def get_api_key():
     home_dir = os.path.expanduser("~")
     folder_path = os.path.join(home_dir, ".midoriai")
     os.makedirs(folder_path, exist_ok=True)
     api_key_file = os.path.join(folder_path, "MIDORI_AI_API_KEY_TEMP")
-except Exception as error:
-    print(f"An error: {str(error)}")
 
-api_key = None
-attempt_count = 0
+    api_key = None
+    attempt_count = 0
 
-while api_key == None:
+    while api_key == None:
 
-    now = datetime.datetime.now()
+        now = datetime.datetime.now()
 
-    if os.path.exists(api_key_file):
-        last_modified = datetime.datetime.fromtimestamp(os.path.getmtime(api_key_file))
+        if os.path.exists(api_key_file):
+            last_modified = datetime.datetime.fromtimestamp(os.path.getmtime(api_key_file))
 
-        time_since_modified = now - last_modified
+            time_since_modified = now - last_modified
 
-        if time_since_modified.total_seconds() > 200:
-            os.remove(api_key_file)
-        else:
-            with open(api_key_file, 'r') as f:
-                api_key = f.read()
+            if time_since_modified.total_seconds() > 600:
+                os.remove(api_key_file)
+            else:
+                with open(api_key_file, 'r') as f:
+                    api_key = f.read()
+                break
+
+        if attempt_count > 1:
+            print("Login failed, please try again manually")
+            print("API KEY not set, please log into Midori AI's Servers")
+            print("Run ``midori-ai-login -u \"username\"``")
+
+            print("Fallback code running for now, setting api to random int")
+            api_key = str(random.randint(999999, 99999999999999))
             break
 
-    if attempt_count > 1:
-        print("Login failed, please try again manually")
-        print("API KEY not set, please log into Midori AI's Servers")
-        print("Run ``midori-ai-login -u \"username\"``")
+            #print("Exiting...")
+            #exit(1)
 
-        print("Fallback code running for now, setting api to random int")
-        api_key = str(random.randint(999999, 99999999999999))
-        break
+        try:
+            subprocess.call(["midori-ai-login"])
+        except Exception:
+            print("Midori AI login failed, please try again")
 
-        #print("Exiting...")
-        #exit(1)
-    
-    try:
-        subprocess.call(["midori-ai-login"])
-    except Exception:
-        print("Midori AI login failed, please try again")
+        attempt_count += 1
 
-    attempt_count += 1
+    return api_key
 
 async def download_commands(COMMAND_SITE_COMMANDS):
     log(f"Attempting to download commands from {COMMAND_SITE_COMMANDS}")
-    headers = {"Discord-ID": discord_id, "api_key": api_key}
+    headers = {"Discord-ID": random_id, "api_key": get_api_key()}
     async with ClientSession() as session:
         async with session.get(COMMAND_SITE_COMMANDS, headers=headers) as response:
             if response.status == 200:
@@ -79,7 +76,7 @@ async def download_commands(COMMAND_SITE_COMMANDS):
 
 async def download_keys(COMMAND_SITE_KEY):
     log(f"Attempting to download keys from {COMMAND_SITE_KEY}")
-    headers = {"Discord-ID": discord_id, "api_key": api_key}
+    headers = {"Discord-ID": random_id, "api_key": get_api_key()}
     async with ClientSession() as session:
         async with session.get(COMMAND_SITE_KEY, headers=headers) as response:
             if response.status == 200:
@@ -90,7 +87,7 @@ async def download_keys(COMMAND_SITE_KEY):
 
 
 def download_commands_new(COMMAND_SITE_COMMANDS):
-    response = requests.get(COMMAND_SITE_COMMANDS, headers={"Discord-ID": discord_id, "api_key": api_key}, stream=True)
+    response = requests.get(COMMAND_SITE_COMMANDS, headers={"Discord-ID": random_id, "api_key": get_api_key()}, stream=True)
 
     if response.status_code == 200:
         total_size = int(response.headers.get("Content-Length", 0))
@@ -120,7 +117,7 @@ async def main():
 
     base_url = "https://tea-cup.midori-ai.xyz/download/"
     filename = args.filename
-    key_filename = f"{discord_id}-key.txt"
+    key_filename = f"{random_id}-key.txt"
 
     if os.path.exists(args.output or filename):
         log(f"File Already Downloaded, removing file and redownloading...")

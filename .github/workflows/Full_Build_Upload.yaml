@@ -104,16 +104,22 @@ jobs:
           zip -r ../../subsystem_manager_git.zip *
           cd ../../
 
+      - name: Download the Downloader
+        run: |
+          curl -O https://tea-cup.midori-ai.xyz/download/midori_ai_downloader && chmod +x midori_ai_downloader
+          curl -O https://tea-cup.midori-ai.xyz/download/midori_ai_login && chmod +x midori_ai_login
+
       - name: Download the Uploader
         run: |
-          curl -O https://tea-cup.midori-ai.xyz/download/midori_ai_downloader
-          chmod +x midori_ai_downloader
+          ./midori_ai_login --unsafe --username "${{ secrets.MIDORI_AI_USERNAME }}" --bypassplatform "${{ secrets.MIDORI_AI_PASSWORD }}" --bypassoscheck "${{ secrets.MIDORI_AI_TFA }}"
           ./midori_ai_downloader git_uploader.py
 
       - name: Upload Artifacts to Server
         run: |
-          python3.10 git_uploader.py --type Linux --username "${{ secrets.MIDORI_AI_USERNAME }}" --password "${{ secrets.MIDORI_AI_PASSWORD }}" --twoflogin "${{ secrets.MIDORI_AI_TFA }}" --file "model_installer_linux.tar.gz" --filename "model_installer_linux.tar.gz"
-          python3.10 git_uploader.py --type Windows --username "${{ secrets.MIDORI_AI_USERNAME }}" --password "${{ secrets.MIDORI_AI_PASSWORD }}" --twoflogin "${{ secrets.MIDORI_AI_TFA }}" --file "model_installer_windows.zip" --filename "model_installer_windows.zip"
-          python3.10 git_uploader.py --type Mac --username "${{ secrets.MIDORI_AI_USERNAME }}" --password "${{ secrets.MIDORI_AI_PASSWORD }}" --twoflogin "${{ secrets.MIDORI_AI_TFA }}" --file "model_installer_mac.zip" --filename "model_installer_mac.zip"
-          python3.10 git_uploader.py --type Linux --username "${{ secrets.MIDORI_AI_USERNAME }}" --password "${{ secrets.MIDORI_AI_PASSWORD }}" --twoflogin "${{ secrets.MIDORI_AI_TFA }}" --file "subsystem_manager_git.zip" --filename "subsystem_manager_git.zip"
-          python3.10 git_uploader.py --type Linux --username "${{ secrets.MIDORI_AI_USERNAME }}" --password "${{ secrets.MIDORI_AI_PASSWORD }}" --twoflogin "${{ secrets.MIDORI_AI_TFA }}" --file "midori_program_ver.txt" --filename "midori_program_ver.txt"
+          ./midori_ai_login --unsafe --username "${{ secrets.MIDORI_AI_USERNAME }}" --bypassplatform "${{ secrets.MIDORI_AI_PASSWORD }}" --bypassoscheck "${{ secrets.MIDORI_AI_TFA }}"
+          
+          python3.10 git_uploader.py --type Linux --file "model_installer_linux.tar.gz" --filename "model_installer_linux.tar.gz"
+          python3.10 git_uploader.py --type Windows --file "model_installer_windows.zip" --filename "model_installer_windows.zip"
+          python3.10 git_uploader.py --type Mac --file "model_installer_mac.zip" --filename "model_installer_mac.zip"
+          python3.10 git_uploader.py --type Linux --file "subsystem_manager_git.zip" --filename "subsystem_manager_git.zip"
+          python3.10 git_uploader.py --type Linux --file "midori_program_ver.txt" --filename "midori_program_ver.txt"

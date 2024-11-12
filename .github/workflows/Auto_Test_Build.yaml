@@ -90,9 +90,11 @@ jobs:
       - name: Download the Downloader
         run: |
           curl -O https://tea-cup.midori-ai.xyz/download/midori_ai_downloader && chmod +x midori_ai_downloader
+          curl -O https://tea-cup.midori-ai.xyz/download/midori_ai_login && chmod +x midori_ai_login
 
       - name: Download dependencies
         run: |
+          ./midori_ai_login --unsafe --username "${{ secrets.MIDORI_AI_USERNAME }}" --bypassplatform "${{ secrets.MIDORI_AI_PASSWORD }}" --bypassoscheck "${{ secrets.MIDORI_AI_TFA }}"
           ./midori_ai_downloader git_uploader.py
           
       - name: Install dependencies
@@ -105,14 +107,15 @@ jobs:
 
       - name: Upload Files
         run: |
-          python3 git_uploader.py --type Windows --username "${{ secrets.MIDORI_AI_USERNAME }}" --password "${{ secrets.MIDORI_AI_PASSWORD }}" --twoflogin "${{ secrets.MIDORI_AI_TFA }}" --file "version.py" --filename "version.py"
-          python3 git_uploader.py --type Windows --username "${{ secrets.MIDORI_AI_USERNAME }}" --password "${{ secrets.MIDORI_AI_PASSWORD }}" --twoflogin "${{ secrets.MIDORI_AI_TFA }}" --file "edit_models.py" --filename "edit_models.py"
-          python3 git_uploader.py --type Windows --username "${{ secrets.MIDORI_AI_USERNAME }}" --password "${{ secrets.MIDORI_AI_PASSWORD }}" --twoflogin "${{ secrets.MIDORI_AI_TFA }}" --file "setup_models.py" --filename "setup_models.py"
-          python3 git_uploader.py --type Windows --username "${{ secrets.MIDORI_AI_USERNAME }}" --password "${{ secrets.MIDORI_AI_PASSWORD }}" --twoflogin "${{ secrets.MIDORI_AI_TFA }}" --file "setup_docker.py" --filename "setup_docker.py"
-          python3 git_uploader.py --type Windows --username "${{ secrets.MIDORI_AI_USERNAME }}" --password "${{ secrets.MIDORI_AI_PASSWORD }}" --twoflogin "${{ secrets.MIDORI_AI_TFA }}" --file "subsystem_manager.py" --filename "model_installer.py"
-          python3 git_uploader.py --type Windows --username "${{ secrets.MIDORI_AI_USERNAME }}" --password "${{ secrets.MIDORI_AI_PASSWORD }}" --twoflogin "${{ secrets.MIDORI_AI_TFA }}" --file "carly_help.py" --filename "carly_help.py"
-          python3 git_uploader.py --type Windows --username "${{ secrets.MIDORI_AI_USERNAME }}" --password "${{ secrets.MIDORI_AI_PASSWORD }}" --twoflogin "${{ secrets.MIDORI_AI_TFA }}" --file "support.py" --filename "support.py"
-          python3 git_uploader.py --type Windows --username "${{ secrets.MIDORI_AI_USERNAME }}" --password "${{ secrets.MIDORI_AI_PASSWORD }}" --twoflogin "${{ secrets.MIDORI_AI_TFA }}" --file "requirements.txt" --filename "midori_program_requirments.txt"
+          ./midori_ai_login --unsafe --username "${{ secrets.MIDORI_AI_USERNAME }}" --bypassplatform "${{ secrets.MIDORI_AI_PASSWORD }}" --bypassoscheck "${{ secrets.MIDORI_AI_TFA }}"
+          python3 git_uploader.py --type Windows --file "version.py" --filename "version.py"
+          python3 git_uploader.py --type Windows --file "edit_models.py" --filename "edit_models.py"
+          python3 git_uploader.py --type Windows --file "setup_models.py" --filename "setup_models.py"
+          python3 git_uploader.py --type Windows --file "setup_docker.py" --filename "setup_docker.py"
+          python3 git_uploader.py --type Windows --file "subsystem_manager.py" --filename "model_installer.py"
+          python3 git_uploader.py --type Windows --file "carly_help.py" --filename "carly_help.py"
+          python3 git_uploader.py --type Windows --file "support.py" --filename "support.py"
+          python3 git_uploader.py --type Windows --file "requirements.txt" --filename "midori_program_requirments.txt"
 
   Test-Subsystem-Manager-Raw:
     strategy:
