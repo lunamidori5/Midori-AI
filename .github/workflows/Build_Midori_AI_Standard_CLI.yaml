@@ -1,4 +1,4 @@
-name: Update PixelArch CLI Programs
+name: Update Standard CLI Programs
 
 on:
   workflow_run:
