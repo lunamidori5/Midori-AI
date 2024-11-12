@@ -15,7 +15,7 @@ jobs:
         run: |
           yay -Syu --noconfirm python python-pip python-virtualenv
 
-      - name: Update Version Name
+      - name: Make Workfolders
         run: |
           mkdir -p /tmp/artifacts
           mkdir -p /tmp/workfolder
@@ -39,7 +39,7 @@ jobs:
       - name: Download the Uploader
         run: |
           cd /tmp/workfolder
-          os/bin/python helper_app.py git_uploader.py
+          sudo os/bin/python helper_app.py git_uploader.py
       
       - name: Build Programs
         run: |
