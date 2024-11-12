@@ -1,4 +1,5 @@
 import os
+import sys
 import json
 import hashlib
 import platform
@@ -28,11 +29,11 @@ elif os.path.exists(username_file):
         username = f.read()
 else:
     print("Please use ``-u`` with your username...")
-    exit()
+    sys.exit()
 
 if len(str(username)) < 6:
     print("Please make your username 6 or more letters...")
-    exit()
+    sys.exit()
 
 if pre_makeuser == "true":
     makeuser = True
@@ -119,7 +120,7 @@ try:
         
         with open(username_file, "w") as f:
             f.write(username)
-            
+
     else:
         error_message = response.text
         raise Exception(f"Server returned status code {response.status_code}: {error_message}")

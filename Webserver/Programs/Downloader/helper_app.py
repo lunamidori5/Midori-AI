@@ -4,6 +4,7 @@ import random
 import asyncio
 import argparse
 import requests
+import datetime
 import subprocess
 
 from tqdm import tqdm
@@ -24,10 +25,20 @@ api_key_file = "MIDORI_AI_API_KEY_TEMP"
 attempt_count = 0
 
 while api_key == None:
+
+    now = datetime.datetime.now()
+
     if os.path.exists(api_key_file):
-        with open(api_key_file, 'r') as f:
-            api_key = f.read()
-        break
+        last_modified = datetime.datetime.fromtimestamp(os.path.getmtime(api_key_file))
+
+        time_since_modified = now - last_modified
+
+        if time_since_modified.total_seconds() > 200:
+            os.remove(api_key_file)
+        else:
+            with open(api_key_file, 'r') as f:
+                api_key = f.read()
+            break
 
     if attempt_count > 1:
         print("Login failed, please try again manually")
