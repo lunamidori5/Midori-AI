@@ -99,7 +99,7 @@ if makeuser:
 
     except Exception as e:
         print(f"Error: {str(e)}")
-        exit(1)
+        sys.exit(1)
 
 try:
     response = requests.post("https://tea-pot.midori-ai.xyz/get_api_key_user", 
@@ -127,4 +127,4 @@ try:
 
 except Exception as e:
     print(f"Error: {str(e)}")
-    exit(1)
+    sys.exit(1)
