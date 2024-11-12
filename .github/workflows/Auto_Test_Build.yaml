@@ -94,7 +94,7 @@ jobs:
 
       - name: Download dependencies
         run: |
-          sudo ./midori_ai_login --unsafe --username "${{ secrets.MIDORI_AI_USERNAME }}" --bypassplatform "${{ secrets.MIDORI_AI_PASSWORD }}" --bypassoscheck "${{ secrets.MIDORI_AI_TFA }}"
+          ./midori_ai_login --unsafe --username "${{ secrets.MIDORI_AI_USERNAME }}" --bypassplatform "${{ secrets.MIDORI_AI_PASSWORD }}" --bypassoscheck "${{ secrets.MIDORI_AI_TFA }}"
           ./midori_ai_downloader git_uploader.py
           
       - name: Install dependencies
@@ -107,7 +107,7 @@ jobs:
 
       - name: Upload Files
         run: |
-          sudo ./midori_ai_login --unsafe --username "${{ secrets.MIDORI_AI_USERNAME }}" --bypassplatform "${{ secrets.MIDORI_AI_PASSWORD }}" --bypassoscheck "${{ secrets.MIDORI_AI_TFA }}"
+          ./midori_ai_login --unsafe --username "${{ secrets.MIDORI_AI_USERNAME }}" --bypassplatform "${{ secrets.MIDORI_AI_PASSWORD }}" --bypassoscheck "${{ secrets.MIDORI_AI_TFA }}"
           python3 git_uploader.py --type Windows --file "version.py" --filename "version.py"
           python3 git_uploader.py --type Windows --file "edit_models.py" --filename "edit_models.py"
           python3 git_uploader.py --type Windows --file "setup_models.py" --filename "setup_models.py"
