@@ -86,7 +86,7 @@ async def download_keys(COMMAND_SITE_KEY):
 
 
 def download_commands_new(COMMAND_SITE_COMMANDS):
-    response = requests.get(COMMAND_SITE_COMMANDS, headers={"Discord-ID": random_id, "api_key": get_api_key()}, stream=True)
+    response = requests.get(COMMAND_SITE_COMMANDS, headers={"Discord-ID": random_id, "api_key": get_api_key()}, stream=True, timeout=55)
 
     if response.status_code == 200:
         total_size = int(response.headers.get("Content-Length", 0))
