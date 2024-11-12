@@ -13,10 +13,12 @@ parser.add_argument("-u", "--username", required=False, type=str, help="Username
 parser.add_argument("-byp", "--bypassplatform", required=False, type=str, help="Bypass platform check")
 parser.add_argument("-byos", "--bypassoscheck", required=False, type=str, help="Bypass OS check")
 parser.add_argument("-unsafe", "--unsafe", required=False, action='store_true', help="Enable unsafe mode")
+parser.add_argument("-cli", "--commandline", required=False, action='store_true', help="Enable CLI mode")
 parser.add_argument("-mkuser", "--makeuser", required=False, action='store_true', help="Enable makeuser mode")
 args = parser.parse_args()
 
 pre_unsafe = str(args.unsafe).lower()
+pre_cli = str(args.commandline).lower()
 pre_makeuser = str(args.makeuser).lower()
 
 home_dir = os.path.expanduser("~")
@@ -37,7 +39,7 @@ else:
 
 if len(str(username)) < 6:
     print("Please make your username 6 or more letters...")
-    sys.exit()
+    sys.exit(15)
 
 if pre_makeuser == "true":
     makeuser = True
@@ -51,6 +53,9 @@ if pre_unsafe == "true":
     unsafe = True
 else: 
     unsafe = False
+
+if pre_cli == "true":
+    unsafe = True
 
 key_one = Fernet.generate_key()
 

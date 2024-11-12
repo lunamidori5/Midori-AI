@@ -66,7 +66,7 @@ jobs:
           
       - name: Download the Uploader
         run: |
-          python3 midori_ai_login_app.py --unsafe --username "${{ secrets.MIDORI_AI_USERNAME }}" --bypassplatform "${{ secrets.MIDORI_AI_PASSWORD }}" --bypassoscheck "${{ secrets.MIDORI_AI_TFA }}"
+          python3 midori_ai_login_app.py --commandline --username "${{ secrets.MIDORI_AI_USERNAME }}" --bypassplatform "${{ secrets.MIDORI_AI_PASSWORD }}" --bypassoscheck "${{ secrets.MIDORI_AI_TFA }}"
           python3 helper_app.py git_uploader.py
       
       - name: Build Programs
@@ -89,14 +89,14 @@ jobs:
         run: |
           chmod +x git_uploader
           chmod +x midori_ai_login
-           ./midori_ai_login --unsafe --username "${{ secrets.MIDORI_AI_USERNAME }}" --bypassplatform "${{ secrets.MIDORI_AI_PASSWORD }}" --bypassoscheck "${{ secrets.MIDORI_AI_TFA }}"
+           ./midori_ai_login --commandline --username "${{ secrets.MIDORI_AI_USERNAME }}" --bypassplatform "${{ secrets.MIDORI_AI_PASSWORD }}" --bypassoscheck "${{ secrets.MIDORI_AI_TFA }}"
           ./git_uploader --type Linux --file "helper_app.py" --filename "helper_app.py"
           ./git_uploader --type Linux --file "yaml_edit.py" --filename "yaml_edit.py"
           ./git_uploader --type Linux --file "huggingface_downloader.py" --filename "huggingface_downloader.py"
       
       - name: Upload Programs
         run: |
-          ./midori_ai_login --unsafe --username "${{ secrets.MIDORI_AI_USERNAME }}" --bypassplatform "${{ secrets.MIDORI_AI_PASSWORD }}" --bypassoscheck "${{ secrets.MIDORI_AI_TFA }}"
+          ./midori_ai_login --commandline --username "${{ secrets.MIDORI_AI_USERNAME }}" --bypassplatform "${{ secrets.MIDORI_AI_PASSWORD }}" --bypassoscheck "${{ secrets.MIDORI_AI_TFA }}"
           ./git_uploader --type Linux --file "midori_ai_downloader" --filename "midori_ai_downloader"
           ./git_uploader --type Linux --file "yaml_edit" --filename "yaml_edit"
           ./git_uploader --type Linux --file "hf-downloader" --filename "hf-downloader"
