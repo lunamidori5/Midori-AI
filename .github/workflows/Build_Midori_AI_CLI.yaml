@@ -1,4 +1,4 @@
-name: Update PixelArch and Cluster OS
+name: Update PixelArch CLI Programs
 
 on:
   workflow_dispatch:

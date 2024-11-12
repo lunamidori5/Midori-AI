@@ -1,4 +1,4 @@
-name: Update PixelArch and Cluster OS
+name: Update PixelGen
 
 on:
   workflow_dispatch:
