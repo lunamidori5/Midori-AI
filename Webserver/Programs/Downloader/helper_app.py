@@ -20,8 +20,12 @@ except:
 if discord_id == None:
     discord_id = str(random.randint(999999, 99999999999999))
 
+home_dir = os.path.expanduser("~")
+folder_path = os.path.join(home_dir, ".midoriai")
+os.makedirs(folder_path, exist_ok=True)
+
 api_key = None
-api_key_file = "MIDORI_AI_API_KEY_TEMP"
+api_key_file = os.path.join(folder_path, "MIDORI_AI_API_KEY_TEMP")
 attempt_count = 0
 
 while api_key == None:

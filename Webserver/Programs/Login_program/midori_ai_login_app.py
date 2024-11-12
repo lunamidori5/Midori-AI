@@ -19,8 +19,12 @@ args = parser.parse_args()
 pre_unsafe = str(args.unsafe).lower()
 pre_makeuser = str(args.makeuser).lower()
 
-username_file = "MIDORI_AI_USERNAME"
-api_key_file = "MIDORI_AI_API_KEY_TEMP"
+home_dir = os.path.expanduser("~")
+folder_path = os.path.join(home_dir, ".midoriai")
+os.makedirs(folder_path, exist_ok=True)
+
+username_file = os.path.join(folder_path, "MIDORI_AI_USERNAME")
+api_key_file = os.path.join(folder_path, "MIDORI_AI_API_KEY_TEMP")
 
 if hasattr(args, "username"):
     username = args.username
