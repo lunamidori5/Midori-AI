@@ -124,6 +124,8 @@ try:
         
         with open(username_file, "w") as f:
             f.write(username)
+        
+        print(f"API Keys saved... `{api_key_file}`")
 
     else:
         error_message = response.text
