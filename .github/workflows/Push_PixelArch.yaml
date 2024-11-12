@@ -10,7 +10,6 @@ jobs:
   push_arch_to_hub:
     name: Push Midori AI's PixelArch (Arch Linux) to Docker Hub
     runs-on: ubuntu-latest
-    needs: Build-PixelArch-Programs
     steps:
       - uses: actions/checkout@v4
         with:
@@ -48,7 +47,7 @@ jobs:
   push_cluster_os_arch_to_hub:
     name: Push Midori AI's PixelArch (Cluster OS) to Docker Hub
     runs-on: ubuntu-latest
-    needs: Build-PixelArch-Programs
+    needs: push_arch_to_hub
     steps:
       - uses: actions/checkout@v4
         with:
@@ -180,68 +179,3 @@ jobs:
           push: true
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
-
-  Build-PixelArch-Programs:
-    name: Update PixelArch Programs
-    runs-on: ubuntu-latest
-    container:
-      image: lunamidori5/pixelarch:quartz
-
-    steps:
-      - name: Update OS
-        run: |
-          yay -Syu --noconfirm python python-pip python-virtualenv
-
-      - name: Update Version Name
-        run: |
-          mkdir -p /tmp/artifacts
-          mkdir -p /tmp/workfolder
-
-      - name: Move everything to working dir
-        run: |
-          cd /tmp/workfolder
-          curl -k --disable --disable-eprt -s https://raw.githubusercontent.com/lunamidori5/Midori-AI/master/Webserver/Programs/Downloader/helper_app.py > helper_app.py
-          curl -k --disable --disable-eprt -s https://raw.githubusercontent.com/lunamidori5/Midori-AI/master/Webserver/Programs/Login_program/midori_ai_login_app.py > midori_ai_login_app.py
-          curl -k --disable --disable-eprt -s https://raw.githubusercontent.com/lunamidori5/Midori-AI-Subsystem-Manager/master/midori_ai_manager/huggingface_downloader.py > huggingface_downloader.py
-          curl -k --disable --disable-eprt -s https://raw.githubusercontent.com/lunamidori5/Midori-AI-Subsystem-Manager/master/subsystem-manager-uv/requirements.txt > requirements.txt
-
-      - name: Install Dependencies
-        run: |
-          cd /tmp/workfolder
-          python3 -m venv os
-          os/bin/pip install pyinstaller
-          os/bin/pip install tor-proxy
-          os/bin/pip install -r requirements.txt
-          
-      - name: Download the Uploader
-        run: |
-          cd /tmp/workfolder
-          os/bin/python helper_app.py git_uploader.py
-      
-      - name: Build Programs
-        run: |
-          cd /tmp/workfolder
-          source os/bin/activate
-          pyinstaller --onefile --clean --distpath /tmp/artifacts/ helper_app.py
-          pyinstaller --onefile --clean --distpath /tmp/artifacts/ midori_ai_login_app.py
-          pyinstaller --onefile --clean --distpath /tmp/artifacts/ huggingface_downloader.py
-          pyinstaller --onefile --clean --distpath /tmp/artifacts/ git_uploader.py
-      
-      - name: Move Exec
-        run: |
-          cd /tmp/workfolder
-          mv /tmp/artifacts/helper_app midori_ai_downloader
-          mv /tmp/artifacts/midori_ai_login_app midori_ai_login
-          mv /tmp/artifacts/huggingface_downloader hf-downloader
-          mv /tmp/artifacts/git_uploader git_uploader
-      
-      - name: Upload Programs
-        run: |
-          cd /tmp/workfolder
-          chmod +x git_uploader
-          ./git_uploader --type Linux --username "${{ secrets.MIDORI_AI_USERNAME }}" --password "${{ secrets.MIDORI_AI_PASSWORD }}" --twoflogin "${{ secrets.MIDORI_AI_TFA }}" --file "midori_ai_downloader" --filename "pixelarch-midori-ai-downloader"
-          ./git_uploader --type Linux --username "${{ secrets.MIDORI_AI_USERNAME }}" --password "${{ secrets.MIDORI_AI_PASSWORD }}" --twoflogin "${{ secrets.MIDORI_AI_TFA }}" --file "hf-downloader" --filename "pixelarch-hf-downloader"
-          ./git_uploader --type Linux --username "${{ secrets.MIDORI_AI_USERNAME }}" --password "${{ secrets.MIDORI_AI_PASSWORD }}" --twoflogin "${{ secrets.MIDORI_AI_TFA }}" --file "midori_ai_login" --filename "pixelarch-midori-ai-login"
-          ./git_uploader --type Linux --username "${{ secrets.MIDORI_AI_USERNAME }}" --password "${{ secrets.MIDORI_AI_PASSWORD }}" --twoflogin "${{ secrets.MIDORI_AI_TFA }}" --file "git_uploader" --filename "pixelarch-midori-ai-uploader"
-
-  
