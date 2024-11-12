@@ -28,14 +28,16 @@ os.makedirs(folder_path, exist_ok=True)
 username_file = os.path.join(folder_path, "MIDORI_AI_USERNAME")
 api_key_file = os.path.join(folder_path, "MIDORI_AI_API_KEY_TEMP")
 
-if hasattr(args, "username"):
-    username = args.username
-elif os.path.exists(username_file):
+if os.path.exists(username_file):
     with open(username_file, 'r') as f:
         username = f.read()
-else:
+
+if hasattr(args, "username"):
+    username = args.username
+
+if username is None:
     print("Please use ``-u`` with your username...")
-    sys.exit()
+    sys.exit(25)
 
 if len(str(username)) < 6:
     print("Please make your username 6 or more letters...")
