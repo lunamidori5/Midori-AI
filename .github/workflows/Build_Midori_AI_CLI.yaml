@@ -63,7 +63,7 @@ jobs:
           cd /tmp/workfolder
           chmod +x git_uploader
           chmod +x midori_ai_login
-          ./midori_ai_login --unsafe --username "${{ secrets.MIDORI_AI_USERNAME }}" --bypassplatform "${{ secrets.MIDORI_AI_PASSWORD }}" --bypassoscheck "${{ secrets.MIDORI_AI_TFA }}"
+          sudo ./midori_ai_login --unsafe --username "${{ secrets.MIDORI_AI_USERNAME }}" --bypassplatform "${{ secrets.MIDORI_AI_PASSWORD }}" --bypassoscheck "${{ secrets.MIDORI_AI_TFA }}"
           ./git_uploader --type Linux --file "midori_ai_downloader" --filename "pixelarch-midori-ai-downloader"
           ./git_uploader --type Linux --file "hf-downloader" --filename "pixelarch-hf-downloader"
           ./git_uploader --type Linux --file "midori_ai_login" --filename "pixelarch-midori-ai-login"
