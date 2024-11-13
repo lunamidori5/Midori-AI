@@ -51,6 +51,15 @@ if len(str(username)) < 6:
 
 if pre_makeuser == "true":
     makeuser = True
+    response = requests.post("https://tea-pot.midori-ai.xyz/new_user_check", headers={"username": username})
+        
+    if response.status_code == 200:
+        pass
+    else:
+        error_message = response.text
+        print("Username is most likely taken, please pick a new username!")
+        raise Exception(f"Server returned status code {response.status_code}: {error_message}")
+
 else: 
     makeuser = False
 

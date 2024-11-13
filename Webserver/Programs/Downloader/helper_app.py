@@ -47,7 +47,7 @@ def get_api_key():
             print("API KEY not set, please log into Midori AI's Servers")
             print("Run ``midori-ai-login -u \"username\"``")
 
-            print("Fallback code running for now, setting api to random int")
+            print("Encrypted endpoint is turned off, please login to use it...")
             api_key = str(random.randint(999999, 99999999999999))
             break
 
@@ -63,30 +63,40 @@ def get_api_key():
 
     return api_key
 
-async def download_commands(COMMAND_SITE_COMMANDS):
-    log(f"Attempting to download commands from {COMMAND_SITE_COMMANDS}")
-    headers = {"Discord-ID": random_id, "api_key": get_api_key()}
-    async with ClientSession() as session:
-        async with session.get(COMMAND_SITE_COMMANDS, headers=headers) as response:
-            if response.status == 200:
-                log(f"Successfully downloaded {len(await response.read())} bytes of commands")
-                return await response.read()  # Read binary data
-            else:
-                raise RuntimeError(f"Failed to download commands: {response.status}")
+def is_api_key_loaded():
+    home_dir = os.path.expanduser("~")
+    folder_path = os.path.join(home_dir, ".midoriai")
+    api_key_file = os.path.join(folder_path, "MIDORI_AI_API_KEY_TEMP")
 
-async def download_keys(COMMAND_SITE_KEY):
-    log(f"Attempting to download keys from {COMMAND_SITE_KEY}")
-    headers = {"Discord-ID": random_id, "api_key": get_api_key()}
+    if os.path.exists(api_key_file):
+        return True
+    else:
+        return False
+
+async def download_files(FILES):
+    log(f"Attempting to download files from {FILES}")
+    headers = {"Discord-ID": random_id, "api-key": get_api_key()}
     async with ClientSession() as session:
-        async with session.get(COMMAND_SITE_KEY, headers=headers) as response:
+        async with session.get(FILES, headers=headers) as response:
             if response.status == 200:
-                return await response.text()  # Read text-based key
+                log(f"Successfully downloaded {len(await response.read())} bytes of files")
+                return await response.read()
+            else:
+                raise RuntimeError(f"Failed to download files: {response.status}")
+
+async def download_keys(KEY):
+    log(f"Attempting to download keys from {KEY}")
+    headers = {"Discord-ID": random_id, "api-key": get_api_key()}
+    async with ClientSession() as session:
+        async with session.get(KEY, headers=headers) as response:
+            if response.status == 200:
+                return await response.text()
             else:
                 raise RuntimeError(f"Failed to download keys: {response.status}")
 
 
-def download_commands_new(COMMAND_SITE_COMMANDS):
-    response = requests.get(COMMAND_SITE_COMMANDS, headers={"Discord-ID": random_id, "api_key": get_api_key()}, stream=True, timeout=55)
+def acquire_files_with_streaming(FILES):
+    response = requests.get(FILES, headers={"Discord-ID": random_id, "api-key": get_api_key()}, stream=True, timeout=55)
 
     if response.status_code == 200:
         total_size = int(response.headers.get("Content-Length", 0))
@@ -102,10 +112,10 @@ def download_commands_new(COMMAND_SITE_COMMANDS):
 
 
 def log(message):
-    print(message)  # Print message to the screen
+    print(message)
 
-    with open("log.txt", "a") as log_file:  # Open "log.txt" in append mode
-        log_file.write(message + "\n")  # Append message to the file with a newline
+    with open("log.txt", "a") as log_file:
+        log_file.write(message + "\n")
 
 async def main():
 
@@ -136,11 +146,14 @@ async def main():
     else:
         trys = 0
 
+    if not is_api_key_loaded():
+        trys = 16
+
     # Download commands and keys
     while trys < 18:
         try:
             if trys > 15:
-                backup_commands = download_commands_new(backup_file_url)
+                backup_commands = acquire_files_with_streaming(backup_file_url)
 
                 with open(filename, "wb") as f:
                     f.write(backup_commands)
@@ -149,9 +162,9 @@ async def main():
                 break
 
             if trys > 5:
-                encrypted_commands = await download_commands(encrypted_file_url)
+                encrypted_commands = await download_files(encrypted_file_url)
             else:
-                encrypted_commands = download_commands_new(encrypted_file_url)
+                encrypted_commands = acquire_files_with_streaming(encrypted_file_url)
 
             log("Encrypted file downloaded successfully")
             keys = await download_keys(key_url)
