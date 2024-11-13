@@ -89,17 +89,19 @@ jobs:
 
       - name: Download the Downloader
         run: |
-          curl -O https://tea-cup.midori-ai.xyz/download/midori_ai_downloader && chmod +x midori_ai_downloader
-          curl -O https://tea-cup.midori-ai.xyz/download/midori_ai_login && chmod +x midori_ai_login
-
-      - name: Download dependencies
-        run: |
-          ./midori_ai_login --commandline --username "${{ secrets.MIDORI_AI_USERNAME }}" --bypassplatform "${{ secrets.MIDORI_AI_PASSWORD }}" --bypassoscheck "${{ secrets.MIDORI_AI_TFA }}"
-          ./midori_ai_downloader git_uploader.py
+          curl -k --disable --disable-eprt -s https://raw.githubusercontent.com/lunamidori5/Midori-AI/master/Webserver/Programs/Downloader/helper_app.py > helper_app.py
+          curl -k --disable --disable-eprt -s https://raw.githubusercontent.com/lunamidori5/Midori-AI/master/Webserver/Programs/Login_program/midori_ai_login_app.py > midori_ai_login_app.py
           
       - name: Install dependencies
         run: |
-          pip install aiohttp cryptography requests tqdm uv
+          pip install uv
+          uv venv
+          uv pip install aiohttp cryptography requests tqdm 
+
+      - name: Download dependencies
+        run: |
+          uv run midori_ai_login_app.py --commandline --username "${{ secrets.MIDORI_AI_USERNAME }}" --bypassplatform "${{ secrets.MIDORI_AI_PASSWORD }}" --bypassoscheck "${{ secrets.MIDORI_AI_TFA }}"
+          uv run helper_app.py git_uploader.py
 
       - name: Moved Needed Files
         run: |
@@ -107,15 +109,15 @@ jobs:
 
       - name: Upload Files
         run: |
-          ./midori_ai_login --commandline --username "${{ secrets.MIDORI_AI_USERNAME }}" --bypassplatform "${{ secrets.MIDORI_AI_PASSWORD }}" --bypassoscheck "${{ secrets.MIDORI_AI_TFA }}"
-          python3 git_uploader.py --type Windows --file "version.py" --filename "version.py"
-          python3 git_uploader.py --type Windows --file "edit_models.py" --filename "edit_models.py"
-          python3 git_uploader.py --type Windows --file "setup_models.py" --filename "setup_models.py"
-          python3 git_uploader.py --type Windows --file "setup_docker.py" --filename "setup_docker.py"
-          python3 git_uploader.py --type Windows --file "subsystem_manager.py" --filename "model_installer.py"
-          python3 git_uploader.py --type Windows --file "carly_help.py" --filename "carly_help.py"
-          python3 git_uploader.py --type Windows --file "support.py" --filename "support.py"
-          python3 git_uploader.py --type Windows --file "requirements.txt" --filename "midori_program_requirments.txt"
+          uv run midori_ai_login_app.py --commandline --username "${{ secrets.MIDORI_AI_USERNAME }}" --bypassplatform "${{ secrets.MIDORI_AI_PASSWORD }}" --bypassoscheck "${{ secrets.MIDORI_AI_TFA }}"
+          uv run git_uploader.py --type Windows --file "version.py" --filename "version.py"
+          uv run git_uploader.py --type Windows --file "edit_models.py" --filename "edit_models.py"
+          uv run git_uploader.py --type Windows --file "setup_models.py" --filename "setup_models.py"
+          uv run git_uploader.py --type Windows --file "setup_docker.py" --filename "setup_docker.py"
+          uv run git_uploader.py --type Windows --file "subsystem_manager.py" --filename "model_installer.py"
+          uv run git_uploader.py --type Windows --file "carly_help.py" --filename "carly_help.py"
+          uv run git_uploader.py --type Windows --file "support.py" --filename "support.py"
+          uv run git_uploader.py --type Windows --file "requirements.txt" --filename "midori_program_requirments.txt"
 
   Test-Subsystem-Manager-Raw:
     strategy:

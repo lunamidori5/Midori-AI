@@ -15,7 +15,7 @@ jobs:
     steps:
       - name: Update OS
         run: |
-          yay -Syu --noconfirm python python-pip python-virtualenv
+          yay -Syu --noconfirm python python-pip python-virtualenv uv
 
       - name: Make Workfolders
         run: |
