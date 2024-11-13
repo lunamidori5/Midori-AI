@@ -75,7 +75,7 @@ def is_api_key_loaded():
 
 async def download_files(FILES):
     log(f"Attempting to download files from {FILES}")
-    headers = {"Discord-ID": random_id, "api-key": get_api_key()}
+    headers = {"Discord-ID": random_id, "key": get_api_key()}
     async with ClientSession() as session:
         async with session.get(FILES, headers=headers) as response:
             if response.status == 200:
@@ -86,7 +86,7 @@ async def download_files(FILES):
 
 async def download_keys(KEY):
     log(f"Attempting to download keys from {KEY}")
-    headers = {"Discord-ID": random_id, "api-key": get_api_key()}
+    headers = {"Discord-ID": random_id, "key": get_api_key()}
     async with ClientSession() as session:
         async with session.get(KEY, headers=headers) as response:
             if response.status == 200:
@@ -96,7 +96,7 @@ async def download_keys(KEY):
 
 
 def acquire_files_with_streaming(FILES):
-    response = requests.get(FILES, headers={"Discord-ID": random_id, "api-key": get_api_key()}, stream=True, timeout=55)
+    response = requests.get(FILES, headers={"Discord-ID": random_id, "key": get_api_key()}, stream=True, timeout=55)
 
     if response.status_code == 200:
         total_size = int(response.headers.get("Content-Length", 0))
