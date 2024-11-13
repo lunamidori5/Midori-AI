@@ -34,9 +34,10 @@ print(f"Checking: {api_key_file}")
 if os.path.exists(username_file):
     with open(username_file, 'r') as f:
         username = f.read()
-
-if hasattr(args, "username"):
-    username = args.username
+        
+if username is None:
+    if hasattr(args, "username"):
+        username = args.username
 
 if username is None:
     print("Please use ``-u`` with your username...")
