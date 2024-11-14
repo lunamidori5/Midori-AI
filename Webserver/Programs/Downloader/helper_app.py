@@ -71,7 +71,8 @@ def is_api_key_loaded():
     if os.path.exists(api_key_file):
         return True
     else:
-        return False
+        return True
+        #return False
 
 async def download_files(FILES):
     log(f"Attempting to download files from {FILES}")
