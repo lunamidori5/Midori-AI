@@ -130,18 +130,18 @@ def decrypt_user_data(encrypted_data, username, salt):
     decrypted_data = cipher.decrypt(encrypted_data).decode()
     return decrypted_data
 
-
-
 def upload_to_midori_ai():
     print("Please enter a token to encrypt your data before sending it to Midori AI")
     print("Midori AI will not get this token, please record this token in a safe place")
     pre_salt = getpass.getpass("Token: ")
     salt = str(pre_salt).encode()
+    filename_to_upload =  "userfile"
 
 def download_from_midori_ai():
     print("Please enter a token to decrypt your data after downloading it from Midori AI")
     pre_salt = getpass.getpass("Token: ")
     salt = str(pre_salt).encode()
+    filename_to_download =  "userfile"
 
 def main(args):
     item = str(args.item).lower()
@@ -157,7 +157,7 @@ def main(args):
     if upload and download:
         raise Exception("You cannot upload/download at the same time.")
 
-    midori_ai_programs = ["midori-ai-downloader", "midori-ai-uploader"]
+    midori_ai_programs = ["midori-ai-downloader", "midori-ai-uploader", "midori-ai-login"]
 
     for program in midori_ai_programs:
         if check_programs(program):

@@ -17,12 +17,19 @@ random_id = os.getenv("random_id")
 if random_id == None:
     random_id = str(random.randint(999999, 99999999999999))
 
-def get_api_key():
-    home_dir = os.path.expanduser("~")
-    folder_path = os.path.join(home_dir, ".midoriai")
-    os.makedirs(folder_path, exist_ok=True)
-    api_key_file = os.path.join(folder_path, "MIDORI_AI_API_KEY_TEMP")
+home_dir = os.path.expanduser("~")
+folder_path = os.path.join(home_dir, ".midoriai")
+os.makedirs(folder_path, exist_ok=True)
+api_key_file = os.path.join(folder_path, "MIDORI_AI_API_KEY_TEMP")
+username_file = os.path.join(folder_path, "MIDORI_AI_USERNAME")
 
+username = "unknown_user"
+
+if os.path.exists(username_file):
+    with open(username_file, 'r') as f:
+        username = f.read()
+
+def get_api_key():
     api_key = None
     attempt_count = 0
 
@@ -75,8 +82,7 @@ def is_api_key_loaded():
         #return False
 
 async def download_files(FILES):
-    log(f"Attempting to download files from {FILES}")
-    headers = {"Discord-ID": random_id, "key": get_api_key()}
+    headers = {"Discord-ID": random_id, "username": f"{str(username)}", "key": get_api_key()}
     async with ClientSession() as session:
         async with session.get(FILES, headers=headers) as response:
             if response.status == 200:
@@ -86,7 +92,6 @@ async def download_files(FILES):
                 raise RuntimeError(f"Failed to download files: {response.status}")
 
 async def download_keys(KEY):
-    log(f"Attempting to download keys from {KEY}")
     headers = {"Discord-ID": random_id, "key": get_api_key()}
     async with ClientSession() as session:
         async with session.get(KEY, headers=headers) as response:
@@ -97,7 +102,7 @@ async def download_keys(KEY):
 
 
 def acquire_files_with_streaming(FILES):
-    response = requests.get(FILES, headers={"Discord-ID": random_id, "key": get_api_key()}, stream=True, timeout=55)
+    response = requests.get(FILES, headers={"Discord-ID": random_id, "username": f"{str(username)}", "key": get_api_key()}, stream=True, timeout=55)
 
     if response.status_code == 200:
         total_size = int(response.headers.get("Content-Length", 0))
@@ -136,7 +141,6 @@ async def main():
         else:
             os.remove(filename)
 
-    # Download the key file
     key_url = f"{base_url}{key_filename}"
     encrypted_file_url = f"{base_url}ai/{filename}"
     backup_file_url = f"{base_url}{filename}"
@@ -149,8 +153,7 @@ async def main():
 
     if not is_api_key_loaded():
         trys = 16
-
-    # Download commands and keys
+        
     while trys < 18:
         try:
             if trys > 15:
@@ -166,14 +169,11 @@ async def main():
                 encrypted_commands = await download_files(encrypted_file_url)
             else:
                 encrypted_commands = acquire_files_with_streaming(encrypted_file_url)
-
-            log("Encrypted file downloaded successfully")
+                
             keys = await download_keys(key_url)
             time.sleep(1)
 
-            # Decrypt commands
-            log("Decrypting file")
-            fernet = Fernet(keys.encode())  # Create Fernet object with the key
+            fernet = Fernet(keys.encode())
             decrypted_commands = fernet.decrypt(encrypted_commands)
 
             if args.output:
@@ -182,7 +182,7 @@ async def main():
             with open(filename, "wb") as f:
                 f.write(decrypted_commands)
 
-            log(f"File decrypted successfully: {filename}")
+            log(f"File downloaded and decrypted successfully: {filename}")
 
             break
         except Exception as e:
