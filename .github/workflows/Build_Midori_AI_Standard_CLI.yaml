@@ -28,7 +28,7 @@ jobs:
       
       - name: Install Dependencies
         run: |
-          pip install pyinstaller tor-proxy
+          pip install pyinstaller tor-proxy pytz
           pip install -r ./Subsystem-Manager/subsystem-manager-uv/requirements.txt
           
       - name: Download the Uploader
