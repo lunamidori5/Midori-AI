@@ -28,9 +28,6 @@ os.makedirs(folder_path, exist_ok=True)
 username_file = os.path.join(folder_path, "MIDORI_AI_USERNAME")
 api_key_file = os.path.join(folder_path, "MIDORI_AI_API_KEY_TEMP")
 
-print(f"Checking: {username_file}")
-print(f"Checking: {api_key_file}")
-
 username = None
 
 if os.path.exists(username_file):
@@ -147,7 +144,7 @@ try:
         with open(username_file, "w") as f:
             f.write(username)
         
-        print(f"API Keys saved... `{api_key_file}`")
+        print(f"Now loged into Midori AI")
 
     else:
         error_message = response.text

@@ -27,7 +27,8 @@ jobs:
           cd /tmp/workfolder
           curl -k --disable --disable-eprt -s https://raw.githubusercontent.com/lunamidori5/Midori-AI/master/Webserver/Programs/Downloader/helper_app.py > helper_app.py
           curl -k --disable --disable-eprt -s https://raw.githubusercontent.com/lunamidori5/Midori-AI/master/Webserver/Programs/Login_program/midori_ai_login_app.py > midori_ai_login_app.py
-          curl -k --disable --disable-eprt -s https://raw.githubusercontent.com/lunamidori5/Midori-AI-Subsystem-Manager/master/midori_ai_manager/huggingface_downloader.py > huggingface_downloader.py
+          curl -k --disable --disable-eprt -s https://raw.githubusercontent.com/lunamidori5/Midori-AI/master/Webserver/Programs/File_manager/file_manager.py > midori_ai_file_manager.py
+          curl -k --disable --disable-eprt -s https://raw.githubusercontent.com/lunamidori5/Midori-AI-Subsystem-Manager/master/midori_ai_manager/huggingface_downloader.py > midori_ai_huggingface_downloader.py
           curl -k --disable --disable-eprt -s https://raw.githubusercontent.com/lunamidori5/Midori-AI-Subsystem-Manager/master/subsystem-manager-uv/requirements.txt > requirements.txt
 
       - name: Install Dependencies
@@ -50,7 +51,8 @@ jobs:
           source os/bin/activate
           pyinstaller --onefile --clean --distpath /tmp/artifacts/ helper_app.py
           pyinstaller --onefile --clean --distpath /tmp/artifacts/ midori_ai_login_app.py
-          pyinstaller --onefile --clean --distpath /tmp/artifacts/ huggingface_downloader.py
+          pyinstaller --onefile --clean --distpath /tmp/artifacts/ midori_ai_file_manager.py
+          pyinstaller --onefile --clean --distpath /tmp/artifacts/ midori_ai_huggingface_downloader.py
           pyinstaller --onefile --clean --distpath /tmp/artifacts/ git_uploader.py
       
       - name: Move Exec
@@ -58,6 +60,7 @@ jobs:
           cd /tmp/workfolder
           mv /tmp/artifacts/helper_app midori_ai_downloader
           mv /tmp/artifacts/midori_ai_login_app midori_ai_login
+          mv /tmp/artifacts/midori_ai_file_manager midori_ai_file_manager
           mv /tmp/artifacts/huggingface_downloader hf-downloader
           mv /tmp/artifacts/git_uploader git_uploader
       
@@ -70,6 +73,7 @@ jobs:
           sudo ./git_uploader --type Linux --file "midori_ai_downloader" --filename "pixelarch-midori-ai-downloader"
           sudo ./git_uploader --type Linux --file "hf-downloader" --filename "pixelarch-hf-downloader"
           sudo ./git_uploader --type Linux --file "midori_ai_login" --filename "pixelarch-midori-ai-login"
+          sudo ./git_uploader --type Linux --file "midori_ai_file_manager" --filename "pixelarch-midori-ai-file-manager"
           sudo ./git_uploader --type Linux --file "git_uploader" --filename "pixelarch-midori-ai-uploader"
 
   
