@@ -37,7 +37,7 @@ jobs:
         run: |
           cd /tmp/workfolder
           python3 -m venv os
-          os/bin/pip install pyinstaller tor-proxy
+          os/bin/pip install pyinstaller tor-proxy pytz
           os/bin/pip install -r requirements.txt
           
       - name: Download the Uploader
