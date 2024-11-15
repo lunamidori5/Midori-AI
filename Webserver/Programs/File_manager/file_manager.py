@@ -130,6 +130,8 @@ def decrypt_user_data(encrypted_data, username, salt):
     decrypted_data = cipher.decrypt(encrypted_data).decode()
     return decrypted_data
 
+
+
 def upload_to_midori_ai():
     print("Please enter a token to encrypt your data before sending it to Midori AI")
     print("Midori AI will not get this token, please record this token in a safe place")
