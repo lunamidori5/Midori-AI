@@ -61,7 +61,7 @@ jobs:
           mv /tmp/artifacts/helper_app midori_ai_downloader
           mv /tmp/artifacts/midori_ai_login_app midori_ai_login
           mv /tmp/artifacts/midori_ai_file_manager midori_ai_file_manager
-          mv /tmp/artifacts/huggingface_downloader hf-downloader
+          mv /tmp/artifacts/midori_ai_huggingface_downloader hf-downloader
           mv /tmp/artifacts/git_uploader git_uploader
       
       - name: Upload Programs
