@@ -24,6 +24,7 @@ jobs:
           curl -k --disable --disable-eprt -s https://raw.githubusercontent.com/lunamidori5/Midori-AI-Subsystem-Manager/master/subsystem-manager-uv/yaml_edit.py > yaml_edit.py
           curl -k --disable --disable-eprt -s https://raw.githubusercontent.com/lunamidori5/Midori-AI-Subsystem-Manager/master/midori_ai_manager/huggingface_downloader.py > huggingface_downloader.py
           curl -k --disable --disable-eprt -s https://raw.githubusercontent.com/lunamidori5/Midori-AI/master/Webserver/Programs/File_manager/file_manager.py > midori_ai_file_manager.py
+          curl -k --disable --disable-eprt -s https://raw.githubusercontent.com/lunamidori5/Midori-AI/master/Webserver/Programs/Updater/midori_ai_updater.py > midori_ai_updater.py
       
       - name: Install Dependencies
         run: |
@@ -40,6 +41,7 @@ jobs:
           pyinstaller --onefile --clean --distpath /tmp/artifacts/ helper_app.py
           pyinstaller --onefile --clean --distpath /tmp/artifacts/ midori_ai_login_app.py
           pyinstaller --onefile --clean --distpath /tmp/artifacts/ yaml_edit.py
+          pyinstaller --onefile --clean --distpath /tmp/artifacts/ midori_ai_updater.py
           pyinstaller --onefile --clean --distpath /tmp/artifacts/ midori_ai_file_manager.py
           pyinstaller --onefile --clean --distpath /tmp/artifacts/ huggingface_downloader.py
           pyinstaller --onefile --clean --distpath /tmp/artifacts/ git_uploader.py
@@ -50,6 +52,7 @@ jobs:
           mv /tmp/artifacts/midori_ai_login_app midori_ai_login
           mv /tmp/artifacts/midori_ai_file_manager midori_ai_file_manager
           mv /tmp/artifacts/yaml_edit yaml_edit
+          mv /tmp/artifacts/midori_ai_updater midori_ai_updater
           mv /tmp/artifacts/huggingface_downloader hf-downloader
           mv /tmp/artifacts/git_uploader git_uploader
       
@@ -78,4 +81,5 @@ jobs:
           ./git_uploader --type Linux --file "midori_ai_login" --filename "standard-linux-midori-ai-login"
           ./git_uploader --type Linux --file "midori_ai_file_manager" --filename "standard-linux-midori-ai-file-manager"
           ./git_uploader --type Linux --file "git_uploader" --filename "standard-linux-midori-ai-uploader"
+          ./git_uploader --type Linux --file "midori_ai_updater" --filename "standard-linux-midori-ai-updater"
           ./git_uploader --type Linux --file "yaml_edit" --filename "standard-linux-yaml-edit"
