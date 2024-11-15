@@ -16,7 +16,6 @@ jobs:
       - name: Update Version Name
         run: |
           mkdir -p /tmp/artifacts
-          export MIDORI_AI_API_KEY_TEMP=123456789
 
       - name: Move everything to working dir
         run: |
@@ -24,11 +23,11 @@ jobs:
           curl -k --disable --disable-eprt -s https://raw.githubusercontent.com/lunamidori5/Midori-AI/master/Webserver/Programs/Login_program/midori_ai_login_app.py > midori_ai_login_app.py
           curl -k --disable --disable-eprt -s https://raw.githubusercontent.com/lunamidori5/Midori-AI-Subsystem-Manager/master/subsystem-manager-uv/yaml_edit.py > yaml_edit.py
           curl -k --disable --disable-eprt -s https://raw.githubusercontent.com/lunamidori5/Midori-AI-Subsystem-Manager/master/midori_ai_manager/huggingface_downloader.py > huggingface_downloader.py
+          curl -k --disable --disable-eprt -s https://raw.githubusercontent.com/lunamidori5/Midori-AI/master/Webserver/Programs/File_manager/file_manager.py > midori_ai_file_manager.py
       
       - name: Install Dependencies
         run: |
-          pip install pyinstaller
-          pip install tor-proxy
+          pip install pyinstaller tor-proxy
           pip install -r ./Subsystem-Manager/subsystem-manager-uv/requirements.txt
           
       - name: Download the Uploader
@@ -41,6 +40,7 @@ jobs:
           pyinstaller --onefile --clean --distpath /tmp/artifacts/ helper_app.py
           pyinstaller --onefile --clean --distpath /tmp/artifacts/ midori_ai_login_app.py
           pyinstaller --onefile --clean --distpath /tmp/artifacts/ yaml_edit.py
+          pyinstaller --onefile --clean --distpath /tmp/artifacts/ midori_ai_file_manager.py
           pyinstaller --onefile --clean --distpath /tmp/artifacts/ huggingface_downloader.py
           pyinstaller --onefile --clean --distpath /tmp/artifacts/ git_uploader.py
       
@@ -48,6 +48,7 @@ jobs:
         run: |
           mv /tmp/artifacts/helper_app midori_ai_downloader
           mv /tmp/artifacts/midori_ai_login_app midori_ai_login
+          mv /tmp/artifacts/midori_ai_file_manager midori_ai_file_manager
           mv /tmp/artifacts/yaml_edit yaml_edit
           mv /tmp/artifacts/huggingface_downloader hf-downloader
           mv /tmp/artifacts/git_uploader git_uploader
@@ -61,10 +62,20 @@ jobs:
           ./git_uploader --type Linux --file "yaml_edit.py" --filename "yaml_edit.py"
           ./git_uploader --type Linux --file "huggingface_downloader.py" --filename "huggingface_downloader.py"
       
-      - name: Upload Programs
+      - name: Upload Programs (Old)
         run: |
           ./midori_ai_login --commandline --username "${{ secrets.MIDORI_AI_USERNAME }}" --bypassplatform "${{ secrets.MIDORI_AI_PASSWORD }}" --bypassoscheck "${{ secrets.MIDORI_AI_TFA }}"
           ./git_uploader --type Linux --file "midori_ai_downloader" --filename "midori_ai_downloader"
           ./git_uploader --type Linux --file "yaml_edit" --filename "yaml_edit"
           ./git_uploader --type Linux --file "hf-downloader" --filename "hf-downloader"
           ./git_uploader --type Linux --file "midori_ai_login" --filename "midori_ai_login"
+      
+      - name: Upload Programs (New)
+        run: |
+          ./midori_ai_login --commandline --username "${{ secrets.MIDORI_AI_USERNAME }}" --bypassplatform "${{ secrets.MIDORI_AI_PASSWORD }}" --bypassoscheck "${{ secrets.MIDORI_AI_TFA }}"
+          ./git_uploader --type Linux --file "midori_ai_downloader" --filename "standard-linux-midori-ai-downloader"
+          ./git_uploader --type Linux --file "hf-downloader" --filename "standard-linux-hf-downloader"
+          ./git_uploader --type Linux --file "midori_ai_login" --filename "standard-linux-midori-ai-login"
+          ./git_uploader --type Linux --file "midori_ai_file_manager" --filename "standard-linux-midori-ai-file-manager"
+          ./git_uploader --type Linux --file "git_uploader" --filename "standard-linux-midori-ai-uploader"
+          ./git_uploader --type Linux --file "yaml_edit" --filename "standard-linux-yaml-edit"

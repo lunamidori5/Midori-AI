@@ -29,14 +29,14 @@ jobs:
           curl -k --disable --disable-eprt -s https://raw.githubusercontent.com/lunamidori5/Midori-AI/master/Webserver/Programs/Login_program/midori_ai_login_app.py > midori_ai_login_app.py
           curl -k --disable --disable-eprt -s https://raw.githubusercontent.com/lunamidori5/Midori-AI/master/Webserver/Programs/File_manager/file_manager.py > midori_ai_file_manager.py
           curl -k --disable --disable-eprt -s https://raw.githubusercontent.com/lunamidori5/Midori-AI-Subsystem-Manager/master/midori_ai_manager/huggingface_downloader.py > midori_ai_huggingface_downloader.py
+          curl -k --disable --disable-eprt -s https://raw.githubusercontent.com/lunamidori5/Midori-AI-Subsystem-Manager/master/subsystem-manager-uv/yaml_edit.py > yaml_edit.py
           curl -k --disable --disable-eprt -s https://raw.githubusercontent.com/lunamidori5/Midori-AI-Subsystem-Manager/master/subsystem-manager-uv/requirements.txt > requirements.txt
 
       - name: Install Dependencies
         run: |
           cd /tmp/workfolder
           python3 -m venv os
-          os/bin/pip install pyinstaller
-          os/bin/pip install tor-proxy
+          os/bin/pip install pyinstaller tor-proxy
           os/bin/pip install -r requirements.txt
           
       - name: Download the Uploader
@@ -54,6 +54,7 @@ jobs:
           pyinstaller --onefile --clean --distpath /tmp/artifacts/ midori_ai_file_manager.py
           pyinstaller --onefile --clean --distpath /tmp/artifacts/ midori_ai_huggingface_downloader.py
           pyinstaller --onefile --clean --distpath /tmp/artifacts/ git_uploader.py
+          pyinstaller --onefile --clean --distpath /tmp/artifacts/ yaml_edit.py
       
       - name: Move Exec
         run: |
@@ -62,6 +63,7 @@ jobs:
           mv /tmp/artifacts/midori_ai_login_app midori_ai_login
           mv /tmp/artifacts/midori_ai_file_manager midori_ai_file_manager
           mv /tmp/artifacts/midori_ai_huggingface_downloader hf-downloader
+          mv /tmp/artifacts/yaml_edit yaml_edit
           mv /tmp/artifacts/git_uploader git_uploader
       
       - name: Upload Programs
@@ -75,5 +77,6 @@ jobs:
           sudo ./git_uploader --type Linux --file "midori_ai_login" --filename "pixelarch-midori-ai-login"
           sudo ./git_uploader --type Linux --file "midori_ai_file_manager" --filename "pixelarch-midori-ai-file-manager"
           sudo ./git_uploader --type Linux --file "git_uploader" --filename "pixelarch-midori-ai-uploader"
+          sudo ./git_uploader --type Linux --file "yaml_edit" --filename "pixelarch-yaml-edit"
 
   
