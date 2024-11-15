@@ -1,31 +1,30 @@
 import os
+import shutil
+import requests
 import subprocess
 
 jobs = []
 
+if os.geteuid() == 0:
+    print("We are running as root, updating programs")
+else:
+    raise PermissionError("This program needs root to update programs, please run with root...")
+
 pixelarch_program_to_update = [
-    {"midori-ai-login", "pixelarch-midori-ai-login"},
-    {"hf-downloader", "pixelarch-hf-downloader"},
-    {"midori-ai-downloader", "pixelarch-midori-ai-downloader"},
-    {"midori-ai-login", "pixelarch-midori-ai-file-manager"},
-    {"midori-ai-uploader", "pixelarch-midori-ai-uploader"}
+    ["midori-ai-login", "pixelarch-midori-ai-login"],
+    ["midori-ai-hf-downloader", "pixelarch-hf-downloader"],
+    ["midori-ai-downloader", "pixelarch-midori-ai-downloader"],
+    ["midori-ai-file-manager", "pixelarch-midori-ai-file-manager"],
+    ["midori-ai-uploader", "pixelarch-midori-ai-uploader"]
     ]
 
 standard_program_to_update = [
-    {"midori-ai-login", "standard-linux-midori-ai-login"},
-    {"hf-downloader", "standard-linux-hf-downloader"},
-    {"midori-ai-downloader", "standard-linux-midori-ai-downloader"},
-    {"midori-ai-login", "standard-linux-midori-ai-file-manager"},
-    {"midori-ai-uploader", "standard-linux-midori-ai-uploader"}
+    ["midori-ai-login", "standard-linux-midori-ai-login"],
+    ["midori-ai-hf-downloader", "standard-linux-hf-downloader"],
+    ["midori-ai-downloader", "standard-linux-midori-ai-downloader"],
+    ["midori-ai-file-manager", "standard-linux-midori-ai-file-manager"],
+    ["midori-ai-uploader", "standard-linux-midori-ai-uploader"]
     ]
-
-with open("/etc/os-release", "r") as f:
-    os_release_data = f.read()
-
-if "pixelarch" in os_release_data.lower():
-    pass
-else:
-    pass
 
 # Check if the OS is PixelArch
 with open("/etc/os-release", "r") as f:
@@ -37,19 +36,41 @@ else:
     program_to_update = standard_program_to_update
 
 # Create a temporary directory
-os.mkdir("tmp")
-os.chdir("tmp")
+home_dir = os.path.expanduser("~")
+folder_path = os.path.join(home_dir, ".midoriai")
+os.makedirs(folder_path, exist_ok=True)
+temp_folder_path = os.path.join(folder_path, "tmp")
+os.makedirs(temp_folder_path, exist_ok=True)
+print(os.getcwd())
+os.chdir(temp_folder_path)
+print(os.getcwd())
 
 # Remove existing programs
 for program in program_to_update:
-    subprocess.run(["sudo", "rm", "-rf", "/usr/local/bin/" + program[0]])
+    path = "/usr/local/bin/" + program[0]
+    if os.path.isfile(path):
+        print(f"Removing existing program: {program[0]}")
+        os.remove(path)
 
 # Download and install new programs
 for program in program_to_update:
-    subprocess.run(["curl", "-k", "--disable", "--disable-eprt", "-s", "https://tea-cup.midori-ai.xyz/download/" + program[1], ">", program[1]])
-    subprocess.run(["chmod", "+x", program[1]])
-    subprocess.run(["sudo", "mv", program[1], "/usr/local/bin/" + program[0]])
+    response = requests.get("https://tea-cup.midori-ai.xyz/download/" + program[1], stream=True)
+    with open(program[1], 'wb') as out_file:
+        print(f"Downloading program: {program[0]}")
+        shutil.copyfileobj(response.raw, out_file)
+        del response
+
+    os.chmod(program[1], 0o755)
+    print(f"Installing program: {program[0]}")
+    shutil.move(program[1], "/usr/local/bin/" + program[0])
+    
+    # Check if the file was moved successfully
+    if os.path.isfile("/usr/local/bin/" + program[0]):
+        print(f"Program {program[0]} installed successfully.")
+    else:
+        print(f"Error: Program {program[0]} was not installed successfully.")
+    del program
 
 # Clean up
 os.chdir("..")
-os.rmdir("tmp")
+os.rmdir(temp_folder_path)
