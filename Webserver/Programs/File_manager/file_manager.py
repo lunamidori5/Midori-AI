@@ -27,6 +27,7 @@ folder_path = os.path.join(home_dir, ".midoriai")
 temp_folder_path = os.path.join(folder_path, "tmp")
 temp_tar_file = os.path.join(temp_folder_path, 'userfolder.tar')
 compressed_tar_file = os.path.join(temp_folder_path, 'userfolder.xz.tar')
+encrypted_tar_file = os.path.join(temp_folder_path, 'userfolder.xz.tar.excrypted')
 os.makedirs(folder_path, exist_ok=True)
 os.makedirs(temp_folder_path, exist_ok=True)
 
@@ -168,6 +169,8 @@ def compress_tar():
     with tarfile.open(compressed_tar_file, "w:xz") as tar:
         tar.add(temp_tar_file)
     
+    os.remove(temp_tar_file)
+    
     print('Tar file compressed and saved as ', temp_tar_file)
 
 def uncompress_tar(dst_dir):
@@ -201,11 +204,11 @@ def upload_to_midori_ai(data: bytes):
     if go_on:
         encrypted_data = encrypt_user_data(data, username, salt)
 
-        with open(filename_to_upload, "rb") as f:
+        with open(encrypted_tar_file, "rb") as f:
             f.write = encrypted_data
 
         try:
-            subprocess.call([f"midori-ai-uploader --type Linux --file \"{filename_to_upload}\" --filename \"{filename_to_upload}\""])
+            subprocess.call([f"midori-ai-uploader --type Linux --file \"{encrypted_tar_file}\" --filename \"{filename_to_upload}\""])
         except Exception as error:
             print(f"Midori AI Uploader failed ({str(error)}), please try again")
 
@@ -266,6 +269,8 @@ def main(args):
         if os.path.exists(compressed_tar_file):
             with open(compressed_tar_file, "rb") as f:
                 bytes_to_upload = f.read()
+            
+            os.remove(compressed_tar_file)
             
             upload_to_midori_ai(bytes_to_upload)
 
