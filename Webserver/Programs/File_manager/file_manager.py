@@ -11,6 +11,7 @@ import platform
 import argparse
 import requests
 import datetime
+import subprocess
 
 from cryptography.fernet import Fernet
 
@@ -26,24 +27,31 @@ args = parser.parse_args()
 
 home_dir = os.path.expanduser("~")
 folder_path = os.path.join(home_dir, ".midoriai")
+temp_folder_path = os.path.join(folder_path, "tmp")
+temp_tar_file = os.path.join(temp_folder_path, 'userfolder.xz.tar')
 os.makedirs(folder_path, exist_ok=True)
+os.makedirs(temp_folder_path, exist_ok=True)
+
+print(os.getcwd())
+os.chdir(temp_folder_path)
+print(os.getcwd())
 
 username_file = os.path.join(folder_path, "MIDORI_AI_USERNAME")
 api_key_file = os.path.join(folder_path, "MIDORI_AI_API_KEY_TEMP")
 
-username = None
+username = "None"
 
 if os.path.exists(username_file):
     with open(username_file, 'r') as f:
-        username = f.read()
+        username = str(f.read())
     
     os.system("midori-ai-login")
 
-if username is None:
+if username == "None":
     if hasattr(args, "username"):
-        username = args.username
+        username = str(args.username)
 
-if username is None:
+if username == "None":
     print("You have not logged into Midori AI\'s servers...")
     sys.exit(25)
 
@@ -54,7 +62,24 @@ def check_programs(program_name):
   except shutil.Error:
     return False
 
-def encrypt_user_data(data, username, salt):
+def confirm():
+    """
+    Asks the user if they are sure they want to continue.
+
+    Returns:
+    True if the user wants to continue, False otherwise.
+    """
+
+    while True:
+        answer = input("Are you sure? (Y/n): ")
+        if answer == "" or answer.lower() == "y":
+            return True
+        elif answer.lower() == "n":
+            return False
+        else:
+            print("Invalid input. Please enter 'y' or 'n'.")
+
+def encrypt_user_data(data: bytes, username: str, salt):
     stats = {
         "platform": {
             "system": platform.system(),
@@ -89,10 +114,10 @@ def encrypt_user_data(data, username, salt):
     key = base64.urlsafe_b64encode(hashlib.sha256(hash_hex.encode() + salt).digest())
 
     cipher = Fernet(key)
-    encrypted_data = cipher.encrypt(data.encode())
+    encrypted_data = cipher.encrypt(data)
     return encrypted_data
 
-def decrypt_user_data(encrypted_data, username, salt):
+def decrypt_user_data(encrypted_data: bytes, username: str, salt):
     stats = {
         "platform": {
             "system": platform.system(),
@@ -130,12 +155,43 @@ def decrypt_user_data(encrypted_data, username, salt):
     decrypted_data = cipher.decrypt(encrypted_data).decode()
     return decrypted_data
 
-def upload_to_midori_ai():
+def compress_tar(src_dir):
+    """ Compress a directory into a tar file using xz compression.
+
+    Args:
+    src_dir: The source directory to compress.
+    """
+    with tarfile.open(temp_tar_file, "w:xz") as tar:
+        tar.add(src_dir, arcname='userfolder.xz.tar')
+
+def uncompress_tar(dst_dir):
+    """ Uncompress a tar file into a directory.
+
+    Args:
+    dst_dir: The destination directory to extract into.
+    """
+    with tarfile.open(temp_tar_file, "r:xz") as tar:
+        tar.extractall(dst_dir)
+
+def upload_to_midori_ai(data: bytes):
     print("Please enter a token to encrypt your data before sending it to Midori AI")
     print("Midori AI will not get this token, please record this token in a safe place")
     pre_salt = getpass.getpass("Token: ")
     salt = str(pre_salt).encode()
     filename_to_upload =  "userfile"
+
+    go_on = confirm()
+
+    if go_on:
+        encrypted_data = encrypt_user_data(data, username, salt)
+
+        with open(filename_to_upload, "rb") as f:
+            f.write = encrypted_data
+
+        try:
+            subprocess.call([f"midori-ai-uploader --type Linux --file \"{filename_to_upload}\" --filename \"{filename_to_upload}\""])
+        except Exception as error:
+            print(f"Midori AI Uploader failed ({str(error)}), please try again")
 
 def download_from_midori_ai():
     print("Please enter a token to decrypt your data after downloading it from Midori AI")
@@ -144,6 +200,7 @@ def download_from_midori_ai():
     filename_to_download =  "userfile"
 
 def main(args):
+    list_of_items = []
     item = str(args.item).lower()
     item_type = str(args.type).lower()
     pack = bool(args.pack)
@@ -164,7 +221,33 @@ def main(args):
             continue
         else:
             print(f"You are missing {program} form your path, please install or update them...")
+    
+    if "folder" in item_type:
+        for root, dirs, files in os.walk(item):
+            for file in files:
+                list_of_items.append(os.path.join(root, file))
 
+    if "file" in item_type:
+        list_of_items.append(item)
+
+    if pack:
+        for item in list_of_items:
+            compress_tar(item)
+
+    if unpack:
+        folder_to_unpack_in = input("Please enter the folder you would like to unpack in: ")
+        uncompress_tar(folder_to_unpack_in)
+        os.remove(temp_tar_file)
+
+    if upload:
+        if os.path.exists(temp_tar_file):
+            with open(temp_tar_file, "rb") as f:
+                bytes_to_upload = f.read()
+            
+            upload_to_midori_ai(bytes_to_upload)
+
+    if download:
+        pass
 
 
 if __name__ == "__main__":

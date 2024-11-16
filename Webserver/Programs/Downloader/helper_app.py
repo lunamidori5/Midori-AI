@@ -63,8 +63,8 @@ def get_api_key():
 
         try:
             subprocess.call(["midori-ai-login"])
-        except Exception:
-            print("Midori AI login failed, please try again")
+        except Exception as error:
+            print(f"Midori AI login failed ({str(error)}), please try again")
 
         attempt_count += 1
 
