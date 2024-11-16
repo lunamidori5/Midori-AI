@@ -161,8 +161,10 @@ def compress_tar(src_dir):
     Args:
     src_dir: The source directory to compress.
     """
+    print('Compressing tar file...')
     with tarfile.open(temp_tar_file, "w:xz") as tar:
-        tar.add(src_dir, arcname='userfolder.xz.tar')
+        tar.add(src_dir)
+    print('Tar file compressed and saved as ', temp_tar_file)
 
 def uncompress_tar(dst_dir):
     """ Uncompress a tar file into a directory.
@@ -170,8 +172,10 @@ def uncompress_tar(dst_dir):
     Args:
     dst_dir: The destination directory to extract into.
     """
+    print('Uncompressing tar file...')
     with tarfile.open(temp_tar_file, "r:xz") as tar:
         tar.extractall(dst_dir)
+    print('Tar file uncompressed and saved to ', dst_dir)
 
 def upload_to_midori_ai(data: bytes):
     print("Please enter a token to encrypt your data before sending it to Midori AI")
@@ -218,7 +222,7 @@ def main(args):
 
     for program in midori_ai_programs:
         if check_programs(program):
-            continue
+            print(f"{program} found!")
         else:
             print(f"You are missing {program} form your path, please install or update them...")
     
@@ -231,6 +235,7 @@ def main(args):
         list_of_items.append(item)
 
     if pack:
+        print("Packing items!")
         for item in list_of_items:
             compress_tar(item)
 
