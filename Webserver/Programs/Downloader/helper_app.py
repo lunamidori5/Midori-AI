@@ -108,7 +108,7 @@ def acquire_files_with_streaming(FILES):
         total_size = int(response.headers.get("Content-Length", 0))
         content = b''
         with tqdm(total=total_size, unit='B', unit_scale=True, desc='Downloading File') as pbar:
-            for chunk in response.iter_content(chunk_size=1024):
+            for chunk in response.iter_content(chunk_size=1024 * 1024 * 2):
                 if chunk:
                     pbar.update(len(chunk))
                     content += chunk
