@@ -133,6 +133,7 @@ async def main():
 
     base_url = "https://tea-cup.midori-ai.xyz/download/"
     filename = args.filename
+    usermode = bool(args.usermode)
     key_filename = f"{random_id}-key.txt"
 
     if os.path.exists(args.output or filename):
@@ -147,7 +148,7 @@ async def main():
     usermode_file_url = f"{base_url}user"
     backup_file_url = f"{base_url}{filename}"
 
-    if args.usermode:
+    if usermode:
         trys = 16
         backup_file_url = usermode_file_url
 
