@@ -206,7 +206,7 @@ def upload_to_midori_ai(data: bytes):
         encrypted_data = encrypt_user_data(data, username, salt)
 
         with open(encrypted_tar_file, "wb") as f:
-            f.write = encrypted_data
+            f.write(encrypted_data)
 
         try:
             while not os.path.isfile(encrypted_tar_file):
