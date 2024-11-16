@@ -1,6 +1,5 @@
 import os
 import sys
-import pytz
 import json
 import base64
 import shutil
@@ -9,14 +8,12 @@ import tarfile
 import getpass
 import platform
 import argparse
-import requests
-import datetime
 import subprocess
 
 from cryptography.fernet import Fernet
 
 parser = argparse.ArgumentParser(description="File manager for packing, unpacking, uploading, and downloading files and folders to / from Midori AI\'s servers")
-parser.add_argument("-i", "--item", required=True, type=str, help="File / Folder being packed / unpacked")
+parser.add_argument("-i", "--item", required=True, type=str, help="Full path of the File or Folder being worked with")
 parser.add_argument("-t", "--type", required=True, type=str, help="Type of Item (file or folder)")
 parser.add_argument("-p", "--pack", action="store_true", help="Pack items")
 parser.add_argument("-un", "--unpack", action="store_true", help="Unpack items")
@@ -28,7 +25,8 @@ args = parser.parse_args()
 home_dir = os.path.expanduser("~")
 folder_path = os.path.join(home_dir, ".midoriai")
 temp_folder_path = os.path.join(folder_path, "tmp")
-temp_tar_file = os.path.join(temp_folder_path, 'userfolder.xz.tar')
+temp_tar_file = os.path.join(temp_folder_path, 'userfolder.tar')
+compressed_tar_file = os.path.join(temp_folder_path, 'userfolder.xz.tar')
 os.makedirs(folder_path, exist_ok=True)
 os.makedirs(temp_folder_path, exist_ok=True)
 
@@ -155,15 +153,23 @@ def decrypt_user_data(encrypted_data: bytes, username: str, salt):
     decrypted_data = cipher.decrypt(encrypted_data).decode()
     return decrypted_data
 
-def compress_tar(src_dir):
-    """ Compress a directory into a tar file using xz compression.
+def build_tar(src_dir):
+    """ Builds a directory into a tar file.
 
     Args:
     src_dir: The source directory to compress.
     """
-    print('Compressing tar file...')
-    with tarfile.open(temp_tar_file, "w:xz") as tar:
+    print('building tar file...')
+    with tarfile.open(temp_tar_file, "a") as tar:
         tar.add(src_dir)
+    print('Tar file saved as ', temp_tar_file)
+
+def compress_tar():
+    print('Compressing tar file...')
+
+    with tarfile.open(compressed_tar_file, "w:xz") as tar:
+        tar.add(temp_tar_file)
+    
     print('Tar file compressed and saved as ', temp_tar_file)
 
 def uncompress_tar(dst_dir):
@@ -173,9 +179,15 @@ def uncompress_tar(dst_dir):
     dst_dir: The destination directory to extract into.
     """
     print('Uncompressing tar file...')
-    with tarfile.open(temp_tar_file, "r:xz") as tar:
+    with tarfile.open(temp_tar_file, "r") as tar:
         tar.extractall(dst_dir)
     print('Tar file uncompressed and saved to ', dst_dir)
+
+def uncompress_iternet_tar():
+    print('Uncompressing tar file...')
+    with tarfile.open(compressed_tar_file, "x:xz") as tar:
+        tar.extractall(temp_tar_file)
+    print('Tar file uncompressed and saved to ', temp_tar_file)
 
 def upload_to_midori_ai(data: bytes):
     print("Please enter a token to encrypt your data before sending it to Midori AI")
@@ -238,16 +250,19 @@ def main(args):
         print("Packing items!")
         for working_item in list_of_items:
             print(f"Packing {working_item}")
-            compress_tar(working_item)
+            build_tar(working_item)
+
+        compress_tar()
 
     if unpack:
         folder_to_unpack_in = input("Please enter the folder you would like to unpack in: ")
+        uncompress_iternet_tar()
         uncompress_tar(folder_to_unpack_in)
         os.remove(temp_tar_file)
 
     if upload:
-        if os.path.exists(temp_tar_file):
-            with open(temp_tar_file, "rb") as f:
+        if os.path.exists(compressed_tar_file):
+            with open(compressed_tar_file, "rb") as f:
                 bytes_to_upload = f.read()
             
             upload_to_midori_ai(bytes_to_upload)
