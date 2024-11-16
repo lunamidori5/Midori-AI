@@ -109,7 +109,7 @@ def encrypt_user_data(data: bytes, username: str, salt):
     hash_hex = hash_object.hexdigest()
     
     # Generate a 32-byte Fernet-compatible key
-    key = base64.urlsafe_b64encode(hashlib.sha512(hash_hex.encode() + salt).digest())
+    key = base64.urlsafe_b64encode(hashlib.sha512(hash_hex.encode() + salt).digest()[:32])
 
     cipher = Fernet(key)
     encrypted_data = cipher.encrypt(data)
@@ -147,7 +147,7 @@ def decrypt_user_data(encrypted_data: bytes, username: str, salt):
     hash_hex = hash_object.hexdigest()
 
     # Generate the same 32-byte Fernet-compatible key for decryption
-    key = base64.urlsafe_b64encode(hashlib.sha512(hash_hex.encode() + salt).digest())
+    key = base64.urlsafe_b64encode(hashlib.sha512(hash_hex.encode() + salt).digest()[:32])
     cipher = Fernet(key)
 
     decrypted_data = cipher.decrypt(encrypted_data).decode()
@@ -159,10 +159,8 @@ def build_tar(src_dir):
     Args:
     src_dir: The source directory to compress.
     """
-    print('building tar file...')
     with tarfile.open(temp_tar_file, "a") as tar:
         tar.add(src_dir)
-    print('Tar file saved as ', temp_tar_file)
 
 def compress_tar():
     print('Compressing tar file...')
@@ -192,6 +190,8 @@ def uncompress_iternet_tar():
 def upload_to_midori_ai(data: bytes):
     print("Please enter a token to encrypt your data before sending it to Midori AI")
     print("Midori AI will not get this token, please record this token in a safe place")
+    print("Token will not be shown, please be mindful...")
+    print("~" * 50)
     pre_salt = getpass.getpass("Token: ")
     salt = str(pre_salt).encode()
     filename_to_upload =  "userfile"
@@ -211,6 +211,8 @@ def upload_to_midori_ai(data: bytes):
 
 def download_from_midori_ai():
     print("Please enter a token to decrypt your data after downloading it from Midori AI")
+    print("Token will not be shown, please be mindful...")
+    print("~" * 50)
     pre_salt = getpass.getpass("Token: ")
     salt = str(pre_salt).encode()
     filename_to_download =  "userfile"
