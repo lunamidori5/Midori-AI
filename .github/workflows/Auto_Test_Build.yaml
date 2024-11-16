@@ -121,7 +121,6 @@ jobs:
 
   Test-Subsystem-Manager-Raw:
     strategy:
-      max-parallel: 5
       matrix:
         os: [ubuntu-latest, windows-latest, macos-latest]
         python: ['3.10']
@@ -151,7 +150,6 @@ jobs:
 
   Test-Subsystem-Manager-Baked:
     strategy:
-      max-parallel: 5
       matrix:
         os: [ubuntu-latest, windows-latest, macos-latest]
         python: ['3.10']
@@ -171,7 +169,7 @@ jobs:
           python subsystem_setup.py
         
   Test-Build-Subsystem-Manager:
-    needs: [Test-Subsystem-Manager-Baked, Test-Subsystem-Manager-Raw]
+    needs: Upload-All-Files
     strategy:
       matrix:
         os: [ubuntu-20.04, windows-latest, macos-latest]
