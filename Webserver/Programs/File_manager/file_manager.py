@@ -111,7 +111,7 @@ def encrypt_user_data(data: bytes, username: str, salt):
     hash_hex = hash_object.hexdigest()
     
     # Generate a 32-byte Fernet-compatible key
-    key = base64.urlsafe_b64encode(hashlib.sha256(hash_hex.encode() + salt).digest())
+    key = base64.urlsafe_b64encode(hashlib.sha512(hash_hex.encode() + salt).digest())
 
     cipher = Fernet(key)
     encrypted_data = cipher.encrypt(data)
@@ -149,7 +149,7 @@ def decrypt_user_data(encrypted_data: bytes, username: str, salt):
     hash_hex = hash_object.hexdigest()
 
     # Generate the same 32-byte Fernet-compatible key for decryption
-    key = base64.urlsafe_b64encode(hashlib.sha256(hash_hex.encode() + salt).digest())
+    key = base64.urlsafe_b64encode(hashlib.sha512(hash_hex.encode() + salt).digest())
     cipher = Fernet(key)
 
     decrypted_data = cipher.decrypt(encrypted_data).decode()
