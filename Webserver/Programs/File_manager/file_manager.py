@@ -205,7 +205,7 @@ def download_from_midori_ai():
 
 def main(args):
     list_of_items = []
-    item = str(args.item).lower()
+    item = os.path.join(args.item)
     item_type = str(args.type).lower()
     pack = bool(args.pack)
     unpack = bool(args.unpack)
@@ -236,8 +236,9 @@ def main(args):
 
     if pack:
         print("Packing items!")
-        for item in list_of_items:
-            compress_tar(item)
+        for working_item in list_of_items:
+            print(f"Packing {working_item}")
+            compress_tar(working_item)
 
     if unpack:
         folder_to_unpack_in = input("Please enter the folder you would like to unpack in: ")
