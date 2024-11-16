@@ -46,10 +46,38 @@ jobs:
         run: |
           flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
           flake8 . --count --exit-zero --max-complexity=30 --max-line-length=40 --statistics
-
-  Subsystem-Manager-Baked:
+          
+  Test-Subsystem-Manager-Raw:
     strategy:
-      max-parallel: 5
+      matrix:
+        os: [ubuntu-latest, windows-latest, macos-latest]
+        python: ['3.10']
+    runs-on: ${{ matrix.os }}
+    needs: Python-Lint-Full
+
+    steps:
+      - name: Set up Python 3.10
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+      - name: Download the Downloader
+        run: |
+          curl -k --disable --disable-eprt https://raw.githubusercontent.com/lunamidori5/Midori-AI/master/Webserver/Programs/Downloader/helper_app.py > helper_app.py
+      - name: Install dependencies
+        run: |
+          pip install aiohttp cryptography requests tqdm uv
+      - name: Midori AI Download Files
+        run: |
+          python3 helper_app.py subsystem_manager_git.zip
+      - name: Unzip Download Files
+        run: |
+          unzip subsystem_manager_git.zip
+      - name: Make EXE file
+        run: |
+          uv run pyinstaller --onefile --clean subsystem_manager.py
+
+  Test-Subsystem-Manager-Baked:
+    strategy:
       matrix:
         os: [ubuntu-latest, windows-latest, macos-latest]
         python: ['3.10']
@@ -69,7 +97,7 @@ jobs:
           python subsystem_setup.py
         
   Test-Build-Subsystem-Manager:
-    needs: [Subsystem-Manager-Baked]
+    needs: Python-Lint-Full
     strategy:
       matrix:
         os: [ubuntu-20.04, windows-latest, macos-latest]
@@ -89,15 +117,16 @@ jobs:
         with:
           python-version: ${{ matrix.python }}
       
-      - name: Install Dependencies
+      - name: Install Dependencies (UV)
         run: |
-          pip install pyinstaller
-          pip install -r ./Subsystem-Manager/subsystem-manager-uv/requirements.txt
+          pip install uv
       
       - name: Build
         run: |
-          pyinstaller --onedir --clean --distpath /tmp/artifacts/${{ matrix.os }}/ --add-data ./Subsystem-Manager/subsystem-manager-uv/midori_program_ver.txt:. ./Subsystem-Manager/subsystem-manager-uv/subsystem_manager.py
-
+          cd Subsystem-Manager/subsystem-manager-uv
+          uv run pyinstaller --onedir --clean --distpath /tmp/artifacts/${{ matrix.os }}/ --add-data midori_program_ver.txt:. subsystem_manager.py
+          cd ../..
+          
       - name: 'Upload Artifact'
         uses: actions/upload-artifact@v4
         with:
@@ -141,6 +170,13 @@ jobs:
           zip -r ../../model_installer_mac.zip subsystem_manager _internal
           cd ../../
           cp model_installer_mac.zip /tmp/artifacts/model_installer_mac.zip
+          
+      - name: Github Artifacts
+        run: |
+          cd subsystem-manager-github-latest/subsystem_manager
+          zip -r ../../subsystem_manager_git.zip *
+          cd ../../
+          cp subsystem_manager_git.zip /tmp/artifacts/subsystem_manager_git.zip
 
       - name: View Artifacts
         run: |

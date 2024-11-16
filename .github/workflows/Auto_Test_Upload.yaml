@@ -8,8 +8,6 @@ on:
 jobs:
   Python-Lint-Full:
     runs-on: [ubuntu-latest]
-    strategy:
-      max-parallel: 5
 
     steps:
       - uses: actions/checkout@v4
@@ -69,7 +67,7 @@ jobs:
         with:
           name: subsystem-manager-github-latest
           path: /tmp/artifacts/*
-          compression-level: 9
+          compression-level: 0
         
   Upload-All-Files:
     runs-on: [ubuntu-latest]
@@ -118,145 +116,3 @@ jobs:
           uv run git_uploader.py --type Windows --file "carly_help.py" --filename "carly_help.py"
           uv run git_uploader.py --type Windows --file "support.py" --filename "support.py"
           uv run git_uploader.py --type Windows --file "requirements.txt" --filename "midori_program_requirments.txt"
-
-  Test-Subsystem-Manager-Raw:
-    strategy:
-      matrix:
-        os: [ubuntu-latest, windows-latest, macos-latest]
-        python: ['3.10']
-    runs-on: ${{ matrix.os }}
-    needs: Upload-All-Files
-
-    steps:
-      - name: Set up Python 3.10
-        uses: actions/setup-python@v5
-        with:
-          python-version: '3.10'
-      - name: Download the Downloader
-        run: |
-          curl -k --disable --disable-eprt https://raw.githubusercontent.com/lunamidori5/Midori-AI/master/Webserver/Programs/Downloader/helper_app.py > helper_app.py
-      - name: Install dependencies
-        run: |
-          pip install aiohttp cryptography requests tqdm uv
-      - name: Midori AI Download Files
-        run: |
-          python3 helper_app.py subsystem_manager_git.zip
-      - name: Unzip Download Files
-        run: |
-          unzip subsystem_manager_git.zip
-      - name: Make EXE file
-        run: |
-          uv run pyinstaller --onefile --clean subsystem_manager.py
-
-  Test-Subsystem-Manager-Baked:
-    strategy:
-      matrix:
-        os: [ubuntu-latest, windows-latest, macos-latest]
-        python: ['3.10']
-    runs-on: ${{ matrix.os }}
-    needs: Upload-All-Files
-
-    steps:
-      - name: Set up Python 3.10
-        uses: actions/setup-python@v5
-        with:
-          python-version: '3.10'
-      - name: Download Files
-        run: |
-          curl -k --disable --disable-eprt -s https://raw.githubusercontent.com/lunamidori5/Midori-AI-Subsystem-Manager/master/midori_ai_manager/subsystem_python_env_setup.py > subsystem_setup.py
-      - name: Make EXE file
-        run: |
-          python subsystem_setup.py
-        
-  Test-Build-Subsystem-Manager:
-    needs: Upload-All-Files
-    strategy:
-      matrix:
-        os: [ubuntu-20.04, windows-latest, macos-latest]
-        python: ['3.10']
-    runs-on: ${{ matrix.os }}
-    steps:
-      - uses: actions/checkout@v4
-        with:
-          submodules: recursive
-
-      - name: Update Version Name
-        run: |
-          mkdir -p /tmp/artifacts
-          cp ./Subsystem-Manager/subsystem-manager-uv/midori_program_ver.txt /tmp/artifacts
-
-      - uses: actions/setup-python@v5
-        with:
-          python-version: ${{ matrix.python }}
-      
-      - name: Install Dependencies (UV)
-        run: |
-          pip install uv
-      
-      - name: Build
-        run: |
-          cd Subsystem-Manager/subsystem-manager-uv
-          uv run pyinstaller --onedir --clean --distpath /tmp/artifacts/${{ matrix.os }}/ --add-data midori_program_ver.txt:. subsystem_manager.py
-          cd ../..
-          
-      - name: 'Upload Artifact'
-        uses: actions/upload-artifact@v4
-        with:
-          name: subsystem-manager-${{ matrix.os }}
-          path: /tmp/artifacts/${{ matrix.os }}/*
-          compression-level: 0
-        
-  Zip-Tar-All-OS:
-    needs: [Test-Build-Subsystem-Manager]
-    container: lunamidori5/linux_model_deb_11:master
-    runs-on: ubuntu-20.04
-    steps:
-      - name: Set up Python 3.10
-        uses: actions/setup-python@v5
-        with:
-          python-version: '3.10'
-
-      - name: Fetch Artifacts
-        uses: actions/download-artifact@v4
-
-      - name: Install Dependencies
-        run: |
-          mkdir -p /tmp/artifacts
-          apt-get install -y tree zip
-
-      - name: Linux Artifacts
-        run: |
-          tar -cvzf model_installer_linux.tar.gz -C subsystem-manager-ubuntu-20.04/subsystem_manager subsystem_manager _internal
-          cp model_installer_linux.tar.gz /tmp/artifacts/model_installer_linux.tar.gz
-
-      - name: Windows Artifacts
-        run: |
-          cd subsystem-manager-windows-latest/subsystem_manager
-          zip -r ../../model_installer_windows.zip subsystem_manager.exe _internal
-          cd ../../
-          cp model_installer_windows.zip /tmp/artifacts/model_installer_windows.zip
-          
-      - name: Mac Artifacts
-        run: |
-          cd subsystem-manager-macos-latest/subsystem_manager
-          zip -r ../../model_installer_mac.zip subsystem_manager _internal
-          cd ../../
-          cp model_installer_mac.zip /tmp/artifacts/model_installer_mac.zip
-          
-      - name: Github Artifacts
-        run: |
-          cd subsystem-manager-github-latest/subsystem_manager
-          zip -r ../../subsystem_manager_git.zip *
-          cd ../../
-          cp subsystem_manager_git.zip /tmp/artifacts/subsystem_manager_git.zip
-
-      - name: View Artifacts
-        run: |
-          tree > /tmp/artifacts/tree.log
-
-      - name: 'Upload Artifact'
-        uses: actions/upload-artifact@v4
-        with:
-          name: everything
-          path: /tmp/artifacts/*
-          compression-level: 0
