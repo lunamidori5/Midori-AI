@@ -54,7 +54,7 @@ for program in program_to_update:
 
 # Download and install new programs
 for program in program_to_update:
-    response = requests.get("https://tea-cup.midori-ai.xyz/download/" + program[1], stream=True)
+    response = requests.get("https://tea-cup.midori-ai.xyz/download/" + program[1], stream=True, timeout=55)
     with open(program[1], 'wb') as out_file:
         print(f"Downloading program: {program[0]}")
         shutil.copyfileobj(response.raw, out_file)
