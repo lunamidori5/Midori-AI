@@ -2,12 +2,14 @@ name: Update PixelArch CLI Programs
 
 on:
   workflow_run:
-    workflows: ["Auto Lint, Test, and Build on Push"]
+    workflows: ["Auto Lint and Upload on Push"]
     types: [completed]
 
 jobs:
   Build-PixelArch-CLI:
     name: Update PixelArch CLI Programs
+    strategy:
+      max-parallel: 1
     runs-on: ubuntu-latest
     container:
       image: lunamidori5/pixelarch:quartz

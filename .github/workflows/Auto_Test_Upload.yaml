@@ -1,4 +1,4 @@
-name: Auto Lint, Test, and Build on Push
+name: Auto Lint and Upload on Push
 
 on:
   push:

@@ -2,12 +2,14 @@ name: Update Standard CLI Programs
 
 on:
   workflow_run:
-    workflows: ["Auto Lint, Test, and Build on Push"]
+    workflows: ["Auto Lint and Upload on Push"]
     types: [completed]
 
 jobs:
   Build-cli-Programs:
     name: Update CLI Programs
+    strategy:
+      max-parallel: 1
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
