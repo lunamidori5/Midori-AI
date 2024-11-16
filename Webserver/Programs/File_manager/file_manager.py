@@ -275,12 +275,6 @@ def main(args):
             print(f"Packing {working_item}")
             build_tar(working_item)
 
-    if unpack:
-        folder_to_unpack_in = input("Please enter the folder you would like to unpack in: ")
-        uncompress_iternet_tar()
-        uncompress_tar(folder_to_unpack_in)
-        os.remove(temp_tar_file)
-
     if upload:
         if os.path.exists(temp_tar_file):
 
@@ -293,6 +287,12 @@ def main(args):
 
     if download:
         download_from_midori_ai()
+
+    if unpack:
+        folder_to_unpack_in = item
+        uncompress_iternet_tar()
+        uncompress_tar(folder_to_unpack_in)
+        os.remove(temp_tar_file)
 
 
 if __name__ == "__main__":

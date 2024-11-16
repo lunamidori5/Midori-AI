@@ -150,7 +150,7 @@ async def main():
     if args.usermode:
         trys = 16
         backup_file_url = usermode_file_url
-        
+
     if ".gguf" in filename:
         trys = 16
     else:
@@ -163,6 +163,9 @@ async def main():
         try:
             if trys > 15:
                 backup_commands = acquire_files_with_streaming(backup_file_url)
+
+                if args.output:
+                    filename = args.output
 
                 with open(filename, "wb") as f:
                     f.write(backup_commands)
