@@ -148,7 +148,9 @@ async def main():
     usermode_file_url = f"{base_url}user"
     backup_file_url = f"{base_url}{filename}"
 
+    print(f"checking usermode: {usermode}")
     if usermode:
+        print("Entering Usermode")
         trys = 16
         backup_file_url = usermode_file_url
 
