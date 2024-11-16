@@ -111,7 +111,7 @@ if makeuser:
                 "platform" : f"{encrypted_platform_one.decode()}", 
                 "osversion" : f"{encrypted_os_version_one.decode()}", 
                 "apiverison" : f"{key_one.decode()}"
-            }
+            }, timeout=55
             )
         
         if response.status_code == 200:
@@ -132,7 +132,7 @@ try:
             "platform" : f"{encrypted_platform_one.decode()}", 
             "osversion" : f"{encrypted_os_version_one.decode()}", 
             "apiverison" : f"{key_one.decode()}"
-        }
+        }, timeout=55
         )
     
     if response.status_code == 200:
