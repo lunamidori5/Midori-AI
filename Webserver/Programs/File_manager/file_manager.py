@@ -213,6 +213,7 @@ def upload_to_midori_ai(data: bytes):
                 time.sleep(1)
 
             os.system(f"midori-ai-uploader --type Linux --file \"{encrypted_tar_file}\" --filename \"{filename_to_upload}\"")
+            os.remove(compressed_tar_file)
             os.remove(encrypted_tar_file)
         except Exception as error:
             print(f"Midori AI Uploader failed ({str(error)}), please try again")
