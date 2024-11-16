@@ -292,7 +292,7 @@ def main(args):
             upload_to_midori_ai(bytes_to_upload)
 
     if download:
-        pass
+        download_from_midori_ai()
 
 
 if __name__ == "__main__":
