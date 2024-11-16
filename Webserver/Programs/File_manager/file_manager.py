@@ -1,6 +1,7 @@
 import os
 import sys
 import json
+import time
 import base64
 import shutil
 import hashlib
@@ -208,6 +209,8 @@ def upload_to_midori_ai(data: bytes):
             f.write = encrypted_data
 
         try:
+            while not os.path.isfile(encrypted_tar_file):
+                time.sleep(1)
             subprocess.call([f"midori-ai-uploader --type Linux --file \"{encrypted_tar_file}\" --filename \"{filename_to_upload}\""])
             os.remove(encrypted_tar_file)
         except Exception as error:
@@ -240,7 +243,7 @@ def main(args):
 
     for program in midori_ai_programs:
         if check_programs(program):
-            print(f"{program} found!")
+            continue
         else:
             print(f"You are missing {program} form your path, please install or update them...")
     
@@ -258,8 +261,6 @@ def main(args):
             print(f"Packing {working_item}")
             build_tar(working_item)
 
-        compress_tar()
-
     if unpack:
         folder_to_unpack_in = input("Please enter the folder you would like to unpack in: ")
         uncompress_iternet_tar()
@@ -267,11 +268,12 @@ def main(args):
         os.remove(temp_tar_file)
 
     if upload:
-        if os.path.exists(compressed_tar_file):
+        if os.path.exists(temp_tar_file):
+
+            compress_tar()
+
             with open(compressed_tar_file, "rb") as f:
                 bytes_to_upload = f.read()
-            
-            os.remove(compressed_tar_file)
             
             upload_to_midori_ai(bytes_to_upload)
 
