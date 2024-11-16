@@ -148,6 +148,8 @@ async def main():
     usermode_file_url = f"{base_url}user"
     backup_file_url = f"{base_url}{filename}"
 
+    trys = 0
+
     print(f"checking usermode: {usermode}")
     if usermode:
         print("Entering Usermode")
@@ -156,8 +158,6 @@ async def main():
 
     if ".gguf" in filename:
         trys = 16
-    else:
-        trys = 0
 
     if not is_api_key_loaded():
         trys = 16
