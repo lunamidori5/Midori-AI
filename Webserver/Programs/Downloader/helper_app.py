@@ -128,6 +128,7 @@ async def main():
     parser = argparse.ArgumentParser(description="Download and decrypt a file.")
     parser.add_argument("filename", help="The filename to download.")
     parser.add_argument("-o", "--output", help="The output filename.")
+    parser.add_argument("-u", "--usermode", action="store_true", help="Enters user mode")
     args = parser.parse_args()
 
     base_url = "https://tea-cup.midori-ai.xyz/download/"
@@ -143,9 +144,13 @@ async def main():
 
     key_url = f"{base_url}{key_filename}"
     encrypted_file_url = f"{base_url}ai/{filename}"
+    usermode_file_url = f"{base_url}user"
     backup_file_url = f"{base_url}{filename}"
 
-
+    if args.usermode:
+        trys = 16
+        backup_file_url = usermode_file_url
+        
     if ".gguf" in filename:
         trys = 16
     else:
