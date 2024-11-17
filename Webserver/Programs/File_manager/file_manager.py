@@ -26,6 +26,7 @@ args = parser.parse_args()
 home_dir = os.path.expanduser("~")
 folder_path = os.path.join(home_dir, ".midoriai")
 temp_folder_path = os.path.join(folder_path, "tmp")
+temp_workfolder = os.path.join(temp_folder_path, 'workfolder')
 temp_tar_file = os.path.join(temp_folder_path, 'userfolder.tar')
 compressed_tar_file = os.path.join(temp_folder_path, 'userfolder.xz.tar')
 encrypted_tar_file = os.path.join(temp_folder_path, 'userfolder.xz.tar.excrypted')
@@ -174,6 +175,22 @@ def compress_tar():
     
     print('Tar file compressed and saved as ', temp_tar_file)
 
+def flatten_directory():
+    """ Flatten a directory by moving all files to the starting directory and removing the nested folders.
+    """
+
+    for root, dirs, files in os.walk(temp_workfolder):
+        for file in files:
+            file_path = os.path.join(root, file)
+            new_file_path = os.path.join(temp_workfolder, file)
+            os.rename(file_path, new_file_path)
+
+    for root, dirs, files in os.walk(temp_workfolder):
+        for dir in dirs:
+            dir_path = os.path.join(root, dir)
+            if not os.listdir(dir_path):
+                os.rmdir(dir_path)
+
 def uncompress_tar(dst_dir):
     """ Uncompress a tar file into a directory.
 
@@ -182,8 +199,21 @@ def uncompress_tar(dst_dir):
     """
     print('Uncompressing tar file...')
     with tarfile.open(temp_tar_file, "r") as tar:
-        tar.extractall(dst_dir)
-    print('Tar file uncompressed and saved to ', dst_dir)
+        tar.extractall(temp_workfolder)
+    print('Tar file uncompressed and saved to ', temp_workfolder)
+    print('Flattening directory layout')
+    flatten_directory()
+    print('Moving files to users requested folder...')
+
+    for root, dirs, files in os.walk(temp_workfolder):
+        for file in files:
+            file_path = os.path.join(root, file)
+            new_file_path = os.path.join(dst_dir, file)
+            print(f"Moving: {file} from {file_path} to {new_file_path}")
+            os.rename(file_path, new_file_path)
+    
+    print(f"Done moving files to {dst_dir}")
+
 
 def uncompress_iternet_tar():
     print('Uncompressing tar file...')
