@@ -178,17 +178,20 @@ def compress_tar():
 def flatten_directory():
     """ Flatten a directory by moving all files to the starting directory and removing the nested folders.
     """
-
     for root, dirs, files in os.walk(temp_workfolder):
+        print('Root: {}, Dirs: {}, Files: {}'.format(root, dirs, files))
         for file in files:
             file_path = os.path.join(root, file)
             new_file_path = os.path.join(temp_workfolder, file)
+            print('Moving {} to {}'.format(file_path, new_file_path))
             os.rename(file_path, new_file_path)
 
     for root, dirs, files in os.walk(temp_workfolder):
+        print('Root: {}, Dirs: {}, Files: {}'.format(root, dirs, files))
         for dir in dirs:
             dir_path = os.path.join(root, dir)
             if not os.listdir(dir_path):
+                print('Removing empty directory: {}'.format(dir_path))
                 os.rmdir(dir_path)
 
 def uncompress_tar(dst_dir):
