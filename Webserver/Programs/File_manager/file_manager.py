@@ -201,8 +201,9 @@ def uncompress_tar(dst_dir):
     with tarfile.open(temp_tar_file, "r") as tar:
         tar.extractall(temp_workfolder)
     print('Tar file uncompressed and saved to ', temp_workfolder)
-    print('Flattening directory layout')
+    print('Flattening directory layout: Starting')
     flatten_directory()
+    print('Flattening directory layout: Done')
     print('Moving files to users requested folder...')
 
     for root, dirs, files in os.walk(temp_workfolder):
@@ -220,6 +221,9 @@ def uncompress_iternet_tar():
     with tarfile.open(compressed_tar_file, "r:xz") as tar:
         tar.extractall(temp_tar_file)
     print('Tar file uncompressed and saved to ', temp_tar_file)
+    print('Flattening directory layout: Starting')
+    flatten_directory()
+    print('Flattening directory layout: Done')
 
 def upload_to_midori_ai(data: bytes):
     print("Please enter a token to encrypt your data before sending it to Midori AI")
