@@ -32,6 +32,7 @@ compressed_tar_file = os.path.join(temp_folder_path, 'userfolder.xz.tar')
 encrypted_tar_file = os.path.join(temp_folder_path, 'userfolder.xz.tar.excrypted')
 os.makedirs(folder_path, exist_ok=True)
 os.makedirs(temp_folder_path, exist_ok=True)
+os.makedirs(temp_workfolder, exist_ok=True)
 
 print(os.getcwd())
 os.chdir(temp_folder_path)
@@ -175,58 +176,102 @@ def compress_tar():
     
     print('Tar file compressed and saved as ', temp_tar_file)
 
-def flatten_directory():
-    """ Flatten a directory by moving all files to the starting directory and removing the nested folders.
-    """
-    for root, dirs, files in os.walk(temp_workfolder):
-        print('Root: {}, Dirs: {}, Files: {}'.format(root, dirs, files))
+def flatten_directory(base_dir):
+    """Flatten a directory by moving all files to the base directory and removing nested folders."""
+    # Move files to the base directory
+    for root, dirs, files in os.walk(base_dir, topdown=False):
         for file in files:
             file_path = os.path.join(root, file)
-            new_file_path = os.path.join(temp_workfolder, file)
-            print('Moving {} to {}'.format(file_path, new_file_path))
+            new_file_path = os.path.join(base_dir, file)
+
+            # Handle duplicate filenames
+            if os.path.exists(new_file_path):
+                base, ext = os.path.splitext(new_file_path)
+                counter = 1
+                while os.path.exists(new_file_path):
+                    new_file_path = f"{base}_{counter}{ext}"
+                    counter += 1
+
+            print(f"Moving {file_path} to {new_file_path}")
             os.rename(file_path, new_file_path)
 
-    for root, dirs, files in os.walk(temp_workfolder):
-        print('Root: {}, Dirs: {}, Files: {}'.format(root, dirs, files))
+    # Remove empty directories
+    for root, dirs, files in os.walk(base_dir, topdown=False):
         for dir in dirs:
             dir_path = os.path.join(root, dir)
-            if not os.listdir(dir_path):
-                print('Removing empty directory: {}'.format(dir_path))
+            if not os.listdir(dir_path):  # Check if directory is empty
+                print(f"Removing empty directory: {dir_path}")
                 os.rmdir(dir_path)
 
-def uncompress_tar(dst_dir):
-    """ Uncompress a tar file into a directory.
 
-    Args:
-    dst_dir: The destination directory to extract into.
-    """
-    print('Uncompressing tar file...')
-    with tarfile.open(temp_tar_file, "r") as tar:
+def unpack_tar(tar_file, dst_dir):
+    """Unpacks a tar file into a directory, flatten it, and move files to a destination directory."""
+
+    print('Unpacking tar file...')
+    with tarfile.open(tar_file, "r") as tar:
         tar.extractall(temp_workfolder)
-    print('Tar file uncompressed and saved to ', temp_workfolder)
-    print('Flattening directory layout: Starting')
-    flatten_directory()
-    print('Flattening directory layout: Done')
-    print('Moving files to users requested folder...')
+    print(f'Tar file unpacked to {temp_workfolder}')
 
+    print('Flattening directory layout...')
+    flatten_directory(temp_workfolder)
+    print('Directory layout flattened.')
+
+    print('Moving files to the destination folder...')
     for root, dirs, files in os.walk(temp_workfolder):
         for file in files:
             file_path = os.path.join(root, file)
             new_file_path = os.path.join(dst_dir, file)
-            print(f"Moving: {file} from {file_path} to {new_file_path}")
+
+            # Handle duplicate filenames in destination
+            if os.path.exists(new_file_path):
+                base, ext = os.path.splitext(new_file_path)
+                counter = 1
+                while os.path.exists(new_file_path):
+                    new_file_path = f"{base}_{counter}{ext}"
+                    counter += 1
+
+            print(f"Moving {file_path} to {new_file_path}")
             os.rename(file_path, new_file_path)
-    
+
+    # Clean up temp directory
+    print(f"Cleaning up temporary folder: {temp_workfolder}")
+    os.rmdir(temp_workfolder)
     print(f"Done moving files to {dst_dir}")
 
 
-def uncompress_iternet_tar():
-    print('Uncompressing tar file...')
+def uncompress_internet_tar(compressed_tar_file, dst_dir):
+    """Uncompress a tar.xz file, flatten it, and move files to a destination directory."""
+
+    print('Uncompressing tar.xz file...')
     with tarfile.open(compressed_tar_file, "r:xz") as tar:
-        tar.extractall(temp_tar_file)
-    print('Tar file uncompressed and saved to ', temp_tar_file)
-    print('Flattening directory layout: Starting')
-    flatten_directory()
-    print('Flattening directory layout: Done')
+        tar.extractall(temp_workfolder)
+    print(f'Tar.xz file uncompressed to {temp_workfolder}')
+
+    print('Flattening directory layout...')
+    flatten_directory(temp_workfolder)
+    print('Directory layout flattened.')
+
+    print('Moving files to the destination folder...')
+    for root, dirs, files in os.walk(temp_workfolder):
+        for file in files:
+            file_path = os.path.join(root, file)
+            new_file_path = os.path.join(dst_dir, file)
+
+            # Handle duplicate filenames in destination
+            if os.path.exists(new_file_path):
+                base, ext = os.path.splitext(new_file_path)
+                counter = 1
+                while os.path.exists(new_file_path):
+                    new_file_path = f"{base}_{counter}{ext}"
+                    counter += 1
+
+            print(f"Moving {file_path} to {new_file_path}")
+            os.rename(file_path, new_file_path)
+
+    # Clean up temp directory
+    print(f"Cleaning up temporary folder: {temp_workfolder}")
+    os.rmdir(temp_workfolder)
+    print(f"Done moving files to {dst_dir}")
 
 def upload_to_midori_ai(data: bytes):
     print("Please enter a token to encrypt your data before sending it to Midori AI")
@@ -327,9 +372,9 @@ def main(args):
         download_from_midori_ai()
 
     if unpack:
-        folder_to_unpack_in = item
-        uncompress_iternet_tar()
-        uncompress_tar(folder_to_unpack_in)
+        uncompress_internet_tar(compressed_tar_file, item)
+        unpack_tar(temp_tar_file, item)
+        os.remove(compressed_tar_file)
         os.remove(temp_tar_file)
 
 
