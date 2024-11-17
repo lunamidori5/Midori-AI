@@ -372,7 +372,7 @@ def main(args):
         download_from_midori_ai()
 
     if unpack:
-        uncompress_internet_tar(compressed_tar_file, item)
+        uncompress_internet_tar(compressed_tar_file, temp_folder_path)
         unpack_tar(temp_tar_file, item)
         os.remove(compressed_tar_file)
         os.remove(temp_tar_file)
