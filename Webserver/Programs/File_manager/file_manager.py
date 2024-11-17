@@ -187,7 +187,7 @@ def uncompress_tar(dst_dir):
 
 def uncompress_iternet_tar():
     print('Uncompressing tar file...')
-    with tarfile.open(compressed_tar_file, "x:xz") as tar:
+    with tarfile.open(compressed_tar_file, "r:xz") as tar:
         tar.extractall(temp_tar_file)
     print('Tar file uncompressed and saved to ', temp_tar_file)
 
