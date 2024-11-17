@@ -152,7 +152,7 @@ def decrypt_user_data(encrypted_data: bytes, username: str, salt):
     key = base64.urlsafe_b64encode(hashlib.sha512(hash_hex.encode() + salt).digest()[:32])
     cipher = Fernet(key)
 
-    decrypted_data = cipher.decrypt(encrypted_data).decode()
+    decrypted_data = cipher.decrypt(encrypted_data)
     return decrypted_data
 
 def build_tar(src_dir):
