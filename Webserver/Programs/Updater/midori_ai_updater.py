@@ -62,6 +62,8 @@ print(os.getcwd())
 
 # Remove existing programs
 for program in program_to_update:
+    if "midori-ai-updater" in program[0]:
+        continue
     path = "/usr/local/bin/" + program[0]
     if os.path.isfile(path):
         print(f"Removing existing program: {program[0]}")
