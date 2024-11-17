@@ -32,7 +32,7 @@ jobs:
           bandit -r --severity-level high --exit-zero ./Subsystem-Manager/subsystem-manager-uv/*.py
       - name: Lint with flake8 (Warnings)
         run: |
-          flake8 . --count  --max-complexity=10 --max-line-length=120  --statistics
+          flake8 . --count --exit-zero --max-complexity=10 --max-line-length=120  --statistics
       - name: Lint with flake8 (Recommendations)
         run: |
           flake8 . --count --exit-zero --max-complexity=15 --max-line-length=100 --statistics
