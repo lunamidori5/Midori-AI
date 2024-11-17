@@ -10,12 +10,16 @@ if os.geteuid() == 0:
 else:
     raise PermissionError("This program needs root to update programs, please run with root...")
 
+supported_flavors = ["pixelarch", "endeavouros", "arch linux"]
+non_standard_supported_flavors = ["pixelgen", "gentoo"]
+
 pixelarch_program_to_update = [
     ["midori-ai-login", "pixelarch-midori-ai-login"],
     ["midori-ai-hf-downloader", "pixelarch-hf-downloader"],
     ["midori-ai-downloader", "pixelarch-midori-ai-downloader"],
     ["midori-ai-file-manager", "pixelarch-midori-ai-file-manager"],
-    ["midori-ai-uploader", "pixelarch-midori-ai-uploader"]
+    ["midori-ai-uploader", "pixelarch-midori-ai-uploader"],
+    ["midori-ai-updater", "pixelarch-midori-ai-updater"]
     ]
 
 standard_program_to_update = [
@@ -23,15 +27,26 @@ standard_program_to_update = [
     ["midori-ai-hf-downloader", "standard-linux-hf-downloader"],
     ["midori-ai-downloader", "standard-linux-midori-ai-downloader"],
     ["midori-ai-file-manager", "standard-linux-midori-ai-file-manager"],
-    ["midori-ai-uploader", "standard-linux-midori-ai-uploader"]
+    ["midori-ai-uploader", "standard-linux-midori-ai-uploader"],
+    ["midori-ai-updater", "standard-linux-midori-ai-updater"]
     ]
 
-# Check if the OS is PixelArch
+non_standard_program_to_update = [
+    ["midori-ai-login", "standard-linux-midori-ai-login"],
+    ["midori-ai-hf-downloader", "standard-linux-hf-downloader"],
+    ["midori-ai-downloader", "standard-linux-midori-ai-downloader"],
+    ["midori-ai-file-manager", "standard-linux-midori-ai-file-manager"],
+    ["midori-ai-uploader", "standard-linux-midori-ai-uploader"],
+    ["midori-ai-updater", "standard-linux-midori-ai-updater"]
+    ]
+
 with open("/etc/os-release", "r") as f:
     os_release_data = f.read()
 
-if "pixelarch" in os_release_data.lower():
-    program_to_update = pixelarch_program_to_update
+for flavor in supported_flavors:
+    if flavor in os_release_data.lower():
+        program_to_update = pixelarch_program_to_update
+        break
 else:
     program_to_update = standard_program_to_update
 
