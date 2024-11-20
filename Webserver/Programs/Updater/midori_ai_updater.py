@@ -3,7 +3,11 @@ import shutil
 import requests
 import subprocess
 
+from halo import Halo
+
 jobs = []
+
+spinner = Halo(text='Loading', spinner='dots', color='green')
 
 if os.geteuid() == 0:
     print("We are running as root, updating programs")
@@ -56,9 +60,7 @@ folder_path = os.path.join(home_dir, ".midoriai")
 os.makedirs(folder_path, exist_ok=True)
 temp_folder_path = os.path.join(folder_path, "tmp")
 os.makedirs(temp_folder_path, exist_ok=True)
-print(os.getcwd())
 os.chdir(temp_folder_path)
-print(os.getcwd())
 
 # Remove existing programs
 for program in program_to_update:
@@ -66,26 +68,27 @@ for program in program_to_update:
         continue
     path = "/usr/local/bin/" + program[0]
     if os.path.isfile(path):
-        print(f"Removing existing program: {program[0]}")
+        spinner.start(text=f"Removing existing program: {program[0]}")
         os.remove(path)
 
 # Download and install new programs
 for program in program_to_update:
     response = requests.get("https://tea-cup.midori-ai.xyz/download/" + program[1], stream=True, timeout=55)
     with open(program[1], 'wb') as out_file:
-        print(f"Downloading program: {program[0]}")
+        spinner.start(text=f"Downloading program: {program[0]}")
         shutil.copyfileobj(response.raw, out_file)
         del response
 
     os.chmod(program[1], 0o755)
-    print(f"Installing program: {program[0]}")
+    spinner.start(text=f"Installing program: {program[0]}")
+    
     shutil.move(program[1], "/usr/local/bin/" + program[0])
     
     # Check if the file was moved successfully
     if os.path.isfile("/usr/local/bin/" + program[0]):
-        print(f"Program {program[0]} installed successfully.")
+        spinner.succeed(text=f"Program {program[0]} installed successfully.")
     else:
-        print(f"Error: Program {program[0]} was not installed successfully.")
+        spinner.fail(text=f"Error: Program {program[0]} was not installed successfully.")
     del program
 
 # Clean up
