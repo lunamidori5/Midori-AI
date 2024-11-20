@@ -5,9 +5,9 @@ import subprocess
 
 from halo import Halo
 
-jobs = []
-
 spinner = Halo(text='Loading', spinner='dots', color='green')
+
+jobs = []
 
 if os.geteuid() == 0:
     print("We are running as root, updating programs")

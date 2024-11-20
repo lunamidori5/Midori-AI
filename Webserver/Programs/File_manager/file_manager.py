@@ -11,7 +11,11 @@ import platform
 import argparse
 import subprocess
 
+from halo import Halo
+
 from cryptography.fernet import Fernet
+
+spinner = Halo(text='Loading', spinner='dots', color='green')
 
 parser = argparse.ArgumentParser(description="File manager for packing, unpacking, uploading, and downloading files and folders to / from Midori AI\'s servers")
 parser.add_argument("-i", "--item", required=True, type=str, help="Full path of the File or Folder being worked with")
@@ -34,9 +38,7 @@ os.makedirs(folder_path, exist_ok=True)
 os.makedirs(temp_folder_path, exist_ok=True)
 os.makedirs(temp_workfolder, exist_ok=True)
 
-print(os.getcwd())
 os.chdir(temp_folder_path)
-print(os.getcwd())
 
 username_file = os.path.join(folder_path, "MIDORI_AI_USERNAME")
 api_key_file = os.path.join(folder_path, "MIDORI_AI_API_KEY_TEMP")
@@ -167,14 +169,10 @@ def build_tar(src_dir):
         tar.add(src_dir)
 
 def compress_tar():
-    print('Compressing tar file...')
-
     with tarfile.open(compressed_tar_file, "w:xz") as tar:
         tar.add(temp_tar_file)
     
     os.remove(temp_tar_file)
-    
-    print('Tar file compressed and saved as ', temp_tar_file)
 
 def flatten_directory(base_dir):
     """Flatten a directory by moving all files to the base directory and removing nested folders."""
@@ -192,7 +190,7 @@ def flatten_directory(base_dir):
                     new_file_path = f"{base}_{counter}{ext}"
                     counter += 1
 
-            print(f"Moving {file_path} to {new_file_path}")
+            spinner.start(text=f"Moving {file_path} to {new_file_path}")
             os.rename(file_path, new_file_path)
 
     # Remove empty directories
@@ -200,23 +198,23 @@ def flatten_directory(base_dir):
         for dir in dirs:
             dir_path = os.path.join(root, dir)
             if not os.listdir(dir_path):  # Check if directory is empty
-                print(f"Removing empty directory: {dir_path}")
+                spinner.start(text=f"Removing empty directory: {dir_path}")
                 os.rmdir(dir_path)
 
 
 def unpack_tar(tar_file, dst_dir):
     """Unpacks a tar file into a directory, flatten it, and move files to a destination directory."""
 
-    print('Unpacking tar file...')
+    spinner.start(text='Unpacking tar file...')
     with tarfile.open(tar_file, "r") as tar:
         tar.extractall(temp_workfolder)
-    print(f'Tar file unpacked to {temp_workfolder}')
+    spinner.succeed(text=f'Tar file unpacked to {temp_workfolder}')
 
-    print('Flattening directory layout...')
+    spinner.start(text='Flattening directory layout...')
     flatten_directory(temp_workfolder)
-    print('Directory layout flattened.')
+    spinner.succeed(text='Directory layout flattened.')
 
-    print('Moving files to the destination folder...')
+    spinner.start(text='Moving files to the destination folder...')
     for root, dirs, files in os.walk(temp_workfolder):
         for file in files:
             file_path = os.path.join(root, file)
@@ -230,28 +228,29 @@ def unpack_tar(tar_file, dst_dir):
                     new_file_path = f"{base}_{counter}{ext}"
                     counter += 1
 
-            print(f"Moving {file_path} to {new_file_path}")
+            spinner.start(text=f"Moving {file_path} to {new_file_path}")
             os.rename(file_path, new_file_path)
+            spinner.succeed(text=f"Moving {file_path} to {new_file_path}")
 
     # Clean up temp directory
-    print(f"Cleaning up temporary folder: {temp_workfolder}")
+    spinner.start(text=f"Cleaning up temporary folder: {temp_workfolder}")
     os.rmdir(temp_workfolder)
-    print(f"Done moving files to {dst_dir}")
+    spinner.succeed(text=f"Done moving files to {dst_dir}")
 
 
 def uncompress_internet_tar(compressed_tar_file, dst_dir):
     """Uncompress a tar.xz file, flatten it, and move files to a destination directory."""
 
-    print('Uncompressing tar.xz file...')
+    spinner.start(text='Uncompressing tar.xz file...')
     with tarfile.open(compressed_tar_file, "r:xz") as tar:
         tar.extractall(temp_workfolder)
-    print(f'Tar.xz file uncompressed to {temp_workfolder}')
+    spinner.succeed(text=f'Tar.xz file uncompressed to {temp_workfolder}')
 
-    print('Flattening directory layout...')
+    spinner.start(text='Flattening directory layout...')
     flatten_directory(temp_workfolder)
-    print('Directory layout flattened.')
+    spinner.succeed(text='Directory layout flattened.')
 
-    print('Moving files to the destination folder...')
+    spinner.start(text='Moving files to the destination folder...')
     for root, dirs, files in os.walk(temp_workfolder):
         for file in files:
             file_path = os.path.join(root, file)
@@ -265,13 +264,14 @@ def uncompress_internet_tar(compressed_tar_file, dst_dir):
                     new_file_path = f"{base}_{counter}{ext}"
                     counter += 1
 
-            print(f"Moving {file_path} to {new_file_path}")
+            spinner.start(text=f"Moving {file_path} to {new_file_path}")
             os.rename(file_path, new_file_path)
+            spinner.succeed(text=f"Moving {file_path} to {new_file_path}")
 
     # Clean up temp directory
-    print(f"Cleaning up temporary folder: {temp_workfolder}")
+    spinner.start(text=f"Cleaning up temporary folder: {temp_workfolder}")
     os.rmdir(temp_workfolder)
-    print(f"Done moving files to {dst_dir}")
+    spinner.succeed(text=f"Done moving files to {dst_dir}")
 
 def upload_to_midori_ai(data: bytes):
     print("Please enter a token to encrypt your data before sending it to Midori AI")
@@ -355,13 +355,15 @@ def main(args):
     if pack:
         print("Packing items!")
         for working_item in list_of_items:
-            print(f"Packing {working_item}")
+            spinner.start(text=f"Packing {working_item}")
             build_tar(working_item)
+            spinner.succeed(text=f"Packed {working_item}")
 
     if upload:
         if os.path.exists(temp_tar_file):
-
+            spinner.start(text=f"Compressing Tar for upload...")
             compress_tar()
+            spinner.succeed(text=f"Compressing Tar for upload...")
 
             with open(compressed_tar_file, "rb") as f:
                 bytes_to_upload = f.read()
