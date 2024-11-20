@@ -379,10 +379,10 @@ def main(args):
     if upload:
         if os.path.exists(temp_tar_file):
             spinner.start(text=f"Compressing Tar for upload...")
-            compress_tar()
+            # compress_tar()
             spinner.succeed(text=f"Compressing Tar for upload...")
 
-            with open(compressed_tar_file, "rb") as f:
+            with open(temp_tar_file, "rb") as f:
                 bytes_to_upload = f.read()
             
             upload_to_midori_ai(bytes_to_upload)
@@ -393,9 +393,9 @@ def main(args):
         download_from_midori_ai()
 
     if unpack:
-        uncompress_internet_tar(compressed_tar_file, temp_folder_path)
+        # uncompress_internet_tar(compressed_tar_file, temp_folder_path)
         unpack_tar(temp_tar_file, item)
-        os.remove(compressed_tar_file)
+        # os.remove(compressed_tar_file)
         os.remove(temp_tar_file)
 
 
