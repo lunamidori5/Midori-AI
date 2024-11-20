@@ -17,15 +17,25 @@ from cryptography.fernet import Fernet
 
 spinner = Halo(text='Loading', spinner='dots', color='green')
 
-parser = argparse.ArgumentParser(description="File manager for packing, unpacking, uploading, and downloading files and folders to / from Midori AI\'s servers")
+description = """
+File manager for packing, unpacking, uploading, and downloading files and folders to / from Midori AI\'s servers.
+It uses the Midori AI cloud service to store and retrieve files securely. 
+The program encrypts the files before uploading them to Midori AI and decrypts them after downloading them. 
+The program can also be used to pack and unpack files into tar archives.
+"""
+
+parser = argparse.ArgumentParser(description=description)
 parser.add_argument("-i", "--item", required=True, type=str, help="Full path of the File or Folder being worked with")
 parser.add_argument("-t", "--type", required=True, type=str, help="Type of Item (file or folder)")
-parser.add_argument("-p", "--pack", action="store_true", help="Pack items")
-parser.add_argument("-un", "--unpack", action="store_true", help="Unpack items")
-parser.add_argument("-up", "--upload", action="store_true", help="Upload items")
+parser.add_argument("-p", "--pack", action="store_true", help="Pack items (Gets items ready for uploading to Midor AI)")
+parser.add_argument("-un", "--unpack", action="store_true", help="Unpack items (Places the items in the requested folder)")
+parser.add_argument("-up", "--upload", action="store_true", help="Upload items (Items must be packed before uploading...)")
 parser.add_argument("-d", "--download", action="store_true", help="Download items")
+parser.add_argument("-pur", "--purgetemp", action="store_true", help="Purges the temp folder")
 
 args = parser.parse_args()
+
+purge = args.purgetemp
 
 home_dir = os.path.expanduser("~")
 folder_path = os.path.join(home_dir, ".midoriai")
@@ -37,6 +47,12 @@ encrypted_tar_file = os.path.join(temp_folder_path, 'userfolder.xz.tar.excrypted
 os.makedirs(folder_path, exist_ok=True)
 os.makedirs(temp_folder_path, exist_ok=True)
 os.makedirs(temp_workfolder, exist_ok=True)
+
+if purge:
+    spinner.start(text=f"Removing {temp_folder_path}", color='red')
+    os.remove(temp_folder_path)
+    spinner.succeed(text=f"Removed {temp_folder_path}")
+    sys.exit(0)
 
 os.chdir(temp_folder_path)
 
@@ -294,6 +310,7 @@ def upload_to_midori_ai(data: bytes):
             while not os.path.isfile(encrypted_tar_file):
                 time.sleep(1)
 
+            os.system(f"midori-ai-login")
             os.system(f"midori-ai-uploader --type Linux --file \"{encrypted_tar_file}\" --filename \"{filename_to_upload}\"")
             os.remove(compressed_tar_file)
             os.remove(encrypted_tar_file)
@@ -369,6 +386,8 @@ def main(args):
                 bytes_to_upload = f.read()
             
             upload_to_midori_ai(bytes_to_upload)
+        else:
+            print("Please pack the files before uploading...")
 
     if download:
         download_from_midori_ai()
