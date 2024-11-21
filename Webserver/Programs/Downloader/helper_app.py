@@ -55,6 +55,7 @@ def get_api_key():
             print("Run ``midori-ai-login -u \"username\"``")
 
             print("Encrypted endpoint is turned off, please login to use it...")
+            print("BYPASSING Encrypted endpoint is turned ON, we are working on updating our CLI tools...")
             api_key = str(random.randint(999999, 99999999999999))
             break
 
