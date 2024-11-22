@@ -1,4 +1,4 @@
-# Midori AI: Empowering the Future of Artificial Intelligence
+# Midori AI: Where Creativity and Innovation Blossom
 
 [![Midori AI photo](https://tea-cup.midori-ai.xyz/download/logo_color1.png)](https://io.midori-ai.xyz/)
 
