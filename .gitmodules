@@ -19,6 +19,3 @@
 [submodule "big-AGI"]
 	path = big-AGI
 	url = https://github.com/lunamidori5/big-AGI
-[submodule "Obsidian-Notes"]
-	path = Obsidian-Notes
-	url = https://github.com/lunamidori5/Midori-AI-Obsidian-Notes.git
