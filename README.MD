@@ -15,6 +15,7 @@ Main SubModules:
 
 - Website - [Link to Module](https://github.com/lunamidori5/Midori-AI-Website)
 - Cluster OS - [Link to Module](https://github.com/lunamidori5/Midori-AI-Cluster-OS)
+- Obsidian Notes - [Link to Module](https://github.com/lunamidori5/Midori-AI-Obsidian-Notes)
 - Subsystem Manager - [Link to Module](https://github.com/lunamidori5/Midori-AI-Subsystem-Manager)
 
 Program Based SubModules:
