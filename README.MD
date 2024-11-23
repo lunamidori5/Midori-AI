@@ -20,6 +20,7 @@ Main SubModules:
 
 Program Based SubModules:
 - Discord GPT Bot (with Rag) - [Link to Module](https://github.com/lunamidori5/Midori-AI-GPT-DiscordBot)
+- Endless AutoFigher - [Link to Module](https://github.com/lunamidori5/python_rpg_game)
 
 ---
 

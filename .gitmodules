@@ -22,3 +22,6 @@
 [submodule "Obsidian-Notes"]
 	path = Obsidian-Notes
 	url = https://github.com/lunamidori5/Midori-AI-Obsidian-Notes.git
+[submodule "Endless-Autofighter"]
+	path = Endless-Autofighter
+	url = https://github.com/lunamidori5/python_rpg_game.git
