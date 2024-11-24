@@ -4,6 +4,7 @@ on:
   workflow_run:
     workflows: ["Auto Lint and Upload on Push"]
     types: [completed]
+  workflow_dispatch:
 
 jobs:
   Build-PixelArch-CLI:
