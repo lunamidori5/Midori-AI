@@ -291,7 +291,7 @@ def main(args):
             shutil.copy2(working_item, temp_working_item)
 
             spinner.succeed(text=f"Moved {working_item} to {temp_working_item}")
-            
+
             spinner.start(text=f"Packing {temp_working_item}")
             build_tar(temp_working_item)
             spinner.succeed(text=f"Packed {temp_working_item}")
@@ -302,6 +302,8 @@ def main(args):
                 bytes_to_upload = f.read()
             
             upload_to_midori_ai(bytes_to_upload)
+
+            os.rmdir(temp_workfolder)
         else:
             print("Please pack the files before uploading...")
 
