@@ -212,10 +212,13 @@ def upload_to_midori_ai(data: bytes):
     go_on = confirm()
 
     if go_on:
+        spinner.start(text=f"Encrypting Data...")
         encrypted_data = encrypt_user_data(data, username, salt)
 
         with open(encrypted_tar_file, "wb") as f:
             f.write(encrypted_data)
+        
+        spinner.succeed(text=f"Data Encrypted...")
 
         try:
             while not os.path.isfile(encrypted_tar_file):
