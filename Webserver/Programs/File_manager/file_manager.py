@@ -41,14 +41,13 @@ folder_path = os.path.join(home_dir, ".midoriai")
 temp_folder_path = os.path.join(folder_path, "tmp")
 temp_workfolder = os.path.join(temp_folder_path, 'workfolder')
 temp_tar_file = os.path.join(temp_folder_path, 'userfolder.tar')
-compressed_tar_file = os.path.join(temp_folder_path, 'userfolder.xz.tar')
 encrypted_tar_file = os.path.join(temp_folder_path, 'userfolder.xz.tar.excrypted')
 os.makedirs(folder_path, exist_ok=True)
 os.makedirs(temp_folder_path, exist_ok=True)
 os.makedirs(temp_workfolder, exist_ok=True)
 
 if purge:
-    spinner.start(text=f"Removing {temp_folder_path}", color='red')
+    spinner.start(text=f"Removing {temp_folder_path}")
     os.remove(temp_folder_path)
     spinner.succeed(text=f"Removed {temp_folder_path}")
     sys.exit(0)
@@ -175,46 +174,14 @@ def decrypt_user_data(encrypted_data: bytes, username: str, salt):
     return decrypted_data
 
 def build_tar(src_dir):
-    """ Builds a directory into a tar file.
+    """ Builds a directory / file into a tar file.
 
     Args:
-    src_dir: The source directory to compress.
+    src_dir: The source directory / file to compress.
     """
     with tarfile.open(temp_tar_file, "a") as tar:
-        tar.add(src_dir)
-
-def compress_tar():
-    with tarfile.open(compressed_tar_file, "w:xz") as tar:
-        tar.add(temp_tar_file)
-    
-    os.remove(temp_tar_file)
-
-def flatten_directory(base_dir):
-    """Flatten a directory by moving all files to the base directory and removing nested folders."""
-    # Move files to the base directory
-    for root, dirs, files in os.walk(base_dir, topdown=False):
-        for file in files:
-            file_path = os.path.join(root, file)
-            new_file_path = os.path.join(base_dir, file)
-
-            # Handle duplicate filenames
-            if os.path.exists(new_file_path):
-                base, ext = os.path.splitext(new_file_path)
-                counter = 1
-                while os.path.exists(new_file_path):
-                    new_file_path = f"{base}_{counter}{ext}"
-                    counter += 1
-
-            spinner.start(text=f"Moving {file_path} to {new_file_path}")
-            os.rename(file_path, new_file_path)
-
-    # Remove empty directories
-    for root, dirs, files in os.walk(base_dir, topdown=False):
-        for dir in dirs:
-            dir_path = os.path.join(root, dir)
-            if not os.listdir(dir_path):  # Check if directory is empty
-                spinner.start(text=f"Removing empty directory: {dir_path}")
-                os.rmdir(dir_path)
+        arcname = os.path.basename(src_dir)
+        tar.add(src_dir, arcname=arcname)
 
 
 def unpack_tar(tar_file, dst_dir):
@@ -225,68 +192,13 @@ def unpack_tar(tar_file, dst_dir):
         tar.extractall(temp_workfolder)
     spinner.succeed(text=f'Tar file unpacked to {temp_workfolder}')
 
-    spinner.start(text='Flattening directory layout...')
-    flatten_directory(temp_workfolder)
-    spinner.succeed(text='Directory layout flattened.')
-
     spinner.start(text='Moving files to the destination folder...')
-    for root, dirs, files in os.walk(temp_workfolder):
-        for file in files:
-            file_path = os.path.join(root, file)
-            new_file_path = os.path.join(dst_dir, file)
-
-            # Handle duplicate filenames in destination
-            if os.path.exists(new_file_path):
-                base, ext = os.path.splitext(new_file_path)
-                counter = 1
-                while os.path.exists(new_file_path):
-                    new_file_path = f"{base}_{counter}{ext}"
-                    counter += 1
-
-            spinner.start(text=f"Moving {file_path} to {new_file_path}")
-            os.rename(file_path, new_file_path)
-            spinner.succeed(text=f"Moving {file_path} to {new_file_path}")
-
-    # Clean up temp directory
-    spinner.start(text=f"Cleaning up temporary folder: {temp_workfolder}")
-    os.rmdir(temp_workfolder)
+    shutil.copytree(temp_workfolder, dst_dir, dirs_exist_ok=True)
     spinner.succeed(text=f"Done moving files to {dst_dir}")
 
-
-def uncompress_internet_tar(compressed_tar_file, dst_dir):
-    """Uncompress a tar.xz file, flatten it, and move files to a destination directory."""
-
-    spinner.start(text='Uncompressing tar.xz file...')
-    with tarfile.open(compressed_tar_file, "r:xz") as tar:
-        tar.extractall(temp_workfolder)
-    spinner.succeed(text=f'Tar.xz file uncompressed to {temp_workfolder}')
-
-    spinner.start(text='Flattening directory layout...')
-    flatten_directory(temp_workfolder)
-    spinner.succeed(text='Directory layout flattened.')
-
-    spinner.start(text='Moving files to the destination folder...')
-    for root, dirs, files in os.walk(temp_workfolder):
-        for file in files:
-            file_path = os.path.join(root, file)
-            new_file_path = os.path.join(dst_dir, file)
-
-            # Handle duplicate filenames in destination
-            if os.path.exists(new_file_path):
-                base, ext = os.path.splitext(new_file_path)
-                counter = 1
-                while os.path.exists(new_file_path):
-                    new_file_path = f"{base}_{counter}{ext}"
-                    counter += 1
-
-            spinner.start(text=f"Moving {file_path} to {new_file_path}")
-            os.rename(file_path, new_file_path)
-            spinner.succeed(text=f"Moving {file_path} to {new_file_path}")
-
-    # Clean up temp directory
     spinner.start(text=f"Cleaning up temporary folder: {temp_workfolder}")
     os.rmdir(temp_workfolder)
-    spinner.succeed(text=f"Done moving files to {dst_dir}")
+    spinner.succeed(text=f"Done cleaning up temporary folder: {temp_workfolder}")
 
 def upload_to_midori_ai(data: bytes):
     print("Please enter a token to encrypt your data before sending it to Midori AI")
@@ -382,10 +294,6 @@ def main(args):
 
     if upload:
         if os.path.exists(temp_tar_file):
-            spinner.start(text=f"Compressing Tar for upload...")
-            # compress_tar()
-            spinner.succeed(text=f"Compressed Tar for upload!")
-
             with open(temp_tar_file, "rb") as f:
                 bytes_to_upload = f.read()
             
@@ -397,9 +305,7 @@ def main(args):
         download_from_midori_ai()
 
     if unpack:
-        # uncompress_internet_tar(compressed_tar_file, temp_folder_path)
         unpack_tar(temp_tar_file, item)
-        # os.remove(compressed_tar_file)
         os.remove(temp_tar_file)
 
 
