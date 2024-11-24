@@ -26,7 +26,6 @@ The program can also be used to pack and unpack files into tar archives.
 
 parser = argparse.ArgumentParser(description=description)
 parser.add_argument("-i", "--item", required=True, type=str, help="Full path of the File or Folder being worked with")
-parser.add_argument("-t", "--type", required=True, type=str, help="Type of Item (file or folder)")
 parser.add_argument("-p", "--pack", action="store_true", help="Pack items (Gets items ready for uploading to Midor AI)")
 parser.add_argument("-un", "--unpack", action="store_true", help="Unpack items (Places the items in the requested folder)")
 parser.add_argument("-up", "--upload", action="store_true", help="Upload items (Items must be packed before uploading...)")
@@ -333,15 +332,14 @@ def download_from_midori_ai():
 
     os.remove(encrypted_tar_file)
 
-    with open(compressed_tar_file, "wb") as f:
+    with open(temp_tar_file, "wb") as f:
         f.write(decrypted_data)
 
-    print(f"Downloaded file: {compressed_tar_file}")
+    print(f"Downloaded file: {temp_tar_file}")
 
 def main(args):
     list_of_items = []
     item = os.path.join(args.item)
-    item_type = str(args.type).lower()
     pack = bool(args.pack)
     unpack = bool(args.unpack)
     upload = bool(args.upload)
@@ -359,28 +357,34 @@ def main(args):
         if check_programs(program):
             continue
         else:
-            print(f"You are missing {program} form your path, please install or update them...")
+            raise ImportError(f"You are missing {program} form your path, please install or update them...")
     
-    if "folder" in item_type:
+    if os.path.isdir(item):
         for root, dirs, files in os.walk(item):
             for file in files:
                 list_of_items.append(os.path.join(root, file))
 
-    if "file" in item_type:
+    elif os.path.isfile(item):
         list_of_items.append(item)
+    
+    else:
+        raise FileNotFoundError(f"{str(item).title()} is not a path or could not be found")
 
     if pack:
         print("Packing items!")
         for working_item in list_of_items:
-            spinner.start(text=f"Packing {working_item}")
-            build_tar(working_item)
-            spinner.succeed(text=f"Packed {working_item}")
+            spinner.start(text=f"Moving {working_item} to {temp_workfolder}")
+            temp_working_item = os.path.join(temp_workfolder, working_item)
+            shutil.copy(working_item, temp_working_item)
+            spinner.start(text=f"Packing {temp_working_item}")
+            build_tar(temp_working_item)
+            spinner.succeed(text=f"Packed {temp_working_item}")
 
     if upload:
         if os.path.exists(temp_tar_file):
             spinner.start(text=f"Compressing Tar for upload...")
             # compress_tar()
-            spinner.succeed(text=f"Compressing Tar for upload...")
+            spinner.succeed(text=f"Compressed Tar for upload!")
 
             with open(temp_tar_file, "rb") as f:
                 bytes_to_upload = f.read()
@@ -400,4 +404,7 @@ def main(args):
 
 
 if __name__ == "__main__":
-    main(args)
+    try:
+        main(args)
+    except Exception as error:
+        print(str(error))
