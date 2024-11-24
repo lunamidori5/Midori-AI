@@ -287,7 +287,7 @@ def main(args):
         for working_item in list_of_items:
             print(f"Moving {working_item} to {temp_workfolder}")
             spinner.start(text=f"Moving {working_item} to {temp_workfolder}")
-            temp_working_item = os.path.join(temp_workfolder, working_item)
+            temp_working_item = os.path.join(temp_workfolder, os.path.basename(working_item))
             shutil.copy2(working_item, temp_working_item)
             spinner.succeed(text=f"Moved {working_item} to {temp_working_item}")
             print(f"Moved {working_item} to {temp_working_item}")
