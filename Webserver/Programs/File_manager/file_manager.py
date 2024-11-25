@@ -313,7 +313,7 @@ def main(args):
 
     if unpack:
         unpack_tar(temp_tar_file, item)
-        os.remove(temp_tar_file)
+        os.removedirs(temp_tar_file)
 
 
 if __name__ == "__main__":
