@@ -309,8 +309,8 @@ def main(args):
             for root, dirs, files in os.walk(temp_workfolder):
                 for file in files:
                     os.remove(os.path.join(root, file))
-                    
-            os.remove(temp_workfolder)
+
+            os.removedirs(temp_workfolder)
         else:
             print("Please pack the files before uploading...")
 
