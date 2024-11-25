@@ -25,12 +25,12 @@ The program can also be used to pack and unpack files into tar archives.
 """
 
 parser = argparse.ArgumentParser(description=description)
-parser.add_argument("-i", "--item", required=True, type=str, help="Full path of the File or Folder being worked with")
-parser.add_argument("-p", "--pack", action="store_true", help="Pack items (Gets items ready for uploading to Midor AI)")
-parser.add_argument("-un", "--unpack", action="store_true", help="Unpack items (Places the items in the requested folder)")
-parser.add_argument("-up", "--upload", action="store_true", help="Upload items (Items must be packed before uploading...)")
+parser.add_argument("-i", "--item", required=True, type=str, help="Full path of the file or folder")
+parser.add_argument("-c", "--pack", action="store_true", help="Create archive (pack)")
+parser.add_argument("-x", "--unpack", action="store_true", help="Extract archive (unpack)")
+parser.add_argument("-u", "--upload", action="store_true", help="Upload items (must be packed first)")
 parser.add_argument("-d", "--download", action="store_true", help="Download items")
-parser.add_argument("-pur", "--purgetemp", action="store_true", help="Purges the temp folder")
+parser.add_argument("-P", "--purgetemp", action="store_true", help="Purge temporary files (use with caution)") 
 
 args = parser.parse_args()
 
@@ -259,12 +259,6 @@ def main(args):
     unpack = bool(args.unpack)
     upload = bool(args.upload)
     download = bool(args.download)
-
-    if pack and unpack:
-        raise Exception("You cannot pack/unpack at the same time.")
-
-    if upload and download:
-        raise Exception("You cannot upload/download at the same time.")
 
     midori_ai_programs = ["midori-ai-downloader", "midori-ai-uploader", "midori-ai-login"]
 
