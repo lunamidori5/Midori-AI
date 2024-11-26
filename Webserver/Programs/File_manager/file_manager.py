@@ -15,7 +15,7 @@ from halo import Halo
 
 from cryptography.fernet import Fernet
 
-spinner = Halo(text='Loading', spinner='dots', color='green')
+spinner = Halo(text='Loading', spinner='dots', color='red')
 
 description = """
 File manager for packing, unpacking, uploading, and downloading files and folders to / from Midori AI\'s servers.
