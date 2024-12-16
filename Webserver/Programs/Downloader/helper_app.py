@@ -131,12 +131,15 @@ async def main():
     parser.add_argument("filename", help="The filename to download.")
     parser.add_argument("-o", "--output", help="The output filename.")
     parser.add_argument("-u", "--usermode", action="store_true", help="Enters user mode")
+    parser.add_argument("-un", "--unsafe", required=False, action='store_true', help="Enable unsafe mode")
     args = parser.parse_args()
 
     base_url = "https://tea-cup.midori-ai.xyz/download/"
     filename = args.filename
     usermode = bool(args.usermode)
     key_filename = f"{random_id}-key.txt"
+
+    pre_unsafe = str(args.unsafe).lower()
 
     if os.path.exists(args.output or filename):
         log(f"File Already Downloaded, removing file and redownloading...")
@@ -146,7 +149,12 @@ async def main():
             os.remove(filename)
 
     key_url = f"{base_url}{key_filename}"
-    encrypted_file_url = f"{base_url}ai/{filename}"
+
+    if pre_unsafe == "true":
+        encrypted_file_url = f"{base_url}{filename}"
+    else:
+        encrypted_file_url = f"{base_url}ai/{filename}"
+
     usermode_file_url = f"{base_url}user"
     backup_file_url = f"{base_url}{filename}"
 
