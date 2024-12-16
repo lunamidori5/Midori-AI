@@ -148,17 +148,18 @@ async def main():
         else:
             os.remove(filename)
 
+    trys = 0
+
     key_url = f"{base_url}{key_filename}"
 
     if pre_unsafe == "true":
+        trys = 16
         encrypted_file_url = f"{base_url}{filename}"
     else:
         encrypted_file_url = f"{base_url}ai/{filename}"
 
     usermode_file_url = f"{base_url}user"
     backup_file_url = f"{base_url}{filename}"
-
-    trys = 0
 
     print(f"checking usermode: {usermode}")
     if usermode:
