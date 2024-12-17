@@ -137,9 +137,9 @@ async def main():
     base_url = "https://tea-cup.midori-ai.xyz/download/"
     filename = args.filename
     usermode = bool(args.usermode)
+    pre_unsafe = bool(args.unsafe)
     key_filename = f"{random_id}-key.txt"
 
-    pre_unsafe = str(args.unsafe).lower()
 
     if os.path.exists(args.output or filename):
         log(f"File Already Downloaded, removing file and redownloading...")
@@ -148,22 +148,15 @@ async def main():
         else:
             os.remove(filename)
 
-    trys = 0
-
     key_url = f"{base_url}{key_filename}"
-
-    if pre_unsafe == "true":
-        trys = 16
-        encrypted_file_url = f"{base_url}{filename}"
-    else:
-        encrypted_file_url = f"{base_url}ai/{filename}"
-
+    
+    encrypted_file_url = f"{base_url}ai/{filename}"
     usermode_file_url = f"{base_url}user"
     backup_file_url = f"{base_url}{filename}"
 
-    print(f"checking usermode: {usermode}")
+    trys = 0
+
     if usermode:
-        print("Entering Usermode")
         trys = 16
         backup_file_url = usermode_file_url
 
@@ -171,6 +164,9 @@ async def main():
         trys = 16
 
     if not is_api_key_loaded():
+        trys = 16
+
+    if pre_unsafe:
         trys = 16
         
     while trys < 18:
