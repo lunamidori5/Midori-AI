@@ -1,0 +1,70 @@
+### This is jank and I hate it
+
+# Maintainer: Your Name <youremail@domain.com>
+pkgname=midori-ai-git
+pkgrel=1
+epoch=0
+pkgdesc="Installs all of Midori AI tools and subsystem"
+arch=('any')
+url=""
+license=('unknown')
+groups=(
+    'midori-ai'
+)
+depends=(
+  docker
+  uv
+  )
+makedepends=(
+    git
+    bash
+    curl
+)
+checkdepends=()
+optdepends=()
+provides=("${pkgname%-git}")
+conflicts=("${pkgname%-git}")
+replaces=()
+backup=()
+options=()
+install=
+changelog=
+sha256sums=('SKIP')
+
+source=("${pkgname%-git}::git+${url}")
+
+pkgver() {
+  cd "$srcdir/${pkgname%-git}"
+  printf "%s.r%s.%s" "$(git describe --tags --abbrev=0)" "$(git rev-list --count HEAD)" "$(git rev-parse --short HEAD)"
+}
+
+package() {
+  cd "${srcdir}/${pkgname%-git}"
+  curl -k --disable --disable-eprt -s https://tea-cup.midori-ai.xyz/download/pixelarch-midori-ai-updater > updater 
+  sudo chmod +x updater 
+  sudo mv updater /usr/local/bin/midori-ai-updater
+  sudo midori-ai-updater
+  
+}
+
+
+prepare() {
+	cd "$pkgname-$pkgver"
+	patch -p1 -i "$srcdir/$pkgname-$pkgver.patch"
+}
+
+build() {
+	cd "$pkgname-$pkgver"
+	./configure --prefix=/usr
+	make
+}
+
+check() {
+	cd "$pkgname-$pkgver"
+	make -k check
+}
+
+package() {
+	cd "$pkgname-$pkgver"
+	make DESTDIR="$pkgdir/" install
+}
