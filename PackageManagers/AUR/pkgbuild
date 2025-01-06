@@ -46,10 +46,10 @@ build() {
     .venv/bin/pip install --no-cache-dir pyinstaller pytz
     .venv/bin/pip install --no-cache-dir -r requirements.txt
 
-    .venv/bin/pyinstaller --onefile --distpath "${srcdir}/${_pkgbasename}/workfolder/build" helper_app.py
-    .venv/bin/pyinstaller --onefile --distpath "${srcdir}/${_pkgbasename}/workfolder/build" midori_ai_login_app.py
-    .venv/bin/pyinstaller --onefile --distpath "${srcdir}/${_pkgbasename}/workfolder/build" midori_ai_updater.py
-    .venv/bin/pyinstaller --onefile --distpath "${srcdir}/${_pkgbasename}/workfolder/build" midori_ai_file_manager.py
+    .venv/bin/pyinstaller --onefile helper_app.py
+    .venv/bin/pyinstaller --onefile midori_ai_login_app.py
+    .venv/bin/pyinstaller --onefile midori_ai_updater.py
+    .venv/bin/pyinstaller --onefile midori_ai_file_manager.py
 
     mv "${srcdir}/${_pkgbasename}/workfolder/build/helper_app" midori_ai_downloader
     mv "${srcdir}/${_pkgbasename}/workfolder/build/midori_ai_login_app" midori_ai_login
