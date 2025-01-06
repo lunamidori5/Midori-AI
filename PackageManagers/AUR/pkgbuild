@@ -1,70 +1,89 @@
 ### This is jank and I hate it
 
-# Maintainer: Your Name <youremail@domain.com>
-pkgname=midori-ai-git
+# Maintainer: Luna Midori <midoriaidev@gmail.com>
+# Contact: Midori AI <contact-us@midori-ai.xyz>
+
+_pkgbasename=midori-ai
+pkgname=${_pkgbasename}-git
 pkgrel=1
-epoch=0
+pkgver=r0
 pkgdesc="Installs all of Midori AI tools and subsystem"
-arch=('any')
-url=""
+arch=('x86_64')
+url="https://github.com/lunamidori5/Midori-AI"
+provides=('midori-ai')
+conflicts=('midori-ai')
 license=('unknown')
-groups=(
-    'midori-ai'
-)
-depends=(
-  docker
-  uv
-  )
-makedepends=(
-    git
-    bash
-    curl
-)
-checkdepends=()
-optdepends=()
-provides=("${pkgname%-git}")
-conflicts=("${pkgname%-git}")
-replaces=()
-backup=()
-options=()
-install=
-changelog=
+depends=('docker' 'uv')
+makedepends=('git' 'bash' 'uv' 'curl')
+source=("git+https://github.com/lunamidori5/Midori-AI.git")
+install='midori-ai.install'
 sha256sums=('SKIP')
 
-source=("${pkgname%-git}::git+${url}")
-
 pkgver() {
-  cd "$srcdir/${pkgname%-git}"
-  printf "%s.r%s.%s" "$(git describe --tags --abbrev=0)" "$(git rev-list --count HEAD)" "$(git rev-parse --short HEAD)"
-}
-
-package() {
-  cd "${srcdir}/${pkgname%-git}"
-  curl -k --disable --disable-eprt -s https://tea-cup.midori-ai.xyz/download/pixelarch-midori-ai-updater > updater 
-  sudo chmod +x updater 
-  sudo mv updater /usr/local/bin/midori-ai-updater
-  sudo midori-ai-updater
-  
-}
-
-
-prepare() {
-	cd "$pkgname-$pkgver"
-	patch -p1 -i "$srcdir/$pkgname-$pkgver.patch"
+    cd "${srcdir}/${_pkgbasename}"
+    printf "r%s.%s" "$(git rev-list --count HEAD)" "$(git rev-parse --short HEAD)"
 }
 
 build() {
-	cd "$pkgname-$pkgver"
-	./configure --prefix=/usr
-	make
-}
+    cd "${srcdir}/${_pkgbasename}"
 
-check() {
-	cd "$pkgname-$pkgver"
-	make -k check
+    git clone --recurse-submodules ${url}.git
+    
+    mkdir -p workfolder
+    mkdir -p workfolder/build
+
+    cd workfolder
+    curl -S https://raw.githubusercontent.com/lunamidori5/Midori-AI/master/Webserver/Programs/Downloader/helper_app.py > helper_app.py
+    curl -S https://raw.githubusercontent.com/lunamidori5/Midori-AI/master/Webserver/Programs/Login_program/midori_ai_login_app.py > midori_ai_login_app.py
+    curl -S https://raw.githubusercontent.com/lunamidori5/Midori-AI/master/Webserver/Programs/File_manager/file_manager.py > midori_ai_file_manager.py
+    curl -S https://raw.githubusercontent.com/lunamidori5/Midori-AI/master/Webserver/Programs/Updater/midori_ai_updater.py > midori_ai_updater.py
+    curl -S https://raw.githubusercontent.com/lunamidori5/Midori-AI-Subsystem-Manager/master/subsystem-manager-uv/requirements.txt > requirements.txt
+
+    uv venv --seed
+    .venv/bin/pip install --no-cache-dir pyinstaller pytz
+    .venv/bin/pip install --no-cache-dir -r requirements.txt
+
+    .venv/bin/pyinstaller --onefile --clean --distpath "${srcdir}/${_pkgbasename}/workfolder/build" helper_app.py
+    .venv/bin/pyinstaller --onefile --clean --distpath "${srcdir}/${_pkgbasename}/workfolder/build" midori_ai_login_app.py
+    .venv/bin/pyinstaller --onefile --clean --distpath "${srcdir}/${_pkgbasename}/workfolder/build" midori_ai_updater.py
+    .venv/bin/pyinstaller --onefile --clean --distpath "${srcdir}/${_pkgbasename}/workfolder/build" midori_ai_file_manager.py
+
+    mv "${srcdir}/${_pkgbasename}/workfolder/build/helper_app" midori_ai_downloader
+    mv "${srcdir}/${_pkgbasename}/workfolder/build/midori_ai_login_app" midori_ai_login
+    mv "${srcdir}/${_pkgbasename}/workfolder/build/midori_ai_updater" midori_ai_updater
+    mv "${srcdir}/${_pkgbasename}/workfolder/build/midori_ai_file_manager" midori_ai_file_manager
+
+    rm -rf build .venv
+
+    # cd Midori-AI
+
+    ZIG_GLOBAL_CACHE_DIR="${srcdir}/tmp" ./nix/build-support/fetch-zig-cache.sh
+    zig build --system "${srcdir}/tmp/p" -Doptimize=ReleaseFast -Demit-docs
 }
 
 package() {
-	cd "$pkgname-$pkgver"
-	make DESTDIR="$pkgdir/" install
+    cd "${srcdir}/${_pkgbasename}/Midori-AI"
+
+    declare -a folders=("subsystem-manager-2" "command-line-programs")
+    declare -a programs=("midori_ai_downloader" "midori_ai_login" "midori_ai_updater" "midori_ai_file_manager")
+
+    if [[ -d "$HOME/.midori-ai" ]]; then
+      echo "Directory .midori-ai exists."
+      for folder in "${folders[@]}"; do
+        if [[ -d "$HOME/.midori-ai/$folder" ]]; then
+          rm -rf "$HOME/.midori-ai/$folder"
+          mkdir "$HOME/.midori-ai/$folder"
+        fi
+      done
+    else
+      echo "Directory .midori-ai does not exist."
+      for folder in "${folders[@]}"; do
+        mkdir "$HOME/.midori-ai/$folder"
+      done
+    fi
+
+    cp -r Midori-AI-Subsystem-Manager/subsystem-manager-2-uv/ "$HOME/.midori-ai/subsystem-manager-2"
+
+    zig build -p "${pkgdir}"/usr --system "${srcdir}/tmp/p" -Doptimize=ReleaseFast -Demit-docs
+    # install -D -m644 LICENSE "${pkgdir}/usr/share/licenses/$_pkgbasename/LICENSE"
 }
