@@ -3,10 +3,10 @@
 # Maintainer: Luna Midori <midoriaidev@gmail.com>
 # Contact: Midori AI <contact-us@midori-ai.xyz>
 
-_pkgbasename=midori-ai
+_pkgbasename=Midori-AI
 pkgname=${_pkgbasename}-git
 pkgrel=1
-pkgver=r0
+pkgver=r1263.5314a63
 pkgdesc="Installs all of Midori AI tools and subsystem"
 arch=('x86_64')
 url="https://github.com/lunamidori5/Midori-AI"
@@ -19,6 +19,11 @@ source=("git+https://github.com/lunamidori5/Midori-AI.git")
 install='midori-ai.install'
 sha256sums=('SKIP')
 
+prepare() {
+  cd "${srcdir}/${_pkgbasename}"
+  git submodule update --init --recursive
+}
+
 pkgver() {
     cd "${srcdir}/${_pkgbasename}"
     printf "r%s.%s" "$(git rev-list --count HEAD)" "$(git rev-parse --short HEAD)"
@@ -26,8 +31,6 @@ pkgver() {
 
 build() {
     cd "${srcdir}/${_pkgbasename}"
-
-    git clone --recurse-submodules ${url}.git
     
     mkdir -p workfolder
     mkdir -p workfolder/build
@@ -43,10 +46,10 @@ build() {
     .venv/bin/pip install --no-cache-dir pyinstaller pytz
     .venv/bin/pip install --no-cache-dir -r requirements.txt
 
-    .venv/bin/pyinstaller --onefile --clean --distpath "${srcdir}/${_pkgbasename}/workfolder/build" helper_app.py
-    .venv/bin/pyinstaller --onefile --clean --distpath "${srcdir}/${_pkgbasename}/workfolder/build" midori_ai_login_app.py
-    .venv/bin/pyinstaller --onefile --clean --distpath "${srcdir}/${_pkgbasename}/workfolder/build" midori_ai_updater.py
-    .venv/bin/pyinstaller --onefile --clean --distpath "${srcdir}/${_pkgbasename}/workfolder/build" midori_ai_file_manager.py
+    .venv/bin/pyinstaller --onefile --distpath "${srcdir}/${_pkgbasename}/workfolder/build" helper_app.py
+    .venv/bin/pyinstaller --onefile --distpath "${srcdir}/${_pkgbasename}/workfolder/build" midori_ai_login_app.py
+    .venv/bin/pyinstaller --onefile --distpath "${srcdir}/${_pkgbasename}/workfolder/build" midori_ai_updater.py
+    .venv/bin/pyinstaller --onefile --distpath "${srcdir}/${_pkgbasename}/workfolder/build" midori_ai_file_manager.py
 
     mv "${srcdir}/${_pkgbasename}/workfolder/build/helper_app" midori_ai_downloader
     mv "${srcdir}/${_pkgbasename}/workfolder/build/midori_ai_login_app" midori_ai_login
