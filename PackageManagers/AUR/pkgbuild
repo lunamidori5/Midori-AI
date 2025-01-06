@@ -60,7 +60,7 @@ build() {
 }
 
 package() {
-    cd "${srcdir}/${_pkgbasename}/Midori-AI"
+    cd "${srcdir}/${_pkgbasename}"
 
     declare -a folders=("subsystem_manager_2" "command_line_programs")
     declare -a programs=("midori_ai_downloader" "midori_ai_login" "midori_ai_updater" "midori_ai_file_manager")
@@ -83,7 +83,7 @@ package() {
     cp -r Midori-AI-Subsystem-Manager/subsystem-manager-2-uv/ "$HOME/.midori-ai/subsystem_manager_2"
 
     for program in "${programs[@]}"; do
-      install -m755 "${srcdir}/${_pkgbasename}/workfolder/${program}" /usr/bin/"$program"
+      install -m755 "${srcdir}/${_pkgbasename}/workfolder/dist/${program}" /usr/bin/"$program"
     done
     
 }
