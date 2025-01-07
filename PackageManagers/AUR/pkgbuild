@@ -43,8 +43,8 @@ build() {
     curl -S https://raw.githubusercontent.com/lunamidori5/Midori-AI-Subsystem-Manager/master/subsystem-manager-uv/requirements.txt > requirements.txt
 
     uv venv --seed
-    .venv/bin/pip install --no-cache-dir pyinstaller pytz
-    .venv/bin/pip install --no-cache-dir -r requirements.txt
+    .venv/bin/pip install --no-cache-dir -v pyinstaller pytz
+    .venv/bin/pip install --no-cache-dir -v -r requirements.txt
 
     .venv/bin/pyinstaller --onefile helper_app.py
     .venv/bin/pyinstaller --onefile midori_ai_login_app.py
@@ -81,7 +81,7 @@ package() {
       done
     fi
 
-    cp -r Midori-AI-Subsystem-Manager/subsystem-manager-2-uv/ "$HOME/.midori-ai/subsystem_manager_2"
+    cp -r Subsystem-Manager/subsystem-manager-2-uv/ "$HOME/.midori-ai/subsystem_manager_2"
 
     for program in "${programs[@]}"; do
       install -m755 "${srcdir}/${_pkgbasename}/workfolder/dist/${program}" /usr/bin/"$program"
