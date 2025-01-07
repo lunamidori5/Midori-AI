@@ -1,12 +1,11 @@
-### This is jank and I hate it
-
 # Maintainer: Luna Midori <midoriaidev@gmail.com>
 # Contact: Midori AI <contact-us@midori-ai.xyz>
 
-_pkgbasename=Midori-AI
+_pkgfullbasename=Midori-AI
+_pkgbasename=midori-ai
 pkgname=${_pkgbasename}-git
 pkgrel=1
-pkgver=r1263.5314a63
+pkgver=r0
 pkgdesc="Installs all of Midori AI tools and subsystem"
 arch=('x86_64')
 url="https://github.com/lunamidori5/Midori-AI"
@@ -16,32 +15,31 @@ license=('unknown')
 depends=('docker' 'docker-compose' 'uv')
 makedepends=('git' 'bash' 'uv')
 source=("git+https://github.com/lunamidori5/Midori-AI.git")
-# install='midori-ai.install'
 sha256sums=('SKIP')
 
 prepare() {
-  cd "${srcdir}/${_pkgbasename}"
+  cd "${srcdir}/${_pkgfullbasename}"
   git submodule update --init --recursive
 }
 
 pkgver() {
-    cd "${srcdir}/${_pkgbasename}"
+    cd "${srcdir}/${_pkgfullbasename}"
     printf "r%s.%s" "$(git rev-list --count HEAD)" "$(git rev-parse --short HEAD)"
 }
 
 build() {
-    cd "${srcdir}/${_pkgbasename}"
+    cd "${srcdir}/${_pkgfullbasename}"
     
     mkdir -p workfolder
     mkdir -p workfolder/build
 
-    mv "${srcdir}/${_pkgbasename}/Webserver/Programs/Downloader/helper_app.py" workfolder/helper_app.py
-    mv "${srcdir}/${_pkgbasename}/Webserver/Programs/Login_program/midori_ai_login_app.py" workfolder/midori_ai_login_app.py
-    mv "${srcdir}/${_pkgbasename}/Webserver/Programs/File_manager/file_manager.py" workfolder/midori_ai_file_manager.py
-    mv "${srcdir}/${_pkgbasename}/Webserver/Programs/Updater/midori_ai_updater.py" workfolder/midori_ai_updater.py
-    mv "${srcdir}/${_pkgbasename}/Subsystem-Manager/subsystem-manager-uv/requirements.txt" workfolder/requirements.txt
+    mv "${srcdir}/${_pkgfullbasename}/Webserver/Programs/Downloader/helper_app.py" workfolder/helper_app.py
+    mv "${srcdir}/${_pkgfullbasename}/Webserver/Programs/Login_program/midori_ai_login_app.py" workfolder/midori_ai_login_app.py
+    mv "${srcdir}/${_pkgfullbasename}/Webserver/Programs/File_manager/file_manager.py" workfolder/midori_ai_file_manager.py
+    mv "${srcdir}/${_pkgfullbasename}/Webserver/Programs/Updater/midori_ai_updater.py" workfolder/midori_ai_updater.py
+    mv "${srcdir}/${_pkgfullbasename}/Subsystem-Manager/subsystem-manager-uv/requirements.txt" workfolder/requirements.txt
 
-    cp -r "${srcdir}/${_pkgbasename}/Subsystem-Manager/subsystem-manager-2-uv" workfolder/subsystem-manager-2
+    cp -r "${srcdir}/${_pkgfullbasename}/Subsystem-Manager/subsystem-manager-2-uv" workfolder/subsystem-manager-2
 
     cd workfolder
 
@@ -54,26 +52,26 @@ build() {
     .venv/bin/pyinstaller --optimize 2 --onefile midori_ai_updater.py
     .venv/bin/pyinstaller --optimize 2 --onefile midori_ai_file_manager.py
 
-    mv "${srcdir}/${_pkgbasename}/workfolder/dist/helper_app" midori_ai_downloader
-    mv "${srcdir}/${_pkgbasename}/workfolder/dist/midori_ai_login_app" midori_ai_login
-    mv "${srcdir}/${_pkgbasename}/workfolder/dist/midori_ai_updater" midori_ai_updater
-    mv "${srcdir}/${_pkgbasename}/workfolder/dist/midori_ai_file_manager" midori_ai_file_manager
+    mv "${srcdir}/${_pkgfullbasename}/workfolder/dist/helper_app" midori_ai_downloader
+    mv "${srcdir}/${_pkgfullbasename}/workfolder/dist/midori_ai_login_app" midori_ai_login
+    mv "${srcdir}/${_pkgfullbasename}/workfolder/dist/midori_ai_updater" midori_ai_updater
+    mv "${srcdir}/${_pkgfullbasename}/workfolder/dist/midori_ai_file_manager" midori_ai_file_manager
 
     cd subsystem-manager-2
 
     uv sync --link-mode=copy --no-cache
     uv pip install --link-mode=copy --no-cache-dir -v pyinstaller pytz
-    uv run pyinstaller --optimize 2 --onefile main.py
+    uv run nicegui-pack --onefile main.py
 
     cd ..
 
-    mv "${srcdir}/${_pkgbasename}/workfolder/subsystem-manager-2/dist/main" midori_ai_subsystem_manager
+    mv "${srcdir}/${_pkgfullbasename}/workfolder/subsystem-manager-2/dist/main" midori_ai_subsystem_manager
 
     rm -rf build .venv dist subsystem-manager-2
 }
 
 package() {
-    cd "${srcdir}/${_pkgbasename}"
+    cd "${srcdir}/${_pkgfullbasename}"
 
     declare -a folders=("subsystem_manager_2" "command_line_programs")
     declare -a programs=("midori_ai_downloader" "midori_ai_login" "midori_ai_updater" "midori_ai_file_manager" "midori_ai_subsystem_manager")
@@ -97,9 +95,9 @@ package() {
     cp -r Subsystem-Manager/subsystem-manager-2-uv/ "$HOME/.midori-ai/subsystem_manager_2"
 
     for program in "${programs[@]}"; do
-      cp -r "${srcdir}/${_pkgbasename}/workfolder/${program}" "${HOME}/.midori-ai/command_line_programs/${program}"
-      #cp -r "${srcdir}/${_pkgbasename}/workfolder/${program}" "${pkgdir}/usr/bin/midoriai/${program}"
-      install -Dm755 "${srcdir}/${_pkgbasename}/workfolder/${program}" "${pkgdir}/usr/local/bin/${program}" 
+      cp -r "${srcdir}/${_pkgfullbasename}/workfolder/${program}" "${HOME}/.midori-ai/command_line_programs/${program}"
+      #cp -r "${srcdir}/${_pkgfullbasename}/workfolder/${program}" "${pkgdir}/usr/bin/midoriai/${program}"
+      install -Dm755 "${srcdir}/${_pkgfullbasename}/workfolder/${program}" "${pkgdir}/usr/local/bin/${program}" 
     done
     
 }
