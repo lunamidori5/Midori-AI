@@ -67,7 +67,7 @@ build() {
 
     cd ..
 
-    mv "${srcdir}/${_pkgbasename}/workfolder/subsystem-manager-2/dist/midori_ai_file_manager" midori_ai_subsystem_manager
+    mv "${srcdir}/${_pkgbasename}/workfolder/subsystem-manager-2/dist/main" midori_ai_subsystem_manager
 
     rm -rf build .venv dist subsystem-manager-2
 }
