@@ -41,7 +41,7 @@ build() {
     mv "${srcdir}/${_pkgbasename}/Webserver/Programs/Updater/midori_ai_updater.py" workfolder/midori_ai_updater.py
     mv "${srcdir}/${_pkgbasename}/Subsystem-Manager/subsystem-manager-uv/requirements.txt" workfolder/requirements.txt
 
-    mv -T "${srcdir}/${_pkgbasename}/Subsystem-Manager/subsystem-manager-2-uv" workfolder/subsystem-manager-2
+    cp -r "${srcdir}/${_pkgbasename}/Subsystem-Manager/subsystem-manager-2-uv" workfolder/subsystem-manager-2
 
     cd workfolder
 
@@ -61,7 +61,7 @@ build() {
 
     cd subsystem-manager-2
 
-    uv sync --link-mode=copy
+    uv sync --link-mode=copy --no-cache
     uv pip install --link-mode=copy --no-cache-dir -v pyinstaller pytz
     uv run pyinstaller --optimize 2 --onefile main.py
 
@@ -98,8 +98,8 @@ package() {
 
     for program in "${programs[@]}"; do
       cp -r "${srcdir}/${_pkgbasename}/workfolder/${program}" "${HOME}/.midori-ai/command_line_programs/${program}"
-      cp -r "${srcdir}/${_pkgbasename}/workfolder/${program}" "${pkgdir}/usr/bin/midoriai/${program}"
-      #install -m755 -T "${srcdir}/${_pkgbasename}/workfolder/${program}" "/usr/bin/${program}" 
+      #cp -r "${srcdir}/${_pkgbasename}/workfolder/${program}" "${pkgdir}/usr/bin/midoriai/${program}"
+      install -Dm755 "${srcdir}/${_pkgbasename}/workfolder/${program}" "${pkgdir}/usr/bin/midoriai/${program}" 
     done
     
 }
