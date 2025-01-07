@@ -16,7 +16,7 @@ license=('unknown')
 depends=('docker' 'uv')
 makedepends=('git' 'bash' 'uv' 'curl')
 source=("git+https://github.com/lunamidori5/Midori-AI.git")
-install='midori-ai.install'
+# install='midori-ai.install'
 sha256sums=('SKIP')
 
 prepare() {
@@ -35,12 +35,13 @@ build() {
     mkdir -p workfolder
     mkdir -p workfolder/build
 
+    mv "${srcdir}/${_pkgbasename}/Webserver/Programs/Downloader/helper_app.py" workfolder/helper_app.py
+    mv "${srcdir}/${_pkgbasename}/Webserver/Programs/Login_program/midori_ai_login_app.py" workfolder/midori_ai_login_app.py
+    mv "${srcdir}/${_pkgbasename}/Webserver/Programs/File_manager/file_manager.py" workfolder/midori_ai_file_manager.py
+    mv "${srcdir}/${_pkgbasename}/Webserver/Programs/Updater/midori_ai_updater.py" workfolder/midori_ai_updater.py
+    mv "${srcdir}/${_pkgbasename}/Subsystem-Manager/subsystem-manager-uv/requirements.txt" workfolder/requirements.txt
+
     cd workfolder
-    curl -S https://raw.githubusercontent.com/lunamidori5/Midori-AI/master/Webserver/Programs/Downloader/helper_app.py > helper_app.py
-    curl -S https://raw.githubusercontent.com/lunamidori5/Midori-AI/master/Webserver/Programs/Login_program/midori_ai_login_app.py > midori_ai_login_app.py
-    curl -S https://raw.githubusercontent.com/lunamidori5/Midori-AI/master/Webserver/Programs/File_manager/file_manager.py > midori_ai_file_manager.py
-    curl -S https://raw.githubusercontent.com/lunamidori5/Midori-AI/master/Webserver/Programs/Updater/midori_ai_updater.py > midori_ai_updater.py
-    curl -S https://raw.githubusercontent.com/lunamidori5/Midori-AI-Subsystem-Manager/master/subsystem-manager-uv/requirements.txt > requirements.txt
 
     uv venv --seed
     .venv/bin/pip install --no-cache-dir -v pyinstaller pytz
