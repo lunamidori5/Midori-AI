@@ -23,21 +23,21 @@ supported_flavors = ["pixelarch", "endeavouros", "arch linux"]
 non_standard_supported_flavors = ["pixelgen", "gentoo"]
 
 pixelarch_program_to_update = [
-    ["midori-ai-login", "pixelarch-midori-ai-login"],
-    ["midori-ai-hf-downloader", "pixelarch-hf-downloader"],
-    ["midori-ai-downloader", "pixelarch-midori-ai-downloader"],
-    ["midori-ai-file-manager", "pixelarch-midori-ai-file-manager"],
-    ["midori-ai-uploader", "pixelarch-midori-ai-uploader"],
-    ["midori-ai-updater", "pixelarch-midori-ai-updater"]
+    ["midori_ai_login", "pixelarch-midori-ai-login"],
+    ["midori_ai_hf_downloader", "pixelarch-hf-downloader"],
+    ["midori_ai_downloader", "pixelarch-midori-ai-downloader"],
+    ["midori_ai_file_manager", "pixelarch-midori-ai-file-manager"],
+    ["midori_ai_uploader", "pixelarch-midori-ai-uploader"],
+    ["midori_ai_updater", "pixelarch-midori-ai-updater"]
     ]
 
 standard_program_to_update = [
-    ["midori-ai-login", "standard-linux-midori-ai-login"],
-    ["midori-ai-hf-downloader", "standard-linux-hf-downloader"],
-    ["midori-ai-downloader", "standard-linux-midori-ai-downloader"],
-    ["midori-ai-file-manager", "standard-linux-midori-ai-file-manager"],
-    ["midori-ai-uploader", "standard-linux-midori-ai-uploader"],
-    ["midori-ai-updater", "standard-linux-midori-ai-updater"]
+    ["midori_ai_login", "standard-linux-midori-ai-login"],
+    ["midori_ai_hf_downloader", "standard-linux-hf-downloader"],
+    ["midori_ai_downloader", "standard-linux-midori-ai-downloader"],
+    ["midori_ai_file_manager", "standard-linux-midori-ai-file-manager"],
+    ["midori_ai_uploader", "standard-linux-midori-ai-uploader"],
+    ["midori_ai_updater", "standard-linux-midori-ai-updater"]
     ]
 
 with open("/etc/os-release", "r") as f:
@@ -60,7 +60,7 @@ os.chdir(temp_folder_path)
 
 # Remove existing programs
 for program in program_to_update:
-    if "midori-ai-updater" in program[0]:
+    if "midori_ai_updater" in program[0]:
         continue
     path = "/usr/local/bin/" + program[0]
     if os.path.isfile(path):
