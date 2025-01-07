@@ -1,4 +1,5 @@
 import os
+import sys
 import shutil
 import requests
 import subprocess
@@ -9,10 +10,14 @@ spinner = Halo(text='Loading', spinner='dots', color='green')
 
 jobs = []
 
-if os.geteuid() == 0:
-    print("We are running as root, updating programs")
-else:
-    raise PermissionError("This program needs root to update programs, please run with root...")
+try:
+    if os.geteuid() == 0:
+        print("We are running as root, updating programs")
+    else:
+        raise PermissionError("This program needs root to update programs, please run with root...")
+except Exception as error:
+    print(f"{str(error)}")
+    sys.exit(15)
 
 supported_flavors = ["pixelarch", "endeavouros", "arch linux"]
 non_standard_supported_flavors = ["pixelgen", "gentoo"]

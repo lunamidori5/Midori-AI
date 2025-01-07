@@ -99,7 +99,7 @@ package() {
     for program in "${programs[@]}"; do
       cp -r "${srcdir}/${_pkgbasename}/workfolder/${program}" "${HOME}/.midori-ai/command_line_programs/${program}"
       #cp -r "${srcdir}/${_pkgbasename}/workfolder/${program}" "${pkgdir}/usr/bin/midoriai/${program}"
-      install -Dm755 "${srcdir}/${_pkgbasename}/workfolder/${program}" "${pkgdir}/usr/bin/midoriai/${program}" 
+      install -Dm755 "${srcdir}/${_pkgbasename}/workfolder/${program}" "${pkgdir}/usr/local/bin/${program}" 
     done
     
 }
