@@ -75,6 +75,7 @@ package() {
       done
     else
       echo "Directory .midori-ai does not exist."
+      mkdir "$HOME/.midori-ai"
       for folder in "${folders[@]}"; do
         mkdir "$HOME/.midori-ai/$folder"
       done
