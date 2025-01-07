@@ -51,12 +51,12 @@ build() {
     .venv/bin/pyinstaller --onefile midori_ai_updater.py
     .venv/bin/pyinstaller --onefile midori_ai_file_manager.py
 
-    mv "${srcdir}/${_pkgbasename}/workfolder/build/helper_app" midori_ai_downloader
-    mv "${srcdir}/${_pkgbasename}/workfolder/build/midori_ai_login_app" midori_ai_login
-    mv "${srcdir}/${_pkgbasename}/workfolder/build/midori_ai_updater" midori_ai_updater
-    mv "${srcdir}/${_pkgbasename}/workfolder/build/midori_ai_file_manager" midori_ai_file_manager
+    mv "${srcdir}/${_pkgbasename}/workfolder/dist/helper_app" midori_ai_downloader
+    mv "${srcdir}/${_pkgbasename}/workfolder/dist/midori_ai_login_app" midori_ai_login
+    mv "${srcdir}/${_pkgbasename}/workfolder/dist/midori_ai_updater" midori_ai_updater
+    mv "${srcdir}/${_pkgbasename}/workfolder/dist/midori_ai_file_manager" midori_ai_file_manager
 
-    rm -rf build .venv
+    rm -rf build .venv dist
 }
 
 package() {
