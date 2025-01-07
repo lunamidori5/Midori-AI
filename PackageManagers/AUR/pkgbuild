@@ -84,7 +84,7 @@ package() {
     cp -r Subsystem-Manager/subsystem-manager-2-uv/ "$HOME/.midori-ai/subsystem_manager_2"
 
     for program in "${programs[@]}"; do
-      install -m755 "${srcdir}/${_pkgbasename}/workfolder/${program}" "/usr/local/bin/${program}"
+      install -Dm755 "${srcdir}/${_pkgbasename}/workfolder/${program}" "${HOME}/bin/${program}"
     done
     
 }
