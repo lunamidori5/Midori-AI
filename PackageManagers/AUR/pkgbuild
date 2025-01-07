@@ -41,6 +41,8 @@ build() {
     mv "${srcdir}/${_pkgbasename}/Webserver/Programs/Updater/midori_ai_updater.py" workfolder/midori_ai_updater.py
     mv "${srcdir}/${_pkgbasename}/Subsystem-Manager/subsystem-manager-uv/requirements.txt" workfolder/requirements.txt
 
+    mv -T "${srcdir}/${_pkgbasename}/Subsystem-Manager/subsystem-manager-2-uv" workfolder/subsystem-manager-2
+
     cd workfolder
 
     uv venv --seed
@@ -57,14 +59,24 @@ build() {
     mv "${srcdir}/${_pkgbasename}/workfolder/dist/midori_ai_updater" midori_ai_updater
     mv "${srcdir}/${_pkgbasename}/workfolder/dist/midori_ai_file_manager" midori_ai_file_manager
 
-    rm -rf build .venv dist
+    cd subsystem-manager-2
+
+    uv sync --link-mode=copy
+    uv pip install --link-mode=copy --no-cache-dir -v pyinstaller pytz
+    uv run pyinstaller --optimize 2 --onefile main.py
+
+    cd ..
+
+    mv "${srcdir}/${_pkgbasename}/workfolder/subsystem-manager-2/dist/midori_ai_file_manager" midori_ai_subsystem_manager
+
+    rm -rf build .venv dist subsystem-manager-2
 }
 
 package() {
     cd "${srcdir}/${_pkgbasename}"
 
     declare -a folders=("subsystem_manager_2" "command_line_programs")
-    declare -a programs=("midori_ai_downloader" "midori_ai_login" "midori_ai_updater" "midori_ai_file_manager")
+    declare -a programs=("midori_ai_downloader" "midori_ai_login" "midori_ai_updater" "midori_ai_file_manager" "midori_ai_subsystem_manager")
 
     if [[ -d "$HOME/.midori-ai" ]]; then
       echo "Directory .midori-ai exists."
