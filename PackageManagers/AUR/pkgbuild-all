@@ -104,7 +104,6 @@ package() {
 
     if [[ -d "$HOME/.midori-ai/autofighter" ]]; then
       echo "Game already installed, doing nothing..."
-      done
     else
       mkdir "$HOME/.midori-ai/autofighter"
     fi
