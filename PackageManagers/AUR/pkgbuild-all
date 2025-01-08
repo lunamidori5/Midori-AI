@@ -6,11 +6,11 @@ _pkgbasename=midori-ai
 pkgname=${_pkgbasename}-git
 pkgrel=1
 pkgver=r0
-pkgdesc="Installs all of Midori AI tools and subsystem"
+pkgdesc="Installs all of Midori AI tools, games, and subsystem"
 arch=('x86_64')
 url="https://github.com/lunamidori5/Midori-AI"
-provides=('midori-ai')
-conflicts=('midori-ai')
+provides=('midori-ai-cli' 'midori-ai-autofighter' 'midori-ai-subsystem-manager')
+conflicts=('midori-ai-cli' 'midori-ai-autofighter' 'midori-ai-subsystem-manager')
 license=('unknown')
 depends=('docker' 'docker-compose' 'uv')
 makedepends=('git' 'bash' 'uv')
@@ -40,6 +40,7 @@ build() {
     mv "${srcdir}/${_pkgfullbasename}/Subsystem-Manager/subsystem-manager-uv/requirements.txt" workfolder/requirements.txt
 
     cp -r "${srcdir}/${_pkgfullbasename}/Subsystem-Manager/subsystem-manager-2-uv" workfolder/subsystem-manager-2
+    cp -r "${srcdir}/${_pkgfullbasename}/Endless-Autofighter" workfolder/Endless-Autofighter
 
     cd workfolder
 
@@ -52,11 +53,6 @@ build() {
     .venv/bin/pyinstaller --optimize 2 --onefile midori_ai_updater.py
     .venv/bin/pyinstaller --optimize 2 --onefile midori_ai_file_manager.py
 
-    mv "${srcdir}/${_pkgfullbasename}/workfolder/dist/helper_app" midori_ai_downloader
-    mv "${srcdir}/${_pkgfullbasename}/workfolder/dist/midori_ai_login_app" midori_ai_login
-    mv "${srcdir}/${_pkgfullbasename}/workfolder/dist/midori_ai_updater" midori_ai_updater
-    mv "${srcdir}/${_pkgfullbasename}/workfolder/dist/midori_ai_file_manager" midori_ai_file_manager
-
     cd subsystem-manager-2
 
     uv sync --link-mode=copy --no-cache
@@ -65,9 +61,23 @@ build() {
 
     cd ..
 
-    mv "${srcdir}/${_pkgfullbasename}/workfolder/subsystem-manager-2/dist/main" midori_ai_subsystem_manager
+    cd Endless-Autofighter
 
-    rm -rf build .venv dist subsystem-manager-2
+    uv sync --link-mode=copy --no-cache
+    uv pip install --link-mode=copy --no-cache-dir -v pyinstaller pytz
+    uv run pyinstaller --optimize 2 --onefile  main.py
+
+    cd ..
+
+    mv "${srcdir}/${_pkgfullbasename}/workfolder/dist/helper_app" midori_ai_downloader
+    mv "${srcdir}/${_pkgfullbasename}/workfolder/dist/midori_ai_login_app" midori_ai_login
+    mv "${srcdir}/${_pkgfullbasename}/workfolder/dist/midori_ai_updater" midori_ai_updater
+    mv "${srcdir}/${_pkgfullbasename}/workfolder/dist/midori_ai_file_manager" midori_ai_file_manager
+
+    mv "${srcdir}/${_pkgfullbasename}/workfolder/subsystem-manager-2/dist/main" midori_ai_subsystem_manager
+    mv "${srcdir}/${_pkgfullbasename}/workfolder/Endless-Autofighter/dist/main" midori_ai_autofighter
+
+    rm -rf build .venv dist subsystem-manager-2 Endless-Autofighter
 }
 
 package() {
@@ -99,4 +109,6 @@ package() {
       #cp -r "${srcdir}/${_pkgfullbasename}/workfolder/${program}" "${pkgdir}/usr/bin/midoriai/${program}"
       install -Dm755 "${srcdir}/${_pkgfullbasename}/workfolder/${program}" "${pkgdir}/usr/local/bin/${program}" 
     done
+
+    install -Dm755 "${srcdir}/${_pkgfullbasename}/workfolder/midori_ai_autofighter" "${pkgdir}/usr/local/bin/midoriai-game/midori_ai_autofighter" 
 }
