@@ -65,7 +65,7 @@ build() {
 
     uv sync --link-mode=copy --no-cache
     uv pip install --link-mode=copy --no-cache-dir -v pyinstaller pytz
-    uv run pyinstaller --optimize 2 --onefile  main.py
+    uv run pyinstaller --optimize 2 --onefile --add-data photos:photos --add-data music:music main.py
 
     cd ..
 
