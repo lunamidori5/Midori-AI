@@ -45,13 +45,13 @@ build() {
     cd workfolder
 
     uv venv --seed
-    .venv/bin/pip install --no-cache-dir -v pyinstaller pytz
-    .venv/bin/pip install --no-cache-dir -v -r requirements.txt
+    uv pip install --no-cache-dir -v pyinstaller pytz
+    uv pip install --no-cache-dir -v -r requirements.txt
 
-    .venv/bin/pyinstaller --optimize 2 --onefile helper_app.py
-    .venv/bin/pyinstaller --optimize 2 --onefile midori_ai_login_app.py
-    .venv/bin/pyinstaller --optimize 2 --onefile midori_ai_updater.py
-    .venv/bin/pyinstaller --optimize 2 --onefile midori_ai_file_manager.py
+    uv run pyinstaller --optimize 2 --onefile helper_app.py
+    uv run pyinstaller --optimize 2 --onefile midori_ai_login_app.py
+    uv run pyinstaller --optimize 2 --onefile midori_ai_updater.py
+    uv run pyinstaller --optimize 2 --onefile midori_ai_file_manager.py
 
     cd subsystem-manager-2
 
