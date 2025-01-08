@@ -99,5 +99,4 @@ package() {
       #cp -r "${srcdir}/${_pkgfullbasename}/workfolder/${program}" "${pkgdir}/usr/bin/midoriai/${program}"
       install -Dm755 "${srcdir}/${_pkgfullbasename}/workfolder/${program}" "${pkgdir}/usr/local/bin/${program}" 
     done
-    
 }
