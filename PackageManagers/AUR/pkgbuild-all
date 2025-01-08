@@ -102,13 +102,19 @@ package() {
       done
     fi
 
-    cp -r Subsystem-Manager/subsystem-manager-2-uv/ "$HOME/.midori-ai/subsystem_manager_2"
+    if [[ -d "$HOME/.midori-ai/autofighter" ]]; then
+      echo "Game already installed, doing nothing..."
+      done
+    else
+      mkdir "$HOME/.midori-ai/autofighter"
+    fi
+
+    install -dm755 "${srcdir}/${_pkgfullbasename}/Subsystem-Manager/subsystem-manager-2-uv/" "${pkgdir}/$HOME/.midori-ai/subsystem_manager_2"
+    install -dm755 "${srcdir}/${_pkgfullbasename}/Endless-Autofighter" "${pkgdir}/$HOME/.midori-ai/autofighter"
 
     for program in "${programs[@]}"; do
       cp -r "${srcdir}/${_pkgfullbasename}/workfolder/${program}" "${HOME}/.midori-ai/command_line_programs/${program}"
       #cp -r "${srcdir}/${_pkgfullbasename}/workfolder/${program}" "${pkgdir}/usr/bin/midoriai/${program}"
       install -Dm755 "${srcdir}/${_pkgfullbasename}/workfolder/${program}" "${pkgdir}/usr/local/bin/${program}" 
     done
-
-    install -Dm755 "${srcdir}/${_pkgfullbasename}/workfolder/midori_ai_autofighter" "${pkgdir}/usr/local/bin/midoriai-game/midori_ai_autofighter" 
 }
