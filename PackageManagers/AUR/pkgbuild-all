@@ -57,7 +57,7 @@ build() {
 
     uv sync --link-mode=copy --no-cache
     uv pip install --link-mode=copy --no-cache-dir -v pyinstaller pytz
-    uv run nicegui-pack --onefile main.py
+    uv run nicegui-pack --onefile --name "main" main.py
 
     cd ..
 
