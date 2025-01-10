@@ -282,12 +282,12 @@ def main(args):
     if pack:
         print("Packing items!")
         for working_item in list_of_items:
-            spinner.start(text=f"Moving {working_item} to {temp_workfolder}")
+            spinner.start(text=f"Copying {working_item} to {temp_workfolder}")
 
             temp_working_item = os.path.join(temp_workfolder, os.path.basename(working_item))
             shutil.copy2(working_item, temp_working_item)
 
-            spinner.succeed(text=f"Moved {working_item} to {temp_working_item}")
+            spinner.succeed(text=f"Copied {working_item} to {temp_working_item}")
 
             spinner.start(text=f"Packing {temp_working_item}")
             build_tar(temp_working_item)
