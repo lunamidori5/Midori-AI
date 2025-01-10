@@ -144,7 +144,7 @@ try:
         with open(username_file, "w") as f:
             f.write(username)
         
-        print(f"Now loged into Midori AI")
+        print(f"Now logged into Midori AI")
 
     else:
         error_message = response.text
