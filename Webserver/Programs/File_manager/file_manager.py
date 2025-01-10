@@ -60,7 +60,7 @@ if purge:
     spinner.succeed(text=f"Removed {temp_folder_path}")
     sys.exit(0)
 
-os.chdir(temp_folder_path)
+# os.chdir(temp_folder_path)
 
 username_file = os.path.join(folder_path, "MIDORI_AI_USERNAME")
 api_key_file = os.path.join(folder_path, "MIDORI_AI_API_KEY_TEMP")
@@ -88,7 +88,7 @@ def check_programs(program_name):
   except shutil.Error:
     return False
 
-def confirm():
+def confirm(text="Are you sure?"):
     """
     Asks the user if they are sure they want to continue.
 
@@ -97,7 +97,7 @@ def confirm():
     """
 
     while True:
-        answer = input("Are you sure? (Y/n): ")
+        answer = input(f"{text} (Y/n): ")
         if answer == "" or answer.lower() == "y":
             return True
         elif answer.lower() == "n":
@@ -116,13 +116,10 @@ def walk_directory(directory: pathlib.Path, tree: Tree) -> None:
         key=lambda path: (path.is_file(), path.name.lower()),
     )
     for path in paths:
-        # Remove hidden files
-        if path.name.startswith("."):
-            continue
         if path.is_dir():
             style = "dim" if path.name.startswith("__") else ""
             branch = tree.add(
-                f"[bold magenta]:open_file_folder: [link file://{path}]{escape(path.name)}",
+                f"[bold magenta][link file://{path}]{escape(path.name)}",
                 style=style,
                 guide_style=style,
             )
@@ -133,7 +130,7 @@ def walk_directory(directory: pathlib.Path, tree: Tree) -> None:
             text_filename.stylize(f"link file://{path}")
             file_size = path.stat().st_size
             text_filename.append(f" ({decimal(file_size)})", "blue")
-            icon = "🐍 " if path.suffix == ".py" else "📄 "
+            icon = "PYTHON " if path.suffix == ".py" else "FILE "
             tree.add(Text(icon) + text_filename)
 
 def encrypt_user_data(data: bytes, username: str, salt):
@@ -315,7 +312,13 @@ def main(args):
         tree = Tree(f"[link file://{directory}]{directory}", guide_style="bold bright_blue",)
         walk_directory(pathlib.Path(directory), tree)
         print(tree)
-        input()
+
+        go_on = confirm(text="Are you sure you want to touch this folder or files?")
+
+        if go_on:
+            pass
+        else:
+            sys.exit(0)
     
     if os.path.isdir(item):
         for root, dirs, files in os.walk(item):
