@@ -63,7 +63,7 @@ if os.path.exists(username_file):
     with open(username_file, 'r') as f:
         username = str(f.read())
     
-    os.system("midori-ai-login")
+    os.system("midori_ai_login")
 
 if username == "None":
     if hasattr(args, "username"):
