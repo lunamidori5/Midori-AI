@@ -52,7 +52,7 @@ def get_api_key():
         if attempt_count > 1:
             print("Login failed, please try again manually")
             print("API KEY not set, please log into Midori AI's Servers")
-            print("Run ``midori-ai-login -u \"username\"``")
+            print("Run ``midori_ai_login -u \"username\"``")
 
             print("Encrypted endpoint is turned off, please login to use it...")
             print("BYPASSING Encrypted endpoint is turned ON, we are working on updating our CLI tools...")
@@ -63,7 +63,7 @@ def get_api_key():
             #exit(1)
 
         try:
-            subprocess.call(["midori-ai-login"])
+            subprocess.call(["midori_ai_login"])
         except Exception as error:
             print(f"Midori AI login failed ({str(error)}), please try again")
 

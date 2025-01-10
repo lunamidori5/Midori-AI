@@ -224,8 +224,8 @@ def upload_to_midori_ai(data: bytes):
             while not os.path.isfile(encrypted_tar_file):
                 time.sleep(1)
 
-            os.system(f"midori-ai-login")
-            os.system(f"midori-ai-uploader --type Linux --file \"{encrypted_tar_file}\" --filename \"{filename_to_upload}\"")
+            os.system(f"midori_ai_login")
+            os.system(f"midori_ai_uploader --type Linux --file \"{encrypted_tar_file}\" --filename \"{filename_to_upload}\"")
             os.remove(temp_tar_file)
             os.remove(encrypted_tar_file)
         except Exception as error:
@@ -238,7 +238,7 @@ def download_from_midori_ai():
     pre_salt = getpass.getpass("Token: ")
     salt = str(pre_salt).encode()
     filename_to_download =  "userfile"
-    os.system(f"midori-ai-downloader -o \"{encrypted_tar_file}\" -u {filename_to_download}")
+    os.system(f"midori_ai_downloader -o \"{encrypted_tar_file}\" -u {filename_to_download}")
 
     with open(encrypted_tar_file, 'rb') as f:
         encrypted_data = f.read()
@@ -260,7 +260,7 @@ def main(args):
     upload = bool(args.upload)
     download = bool(args.download)
 
-    midori_ai_programs = ["midori-ai-downloader", "midori-ai-uploader", "midori-ai-login"]
+    midori_ai_programs = ["midori_ai_downloader", "midori_ai_uploader", "midori_ai_login"]
 
     for program in midori_ai_programs:
         if check_programs(program):
