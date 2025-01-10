@@ -86,33 +86,33 @@ package() {
     declare -a folders=("subsystem_manager_2" "command_line_programs")
     declare -a programs=("midori_ai_downloader" "midori_ai_login" "midori_ai_updater" "midori_ai_file_manager" "midori_ai_subsystem_manager")
 
-    if [[ -d "$HOME/.midori-ai" ]]; then
-      echo "Directory .midori-ai exists."
+    if [[ -d "$HOME/.midoriai" ]]; then
+      echo "Directory .midoriai exists."
       for folder in "${folders[@]}"; do
-        if [[ -d "$HOME/.midori-ai/$folder" ]]; then
-          rm -rf "$HOME/.midori-ai/$folder"
-          mkdir "$HOME/.midori-ai/$folder"
+        if [[ -d "$HOME/.midoriai/$folder" ]]; then
+          rm -rf "$HOME/.midoriai/$folder"
+          mkdir "$HOME/.midoriai/$folder"
         fi
       done
     else
-      echo "Directory .midori-ai does not exist."
-      mkdir "$HOME/.midori-ai"
+      echo "Directory .midoriai does not exist."
+      mkdir "$HOME/.midoriai"
       for folder in "${folders[@]}"; do
-        mkdir "$HOME/.midori-ai/$folder"
+        mkdir "$HOME/.midoriai/$folder"
       done
     fi
 
-    if [[ -d "$HOME/.midori-ai/autofighter" ]]; then
+    if [[ -d "$HOME/.midoriai/autofighter" ]]; then
       echo "Game already installed, doing nothing..."
     else
-      mkdir "$HOME/.midori-ai/autofighter"
+      mkdir "$HOME/.midoriai/autofighter"
     fi
 
-    install -dm755 "${srcdir}/${_pkgfullbasename}/Subsystem-Manager/subsystem-manager-2-uv/" "${pkgdir}/$HOME/.midori-ai/subsystem_manager_2"
-    install -dm755 "${srcdir}/${_pkgfullbasename}/Endless-Autofighter" "${pkgdir}/$HOME/.midori-ai/autofighter"
+    install -dm755 "${srcdir}/${_pkgfullbasename}/Subsystem-Manager/subsystem-manager-2-uv/" "${pkgdir}/$HOME/.midoriai/subsystem_manager_2"
+    install -dm755 "${srcdir}/${_pkgfullbasename}/Endless-Autofighter" "${pkgdir}/$HOME/.midoriai/autofighter"
 
     for program in "${programs[@]}"; do
-      cp -r "${srcdir}/${_pkgfullbasename}/workfolder/${program}" "${HOME}/.midori-ai/command_line_programs/${program}"
+      cp -r "${srcdir}/${_pkgfullbasename}/workfolder/${program}" "${HOME}/.midoriai/command_line_programs/${program}"
       #cp -r "${srcdir}/${_pkgfullbasename}/workfolder/${program}" "${pkgdir}/usr/bin/midoriai/${program}"
       install -Dm755 "${srcdir}/${_pkgfullbasename}/workfolder/${program}" "${pkgdir}/usr/local/bin/${program}" 
     done
