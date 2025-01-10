@@ -54,12 +54,6 @@ os.makedirs(folder_path, exist_ok=True)
 os.makedirs(temp_folder_path, exist_ok=True)
 os.makedirs(temp_workfolder, exist_ok=True)
 
-if purge:
-    spinner.start(text=f"Removing {temp_folder_path}")
-    os.remove(temp_folder_path)
-    spinner.succeed(text=f"Removed {temp_folder_path}")
-    sys.exit(0)
-
 # os.chdir(temp_folder_path)
 
 username_file = os.path.join(folder_path, "MIDORI_AI_USERNAME")
@@ -132,6 +126,46 @@ def walk_directory(directory: pathlib.Path, tree: Tree) -> None:
             text_filename.append(f" ({decimal(file_size)})", "blue")
             icon = "PYTHON " if path.suffix == ".py" else "FILE "
             tree.add(Text(icon) + text_filename)
+
+def remove_directory_recursively(path, spinner):
+    """Recursively removes a directory and its contents."""
+
+    if not os.path.exists(path):
+        spinner.warn(f"Path not found: {path}")  # Use warn for non-critical issues
+        return
+
+    for root, dirs, files in os.walk(path, topdown=False):  # topdown=False for post-order traversal
+        for name in files:
+            file_path = os.path.join(root, name)
+            try:
+                spinner.start(text=f"Removing file: {file_path}")
+                os.remove(file_path)
+                spinner.succeed(text=f"Removed file: {file_path}")
+            except OSError as e:
+                spinner.fail(text=f"Error removing file {file_path}: {e}")
+                # Consider raising the exception or handling it differently
+                # depending on your desired behavior. sys.exit() might be too abrupt.
+
+        for name in dirs:
+            dir_path = os.path.join(root, name)
+            try:
+                spinner.start(text=f"Removing directory: {dir_path}")
+                os.rmdir(dir_path) # Use rmdir for empty directories after file deletion
+                spinner.succeed(text=f"Removed directory: {dir_path}")
+
+            except OSError as e:
+                spinner.fail(text=f"Error removing directory {dir_path}: {e}")
+                # Again, handle the error appropriately. Perhaps logging?
+
+    # Finally, remove the initial directory itself.        
+    try:        
+        if os.path.exists(path):  # Double-check existence to avoid OSError
+            spinner.start(text=f"Removing directory: {path}")
+            os.rmdir(path)
+            spinner.succeed(text=f"Removed directory: {path}")
+    except OSError as e:
+        spinner.fail(text=f"Error removing directory {path}: {e}")
+
 
 def encrypt_user_data(data: bytes, username: str, salt):
     stats = {
@@ -356,7 +390,7 @@ def main(args):
                 for file in files:
                     os.remove(os.path.join(root, file))
 
-            os.removedirs(temp_workfolder)
+            remove_directory_recursively(temp_workfolder, spinner)
         else:
             print("Please pack the files before uploading...")
 
@@ -365,10 +399,14 @@ def main(args):
 
     if unpack:
         unpack_tar(temp_tar_file, item)
-        os.removedirs(temp_tar_file)
+        remove_directory_recursively(temp_tar_file, spinner)
 
 
 if __name__ == "__main__":
+    if purge:
+        remove_directory_recursively(temp_folder_path, spinner)
+        sys.exit(0)
+
     try:
         main(args)
     except Exception as error:
