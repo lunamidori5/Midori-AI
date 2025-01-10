@@ -13,6 +13,9 @@ import subprocess
 
 from halo import Halo
 
+from rich import print
+from rich.console import Console
+
 from cryptography.fernet import Fernet
 
 spinner = Halo(text='Loading', spinner='dots', color='red')
