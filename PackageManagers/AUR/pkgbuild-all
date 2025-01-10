@@ -48,7 +48,10 @@ build() {
     uv pip install --no-cache-dir -v pyinstaller pytz
     uv pip install --no-cache-dir -v -r requirements.txt
 
+    uv run helper_app.py git_uploader.py
+
     uv run pyinstaller --optimize 2 --onefile helper_app.py
+    uv run pyinstaller --optimize 2 --onefile git_uploader.py
     uv run pyinstaller --optimize 2 --onefile midori_ai_login_app.py
     uv run pyinstaller --optimize 2 --onefile midori_ai_updater.py
     uv run pyinstaller --optimize 2 --onefile midori_ai_file_manager.py
@@ -70,6 +73,7 @@ build() {
     cd ..
 
     mv "${srcdir}/${_pkgfullbasename}/workfolder/dist/helper_app" midori_ai_downloader
+    mv "${srcdir}/${_pkgfullbasename}/workfolder/dist/git_uploader" midori_ai_uploader
     mv "${srcdir}/${_pkgfullbasename}/workfolder/dist/midori_ai_login_app" midori_ai_login
     mv "${srcdir}/${_pkgfullbasename}/workfolder/dist/midori_ai_updater" midori_ai_updater
     mv "${srcdir}/${_pkgfullbasename}/workfolder/dist/midori_ai_file_manager" midori_ai_file_manager
@@ -84,7 +88,7 @@ package() {
     cd "${srcdir}/${_pkgfullbasename}"
 
     declare -a folders=("subsystem_manager_2" "command_line_programs")
-    declare -a programs=("midori_ai_downloader" "midori_ai_login" "midori_ai_updater" "midori_ai_file_manager" "midori_ai_subsystem_manager")
+    declare -a programs=("midori_ai_downloader" "midori_ai_login" "midori_ai_updater" "midori_ai_file_manager" "midori_ai_subsystem_manager" "midori_ai_uploader")
 
     if [[ -d "$HOME/.midoriai" ]]; then
       echo "Directory .midoriai exists."
