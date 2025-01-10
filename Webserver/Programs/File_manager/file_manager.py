@@ -54,8 +54,6 @@ os.makedirs(folder_path, exist_ok=True)
 os.makedirs(temp_folder_path, exist_ok=True)
 os.makedirs(temp_workfolder, exist_ok=True)
 
-# os.chdir(temp_folder_path)
-
 username_file = os.path.join(folder_path, "MIDORI_AI_USERNAME")
 api_key_file = os.path.join(folder_path, "MIDORI_AI_API_KEY_TEMP")
 
@@ -364,6 +362,8 @@ def main(args):
     
     else:
         raise FileNotFoundError(f"{str(item).title()} is not a path or could not be found")
+
+    os.chdir(temp_folder_path)
 
     if pack:
         print("Packing items!")
