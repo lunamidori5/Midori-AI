@@ -335,6 +335,9 @@ def main(args):
             continue
         else:
             raise ImportError(f"You are missing {program} form your path, please install or update them...")
+        
+    if not os.path.isabs(item):
+        item = os.path.join(os.getcwd(), item)
     
     if os.path.isdir(item):
         try:
