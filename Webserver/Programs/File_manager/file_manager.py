@@ -336,23 +336,23 @@ def main(args):
         else:
             raise ImportError(f"You are missing {program} form your path, please install or update them...")
     
-    try:
-        directory = os.path.abspath(item)
-    except IndexError:
-        print("Some type of error happened...")
-    else:
-        tree = Tree(f"[link file://{directory}]{directory}", guide_style="bold bright_blue",)
-        walk_directory(pathlib.Path(directory), tree)
-        print(tree)
-
-        go_on = confirm(text="Are you sure you want to touch this folder or files?")
-
-        if go_on:
-            pass
-        else:
-            sys.exit(0)
-    
     if os.path.isdir(item):
+        try:
+            directory = os.path.abspath(item)
+        except IndexError:
+            print("Some type of error happened...")
+        else:
+            tree = Tree(f"[link file://{directory}]{directory}", guide_style="bold bright_blue",)
+            walk_directory(pathlib.Path(directory), tree)
+            print(tree)
+
+            go_on = confirm(text="Are you sure you want to touch these folders?")
+
+            if go_on:
+                pass
+            else:
+                sys.exit(0)
+
         for root, dirs, files in os.walk(item):
             for file in files:
                 list_of_items.append(os.path.join(root, file))
