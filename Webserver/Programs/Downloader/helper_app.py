@@ -49,7 +49,7 @@ def get_api_key():
                     api_key = f.read()
                 break
 
-        if attempt_count > 1:
+        if attempt_count > 0:
             print("Login failed, please try again manually")
             print("API KEY not set, please log into Midori AI's Servers")
             print("Run ``midori_ai_login -u \"username\"``")

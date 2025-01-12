@@ -97,9 +97,6 @@ def confirm(text="Are you sure?"):
         else:
             print("Invalid input. Please enter 'y' or 'n'.")
 
-
-
-
 def walk_directory(directory: pathlib.Path, tree: Tree) -> None:
     """Recursively build a Tree with directory contents."""
     # Sort dirs first then by filename
@@ -265,7 +262,7 @@ def unpack_tar(tar_file, dst_dir):
     spinner.succeed(text=f"Done moving files to {dst_dir}")
 
     spinner.start(text=f"Cleaning up temporary folder: {temp_workfolder}")
-    os.rmdir(temp_workfolder)
+    remove_directory_recursively(temp_workfolder, spinner)
     spinner.succeed(text=f"Done cleaning up temporary folder: {temp_workfolder}")
 
 def upload_to_midori_ai(data: bytes):
