@@ -239,18 +239,24 @@ def build_zip(src_dir, compression_level=9):
     """
     salt = get_token_from_user()
     size_limit = 750 * 1024 * 1024
-
+    
+    spinner.start(text=f"Packing {temp_workfolder}")
     with zipfile.ZipFile(temp_tar_file, 'w', zipfile.ZIP_DEFLATED, compresslevel=compression_level) as zipf:
         if os.path.isfile(src_dir):
             file_size = os.path.getsize(src_dir)
+            spinner.start(text=f"Reading {src_dir}")  
             with open(src_dir, 'rb') as f:
                 data = f.read()
+                spinner.start(text=f"Processing {src_dir}") 
                 if file_size <= size_limit:
                     encrypted_data = encrypt_user_data(data, username, salt)
+                    spinner.start(text=f"Encrypting {src_dir}") 
                     zipf.writestr(os.path.basename(src_dir), encrypted_data)
+                    spinner.succeed(text=f"Adding (encrypted) {src_dir} to archive") 
+
                 else:
                     zipf.writestr(os.path.basename(src_dir), data)
-
+                    spinner.succeed(text=f"Adding {src_dir} to archive") 
 
         elif os.path.isdir(src_dir):
             for root, _, files in os.walk(src_dir):
@@ -258,14 +264,20 @@ def build_zip(src_dir, compression_level=9):
                     file_path = os.path.join(root, file)
                     arcname = os.path.relpath(file_path, src_dir)
                     file_size = os.path.getsize(file_path)
+                    spinner.start(text=f"Reading {file_path}") 
                     with open(file_path, 'rb') as f:
                         data = f.read()
+                        spinner.start(text=f"Processing {file_path}") 
 
                         if file_size <= size_limit:
                             encrypted_data = encrypt_user_data(data, username, salt)
+                            spinner.start(text=f"Encrypting {file_path}") 
                             zipf.writestr(arcname, encrypted_data)
+                            spinner.succeed(text=f"Adding (encrypted) {file_path} to archive") 
+
                         else:
                             zipf.writestr(arcname, data)
+                            spinner.succeed(text=f"Adding {file_path} to archive") 
 
 def unpack_tar(dst_dir):
     """Unpacks a zip file into a directory and moves files to a destination directory."""
@@ -384,7 +396,6 @@ def main(args):
 
             spinner.succeed(text=f"Copied {working_item} to {temp_working_item}")
 
-        spinner.start(text=f"Packing {temp_workfolder}")
         build_zip(temp_workfolder)
         spinner.succeed(text=f"Packed {temp_workfolder}")
 
