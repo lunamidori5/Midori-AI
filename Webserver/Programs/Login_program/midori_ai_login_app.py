@@ -17,10 +17,12 @@ parser.add_argument("-byos", "--bypassoscheck", required=False, type=str, help="
 parser.add_argument("-unsafe", "--unsafe", required=False, action='store_true', help="Enable unsafe mode")
 parser.add_argument("-cli", "--commandline", required=False, action='store_true', help="Enable CLI mode")
 parser.add_argument("-mkuser", "--makeuser", required=False, action='store_true', help="Enable makeuser mode")
+parser.add_argument("-debug", "--debug", required=False, action='store_true', help="Enable debug mode")
 args = parser.parse_args()
 
 pre_unsafe = str(args.unsafe).lower()
 pre_cli = str(args.commandline).lower()
+debug = str(args.debug).lower()
 pre_makeuser = str(args.makeuser).lower()
 
 home_dir = os.path.expanduser("~")
@@ -108,6 +110,11 @@ if not unsafe:
 
     hash_hex = hash_object.hexdigest()
     os_hash_hex = os_hash_object.hexdigest()
+
+    if debug == "true":
+        print("SHOWING STATS")
+        print(f"Stats: {hash_hex}")
+        print(f"Os: {os_hash_hex}")
 
 else:
     hash_hex = str(args.bypassplatform).lower()
