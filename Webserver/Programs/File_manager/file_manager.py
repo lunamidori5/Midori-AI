@@ -50,7 +50,6 @@ folder_path = os.path.join(home_dir, ".midoriai")
 temp_folder_path = os.path.join(folder_path, "tmp")
 temp_workfolder = os.path.join(temp_folder_path, 'workfolder')
 temp_tar_file = os.path.join(temp_folder_path, 'userfolder.tar')
-encrypted_tar_file = os.path.join(temp_folder_path, 'userfolder.xz.tar.excrypted')
 os.makedirs(folder_path, exist_ok=True)
 os.makedirs(temp_folder_path, exist_ok=True)
 os.makedirs(temp_workfolder, exist_ok=True)
@@ -232,38 +231,64 @@ def decrypt_user_data(encrypted_data: bytes, username: str, salt):
     decrypted_data = cipher.decrypt(encrypted_data)
     return decrypted_data
 
-def build_tar(src_dir):
-    """ Builds a directory / file into a tar file.
-
-    Args:
-    src_dir: The source directory / file to compress.
-    """
-    with tarfile.open(temp_tar_file, "a") as tar:
-        arcname = os.path.basename(src_dir)
-        tar.add(src_dir, arcname=arcname)
-
 def build_zip(src_dir, compression_level=9):
-    """ Builds a directory / file into a zip file.
+    """ Builds a directory / file into a zip file, encrypting file contents (except those over 750MB).
 
     Args:
         src_dir: The source directory / file to compress.
     """
+    salt = get_token_from_user()
+    size_limit = 750 * 1024 * 1024
+
     with zipfile.ZipFile(temp_tar_file, 'w', zipfile.ZIP_DEFLATED, compresslevel=compression_level) as zipf:
         if os.path.isfile(src_dir):
-            zipf.write(src_dir, os.path.basename(src_dir))
+            file_size = os.path.getsize(src_dir)
+            with open(src_dir, 'rb') as f:
+                data = f.read()
+                if file_size <= size_limit:
+                    encrypted_data = encrypt_user_data(data, username, salt)
+                    zipf.writestr(os.path.basename(src_dir), encrypted_data)
+                else:
+                    zipf.writestr(os.path.basename(src_dir), data)
+
+
         elif os.path.isdir(src_dir):
             for root, _, files in os.walk(src_dir):
                 for file in files:
-                    zipf.write(os.path.join(root, file), os.path.relpath(os.path.join(root, file), src_dir))
+                    file_path = os.path.join(root, file)
+                    arcname = os.path.relpath(file_path, src_dir)
+                    file_size = os.path.getsize(file_path)
+                    with open(file_path, 'rb') as f:
+                        data = f.read()
 
+                        if file_size <= size_limit:
+                            encrypted_data = encrypt_user_data(data, username, salt)
+                            zipf.writestr(arcname, encrypted_data)
+                        else:
+                            zipf.writestr(arcname, data)
 
-
-def unpack_tar(tar_file, dst_dir):
+def unpack_tar(dst_dir):
     """Unpacks a zip file into a directory and moves files to a destination directory."""
+    salt = get_token_from_user()
+    size_limit = 750 * 1024 * 1024
 
     spinner.start(text='Unpacking zip file...')
-    with zipfile.ZipFile(tar_file, 'r') as zip_ref:
-        zip_ref.extractall(temp_workfolder)
+    with zipfile.ZipFile(temp_tar_file, 'r') as zipf:
+        for info in zipf.infolist():
+            with zipf.open(info) as f:
+                if info.file_size > size_limit:
+                    data = f.read() 
+                else:
+                    encrypted_data = f.read()
+                    data = decrypt_user_data(encrypted_data, username, salt)
+
+                target_path = os.path.join(temp_workfolder, info.filename)
+                target_dir = os.path.dirname(target_path)
+                os.makedirs(target_dir, exist_ok=True)
+
+                with open(target_path, 'wb') as outfile:
+                    outfile.write(data)
+            
     spinner.succeed(text=f'Zip file unpacked to {temp_workfolder}')
 
     spinner.start(text='Moving files to the destination folder...')
@@ -274,55 +299,31 @@ def unpack_tar(tar_file, dst_dir):
     remove_directory_recursively(temp_workfolder, spinner)
     spinner.succeed(text=f"Done cleaning up temporary folder: {temp_workfolder}")
 
-def upload_to_midori_ai(data: bytes):
-    print("Please enter a token to encrypt your data before sending it to Midori AI")
+def get_token_from_user():
+    print("Please enter a token to encrypt / decrypt your data before sending / downloading to / from Midori AI")
     print("Midori AI will not get this token, please record this token in a safe place")
     print("Token will not be shown, please be mindful...")
     print("~" * 50)
     pre_salt = getpass.getpass("Token: ")
     salt = str(pre_salt).encode()
+    return salt
+
+def upload_to_midori_ai():
     filename_to_upload =  "userfile"
 
     go_on = confirm()
 
     if go_on:
-        spinner.start(text=f"Encrypting Data...")
-        encrypted_data = encrypt_user_data(data, username, salt)
-
-        with open(encrypted_tar_file, "wb") as f:
-            f.write(encrypted_data)
-        
-        spinner.succeed(text=f"Data Encrypted...")
-
         try:
-            while not os.path.isfile(encrypted_tar_file):
-                time.sleep(1)
-
             os.system(f"midori_ai_login")
-            os.system(f"midori_ai_uploader --type Linux --file \"{encrypted_tar_file}\" --filename \"{filename_to_upload}\"")
+            os.system(f"midori_ai_uploader --type Linux --file \"{temp_tar_file}\" --filename \"{filename_to_upload}\"")
             os.remove(temp_tar_file)
-            os.remove(encrypted_tar_file)
         except Exception as error:
             print(f"Midori AI Uploader failed ({str(error)}), please try again")
 
 def download_from_midori_ai():
-    print("Please enter a token to decrypt your data after downloading it from Midori AI")
-    print("Token will not be shown, please be mindful...")
-    print("~" * 50)
-    pre_salt = getpass.getpass("Token: ")
-    salt = str(pre_salt).encode()
     filename_to_download =  "userfile"
-    os.system(f"midori_ai_downloader -o \"{encrypted_tar_file}\" -u {filename_to_download}")
-
-    with open(encrypted_tar_file, 'rb') as f:
-        encrypted_data = f.read()
-
-    decrypted_data = decrypt_user_data(encrypted_data, username, salt)
-
-    os.remove(encrypted_tar_file)
-
-    with open(temp_tar_file, "wb") as f:
-        f.write(decrypted_data)
+    os.system(f"midori_ai_downloader -o \"{temp_tar_file}\" -u {filename_to_download}")
 
     print(f"Downloaded file: {temp_tar_file}")
 
@@ -389,10 +390,7 @@ def main(args):
 
     if upload:
         if os.path.exists(temp_tar_file):
-            with open(temp_tar_file, "rb") as f:
-                bytes_to_upload = f.read()
-            
-            upload_to_midori_ai(bytes_to_upload)
+            upload_to_midori_ai()
 
             remove_directory_recursively(temp_workfolder, spinner)
         else:
@@ -402,7 +400,7 @@ def main(args):
         download_from_midori_ai()
 
     if unpack:
-        unpack_tar(temp_tar_file, item)
+        unpack_tar(item)
         remove_directory_recursively(temp_tar_file, spinner)
 
 

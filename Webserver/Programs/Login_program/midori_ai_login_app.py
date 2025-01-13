@@ -59,7 +59,8 @@ if pre_makeuser == "true":
     else:
         error_message = response.text
         print("Username is most likely taken, please pick a new username!")
-        raise Exception(f"Server returned status code {response.status_code}: {error_message}")
+        print(f"Server returned status code {response.status_code}: {error_message}")
+        sys.exit(15)
 
 else: 
     makeuser = False
