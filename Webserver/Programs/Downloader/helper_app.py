@@ -104,7 +104,29 @@ async def download_keys(KEY):
 
 def acquire_files_with_streaming(FILES):
     chunk_size = 1024 * 1024 * 2
-    response = requests.get(FILES, headers={"Discord-ID": random_id, "username": f"{str(username)}", "key": get_api_key()}, stream=True, timeout=55)
+    filename = f"temp_download_{random.randint(1000, 10000)}.tmp"
+    
+    try:
+        response = requests.get(FILES, headers={"Discord-ID": random_id, "username": f"{str(username)}", "key": get_api_key()}, stream=True, timeout=55)
+        response.raise_for_status()
+
+        total_size = int(response.headers.get("Content-Length", 0))
+        
+        with open(filename, 'wb') as f, tqdm(total=total_size, unit='B', unit_scale=True, desc=f'Downloading {filename}') as pbar:
+            for chunk in response.iter_content(chunk_size=chunk_size):
+                if chunk:
+                    f.write(chunk)
+                    pbar.update(len(chunk))
+
+        with open(filename, "rb") as f:
+            content = f.read()
+        os.remove(filename)
+        return content
+
+    except requests.exceptions.RequestException as e:
+        raise RuntimeError(f"Download failed: {e}")
+    except Exception as e:
+        raise RuntimeError(f"An error occurred: {e}")
 
     if response.status_code == 200:
         total_size = int(response.headers.get("Content-Length", 0))
