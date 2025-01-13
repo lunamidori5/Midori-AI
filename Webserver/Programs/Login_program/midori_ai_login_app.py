@@ -1,6 +1,8 @@
 import os
 import sys
 import json
+import psutil
+import shutil
 import hashlib
 import platform
 import argparse
@@ -76,19 +78,33 @@ key_one = Fernet.generate_key()
 fernet_one = Fernet(key_one)
 
 if not unsafe:
+    try:
+        cpuinfo = ""
+        with open("/proc/cpuinfo", "r") as f:
+             cpuinfo = f.read()
+        cpuinfo_full = hashlib.sha512(cpuinfo.encode()).hexdigest()
+    except FileNotFoundError:
+        cpuinfo_full = hashlib.sha512(str(psutil.swap_memory().total).encode()).hexdigest()
+    
     stats = {
         "platform": {
+            "cpu_count": psutil.cpu_count(),
+            "memory_total": psutil.virtual_memory().total,
             "system": platform.system(),
             "machine": platform.machine(),
             "processor": platform.processor(),
+            "ssh_installed": shutil.which("ssh"),
+            "docker_installed": shutil.which("docker"),
+            "midori_ai_installed": shutil.which("midori_ai_updater"),
+            "cpuinfo": cpuinfo_full,
         },
     }
 
     stats_json = json.dumps(stats)
     os_version = os.uname().machine
 
-    hash_object = hashlib.sha512(stats_json.encode())
-    os_hash_object = hashlib.sha512(os_version.encode())
+    hash_object = hashlib.sha512(stats_json.encode(), usedforsecurity=True)
+    os_hash_object = hashlib.sha512(os_version.encode(), usedforsecurity=True)
 
     hash_hex = hash_object.hexdigest()
     os_hash_hex = os_hash_object.hexdigest()
