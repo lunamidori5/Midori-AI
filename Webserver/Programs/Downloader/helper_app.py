@@ -112,7 +112,7 @@ def acquire_files_with_streaming(FILES):
 
         total_size = int(response.headers.get("Content-Length", 0))
         
-        with open(filename, 'wb') as f, tqdm(total=total_size, unit='B', unit_scale=True, desc=f'Downloading {filename}') as pbar:
+        with open(filename, 'wb') as f, tqdm(total=total_size, unit='B', unit_scale=True, desc=f'Downloading File') as pbar:
             for chunk in response.iter_content(chunk_size=chunk_size):
                 if chunk:
                     f.write(chunk)
@@ -127,19 +127,6 @@ def acquire_files_with_streaming(FILES):
         raise RuntimeError(f"Download failed: {e}")
     except Exception as e:
         raise RuntimeError(f"An error occurred: {e}")
-
-    if response.status_code == 200:
-        total_size = int(response.headers.get("Content-Length", 0))
-        content = b''
-        with tqdm(total=total_size, unit='B', unit_scale=True, desc='Downloading File') as pbar:
-            for chunk in response.iter_content(chunk_size=chunk_size):
-                if chunk:
-                    pbar.update(len(chunk))
-                    content += chunk
-        return content
-    else:
-        raise RuntimeError(f"Failed to download File: {response.status_code}")
-
 
 def log(message):
     print(message)
@@ -176,58 +163,43 @@ async def main():
     usermode_file_url = f"{base_url}user"
     backup_file_url = f"{base_url}{filename}"
 
-    trys = 0
+    max_retries = 18
+    use_backup = usermode or pre_unsafe or ".gguf" in filename or not is_api_key_loaded()
 
-    if usermode:
-        trys = 16
-        backup_file_url = usermode_file_url
+    if usermode: backup_file_url = usermode_file_url;
 
-    if ".gguf" in filename:
-        trys = 16
-
-    if not is_api_key_loaded():
-        trys = 16
-
-    if pre_unsafe:
-        trys = 16
-        
-    while trys < 18:
+    for attempt in range(max_retries):
         try:
-            if trys > 15:
-                backup_commands = acquire_files_with_streaming(backup_file_url)
-
-                if args.output:
-                    filename = args.output
-
-                with open(filename, "wb") as f:
-                    f.write(backup_commands)
-
-                log("File downloaded successfully")
-                break
-
-            if trys > 5:
-                encrypted_commands = await download_files(encrypted_file_url)
+            if attempt > 15 or use_backup:
+                # Use backup URL if specified, otherwise fall back to encrypted URL
+                download_url = backup_file_url if backup_file_url else encrypted_file_url
+                downloaded_data = acquire_files_with_streaming(download_url)
+                log("Downloaded using backup/direct method.")
+            elif attempt > 5:
+                downloaded_data = await download_files(encrypted_file_url)
             else:
-                encrypted_commands = acquire_files_with_streaming(encrypted_file_url)
-                
-            keys = await download_keys(key_url)
-            time.sleep(1)
+                downloaded_data = acquire_files_with_streaming(encrypted_file_url)
 
-            fernet = Fernet(keys.encode())
-            decrypted_commands = fernet.decrypt(encrypted_commands)
+            if not use_backup:
+                keys = await download_keys(key_url)
+                fernet = Fernet(keys.encode())
+                downloaded_data = fernet.decrypt(downloaded_data)
+                log("File downloaded and decrypted successfully.")
+            else:
+                if not backup_file_url:
+                    raise Exception("Backup download attempted but no backup URL provided.")
 
-            if args.output:
+            if args and args.output:
                 filename = args.output
 
             with open(filename, "wb") as f:
-                f.write(decrypted_commands)
+                f.write(downloaded_data)
 
-            log(f"File downloaded and decrypted successfully: {filename}")
+            log(f"File saved: {filename}")  # Log the filename always
+            break  # Exit the function on success
 
-            break
         except Exception as e:
-            log(f"Error: {str(e)}")
-            trys = trys + 1
+            log(f"Attempt {attempt + 1}/{max_retries} failed: {str(e)}")
             time.sleep(0.2)
 
 
