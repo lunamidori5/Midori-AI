@@ -94,7 +94,7 @@ jobs:
         run: |
           pip install uv
           uv venv
-          uv pip install aiohttp cryptography requests tqdm 
+          uv pip install aiohttp cryptography requests tqdm psutil
 
       - name: Download dependencies
         run: |
