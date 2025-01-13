@@ -80,14 +80,6 @@ key_one = Fernet.generate_key()
 fernet_one = Fernet(key_one)
 
 if not unsafe:
-    try:
-        cpuinfo = ""
-        with open("/proc/cpuinfo", "r") as f:
-             cpuinfo = f.read()
-        cpuinfo_full = hashlib.sha512(cpuinfo.encode()).hexdigest()
-    except FileNotFoundError:
-        cpuinfo_full = hashlib.sha512(str(psutil.swap_memory().total).encode()).hexdigest()
-    
     stats = {
         "platform": {
             "cpu_count": psutil.cpu_count(),
@@ -98,7 +90,6 @@ if not unsafe:
             "ssh_installed": shutil.which("ssh"),
             "docker_installed": shutil.which("docker"),
             "midori_ai_installed": shutil.which("midori_ai_updater"),
-            "cpuinfo": cpuinfo_full,
         },
     }
 
