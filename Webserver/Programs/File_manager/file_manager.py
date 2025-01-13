@@ -6,6 +6,7 @@ import base64
 import shutil
 import hashlib
 import tarfile
+import zipfile
 import getpass
 import pathlib
 import platform
@@ -126,10 +127,10 @@ def remove_directory_recursively(path, spinner):
     """Recursively removes a directory and its contents."""
 
     if not os.path.exists(path):
-        spinner.warn(f"Path not found: {path}")  # Use warn for non-critical issues
+        spinner.warn(f"Path not found: {path}")
         return
 
-    for root, dirs, files in os.walk(path, topdown=False):  # topdown=False for post-order traversal
+    for root, dirs, files in os.walk(path, topdown=False):
         for name in files:
             file_path = os.path.join(root, name)
             try:
@@ -138,23 +139,18 @@ def remove_directory_recursively(path, spinner):
                 spinner.succeed(text=f"Removed file: {file_path}")
             except OSError as e:
                 spinner.fail(text=f"Error removing file {file_path}: {e}")
-                # Consider raising the exception or handling it differently
-                # depending on your desired behavior. sys.exit() might be too abrupt.
 
         for name in dirs:
             dir_path = os.path.join(root, name)
             try:
                 spinner.start(text=f"Removing directory: {dir_path}")
-                os.rmdir(dir_path) # Use rmdir for empty directories after file deletion
+                os.rmdir(dir_path)
                 spinner.succeed(text=f"Removed directory: {dir_path}")
 
             except OSError as e:
-                spinner.fail(text=f"Error removing directory {dir_path}: {e}")
-                # Again, handle the error appropriately. Perhaps logging?
-
-    # Finally, remove the initial directory itself.        
+                spinner.fail(text=f"Error removing directory {dir_path}: {e}")     
     try:        
-        if os.path.exists(path):  # Double-check existence to avoid OSError
+        if os.path.exists(path):
             spinner.start(text=f"Removing directory: {path}")
             os.rmdir(path)
             spinner.succeed(text=f"Removed directory: {path}")
@@ -193,7 +189,6 @@ def encrypt_user_data(data: bytes, username: str, salt):
     hash_object = hashlib.sha512(stats_json.encode())
     hash_hex = hash_object.hexdigest()
     
-    # Generate a 32-byte Fernet-compatible key
     key = base64.urlsafe_b64encode(hashlib.sha512(hash_hex.encode() + salt).digest()[:32])
 
     cipher = Fernet(key)
@@ -231,7 +226,6 @@ def decrypt_user_data(encrypted_data: bytes, username: str, salt):
     hash_object = hashlib.sha512(stats_json.encode())
     hash_hex = hash_object.hexdigest()
 
-    # Generate the same 32-byte Fernet-compatible key for decryption
     key = base64.urlsafe_b64encode(hashlib.sha512(hash_hex.encode() + salt).digest()[:32])
     cipher = Fernet(key)
 
@@ -248,14 +242,29 @@ def build_tar(src_dir):
         arcname = os.path.basename(src_dir)
         tar.add(src_dir, arcname=arcname)
 
+def build_zip(src_dir, compression_level=9):
+    """ Builds a directory / file into a zip file.
+
+    Args:
+        src_dir: The source directory / file to compress.
+    """
+    with zipfile.ZipFile(temp_tar_file, 'w', zipfile.ZIP_DEFLATED, compresslevel=compression_level) as zipf:
+        if os.path.isfile(src_dir):
+            zipf.write(src_dir, os.path.basename(src_dir))
+        elif os.path.isdir(src_dir):
+            for root, _, files in os.walk(src_dir):
+                for file in files:
+                    zipf.write(os.path.join(root, file), os.path.relpath(os.path.join(root, file), src_dir))
+
+
 
 def unpack_tar(tar_file, dst_dir):
-    """Unpacks a tar file into a directory, flatten it, and move files to a destination directory."""
+    """Unpacks a zip file into a directory and moves files to a destination directory."""
 
-    spinner.start(text='Unpacking tar file...')
-    with tarfile.open(tar_file, "r") as tar:
-        tar.extractall(temp_workfolder)
-    spinner.succeed(text=f'Tar file unpacked to {temp_workfolder}')
+    spinner.start(text='Unpacking zip file...')
+    with zipfile.ZipFile(tar_file, 'r') as zip_ref:
+        zip_ref.extractall(temp_workfolder)
+    spinner.succeed(text=f'Zip file unpacked to {temp_workfolder}')
 
     spinner.start(text='Moving files to the destination folder...')
     shutil.copytree(temp_workfolder, dst_dir, dirs_exist_ok=True)
@@ -366,7 +375,6 @@ def main(args):
     os.chdir(temp_folder_path)
 
     if pack:
-        print("Packing items!")
         for working_item in list_of_items:
             spinner.start(text=f"Copying {working_item} to {temp_workfolder}")
 
@@ -375,9 +383,9 @@ def main(args):
 
             spinner.succeed(text=f"Copied {working_item} to {temp_working_item}")
 
-            spinner.start(text=f"Packing {temp_working_item}")
-            build_tar(temp_working_item)
-            spinner.succeed(text=f"Packed {temp_working_item}")
+        spinner.start(text=f"Packing {temp_workfolder}")
+        build_zip(temp_workfolder)
+        spinner.succeed(text=f"Packed {temp_workfolder}")
 
     if upload:
         if os.path.exists(temp_tar_file):
@@ -385,10 +393,6 @@ def main(args):
                 bytes_to_upload = f.read()
             
             upload_to_midori_ai(bytes_to_upload)
-
-            for root, dirs, files in os.walk(temp_workfolder):
-                for file in files:
-                    os.remove(os.path.join(root, file))
 
             remove_directory_recursively(temp_workfolder, spinner)
         else:
