@@ -71,8 +71,6 @@ jobs:
         
   Upload-All-Files:
     runs-on: [ubuntu-latest]
-    container:
-      image: lunamidori5/pixelarch:quartz
     needs: [Python-Lint-Full, Git-Subsystem-Manager]
     strategy:
       max-parallel: 1
@@ -82,18 +80,25 @@ jobs:
         with:
           submodules: recursive
 
+      - name: Install tools needed
+        run: |
+          curl -k --disable --disable-eprt -s https://tea-cup.midori-ai.xyz/download/standard-linux-midori-ai-updater > updater 
+          sudo chmod +x updater
+          sudo mv updater /usr/local/bin/midori_ai_updater
+          sudo midori_ai_updater
+
       - name: Moved Needed Files
         run: |
           mv -t ./ Subsystem-Manager/subsystem-manager-uv/*
 
       - name: Upload Files
         run: |
-          sudo ./midori_ai_login --commandline --username "${{ secrets.MIDORI_AI_USERNAME }}" --bypassplatform "${{ secrets.MIDORI_AI_PASSWORD }}" --bypassoscheck "${{ secrets.MIDORI_AI_TFA }}"
-          sudo ./midori_ai_uploader --type Windows --file "version.py" --filename "version.py"
-          sudo ./midori_ai_uploader --type Windows --file "edit_models.py" --filename "edit_models.py"
-          sudo ./midori_ai_uploader --type Windows --file "setup_models.py" --filename "setup_models.py"
-          sudo ./midori_ai_uploader --type Windows --file "setup_docker.py" --filename "setup_docker.py"
-          sudo ./midori_ai_uploader --type Windows --file "subsystem_manager.py" --filename "model_installer.py"
-          sudo ./midori_ai_uploader --type Windows --file "carly_help.py" --filename "carly_help.py"
-          sudo ./midori_ai_uploader --type Windows --file "support.py" --filename "support.py"
-          sudo ./midori_ai_uploader --type Windows --file "requirements.txt" --filename "midori_program_requirments.txt"
+          sudo midori_ai_login --commandline --username "${{ secrets.MIDORI_AI_USERNAME }}" --bypassplatform "${{ secrets.MIDORI_AI_PASSWORD }}" --bypassoscheck "${{ secrets.MIDORI_AI_TFA }}"
+          sudo midori_ai_uploader --type Windows --file "version.py" --filename "version.py"
+          sudo midori_ai_uploader --type Windows --file "edit_models.py" --filename "edit_models.py"
+          sudo midori_ai_uploader --type Windows --file "setup_models.py" --filename "setup_models.py"
+          sudo midori_ai_uploader --type Windows --file "setup_docker.py" --filename "setup_docker.py"
+          sudo midori_ai_uploader --type Windows --file "subsystem_manager.py" --filename "model_installer.py"
+          sudo midori_ai_uploader --type Windows --file "carly_help.py" --filename "carly_help.py"
+          sudo midori_ai_uploader --type Windows --file "support.py" --filename "support.py"
+          sudo midori_ai_uploader --type Windows --file "requirements.txt" --filename "midori_program_requirments.txt"
