@@ -105,15 +105,16 @@ if not unsafe:
     stats_json = json.dumps(stats)
     os_version = os.uname().machine
 
-    hash_object = hashlib.sha512(stats_json.encode(), usedforsecurity=True)
-    os_hash_object = hashlib.sha512(os_version.encode(), usedforsecurity=True)
+    hash_object = hashlib.sha512(stats_json.encode())
+    os_hash_object = hashlib.sha512(os_version.encode())
 
     hash_hex = hash_object.hexdigest()
     os_hash_hex = os_hash_object.hexdigest()
 
     if debug == "true":
         print("SHOWING STATS")
-        print(f"Stats: {hash_hex}")
+        print(f"Stats: {stats}")
+        print(f"Hash Stats: {hash_hex}")
         print(f"Os: {os_hash_hex}")
 
 else:
