@@ -315,10 +315,18 @@ def get_token_from_user():
     print("Please enter a token to encrypt / decrypt your data before sending / downloading to / from Midori AI")
     print("Midori AI will not get this token, please record this token in a safe place")
     print("Token will not be shown, please be mindful...")
-    print("~" * 50)
-    pre_salt = getpass.getpass("Token: ")
-    salt = str(pre_salt).encode()
-    return salt
+    while True:
+        try:
+            print("~" * 50)
+            pre_salt = getpass.getpass("Token: ")
+            print("~" * 50)
+            if confirm():
+                salt = str(pre_salt).encode()
+                return salt
+            else:
+                raise Exception("Token not entered")
+        except Exception as error:
+            print(str(error))
 
 def upload_to_midori_ai():
     filename_to_upload =  "userfile"
@@ -412,7 +420,6 @@ def main(args):
 
     if unpack:
         unpack_tar(item)
-        remove_directory_recursively(temp_tar_file, spinner)
 
 
 if __name__ == "__main__":
