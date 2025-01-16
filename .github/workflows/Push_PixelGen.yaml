@@ -3,7 +3,7 @@ name: Update PixelGen
 on:
   workflow_dispatch:
   schedule:
-    - cron: '24 2 * * *'
+    - cron: '25 10 * * 2'
 
 jobs:
   push_gentoo_to_hub:
