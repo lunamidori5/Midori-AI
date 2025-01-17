@@ -9,6 +9,8 @@ import subprocess
 
 from tqdm import tqdm
 
+from rich import print
+
 from aiohttp import ClientSession
 from cryptography.fernet import Fernet
 
@@ -29,7 +31,7 @@ if os.path.exists(username_file):
     with open(username_file, 'r') as f:
         username = f.read()
 
-def get_api_key():
+async def get_api_key():
     api_key = None
     attempt_count = 0
 
@@ -49,23 +51,19 @@ def get_api_key():
                     api_key = f.read()
                 break
 
-        if attempt_count > 0:
+        try:
+            subprocess.call(["midori_ai_login"])
+            await asyncio.sleep(2)
+        except Exception as error:
             print("Login failed, please try again manually")
             print("API KEY not set, please log into Midori AI's Servers")
             print("Run ``midori_ai_login -u \"username\"``")
 
             print("Encrypted endpoint is turned off, please login to use it...")
             print("BYPASSING Encrypted endpoint is turned ON, we are working on updating our CLI tools...")
+            
             api_key = str(random.randint(999999, 99999999999999))
             break
-
-            #print("Exiting...")
-            #exit(1)
-
-        try:
-            subprocess.call(["midori_ai_login"])
-        except Exception as error:
-            print(f"Midori AI login failed ({str(error)}), please try again")
 
         attempt_count += 1
 
@@ -83,7 +81,7 @@ def is_api_key_loaded():
         #return False
 
 async def download_files(FILES):
-    headers = {"Discord-ID": random_id, "username": f"{str(username)}", "key": get_api_key()}
+    headers = {"Discord-ID": random_id, "username": f"{str(username)}", "key": await get_api_key()}
     async with ClientSession() as session:
         async with session.get(FILES, headers=headers) as response:
             if response.status == 200:
@@ -102,12 +100,12 @@ async def download_keys(KEY):
                 raise RuntimeError(f"Failed to download keys: {response.status}")
 
 
-def acquire_files_with_streaming(FILES):
+async def acquire_files_with_streaming(FILES):
     chunk_size = 1024 * 1024 * 2
     filename = f"temp_download_{random.randint(1000, 10000)}.tmp"
     
     try:
-        response = requests.get(FILES, headers={"Discord-ID": random_id, "username": f"{str(username)}", "key": get_api_key()}, stream=True, timeout=55)
+        response = requests.get(FILES, headers={"Discord-ID": random_id, "username": f"{str(username)}", "key": await get_api_key()}, stream=True, timeout=55)
         response.raise_for_status()
 
         total_size = int(response.headers.get("Content-Length", 0))
@@ -149,7 +147,6 @@ async def main():
     pre_unsafe = bool(args.unsafe)
     key_filename = f"{random_id}-key.txt"
 
-
     if os.path.exists(args.output or filename):
         log(f"File Already Downloaded, removing file and redownloading...")
         if args.output:
@@ -171,14 +168,13 @@ async def main():
     for attempt in range(max_retries):
         try:
             if attempt > 15 or use_backup:
-                # Use backup URL if specified, otherwise fall back to encrypted URL
                 download_url = backup_file_url if backup_file_url else encrypted_file_url
-                downloaded_data = acquire_files_with_streaming(download_url)
+                downloaded_data = await acquire_files_with_streaming(download_url)
                 log("Downloaded using backup/direct method.")
             elif attempt > 5:
                 downloaded_data = await download_files(encrypted_file_url)
             else:
-                downloaded_data = acquire_files_with_streaming(encrypted_file_url)
+                downloaded_data = await acquire_files_with_streaming(encrypted_file_url)
 
             if not use_backup:
                 keys = await download_keys(key_url)
@@ -200,7 +196,7 @@ async def main():
 
         except Exception as e:
             log(f"Attempt {attempt + 1}/{max_retries} failed: {str(e)}")
-            time.sleep(0.2)
+            await asyncio.sleep(0.2)
 
 
 if __name__ == "__main__":
