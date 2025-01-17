@@ -3,7 +3,7 @@ name: Update PixelArch and Cluster OS
 on:
   workflow_dispatch:
   schedule:
-    - cron: '30 10 * * '
+    - cron: '30 10 * * *'
 
 jobs:
 
