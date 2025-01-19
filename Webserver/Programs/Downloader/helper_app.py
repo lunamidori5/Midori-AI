@@ -91,7 +91,7 @@ async def download_files(FILES):
                 raise RuntimeError(f"Failed to download files: {response.status}")
 
 async def download_keys(KEY):
-    headers = {"Discord-ID": random_id, "key": get_api_key()}
+    headers = {"Discord-ID": random_id, "key": str(await get_api_key())}
     async with ClientSession() as session:
         async with session.get(KEY, headers=headers) as response:
             if response.status == 200:
