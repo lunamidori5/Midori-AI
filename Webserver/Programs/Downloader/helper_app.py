@@ -9,10 +9,14 @@ import subprocess
 
 from tqdm import tqdm
 
-from rich import print
-
 from aiohttp import ClientSession
 from cryptography.fernet import Fernet
+
+try:
+    from rich import print
+except Exception as Error:
+    from builtins import print
+    print(f"Error: {str(Error)}")
 
 random_id = os.getenv("random_id")
 
