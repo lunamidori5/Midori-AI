@@ -34,13 +34,14 @@ api_key_file = os.path.join(folder_path, "MIDORI_AI_API_KEY_TEMP")
 
 username = None
 
-if os.path.exists(username_file):
-    with open(username_file, 'r') as f:
-        username = f.read()
-
 if hasattr(args, "username"):
     username = args.username
-        
+
+if username is None:
+    if os.path.exists(username_file):
+        with open(username_file, 'r') as f:
+            username = f.read()
+            
 if username is None:
     print("Please use ``-u`` with your username...")
     sys.exit(25)
