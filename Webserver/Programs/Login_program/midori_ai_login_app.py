@@ -86,7 +86,7 @@ if not unsafe:
     stats = {
         "platform": {
             "cpu_count": psutil.cpu_count(),
-            "memory_total": psutil.users(),
+            "users": psutil.users(),
             "system": platform.system(),
             "machine": platform.machine(),
             "processor": platform.processor(),
