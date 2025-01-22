@@ -10,6 +10,8 @@ import requests
 
 from cryptography.fernet import Fernet
 
+filler = "~-" * 25
+
 parser = argparse.ArgumentParser(description="N/A")
 parser.add_argument("-u", "--username", required=False, type=str, help="Username to use for the server...")
 parser.add_argument("-byp", "--bypassplatform", required=False, type=str, help="Bypass platform check")
@@ -104,10 +106,17 @@ if not unsafe:
     os_hash_hex = os_hash_object.hexdigest()
 
     if debug == "true":
+        print(filler)
         print("SHOWING STATS")
+        print(filler)
         print(f"Stats: {stats}")
+        print(filler)
+        print(f"Json Stats: {stats_json}")
+        print(filler)
         print(f"Hash Stats: {hash_hex}")
+        print(filler)
         print(f"Os: {os_hash_hex}")
+        print(filler)
 
 else:
     hash_hex = str(args.bypassplatform).lower()
