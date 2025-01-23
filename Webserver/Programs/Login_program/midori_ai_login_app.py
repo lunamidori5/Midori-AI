@@ -1,6 +1,7 @@
 import os
 import sys
 import json
+import uuid
 import psutil
 import shutil
 import hashlib
@@ -32,6 +33,7 @@ folder_path = os.path.join(home_dir, ".midoriai")
 os.makedirs(folder_path, exist_ok=True)
 
 username_file = os.path.join(folder_path, "MIDORI_AI_USERNAME")
+user_uuid_file = os.path.join(folder_path, "MIDORI_AI_USER_UUID")
 api_key_file = os.path.join(folder_path, "MIDORI_AI_API_KEY_TEMP")
 
 username = None
@@ -83,12 +85,23 @@ key_one = Fernet.generate_key()
 fernet_one = Fernet(key_one)
 
 if not unsafe:
+
+    if os.path.exists(user_uuid_file):
+        with open(user_uuid_file, 'rb') as f:
+            user_uuid = f.read().decode()
+    else:
+        user_uuid = f"{str(uuid.uuid4())}-{str(uuid.uuid4())}"
+        
+        with open(user_uuid_file, "wb") as f:
+            f.write(user_uuid.encode())
+
     stats = {
         "platform": {
             "cpu_count": psutil.cpu_count(),
             "system": platform.system(),
             "machine": platform.machine(),
             "processor": platform.processor(),
+            "system_uuid": user_uuid,
             "ssh_installed": shutil.which("ssh"),
             "docker_installed": shutil.which("docker"),
             "midori_ai_installed": shutil.which("midori_ai_updater"),
@@ -96,7 +109,7 @@ if not unsafe:
     }
 
     stats_json = json.dumps(stats)
-    os_version = os.uname().machine
+    os_version = os.uname().machine + user_uuid
 
     hash_object = hashlib.sha512(stats_json.encode())
     os_hash_object = hashlib.sha512(os_version.encode())
