@@ -13,7 +13,7 @@ from cryptography.fernet import Fernet
 
 filler = "~-" * 25
 
-parser = argparse.ArgumentParser(description="N/A")
+parser = argparse.ArgumentParser(description="Midori AI Login Application - CLI tool used to manage user authentication and access. Supports bypass checks, user creation and debugging.")
 parser.add_argument("-u", "--username", required=False, type=str, help="Username to use for the server...")
 parser.add_argument("-byp", "--bypassplatform", required=False, type=str, help="Bypass platform check")
 parser.add_argument("-byos", "--bypassoscheck", required=False, type=str, help="Bypass OS check")
