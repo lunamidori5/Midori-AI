@@ -20,6 +20,7 @@ from rich.text import Text
 from rich.tree import Tree
 from rich.markup import escape
 from rich.console import Console
+from rich.prompt import Confirm
 from rich.filesize import decimal
 
 from cryptography.fernet import Fernet
@@ -34,7 +35,7 @@ The program can also be used to pack and unpack files into tar archives.
 """
 
 parser = argparse.ArgumentParser(description=description)
-parser.add_argument("-i", "--item", required=True, type=str, help="Full path of the file or folder")
+parser.add_argument("-i", "--item", type=str, help="Full path of the file or folder")
 parser.add_argument("-c", "--pack", action="store_true", help="Create archive (pack)")
 parser.add_argument("-x", "--unpack", action="store_true", help="Extract archive (unpack)")
 parser.add_argument("-u", "--upload", action="store_true", help="Upload items (must be packed first)")
@@ -44,6 +45,8 @@ parser.add_argument("-P", "--purgetemp", action="store_true", help="Purge tempor
 args = parser.parse_args()
 
 purge = args.purgetemp
+
+console = Console()
 
 home_dir = os.path.expanduser("~")
 folder_path = os.path.join(home_dir, ".midoriai")
@@ -362,36 +365,81 @@ def main(args):
             continue
         else:
             raise ImportError(f"You are missing {program} form your path, please install or update them...")
-        
-    if not os.path.isabs(item):
-        item = os.path.join(os.getcwd(), item)
-    
-    if os.path.isdir(item):
-        try:
-            directory = os.path.abspath(item)
-        except IndexError:
-            print("Some type of error happened...")
+    # Interactive input if no item is provided via command-line
+    if not item:
+        use_interactive = Confirm.ask("Do you want to select files/folders interactively?")
+        if use_interactive:
+           while True:
+                item = console.input(prompt="Enter a file or folder path (or type 'done'): ")
+                if item.lower() == 'done':
+                    break
+                
+                if not os.path.isabs(item):
+                    item = os.path.join(os.getcwd(), item)
+                
+                if os.path.isdir(item):
+                     try:
+                        directory = os.path.abspath(item)
+                     except IndexError:
+                        print("Some type of error happened...")
+                     else:
+                        tree = Tree(f"[link file://{directory}]{directory}", guide_style="bold bright_blue",)
+                        walk_directory(pathlib.Path(directory), tree)
+                        print(tree)
+
+                        go_on = confirm(text="Are you sure you want to touch these folders?")
+
+                        if go_on:
+                           pass
+                        else:
+                           continue
+
+                     for root, dirs, files in os.walk(item):
+                           for file in files:
+                                list_of_items.append(os.path.join(root, file))
+
+                elif os.path.isfile(item):
+                    list_of_items.append(item)
+                
+                else:
+                   print(f"[bold red]Error:[/] {str(item).title()} is not a path or could not be found")
+                   continue
         else:
-            tree = Tree(f"[link file://{directory}]{directory}", guide_style="bold bright_blue",)
-            walk_directory(pathlib.Path(directory), tree)
-            print(tree)
-
-            go_on = confirm(text="Are you sure you want to touch these folders?")
-
-            if go_on:
-                pass
-            else:
-                sys.exit(0)
-
-        for root, dirs, files in os.walk(item):
-            for file in files:
-                list_of_items.append(os.path.join(root, file))
-
-    elif os.path.isfile(item):
-        list_of_items.append(item)
-    
+             print("[bold blue]No paths given, please pass a path in arguments[/]")
+             sys.exit(0)
+                
+    # Old logic if item provided from command-line
     else:
-        raise FileNotFoundError(f"{str(item).title()} is not a path or could not be found")
+            
+        if not os.path.isabs(item):
+            item = os.path.join(os.getcwd(), item)
+        
+        if os.path.isdir(item):
+            try:
+                directory = os.path.abspath(item)
+            except IndexError:
+                print("Some type of error happened...")
+            else:
+                tree = Tree(f"[link file://{directory}]{directory}", guide_style="bold bright_blue",)
+                walk_directory(pathlib.Path(directory), tree)
+                print(tree)
+
+                go_on = confirm(text="Are you sure you want to touch these folders?")
+
+                if go_on:
+                    pass
+                else:
+                    sys.exit(0)
+
+            for root, dirs, files in os.walk(item):
+                for file in files:
+                    list_of_items.append(os.path.join(root, file))
+
+        elif os.path.isfile(item):
+            list_of_items.append(item)
+        
+        else:
+            raise FileNotFoundError(f"{str(item).title()} is not a path or could not be found")
 
     os.chdir(temp_folder_path)
 
