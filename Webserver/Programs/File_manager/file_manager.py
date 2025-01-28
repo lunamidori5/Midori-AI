@@ -352,7 +352,6 @@ def download_from_midori_ai():
 
 def main(args):
     list_of_items = []
-    item = os.path.join(args.item)
     pack = bool(args.pack)
     unpack = bool(args.unpack)
     upload = bool(args.upload)
@@ -411,7 +410,7 @@ def main(args):
                 
     # Old logic if item provided from command-line
     else:
-            
+        item = os.path.join(args.item)
         if not os.path.isabs(item):
             item = os.path.join(os.getcwd(), item)
         
