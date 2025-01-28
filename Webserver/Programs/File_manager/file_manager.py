@@ -366,7 +366,7 @@ def main(args):
         else:
             raise ImportError(f"You are missing {program} form your path, please install or update them...")
     # Interactive input if no item is provided via command-line
-    if not item:
+    if args.item is None:
         use_interactive = Confirm.ask("Do you want to select files/folders interactively?")
         if use_interactive:
            while True:
