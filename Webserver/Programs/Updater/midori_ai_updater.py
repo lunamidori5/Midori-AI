@@ -99,9 +99,6 @@ for program in program_to_update:
 for program in cluster_check:
     if os.path.isfile("/usr/local/bin/" + program[1]):
         shutil.move("/usr/local/bin/" + program[0], "/usr/local/bin/" + program[1])
-        spinner.succeed(text=f"Program {program[1]} renamed successfully.")
-    else:
-        spinner.fail(text=f"Error: Program {program[1]} was not renamed successfully.")
 
 # Clean up
 os.chdir("..")
