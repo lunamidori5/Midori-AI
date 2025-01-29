@@ -27,7 +27,7 @@ from rich.filesize import decimal
 
 from transformers import pipeline
 
-pipe = pipeline("text-generation", "deepseek-ai/DeepSeek-R1-Distill-Qwen-14B", torch_dtype=torch.bfloat16, device_map="auto")
+pipe = pipeline("text-generation", "deepseek-ai/DeepSeek-R1-Distill-Llama-8B", torch_dtype=torch.bfloat16, device_map="auto")
 
 spinner = Halo(text='Loading', spinner='dots', color='green')
 

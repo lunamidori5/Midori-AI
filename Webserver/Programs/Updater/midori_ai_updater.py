@@ -40,6 +40,15 @@ standard_program_to_update = [
     ["midori_ai_updater", "standard-linux-midori-ai-updater"]
     ]
 
+cluster_check = [
+    ["midori_ai_login", "midori-ai-login"],
+    ["midori_ai_hf_downloader", "midori-ai-hf-downloader"],
+    ["midori_ai_downloader", "midori-ai-downloader"],
+    ["midori_ai_file_manager", "midori-ai-file-manager"],
+    ["midori_ai_uploader", "midori-ai-uploader"],
+    ["midori_ai_updater", "midori-ai-updater"]
+    ]
+
 with open("/etc/os-release", "r") as f:
     os_release_data = f.read()
     
@@ -86,6 +95,13 @@ for program in program_to_update:
     else:
         spinner.fail(text=f"Error: Program {program[0]} was not installed successfully.")
     del program
+
+for program in cluster_check:
+    if os.path.isfile("/usr/local/bin/" + program[1]):
+        shutil.move("/usr/local/bin/" + program[0], "/usr/local/bin/" + program[1])
+        spinner.succeed(text=f"Program {program[1]} renamed successfully.")
+    else:
+        spinner.fail(text=f"Error: Program {program[1]} was not renamed successfully.")
 
 # Clean up
 os.chdir("..")
