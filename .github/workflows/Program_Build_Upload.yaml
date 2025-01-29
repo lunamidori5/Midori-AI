@@ -126,13 +126,17 @@ jobs:
         id: meta
         uses: docker/metadata-action@master
         with:
-          images: lunamidori5/midori_ai_subsystem_localai_cpu
+          images: |
+            lunamidori5/midori_ai_subsystem_localai_cpu
+            lunamidori5/localai_cpu
 
       - name: Make Ver Tags (tags, labels) for Docker
         id: sha
         uses: docker/metadata-action@master
         with:
-          images: lunamidori5/midori_ai_subsystem_localai_cpu
+          images: |
+            lunamidori5/midori_ai_subsystem_localai_cpu
+            lunamidori5/localai_cpu
           tags: |
             type=sha,enable=true,priority=100,prefix={{date 'YYYYMMDD-HHmmss' tz='Asia/Tokyo'}}-sha-,suffix=,format=short
 
@@ -182,13 +186,17 @@ jobs:
         id: meta
         uses: docker/metadata-action@master
         with:
-          images: lunamidori5/midori_ai_subsystem_localai_${{ matrix.gpu_type }}_gpu
+          images: |
+            lunamidori5/midori_ai_subsystem_localai_${{ matrix.gpu_type }}_gpu
+            lunamidori5/localai_${{ matrix.gpu_type }}_gpu
 
       - name: Make Ver Tags (tags, labels) for Docker
         id: sha
         uses: docker/metadata-action@master
         with:
-          images: lunamidori5/midori_ai_subsystem_localai_${{ matrix.gpu_type }}_gpu
+          images: |
+            lunamidori5/midori_ai_subsystem_localai_${{ matrix.gpu_type }}_gpu
+            lunamidori5/localai_${{ matrix.gpu_type }}_gpu
           tags: |
             type=sha,enable=true,priority=100,prefix={{date 'YYYYMMDD-HHmmss' tz='Asia/Tokyo'}}-sha-,suffix=,format=short
 
