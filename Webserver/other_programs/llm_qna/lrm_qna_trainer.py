@@ -1,29 +1,13 @@
+
 import os
 import re
-import sys
 import json
-import time
 import torch
-import base64
-import shutil
 import random
-import tarfile
-import zipfile
-import getpass
-import pathlib
-import platform
-import argparse
-import subprocess
 
 from halo import Halo
 
 from rich import print
-from rich.text import Text
-from rich.tree import Tree
-from rich.markup import escape
-from rich.console import Console
-from rich.prompt import Confirm
-from rich.filesize import decimal
 
 from transformers import pipeline
 
