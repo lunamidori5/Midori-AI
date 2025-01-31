@@ -61,13 +61,10 @@ for i, question in enumerate(questions):
 
     spinner.succeed(text=f"LRM done with: `{question}`!")
 
-    print()
-    print(f"Model's Thinking: [italic blue]{thinking_str}[/italic blue]")
-    print()
-    print(f"Model's Output: [red]{output_str}[/red]")
-    print()
-    print(f"Question: [green]`{question}`[/green]")
-    print()
+    print(f"\nModel's Thinking: [italic blue]{thinking_str}[/italic blue]\n")
+    print(f"Model's Output: [red]{output_str}[/red]\n")
+    print(f"Question: [green]`{question}`[/green]\n")
+
     print("Press enter to take the LRM's output, or type the reply needed")
 
     user_message_text = input("Text: ")
@@ -77,17 +74,19 @@ for i, question in enumerate(questions):
         output_full = user_message_text
     
     answers.append(output_full)
+    
+    try:
+        with open('qa_output.json', 'r', encoding='utf-8') as infile:
+            try:
+                data = json.load(infile)
+            except json.JSONDecodeError:
+                data = []
+    except FileNotFoundError:
+        data = []
 
-    if (i + 1) % 25 == 0:
-        json_output.update(dict(zip(questions[i-24:i+1], answers[i-24:i+1]))) # type: ignore
-
-        with open('qa_output.json', 'w', encoding='utf-8') as outfile:
-            json.dump(json_output, outfile, indent=4)
-        print(f"[bold green]Saved {len(json_output)} Q&A pairs to qa_output.json[/bold green")
-
-
-if len(questions) % 25 != 0:
-    json_output.update(dict(zip(questions[i-(len(questions) % 25)+1:], answers[i-(len(questions) % 25)+1:]))) # type: ignore
     with open('qa_output.json', 'w', encoding='utf-8') as outfile:
-        json.dump(json_output, outfile, indent=4)
-    print(f"[bold green]Saved the rest of the Q&A pairs to qa_output.json[/bold green]")
+        json_object = {"instruction": system_prompt, "input": questions[i], "output": answers[i]}
+        json.dump(json_object, outfile, ensure_ascii=False)
+        print(f"[bold green]Saved Q&A pairs to qa_output.json[/bold green")
+
+
