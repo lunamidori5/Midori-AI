@@ -98,7 +98,7 @@ for program in program_to_update:
 
 for program in cluster_check:
     if os.path.isfile("/usr/local/bin/" + program[1]):
-        shutil.move("/usr/local/bin/" + program[0], "/usr/local/bin/" + program[1])
+        shutil.copy("/usr/local/bin/" + program[0], "/usr/local/bin/" + program[1])
 
 # Clean up
 os.chdir("..")
