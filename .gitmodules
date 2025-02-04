@@ -25,3 +25,12 @@
 [submodule "Endless-Autofighter"]
 	path = Endless-Autofighter
 	url = https://github.com/lunamidori5/python_rpg_game.git
+[submodule "Mozilla-AI/blueprints/subsystem-manager"]
+	path = Mozilla-AI/blueprints/subsystem-manager
+	url = https://github.com/lunamidori5/subsystem-manager.git
+[submodule "Mozilla-AI/blueprints/lrm-testing"]
+	path = Mozilla-AI/blueprints/lrm-testing
+	url = https://github.com/lunamidori5/lrm-testing.git
+[submodule "Mozilla-AI/blueprints/rpg-note-taker"]
+	path = Mozilla-AI/blueprints/rpg-note-taker
+	url = https://github.com/lunamidori5/rpg-note-taker.git
