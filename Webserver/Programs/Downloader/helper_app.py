@@ -162,13 +162,15 @@ async def main():
     key_url = f"{base_url}{key_filename}"
     
     encrypted_file_url = f"{base_url}ai/{filename}"
-    usermode_file_url = f"{base_url}user"
     backup_file_url = f"{base_url}{filename}"
 
     max_retries = 18
     use_backup = usermode or pre_unsafe or ".gguf" in filename or not is_api_key_loaded()
 
-    if usermode: backup_file_url = usermode_file_url;
+    if usermode: 
+        # This line will be removed soon...
+        filename = "userfile"
+        backup_file_url = f"{base_url}user/{filename}"
 
     for attempt in range(max_retries):
         try:
