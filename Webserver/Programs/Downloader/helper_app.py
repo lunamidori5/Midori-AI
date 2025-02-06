@@ -53,22 +53,18 @@ async def get_api_key():
             else:
                 with open(api_key_file, 'r') as f:
                     api_key = f.read()
-                break
+                return api_key
 
         try:
             subprocess.call(["midori_ai_login"])
             await asyncio.sleep(2)
         except Exception as error:
             print("Login failed, please try again manually")
-            print("API KEY not set, please log into Midori AI's Servers")
             print("Run ``midori_ai_login -u \"username\"``")
 
         attempt_count += 1
 
         if attempt_count >= 1:
-            print("Encrypted endpoint is turned off, please login to use it...")
-            print("BYPASSING Encrypted endpoint is turned ON, we are working on updating our CLI tools...")
-            
             api_key = str(random.randint(999999, 99999999999999))
             return api_key
 

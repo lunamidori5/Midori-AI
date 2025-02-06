@@ -84,16 +84,16 @@ key_one = Fernet.generate_key()
 
 fernet_one = Fernet(key_one)
 
-if not unsafe:
+if os.path.exists(user_uuid_file):
+    with open(user_uuid_file, 'rb') as f:
+        user_uuid = f.read().decode()
+else:
+    user_uuid = f"{str(uuid.uuid4())}-{str(uuid.uuid4())}"
+    
+    with open(user_uuid_file, "wb") as f:
+        f.write(user_uuid.encode())
 
-    if os.path.exists(user_uuid_file):
-        with open(user_uuid_file, 'rb') as f:
-            user_uuid = f.read().decode()
-    else:
-        user_uuid = f"{str(uuid.uuid4())}-{str(uuid.uuid4())}"
-        
-        with open(user_uuid_file, "wb") as f:
-            f.write(user_uuid.encode())
+if not unsafe:
 
     stats = {
         "platform": {
