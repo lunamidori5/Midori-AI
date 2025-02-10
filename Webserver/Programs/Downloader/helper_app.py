@@ -54,13 +54,14 @@ async def get_api_key():
                 with open(api_key_file, 'r') as f:
                     api_key = f.read()
                 return api_key
-
-        try:
-            subprocess.call(["midori_ai_login"])
-            await asyncio.sleep(2)
-        except Exception as error:
-            print("Login failed, please try again manually")
-            print("Run ``midori_ai_login -u \"username\"``")
+        
+        else:
+            try:
+                subprocess.call(["midori_ai_login"])
+                await asyncio.sleep(2)
+            except Exception as error:
+                print("Login failed, please try again manually")
+                print("Run ``midori_ai_login -u \"username\"``")
 
         attempt_count += 1
 
