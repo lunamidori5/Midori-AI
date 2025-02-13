@@ -82,6 +82,16 @@ def is_api_key_loaded():
         return True
         #return False
 
+async def check_file_size(FILES):
+    async with ClientSession() as session:
+        async with session.get(FILES, headers={}) as response:
+            if response.status == 652:
+                return False
+            elif response.status == 651:
+                return True
+            else:
+                raise RuntimeError(f"Failed to check files size: {response.status}")
+
 async def download_files(FILES):
     headers = {"Discord-ID": random_id, "username": f"{str(username)}", "key": str(await get_api_key())}
     async with ClientSession() as session:
@@ -161,8 +171,12 @@ async def main():
     encrypted_file_url = f"{base_url}ai/{filename}"
     backup_file_url = f"{base_url}{filename}"
 
+    file_checker_url = f"https://tea-cup.midori-ai.xyz/download/size/{filename}"
+
+    unsafe_file = await check_file_size(file_checker_url)
+
     max_retries = 18
-    use_backup = usermode or pre_unsafe or ".gguf" in filename or not is_api_key_loaded()
+    use_backup = usermode or pre_unsafe or unsafe_file or ".gguf" in filename or not is_api_key_loaded()
 
     if usermode: 
         # This line will be removed soon...
