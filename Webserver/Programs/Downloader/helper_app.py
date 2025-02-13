@@ -134,9 +134,9 @@ async def acquire_files_with_streaming(FILES):
         return content
 
     except requests.exceptions.RequestException as e:
-        raise RuntimeError(f"Download failed: {e}")
+        raise RuntimeError(f"Download failed: {str(e)}")
     except Exception as e:
-        raise RuntimeError(f"An error occurred: {e}")
+        raise RuntimeError(f"An error occurred: {str(e)}")
 
 def log(message):
     print(message)
