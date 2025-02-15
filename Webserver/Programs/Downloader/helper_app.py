@@ -31,6 +31,8 @@ username_file = os.path.join(folder_path, "MIDORI_AI_USERNAME")
 
 username = "unknown_user"
 
+# please do not mind this commit I am trying to find a bug with vs code or my setup
+
 if os.path.exists(username_file):
     with open(username_file, 'r') as f:
         username = f.read()
