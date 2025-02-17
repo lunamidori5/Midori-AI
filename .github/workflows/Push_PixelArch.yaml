@@ -40,10 +40,6 @@ jobs:
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
 
-      - name: Clean up Docker Cache
-        run: |
-          docker image prune -f
-
   push_cluster_os_arch_to_hub:
     name: Push Midori AI's PixelArch (Cluster OS) to Docker Hub
     runs-on: ubuntu-latest
@@ -77,12 +73,13 @@ jobs:
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
 
-      - name: Clean up Docker Cache
-        run: |
-          docker image prune -f
-
-  push_pixelarch_ver_amethyst_to_hub:
-    name: Push Midori AI's PixelArch (Amethyst) to Docker Hub
+  push_pixelarch_ver_to_hub:
+    name: Push Midori AI's PixelArch to Docker Hub
+    strategy:
+      max-parallel: 1
+      matrix:
+        ver: [amethyst, topaz, emerald]
+        gpu: ["", "_cuda"]
     runs-on: ubuntu-latest
     needs: push_arch_to_hub
     steps:
@@ -103,79 +100,13 @@ jobs:
         with:
           images: lunamidori5/pixelarch
           tags: |
-            type=raw,value=amethyst
+            type=raw,value=${{ matrix.ver }}${{ matrix.gpu }}
 
-      - name: Build and push PixelArch OS (Amethyst) Docker Image
+      - name: Build and push PixelArch ${{ matrix.ver }} OS Docker Image
         uses: docker/build-push-action@master
         with:
           context: ./Cluster-OS/pixelarch_os/
-          file: ./Cluster-OS/pixelarch_os/arch_dockerfile_amethyst
-          push: true
-          tags: ${{ steps.meta.outputs.tags }}
-          labels: ${{ steps.meta.outputs.labels }}
-
-  push_pixelarch_ver_topaz_to_hub:
-    name: Push Midori AI's PixelArch (Topaz) to Docker Hub
-    runs-on: ubuntu-latest
-    needs: push_pixelarch_ver_amethyst_to_hub
-    steps:
-      - uses: actions/checkout@v4
-        with:
-          submodules: recursive
-
-      - name: Log in to Docker Hub
-        uses: docker/login-action@master
-        with:
-          username: ${{ secrets.DOCKER_USERNAME }}
-          password: ${{ secrets.DOCKER_PASSWORD }}
-          logout: false
-
-      - name: Extract metadata (tags, labels) for Docker
-        id: meta
-        uses: docker/metadata-action@master
-        with:
-          images: lunamidori5/pixelarch
-          tags: |
-            type=raw,value=topaz
-
-      - name: Build and push PixelArch OS (Topaz) Docker Image
-        uses: docker/build-push-action@master
-        with:
-          context: ./Cluster-OS/pixelarch_os/
-          file: ./Cluster-OS/pixelarch_os/arch_dockerfile_topaz
-          push: true
-          tags: ${{ steps.meta.outputs.tags }}
-          labels: ${{ steps.meta.outputs.labels }}
-
-  push_pixelarch_ver_emerald_to_hub:
-    name: Push Midori AI's PixelArch (Emerald) to Docker Hub
-    runs-on: ubuntu-latest
-    needs: push_pixelarch_ver_topaz_to_hub
-    steps:
-      - uses: actions/checkout@v4
-        with:
-          submodules: recursive
-
-      - name: Log in to Docker Hub
-        uses: docker/login-action@master
-        with:
-          username: ${{ secrets.DOCKER_USERNAME }}
-          password: ${{ secrets.DOCKER_PASSWORD }}
-          logout: false
-
-      - name: Extract metadata (tags, labels) for Docker
-        id: meta
-        uses: docker/metadata-action@master
-        with:
-          images: lunamidori5/pixelarch
-          tags: |
-            type=raw,value=emerald
-
-      - name: Build and push PixelArch OS (Emerald) Docker Image
-        uses: docker/build-push-action@master
-        with:
-          context: ./Cluster-OS/pixelarch_os/
-          file: ./Cluster-OS/pixelarch_os/arch_dockerfile_emerald
+          file: ./Cluster-OS/pixelarch_os/arch_dockerfile_${{ matrix.ver }}${{ matrix.gpu }}
           push: true
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
