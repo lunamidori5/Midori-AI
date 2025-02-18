@@ -140,7 +140,7 @@ def remove_directory_recursively(path, spinner):
                 os.remove(file_path)
                 spinner.succeed(text=f"Removed file: {file_path}")
             except OSError as e:
-                spinner.fail(text=f"Error removing file {file_path}: {e}")
+                spinner.fail(text=f"Error removing file {file_path}: {str(e)}")
 
         for name in dirs:
             dir_path = os.path.join(root, name)
@@ -150,14 +150,14 @@ def remove_directory_recursively(path, spinner):
                 spinner.succeed(text=f"Removed directory: {dir_path}")
 
             except OSError as e:
-                spinner.fail(text=f"Error removing directory {dir_path}: {e}")     
+                spinner.fail(text=f"Error removing directory {dir_path}: {str(e)}")     
     try:        
         if os.path.exists(path):
             spinner.start(text=f"Removing directory: {path}")
             os.rmdir(path)
             spinner.succeed(text=f"Removed directory: {path}")
     except OSError as e:
-        spinner.fail(text=f"Error removing directory {path}: {e}")
+        spinner.fail(text=f"Error removing directory {path}: {str(e)}")
 
 
 def encrypt_user_data(data: bytes, username: str, salt):
