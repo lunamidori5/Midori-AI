@@ -119,6 +119,9 @@ async def acquire_files_with_streaming(FILES):
     try:
         response = requests.get(FILES, headers={"Discord-ID": random_id, "username": f"{str(username)}", "key": str(await get_api_key())}, stream=True, timeout=55)
         response.raise_for_status()
+        
+        if response.status_code != 200:
+            raise RuntimeError(f"Download failed: Server returned status code {response.status_code}")
 
         total_size = int(response.headers.get("Content-Length", 0))
         

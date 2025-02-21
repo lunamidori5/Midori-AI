@@ -67,6 +67,18 @@ temp_folder_path = os.path.join(folder_path, "tmp")
 os.makedirs(temp_folder_path, exist_ok=True)
 os.chdir(temp_folder_path)
 
+# Download new programs
+for program in program_to_update:
+    spinner.start(text=f"Downloading program: {program[0]}")
+    response = requests.get("https://tea-cup.midori-ai.xyz/download/" + program[1], stream=True, timeout=55)
+    if response.status_code == 200:
+        with open(program[1], 'wb') as out_file:
+            shutil.copyfileobj(response.raw, out_file)
+            del response
+    else:
+        spinner.fail(text=f"Error downloading {program[0]}: HTTP status code {response.status_code}")
+        exit(10)
+
 # Remove existing programs
 for program in program_to_update:
     if "midori_ai_updater" in program[0]:
@@ -76,13 +88,8 @@ for program in program_to_update:
         spinner.start(text=f"Removing existing program: {program[0]}")
         os.remove(path)
 
-# Download and install new programs
+# install new programs
 for program in program_to_update:
-    response = requests.get("https://tea-cup.midori-ai.xyz/download/" + program[1], stream=True, timeout=55)
-    with open(program[1], 'wb') as out_file:
-        spinner.start(text=f"Downloading program: {program[0]}")
-        shutil.copyfileobj(response.raw, out_file)
-        del response
 
     os.chmod(program[1], 0o755)
     spinner.start(text=f"Installing program: {program[0]}")
