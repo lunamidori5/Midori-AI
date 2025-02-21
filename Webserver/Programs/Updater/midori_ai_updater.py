@@ -77,7 +77,7 @@ for program in program_to_update:
             del response
     else:
         spinner.fail(text=f"Error downloading {program[0]}: HTTP status code {response.status_code}")
-        exit(10)
+        sys.exit(10)
 
 # Remove existing programs
 for program in program_to_update:
