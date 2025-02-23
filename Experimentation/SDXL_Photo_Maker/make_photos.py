@@ -1,5 +1,6 @@
 import os
 import re
+import sys
 import json
 import uuid
 import time
@@ -63,7 +64,7 @@ try:
 except Exception as e:
     log(f"Oops import error: {str(e)}")
         
-    exit(0)
+    sys.exit(0)
 
 
 def is_amd_gpu():
@@ -151,7 +152,7 @@ def progress(pipeline, step, timestep, callback_kwargs):
 
 async def get_model():
     url = "https://tea-cup.midori-ai.xyz/download/list.json"
-    response = requests.get(url)
+    response = requests.get(url, timeout=25)
     
     if response.status_code == 200:
         data = json.loads(response.text)
@@ -347,7 +348,6 @@ async def partly_generate(text, neg_text):
     log("Images saved.")
 
 async def main():
-    os.system("touch program.lock")
     while True:
 
         colors = ["crimson", "teal", "fuchsia", "olive", "indigo", "sienna", "aquamarine", "coral", "orchid", "chartreuse", "lavender", "tan", " salmon", "plum", "turquoise"]
@@ -412,7 +412,7 @@ async def main():
                 retrys =+ 1
 
                 if retrys > 50:
-                    exit(404)
+                    sys.exit(404)
                 
         del pipe
 
@@ -456,7 +456,7 @@ async def main():
                     
         os.remove("program.lock")
         
-        exit(0)
+        sys.exit(0)
 
 if __name__ == "__main__":
     asyncio.run(main())
