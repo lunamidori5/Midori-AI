@@ -55,6 +55,9 @@ if username is None:
 if len(str(username)) < 6:
     print("Please make your username 6 or more letters...")
     sys.exit(15)
+else:
+    username = username.replace("-", "")
+    username = username.replace("_", "")
 
 if pre_makeuser == "true":
     makeuser = True
