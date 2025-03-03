@@ -20,6 +20,7 @@ parser.add_argument("-byos", "--bypassoscheck", required=False, type=str, help="
 parser.add_argument("-unsafe", "--unsafe", required=False, action='store_true', help="Enable unsafe mode")
 parser.add_argument("-cli", "--commandline", required=False, action='store_true', help="Enable CLI mode")
 parser.add_argument("-mkuser", "--makeuser", required=False, action='store_true', help="Enable makeuser mode")
+parser.add_argument("-inv", "--invitekey", required=False, type=str, help="Invite Key makeuser mode")
 parser.add_argument("-debug", "--debug", required=False, action='store_true', help="Enable debug mode")
 args = parser.parse_args()
 
@@ -27,6 +28,7 @@ pre_unsafe = str(args.unsafe).lower()
 pre_cli = str(args.commandline).lower()
 debug = str(args.debug).lower()
 pre_makeuser = str(args.makeuser).lower()
+invite_key = str(args.invitekey).lower()
 
 home_dir = os.path.expanduser("~")
 folder_path = os.path.join(home_dir, ".midoriai")
@@ -141,7 +143,8 @@ encrypted_platform_one = fernet_one.encrypt(str(hash_hex).encode())
 encrypted_os_version_one = fernet_one.encrypt(str(os_hash_hex).encode())
 
 if makeuser:
-    invite_key = input("Please enter the invite key from Midori AI: ")
+    if len(invite_key) < 10:
+        invite_key = input("Please enter the invite key from Midori AI: ")
     try:
         response = requests.post("https://tea-pot.midori-ai.xyz/make_user_user", 
             headers=
