@@ -76,11 +76,11 @@ jobs:
   push_pixelarch_ver_to_hub:
     name: Push Midori AI's PixelArch to Docker Hub
     strategy:
-      max-parallel: 1
+      max-parallel: 3
       matrix:
         ver: [amethyst, topaz, emerald]
         gpu: ["", "_cuda"]
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     needs: push_arch_to_hub
     steps:
       - uses: actions/checkout@v4
