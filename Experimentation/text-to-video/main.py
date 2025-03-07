@@ -24,8 +24,10 @@ old_prompt = "(Black strapless dress, White cloak), 1woman, (dark green hair), b
 
 prompt = """
 Cinematic shot of a woman walking towards the camera. 
-The scene is a cave filled with ethereal light. She is wearing a black strapless dress and a white cloak. 
-Dark green hair with bangs frames her face. Her eyes are a striking golden yellow, and a delicate halo adorns her head. 
+The scene is a cave filled with ethereal light. 
+She is wearing a black strapless dress and a white cloak. 
+Dark green hair with bangs frames her face. 
+Her eyes are a striking golden yellow, and a delicate halo adorns her head. 
 She moves with a magical aura, a gentle wave of distorted light rippling behind her as she progresses through the cave.
 """.replace("\n", " ")
 
@@ -34,7 +36,7 @@ generator = torch.manual_seed(random.randint(1, 99999))
 
 output = pipeline(
     prompt=prompt, negative_prompt=negative_prompt, 
-    image=image, num_inference_steps=45, guidance_scale=9.0, num_frames=125, 
+    image=image, num_inference_steps=45, guidance_scale=9.0, num_frames=75, 
     height=1280, width=704, generator=generator)
 
 frames = output.frames[0]
