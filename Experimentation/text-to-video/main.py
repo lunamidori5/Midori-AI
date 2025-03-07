@@ -29,11 +29,11 @@ frames = pipeline(
     num_inference_steps=35,
     guidance_scale=1.0,
     num_frames=30,
-    height=800,
-    width=448,
+    height=1280,
+    width=704,
     generator=generator,
     decode_chunk_size=5
 ).frames[0]
 
-export_to_gif(frames, "generated.gif")
+export_to_gif(frames, "generated.gif", fps=2)
 export_to_video(frames, "generated.mp4", fps=2)
