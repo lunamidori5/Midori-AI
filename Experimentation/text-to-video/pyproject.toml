@@ -1,0 +1,19 @@
+[project]
+name = "text-to-video"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = "==3.12.8"
+dependencies = [
+    "accelerate>=1.4.0",
+    "diffusers",
+    "opencv-python>=4.11.0.86",
+    "optimum[openvino]>=1.17.1",
+    "torch>=2.6.0",
+    "transformers",
+    "xformers>=0.0.29.post3",
+]
+
+[tool.uv.sources]
+diffusers = { git = "https://github.com/huggingface/diffusers.git" }
+transformers = { git = "https://github.com/huggingface/transformers" }

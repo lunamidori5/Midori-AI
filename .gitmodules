@@ -34,3 +34,12 @@
 [submodule "Mozilla-AI/blueprints/rpg-note-taker"]
 	path = Mozilla-AI/blueprints/rpg-note-taker
 	url = https://github.com/lunamidori5/rpg-note-taker.git
+[submodule "Experimentation/rpg-note-taker"]
+	path = Experimentation/rpg-note-taker
+	url = https://github.com/lunamidori5/rpg-note-taker.git
+[submodule "Experimentation/lrm-testing"]
+	path = Experimentation/lrm-testing
+	url = https://github.com/lunamidori5/lrm-testing.git
+[submodule "Experimentation/subsystem-manager"]
+	path = Experimentation/subsystem-manager
+	url = https://github.com/lunamidori5/subsystem-manager.git
