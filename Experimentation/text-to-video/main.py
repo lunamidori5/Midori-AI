@@ -26,15 +26,16 @@ image = load_image(image_url).convert("RGB")
 old_prompt = "(Black strapless dress, White cloak), 1woman, (dark green hair), bangs, closed mouth, (golden yellow eyes)+, (small Halo), walking towards camera"
 
 prompt = """
-A woman in walking.
+A woman is walking.
 She is wearing a black strapless dress and a white cloak. Dark green hair with bangs frames her face. 
 Her eyes are a striking golden yellow, and a delicate golden halo adorns her head. 
 She has a sliver staff she is using to walk.
 She walks through the town, from left to right.
 """.replace("\n", " ")
 
+seed = random.randint(1, 99999)
 negative_prompt = "Distorted, discontinuous, Ugly, blurry, low resolution, motionless, static, disfigured, disconnected limbs, Ugly faces, incomplete arms"
-generator = torch.manual_seed(8585)
+generator = torch.manual_seed(seed)
 
 output = pipeline(prompt=prompt, negative_prompt=negative_prompt, image=image, num_inference_steps=150, num_frames=120, frame_rate=24, height=704, width=480, generator=generator)
 
