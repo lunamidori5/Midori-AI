@@ -89,6 +89,8 @@ async def check_file_size(FILES):
                 return False
             elif response.status == 651:
                 return True
+            elif response.status == 500:
+                return True
             else:
                 raise RuntimeError(f"Failed to check files size: {response.status}")
 
