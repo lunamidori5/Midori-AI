@@ -2,8 +2,6 @@ name: Build Docker Images / Push Programs To Server
 
 on:
   workflow_dispatch:
-  schedule:
-    - cron: '0 */16 * * *'
 
 jobs:
   push_deb11_to_hub:
